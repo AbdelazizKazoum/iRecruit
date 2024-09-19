@@ -1,0 +1,22 @@
+{
+  "name": "irecruit",
+  "version": "1.0.0",
+  "description": "Application de Recrutement iRecruit, Cette application de recrutement utilise Next.js, Tailwind CSS, MongoDB et NestJS avec TypeScript. Elle permet aux organisations de gérer le processus de recrutement : soumission de candidatures, gestion des offres, et interface utilisateur moderne. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " ./server nest start",
+    "start:dev": "./server nest start --watch",
+    "dev": " ./client next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbdelazizKazoum/iRecruit.git"
+  },
+  "author": "Abdelaziz_KAZOUM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbdelazizKazoum/iRecruit/issues"
+  },
+  "homepage": "https://github.com/AbdelazizKazoum/iRecruit#readme"
+}

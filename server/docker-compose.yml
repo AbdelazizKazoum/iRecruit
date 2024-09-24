@@ -1,0 +1,9 @@
+version: "2.29.6"
+services:
+  node-app:
+    container_name: nest-app-container
+    build: .
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "4400:4400"

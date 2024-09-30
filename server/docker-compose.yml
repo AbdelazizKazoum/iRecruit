@@ -1,9 +1,21 @@
-version: "2.29.6"
+version: '3.8' # Updated version
 services:
   node-app:
     container_name: nest-app-container
     build: .
-    volumes:
-      - ./src:/app/src
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./node_modules:/app/node_modules # Make sure node_modules are also mounted
+    develop:
+      watch:
+        - action: sync # 'build' is another action type
+          path: ./src # host directory path
+          target: /app/src # container directory path to map
+          ignore:
+            - node_modules/
+
     ports:
-      - "4400:4400"
+      - '4000:4000'
+    environment:
+      - PORT=4000
+    command: npm run start:dev # Ensure using the correct dev command for hot reload

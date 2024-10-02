@@ -3,19 +3,23 @@ services:
   node-app:
     container_name: nest-app-container
     build: .
-    # volumes:
-    #   - ./src:/app/src
-    #   - ./node_modules:/app/node_modules # Make sure node_modules are also mounted
-    develop:
-      watch:
-        - action: sync # 'build' is another action type
-          path: ./src # host directory path
-          target: /app/src # container directory path to map
-          ignore:
-            - node_modules/
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules # Make sure node_modules are also mounted
 
     ports:
       - '4000:4000'
     environment:
       - PORT=4000
+      - MONGO_HOST=172.18.0.2
+      - MONGO_USER=root
+      - MONGO_PASSWORD=example
+      - MONGO_PORT=27017
     command: npm run start:dev # Ensure using the correct dev command for hot reload
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example

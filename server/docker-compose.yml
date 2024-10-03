@@ -1,7 +1,7 @@
 version: '3.8' # Updated version
 services:
   node-app:
-    container_name: nest-app-container
+    container_name: iRecuit-app-container
     build: .
     volumes:
       - ./src:/app/src
@@ -11,15 +11,20 @@ services:
       - '4000:4000'
     environment:
       - PORT=4000
-      - MONGO_HOST=172.18.0.2
-      - MONGO_USER=root
+      - MONGO_HOST=iRectuit_db
       - MONGO_PASSWORD=example
+      - MONGO_USER=root
       - MONGO_PORT=27017
     command: npm run start:dev # Ensure using the correct dev command for hot reload
 
-  mongo:
+  iRectuit_db:
     image: mongo
     restart: always
+    volumes:
+      - mongo_db:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+
+volumes:
+  mongo_db:

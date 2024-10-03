@@ -3,6 +3,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 console.log(process.env.PORT);
+console.log(process.env.MONGO_USER);
+console.log(process.env.MONGO_PASSWORD);
+console.log(process.env.MONGO_HOST);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

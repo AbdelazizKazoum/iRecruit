@@ -5,6 +5,7 @@ import { Link as LinkScroll } from "react-scroll";
 
 import ButtonOutline from "../misc/ButtonOutline.";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -108,11 +109,11 @@ const Header = () => {
             </LinkScroll>
           </ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-            {/* <Link href="/">
-              <a className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
+            <Link href="/">
+              <span className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
                   Sign In
-              </a>
-            </Link> */}
+              </span>
+            </Link>
             <ButtonOutline>Sign Up</ButtonOutline>
           </div>
         </nav>

@@ -15,6 +15,10 @@ const config: Config = {
         500: "#4F5665",
         600: "#0B132A",
       },
+      primary: {
+        300: "#45aaf2",
+        500: "#2d98da",
+      },
       orange: {
         100: "#FFECEC",
         500: "#F53855",

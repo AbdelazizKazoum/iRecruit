@@ -1,12 +1,12 @@
 import React from "react";
 import Hero from "@/components/home/Hero";
-import Feature from "@/components/home/Feature";
+import Annonces from "@/components/home/Annonces";
 
 const Page = () => {
   return (
     <>
       <Hero />
-      <Feature />
+      <Annonces />
     </>
   );
 };

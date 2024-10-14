@@ -36,7 +36,7 @@ const RegisterPage = () => {
           <p className="text-[32px] font-bold text-zinc-950 dark:text-white">
             Inscription
           </p>
-          <p className="mb-2.5 mt-2.5 font-normal text-zinc-950 dark:text-zinc-400">
+          <p className="mb-2.5 mt-2.5 font-normal text-black-500 dark:text-gray-400">
             Entrez votre email pour recevoir un code de vérification !
           </p>
           <div className="mt-8">
@@ -59,7 +59,7 @@ const RegisterPage = () => {
                   name="email"
                 />
                 <button
-                  className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
+                  className="whitespace-nowrap     bg-primary-500 text-white-500 hover:bg-primary-500/90  mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
                   type="submit"
                 >
                   Envoyer le code de vérification
@@ -68,7 +68,7 @@ const RegisterPage = () => {
             </form>
           </div>
 
-          <p className="mb-8 mt-6 text-center text-sm text-zinc-950 dark:text-zinc-400">
+          <p className="mb-8 mt-6 text-center text-sm text-black-500 dark:text-zinc-400">
             Vous avez déjà un compte ?{" "}
             <a
               href="/dashboard/signin"

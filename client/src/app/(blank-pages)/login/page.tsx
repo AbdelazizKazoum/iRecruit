@@ -36,7 +36,7 @@ const Page = () => {
           <p className="text-[32px] font-bold text-zinc-950 dark:text-white">
             Connexion
           </p>
-          <p className="mb-2.5 mt-2.5 font-normal text-zinc-950 dark:text-zinc-400">
+          <p className="mb-2.5 mt-2.5 font-normal text-black-500 dark:text-gray-400">
             Entrez votre email et votre mot de passe pour vous connecter !
           </p>
           <div className="mt-8">
@@ -142,14 +142,14 @@ const Page = () => {
             <p>
               <a
                 href="/dashboard/signin/forgot_password"
-                className="font-medium text-zinc-950 dark:text-white text-sm"
+                className="font-normal text-black-500 dark:text-white-500 text-sm"
               >
                 Mot de passe oublié ?
               </a>
             </p>
           </div>
 
-          <p className="mb-8 mt-6 text-center text-sm text-zinc-950 dark:text-zinc-400">
+          <p className="mb-8 mt-6 text-center text-sm text-black-500 dark:text-gray-400">
             Vous n&apos;avez pas de compte ?{" "}
             <a
               href="/dashboard/signup"

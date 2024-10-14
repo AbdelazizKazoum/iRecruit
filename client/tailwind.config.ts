@@ -12,22 +12,23 @@ const config: Config = {
     colors: {
       transparent: "transparent",
       black: {
+        300: "rgb(79 86 101 / 58%)",
         500: "#4F5665",
         600: "#0B132A",
       },
       primary: {
-        300: "#45aaf2",
-        500: "#2d98da",
-        default: "#45aaf2",
+        300: "rgb(0 129 167 / 82%)",
+        500: "rgb(0 129 167)",
       },
       orange: {
         100: "#FFECEC",
-        500: "#F53855",
+        500: "#F07167",
       },
       green: {
         500: "#2FAB73",
       },
       white: {
+        100: "rgb(255 255 255)",
         300: "#F8F8F8",
         500: "#fff",
       },

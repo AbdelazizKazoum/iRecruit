@@ -32,7 +32,7 @@ export class UsersService {
   }
   async findOneById(id: string) {
     try {
-      return await this.userModal.findById(id).exec();
+      return await this.userModal.findById(id).select('-password').exec();
     } catch (error) {
       throw new UnauthorizedException(error);
     }
@@ -42,7 +42,7 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.userModal.deleteOne({ _id: id });
   }
 }

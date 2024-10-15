@@ -8,12 +8,13 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('login')
   async login(@Body() loginDto: LoginDto) {
     const user = await this.authService.validateUser(
       loginDto.email,
       loginDto.password,
     );
+    console.log('🚀 ~ AuthController ~ login ~ user:', user);
 
     return this.authService.login(user);
   }

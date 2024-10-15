@@ -1,28 +1,41 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './user.entity';
 import { Model } from 'mongoose';
-
+import * as bcrypt from 'bcryptjs';
+import { User } from 'src/schemas/user.schema';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModal: Model<User>) {}
 
   async create(createUserDto: CreateUserDto) {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser = new this.userModal({
-      createUserDto,
+      ...createUserDto,
+      password: hashedPassword,
     });
-    return await newUser.save();
+    return newUser.save();
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.userModal.find().exec();
   }
 
-  async findOne(email: string) {
-    return await this.userModal.findOne({ email }).exec();
+  async findOneByEmail(email: string): Promise<User> {
+    try {
+      return await this.userModal.findOne({ email }).exec();
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
+  }
+  async findOneById(id: string) {
+    try {
+      return await this.userModal.findById(id).exec();
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

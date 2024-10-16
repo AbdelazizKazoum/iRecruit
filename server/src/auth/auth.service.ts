@@ -49,12 +49,19 @@ export class AuthService {
     });
 
     const verificationLink = `${process.env.FRONTEND}/verify-email?code=${verifecationCode}`;
+
     // Send the verification email
-    await this.mailerService.sendMail({
-      to: user.email,
-      subject: 'Email Verification',
-      text: `Click here to verify your email: ${verificationLink}`,
-    });
+    // await this.mailerService.sendMail({
+    //   to: user.email,
+    //   subject: 'Email Verification',
+    //   text: `Click here to verify your email: ${verificationLink}`,
+    // });
+
+    console.log(verificationLink);
+
+    return {
+      link: verificationLink,
+    };
 
     return { message: 'Verification email sent' };
   }

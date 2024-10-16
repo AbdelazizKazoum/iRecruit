@@ -11,6 +11,7 @@ services:
       - '4000:4000'
     environment:
       - PORT=4000
+      - FRONTEND=http://localhost:3001
       - MONGO_HOST=iRecruit_db
       - MONGO_PASSWORD=example
       - MONGO_USER=root

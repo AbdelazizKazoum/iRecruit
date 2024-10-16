@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User, UserDocument } from 'src/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
+import { MailerService } from 'src/mailer/mailer.service';
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
+    private mailerService: MailerService,
     private jwtService: JwtService,
   ) {}
 
@@ -34,6 +40,22 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterDto) {
-    return registerDto;
+    const user = await this.usersService.findOneByEmail(registerDto.email);
+    if (user) throw new ConflictException("L'utilisateur existe déjà");
+
+    const verifecationCode = this.jwtService.sign({
+      email: registerDto.email,
+      username: registerDto.username,
+    });
+
+    const verificationLink = `${process.env.FRONTEND}/verify-email?code=${verifecationCode}`;
+    // Send the verification email
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Email Verification',
+      text: `Click here to verify your email: ${verificationLink}`,
+    });
+
+    return { message: 'Verification email sent' };
   }
 }

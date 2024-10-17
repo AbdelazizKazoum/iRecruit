@@ -1,9 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Param,
+  Get,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
-import { RegisterDto } from './dto/register.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,9 +28,14 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  @Post('register')
-  async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+  @Post('verify-email')
+  async register(@Body() verifyEmailDto: VerifyEmailDto) {
+    return this.authService.verifyEmail(verifyEmailDto);
+  }
+
+  @Get('verify-code/:code')
+  async verifyCodeValidity(@Param('code') code: string) {
+    return this.authService.checkEmail(code);
   }
 
   @UseGuards(JwtAuthGuard)

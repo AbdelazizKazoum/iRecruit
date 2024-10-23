@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   UnauthorizedException,
@@ -12,8 +13,8 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { User } from 'src/schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
-import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UsersService {
   constructor(
@@ -32,11 +33,18 @@ export class UsersService {
   }
 
   async registerUser(registerUserDto: RegisterUserDto) {
+    // Verify the verification code
+    const payload = this.verifyVerificationCode(registerUserDto.code);
+
+    // Check if a user with the email already exists
+    const user = await this.findOneByEmail(payload.email);
+    if (user) throw new ConflictException("L'utilisateur existe déjà");
+
     try {
+      // Hash the password
       const hashedPassword = await bcrypt.hash(registerUserDto.password, 10);
 
-      const payload = this.verifyVerificationCode(registerUserDto.code);
-
+      // Create a new user
       const newUser = new this.userModal({
         username: payload.username,
         email: payload.email,
@@ -44,9 +52,20 @@ export class UsersService {
         role: 'Candidat',
       });
 
-      return newUser.save();
+      // Save the user in the database
+      const savedUser = await newUser.save();
+
+      // Exclude the password before returning the user
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...userWithoutPassword } = savedUser.toObject();
+
+      // Return the user object without the password
+      return userWithoutPassword;
     } catch (error) {
-      throw new InternalServerErrorException(error);
+      throw new InternalServerErrorException(
+        'Error registering the user',
+        error,
+      );
     }
   }
 
@@ -77,12 +96,14 @@ export class UsersService {
     return this.userModal.deleteOne({ _id: id });
   }
 
-  //------------------------- Methods     -----------------
-
+  // ------------------------- Methods -----------------
   private verifyVerificationCode(code: string): any {
     try {
+      const payload = this.jwtService.verify(code);
+
       console.log('🚀 ~ UsersService ~ verifyVerificationCode ~ code:', code);
-      return this.jwtService.verify(code);
+      return payload;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new UnauthorizedException('Verification code is invalid!');
     }

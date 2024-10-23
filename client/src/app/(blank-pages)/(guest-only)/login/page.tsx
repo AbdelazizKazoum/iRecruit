@@ -1,3 +1,4 @@
+import { signIn } from "@/libs/auth";
 import React from "react";
 
 const Page = () => {
@@ -97,7 +98,22 @@ const Page = () => {
           </div>
 
           <div>
-            <form className="mb-4">
+            <form
+              className="mb-4"
+              action={async (formData) => {
+                "use server";
+                console.log("hello world :", formData);
+                try {
+                  const res = await signIn("credentials", {
+                    email: formData.get("email"),
+                    password: formData.get("password"),
+                    redirect: false,
+                  });
+                } catch (error) {
+                  console.log("log the error :", error);
+                }
+              }}
+            >
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <label

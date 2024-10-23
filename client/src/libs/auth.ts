@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { AuthError, CredentialsSignin, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -27,9 +27,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           return res.data;
         } catch (error: any) {
-          if (error.response.status === 401)
-            throw new Error("Invalid email or password. Please try again.");
-          throw new Error("Server error. Please try again later.");
+          if (error.response.status === 401) {
+            throw new CredentialsSignin(
+              "Email ou mot de passe invalide. Veuillez réessayer."
+            );
+          }
+
+          throw new AuthError("Server error. Please try again later.");
         }
       },
     }),
@@ -65,11 +69,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         token.accessToken = user.access_token;
         token.refreshToken = user.refresh_token;
-
-        return token;
       }
 
-      return null;
+      return token;
     },
 
     async session({ token, session }: { session: Session; token: JWT }) {

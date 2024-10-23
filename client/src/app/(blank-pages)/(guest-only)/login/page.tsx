@@ -1,7 +1,11 @@
-import { signIn } from "@/libs/auth";
+"use client";
+import { authenticate } from "@/libs/actions";
 import React from "react";
+import { useFormState } from "react-dom";
 
 const Page = () => {
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
   return (
     <div
       className="flex flex-col justify-center items-center bg-white h-[100vh]"
@@ -98,22 +102,7 @@ const Page = () => {
           </div>
 
           <div>
-            <form
-              className="mb-4"
-              action={async (formData) => {
-                "use server";
-                console.log("hello world :", formData);
-                try {
-                  const res = await signIn("credentials", {
-                    email: formData.get("email"),
-                    password: formData.get("password"),
-                    redirect: false,
-                  });
-                } catch (error) {
-                  console.log("log the error :", error);
-                }
-              }}
-            >
+            <form className="mb-4" action={dispatch}>
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <label
@@ -146,6 +135,8 @@ const Page = () => {
                     className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
                     name="password"
                   />
+
+                  <p className=" text-orange-500 ">{errorMessage}</p>
                 </div>
                 <button
                   className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"

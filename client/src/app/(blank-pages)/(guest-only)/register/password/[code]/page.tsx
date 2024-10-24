@@ -1,7 +1,24 @@
+import { redirect } from "next/navigation";
 import React from "react";
 
-const PasswordCreationPage = ({ params }: { params: { code: string } }) => {
-  console.log(params.code);
+const PasswordCreationPage = async ({
+  params,
+}: {
+  params: { code: string };
+}) => {
+  let user = null as { username: string; email: string; code: string } | null;
+  try {
+    const res = await fetch(
+      `http://localhost:4000/api/auth/verify-code/${params.code}`
+    );
+
+    user = await res.json();
+    console.log(user);
+  } catch (error) {
+    console.error(error);
+    redirect("/login");
+  }
+
   return (
     <div
       className="flex flex-col justify-center items-center bg-white h-[100vh]"
@@ -38,6 +55,8 @@ const PasswordCreationPage = ({ params }: { params: { code: string } }) => {
             Créer un mot de passe
           </p>
           <p className="mb-2.5 mt-2.5 font-normal text-zinc-950 dark:text-zinc-400">
+            Bounjour{" "}
+            <strong className=" text-primary-500 ">{user?.username}</strong> ,
             Veuillez créer un mot de passe pour votre compte.
           </p>
           <div className="mt-8">

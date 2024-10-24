@@ -1,6 +1,7 @@
 import React from "react";
 
-const PasswordCreationPage = () => {
+const PasswordCreationPage = ({ params }: { params: { code: string } }) => {
+  console.log(params.code);
   return (
     <div
       className="flex flex-col justify-center items-center bg-white h-[100vh]"

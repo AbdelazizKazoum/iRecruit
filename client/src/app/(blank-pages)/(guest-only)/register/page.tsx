@@ -1,15 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { sendVerificationLink } from "@/libs/actions";
-import React from "react";
+import { cn } from "@/libs/utils";
+import { registerSchema } from "@/libs/zod";
+import React, { useState } from "react";
 import { useFormState } from "react-dom";
 
 const RegisterPage = () => {
+  // Hooks
   const [state, dispatch] = useFormState(sendVerificationLink, {
     message: "",
     error: "",
   });
+  console.log("🚀 ~ RegisterPage ~ state:", state);
 
-  console.log(state);
+  // state
+  const [formData, setFormData] = useState({ email: "", username: "" });
+  const [errors, setErrors] = useState({ email: "", username: "" });
+
+  // Validate form fields
+  const validate = (formData: { email: string; username: string }) => {
+    try {
+      registerSchema.parse(formData);
+      setErrors({ email: "", username: "" });
+      return true;
+    } catch (err: any) {
+      const zodErrors = err.errors.reduce(
+        (acc: any, error: any) => ({
+          ...acc,
+          [error.path[0]]: error.message,
+        }),
+        {}
+      );
+      setErrors(zodErrors);
+      return false;
+    }
+  };
+
+  // Update form data on input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    validate({ ...formData, [name]: value });
+  };
 
   return (
     <div
@@ -60,9 +93,9 @@ const RegisterPage = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="lucide lucide-check text-green-500 "
               >
                 <path d="M20 6 9 17l-5-5" />
@@ -84,7 +117,10 @@ const RegisterPage = () => {
                     Username
                   </label>
                   <input
-                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    className={cn(
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      errors.username && "border-orange-500"
+                    )}
                     id="username"
                     placeholder=""
                     type="text"
@@ -92,7 +128,11 @@ const RegisterPage = () => {
                     autoComplete="username"
                     autoCorrect="off"
                     name="username"
+                    onChange={handleInputChange}
                   />
+                  {errors.username && (
+                    <small className="text-orange-500">{errors.username}</small>
+                  )}
                   <label
                     className="text-zinc-950 dark:text-white"
                     htmlFor="email"
@@ -100,7 +140,10 @@ const RegisterPage = () => {
                     Email
                   </label>
                   <input
-                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    className={cn(
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      errors.email && "border-orange-500"
+                    )}
                     id="email"
                     placeholder="nom@exemple.com"
                     type="email"
@@ -108,9 +151,17 @@ const RegisterPage = () => {
                     autoComplete="email"
                     autoCorrect="off"
                     name="email"
+                    onChange={handleInputChange}
                   />
+                  {errors.email && (
+                    <small className="text-orange-500">{errors.email}</small>
+                  )}
                   <button
-                    className="whitespace-nowrap bg-primary-500 text-white-500 hover:bg-primary-500/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
+                    disabled={
+                      (errors.email !== "" && errors.username !== "") ||
+                      (formData.email === "" && formData.username === "")
+                    }
+                    className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
                     type="submit"
                   >
                     Envoyer le code de vérification

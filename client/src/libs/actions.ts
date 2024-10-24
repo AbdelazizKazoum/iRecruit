@@ -52,17 +52,6 @@ export async function sendVerificationLink(prevState: any, formData: FormData) {
       data: res.data,
     };
   } catch (error: any) {
-    console.log(error);
-    // return {
-    //   error:
-    //     "Error : " + error.response
-    //       ? error.response?.data
-    //         ? error.response.data?.message
-    //         : "Somthing wrong !"
-    //       : "Somthing wrong !",
-
-    //   message: "",
-    // };
     switch (error.status) {
       case 404:
         return {

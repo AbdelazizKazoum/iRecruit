@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { authenticate } from "@/libs/actions";
+import { cn } from "@/libs/utils";
 import { loginSchema } from "@/libs/zod";
 import React, { useState } from "react";
 import { useFormState } from "react-dom";
@@ -10,7 +11,7 @@ const Page = () => {
 
   // state
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: " ", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
   // Validate form fields
   const validate = (formData: { email: string; password: string }) => {
@@ -144,7 +145,10 @@ const Page = () => {
                     Email
                   </label>
                   <input
-                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    className={cn(
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-black-600 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      errors.email && "border-orange-500"
+                    )}
                     id="email"
                     placeholder="nom@exemple.com"
                     type="email"
@@ -169,7 +173,10 @@ const Page = () => {
                     placeholder="Mot de passe"
                     type="password"
                     autoComplete="current-password"
-                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    className={cn(
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-black-600 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      errors.password && "border-orange-500"
+                    )}
                     name="password"
                     onChange={handleInputChange}
                   />

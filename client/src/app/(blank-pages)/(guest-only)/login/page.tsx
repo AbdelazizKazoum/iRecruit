@@ -1,10 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { authenticate } from "@/libs/actions";
-import React from "react";
+import { loginSchema } from "@/libs/zod";
+import React, { useState } from "react";
 import { useFormState } from "react-dom";
 
 const Page = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
+  // state
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: " ", password: "" });
+
+  // Validate form fields
+  const validate = (formData: { email: string; password: string }) => {
+    try {
+      loginSchema.parse(formData);
+      setErrors({ email: "", password: "" });
+      return true;
+    } catch (err: any) {
+      const zodErrors = err.errors.reduce(
+        (acc: any, error: any) => ({
+          ...acc,
+          [error.path[0]]: error.message,
+        }),
+        {}
+      );
+      setErrors(zodErrors);
+      return false;
+    }
+  };
+
+  // Update form data on input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    validate({ ...formData, [name]: value });
+  };
 
   return (
     <div
@@ -120,7 +152,12 @@ const Page = () => {
                     autoComplete="email"
                     autoCorrect="off"
                     name="email"
+                    onChange={handleInputChange}
                   />
+                  {errors.email && (
+                    <small className="text-orange-500">{errors.email}</small>
+                  )}
+
                   <label
                     className="text-zinc-950 mt-2 dark:text-white"
                     htmlFor="password"
@@ -134,16 +171,23 @@ const Page = () => {
                     autoComplete="current-password"
                     className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
                     name="password"
+                    onChange={handleInputChange}
                   />
-
-                  <p className=" text-orange-500 ">{errorMessage}</p>
+                  {errors.password && (
+                    <small className="text-orange-500">{errors.password}</small>
+                  )}
                 </div>
                 <button
+                  disabled={
+                    (errors.email !== "" && errors.password !== "") ||
+                    (formData.email === "" && formData.password === "")
+                  }
                   className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
                   type="submit"
                 >
                   Se connecter
                 </button>
+                <p className=" text-orange-500 ">{errorMessage}</p>
               </div>
             </form>
             <p>
@@ -159,7 +203,7 @@ const Page = () => {
           <p className="mb-8 mt-6 text-center text-sm text-black-500 dark:text-gray-400">
             Vous n&apos;avez pas de compte ?{" "}
             <a
-              href="/dashboard/signup"
+              href="/register"
               className="font-semibold text-primary hover:underline dark:text-primary"
             >
               S&apos;inscrire{" "}

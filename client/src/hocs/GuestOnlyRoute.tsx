@@ -8,7 +8,6 @@ import { auth } from "@/libs/auth";
 import themeConfig from "@/configs/themeConfig";
 import { ReactNode } from "react";
 
-
 const GuestOnlyRoute = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
 

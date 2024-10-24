@@ -1,12 +1,22 @@
+"use client";
+import { sendVerificationLink } from "@/libs/actions";
 import React from "react";
+import { useFormState } from "react-dom";
 
 const RegisterPage = () => {
+  const [state, dispatch] = useFormState(sendVerificationLink, {
+    message: "",
+    error: "",
+  });
+
+  console.log(state);
+
   return (
     <div
       className="flex flex-col justify-center items-center bg-white h-[100vh]"
       style={{
         backgroundImage:
-          "url('https://tasklms.telangana.gov.in/img/login-top-bg.524c2de8.png')", // Remplacez par le chemin de votre image
+          "url('https://tasklms.telangana.gov.in/img/login-top-bg.524c2de8.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -39,39 +49,83 @@ const RegisterPage = () => {
           <p className="mb-2.5 mt-2.5 font-normal text-black-500 dark:text-gray-400">
             Entrez votre email pour recevoir un code de vérification !
           </p>
-          <div className="mt-8">
-            <form className="pb-2">
-              <div className="grid gap-1">
-                <label
-                  className="text-zinc-950 dark:text-white"
-                  htmlFor="email"
-                >
-                  Email
-                </label>
-                <input
-                  className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
-                  id="email"
-                  placeholder="nom@exemple.com"
-                  type="email"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  autoCorrect="off"
-                  name="email"
-                />
-                <button
-                  className="whitespace-nowrap     bg-primary-500 text-white-500 hover:bg-primary-500/90  mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
-                  type="submit"
-                >
-                  Envoyer le code de vérification
-                </button>
-              </div>
-            </form>
-          </div>
+
+          {/* Message Display */}
+          {state.message && (
+            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-green-100 border border-green-400 text-green-500 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100"
+                height="100"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-check text-green-500 "
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+
+              <span>{state.message}</span>
+            </div>
+          )}
+
+          {/* Form Display */}
+          {!state.message && (
+            <div className="mt-8">
+              <form className="pb-2" action={dispatch}>
+                <div className="grid gap-1">
+                  <label
+                    className="text-zinc-950 dark:text-white"
+                    htmlFor="username"
+                  >
+                    Username
+                  </label>
+                  <input
+                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    id="username"
+                    placeholder=""
+                    type="text"
+                    autoCapitalize="none"
+                    autoComplete="username"
+                    autoCorrect="off"
+                    name="username"
+                  />
+                  <label
+                    className="text-zinc-950 dark:text-white"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
+                    id="email"
+                    placeholder="nom@exemple.com"
+                    type="email"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                    autoCorrect="off"
+                    name="email"
+                  />
+                  <button
+                    className="whitespace-nowrap bg-primary-500 text-white-500 hover:bg-primary-500/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
+                    type="submit"
+                  >
+                    Envoyer le code de vérification
+                  </button>
+                  <p className="text-orange-500">{state && state?.error}</p>
+                  <p className="text-green-500">{state && state?.message}</p>
+                </div>
+              </form>
+            </div>
+          )}
 
           <p className="mb-8 mt-6 text-center text-sm text-black-500 dark:text-zinc-400">
             Vous avez déjà un compte ?{" "}
             <a
-              href="/dashboard/signin"
+              href="/login"
               className="font-semibold text-primary hover:underline dark:text-primary"
             >
               Se connecter

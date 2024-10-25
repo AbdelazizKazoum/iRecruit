@@ -1,3 +1,4 @@
+import PasswordForm from "@/components/forms/Password";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -60,55 +61,8 @@ const PasswordCreationPage = async ({
             Veuillez créer un mot de passe pour votre compte.
           </p>
           <div className="mt-8">
-            <form className="pb-2">
-              <div className="grid gap-1">
-                <label
-                  className="text-zinc-950 dark:text-white"
-                  htmlFor="password"
-                >
-                  Mot de passe
-                </label>
-                <input
-                  id="password"
-                  placeholder="Mot de passe"
-                  type="password"
-                  autoComplete="new-password"
-                  className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
-                  name="password"
-                />
-                <label
-                  className="text-zinc-950 dark:text-white"
-                  htmlFor="confirm_password"
-                >
-                  Confirmer le mot de passe
-                </label>
-                <input
-                  id="confirm_password"
-                  placeholder="Confirmer le mot de passe"
-                  type="password"
-                  autoComplete="new-password"
-                  className="mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400"
-                  name="confirm_password"
-                />
-                <button
-                  className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-4 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
-                  type="submit"
-                >
-                  Créer le mot de passe
-                </button>
-              </div>
-            </form>
+            <PasswordForm code={params.code} />
           </div>
-
-          <p className="mb-8 mt-6 text-center text-sm text-zinc-950 dark:text-zinc-400">
-            Vous avez déjà un compte ?{" "}
-            <a
-              href="/dashboard/signin"
-              className="font-semibold text-primary hover:underline dark:text-primary"
-            >
-              Se connecter
-            </a>
-          </p>
         </div>
       </div>
     </div>

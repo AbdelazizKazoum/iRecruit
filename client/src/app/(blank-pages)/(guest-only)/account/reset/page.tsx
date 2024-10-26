@@ -107,7 +107,7 @@ const Page: React.FC = () => {
 
           {/* Error Display */}
           {error && (
-            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-red-100 border border-red-400 text-red-500 rounded-md">
+            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-orange-100 border border-orange-500 text-orange-500 rounded-md">
               <span>{error}</span>
             </div>
           )}

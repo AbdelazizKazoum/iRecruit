@@ -116,3 +116,21 @@ export async function createPassword(prevState: any, formData: FormData) {
     }
   }
 }
+
+export async function sendResetLink(email: string) {
+  try {
+    const res = await axios.get(
+      `${process.env.BACKEND_API}/auth/reset/${email}`
+    );
+
+    return {
+      data: res.data,
+      success: true,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}

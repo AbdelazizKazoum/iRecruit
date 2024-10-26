@@ -38,6 +38,11 @@ export class AuthController {
     return this.authService.checkEmail(code);
   }
 
+  @Get('reset/:email')
+  async resetAccount(@Param('email') email: string) {
+    return this.authService.resetPasswordLink(email);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('profile')
   getProfile(@Request() req) {

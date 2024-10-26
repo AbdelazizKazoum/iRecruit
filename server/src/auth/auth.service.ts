@@ -1,9 +1,12 @@
+import { UserUtilsService } from 'src/common/services/user-utils.service';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   ConflictException,
   Injectable,
+  InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
@@ -18,6 +21,7 @@ export class AuthService {
     private usersService: UsersService,
     private mailerService: MailerService,
     private jwtService: JwtService,
+    private userUtilsService: UserUtilsService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -84,17 +88,38 @@ export class AuthService {
     }
   }
 
-  async register(code: string) {
+  async resetPasswordLink(email: string) {
+    const findUser = await this.userUtilsService.checkUserExists(email);
+    if (!findUser) throw new NotFoundException('Email Not found ! ');
+
     try {
-      const payload = this.jwtService.verify(code);
+      const verificationCode = this.jwtService.sign({
+        email,
+        username: findUser.username,
+        id: findUser._id,
+      });
+
+      const verificationLink = `${process.env.FRONTEND}/account/update-password?code=${verificationCode}`;
 
       return {
-        username: payload.username,
-        email: payload.email,
-        code,
+        link: verificationLink,
       };
     } catch (error) {
-      throw new UnauthorizedException('Invalid code !');
+      throw new InternalServerErrorException(error);
     }
   }
+
+  // async register(code: string) {
+  //   try {
+  //     const payload = this.jwtService.verify(code);
+
+  //     return {
+  //       username: payload.username,
+  //       email: payload.email,
+  //       code,
+  //     };
+  //   } catch (error) {
+  //     throw new UnauthorizedException('Invalid code !');
+  //   }
+  // }
 }

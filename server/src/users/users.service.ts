@@ -15,11 +15,13 @@ import { User } from 'src/schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 import { JwtService } from '@nestjs/jwt';
+import { UserUtilsService } from 'src/common/services/user-utils.service';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModal: Model<User>,
     private jwtService: JwtService,
+    private userUtilsService: UserUtilsService,
   ) {}
 
   @UseGuards(JwtAuthGuard)

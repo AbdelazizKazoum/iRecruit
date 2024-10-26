@@ -38,3 +38,7 @@ export const passwordSchema = z
     message: "Les mots de passe ne correspondent pas",
     path: ["confirmPassword"], // Error will appear on confirmPassword
   });
+
+export const emailSchema = z.object({
+  email: z.string().email("Email invalide").nonempty("L'email est requis"),
+});

@@ -1,20 +1,15 @@
-import PasswordForm from "@/components/forms/Password";
+import axios from "axios";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const PasswordCreationPage = async ({
-  params,
-}: {
-  params: { code: string };
-}) => {
-  let user = null as { username: string; email: string; code: string } | null;
+const Page = async ({ searchParams }: { searchParams: { code: string } }) => {
+  let user = null;
   try {
-    const res = await fetch(
-      `${process.env.BACKEND_API}/auth/verify-code/${params.code}`
+    const res = await axios.get(
+      `${process.env.BACKEND_API}/auth/reset/${searchParams.code}`
     );
 
-    user = await res.json();
-    console.log(user);
+    user = res.data;
   } catch (error) {
     console.error(error);
     redirect("/login");
@@ -61,7 +56,7 @@ const PasswordCreationPage = async ({
             Veuillez créer un mot de passe pour votre compte.
           </p>
           <div className="mt-8">
-            <PasswordForm code={params.code} />
+            {/* <PasswordForm code={params.code} /> */}
           </div>
         </div>
       </div>
@@ -69,4 +64,4 @@ const PasswordCreationPage = async ({
   );
 };
 
-export default PasswordCreationPage;
+export default Page;

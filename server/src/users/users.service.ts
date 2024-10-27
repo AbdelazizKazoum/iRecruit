@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 import { JwtService } from '@nestjs/jwt';
 import { UserUtilsService } from 'src/common/services/user-utils.service';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -66,6 +68,39 @@ export class UsersService {
     } catch (error) {
       throw new InternalServerErrorException(
         'Error registering the user',
+        error,
+      );
+    }
+  }
+
+  async updatePassword(updatePasswordDto: UpdatePasswordDto) {
+    // Find the user by email
+    const user = await this.findOneByEmail(updatePasswordDto.email);
+    if (!user) throw new NotFoundException("L'utilisateur n'existe pas");
+
+    try {
+      // Hash the new password
+      const hashedNewPassword = await bcrypt.hash(
+        updatePasswordDto.newPassword,
+        10,
+      );
+
+      // Update the user's password
+      const updatedUser = await this.userModal.findByIdAndUpdate(
+        updatePasswordDto.id,
+        { password: hashedNewPassword },
+        { new: true }, // Return the updated document
+      );
+
+      // Exclude the password before returning the user
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...userWithoutPassword } = updatedUser.toObject();
+
+      // Return the user object without the password
+      return userWithoutPassword;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Erreur lors de la mise à jour du mot de passe',
         error,
       );
     }

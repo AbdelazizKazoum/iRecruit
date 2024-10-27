@@ -109,6 +109,21 @@ export class AuthService {
     }
   }
 
+  async checkResetLink(code: string) {
+    try {
+      const payload = this.jwtService.verify(code);
+
+      return {
+        username: payload.username,
+        email: payload.email,
+        id: payload.id,
+        code,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Invalid code !');
+    }
+  }
+
   // async register(code: string) {
   //   try {
   //     const payload = this.jwtService.verify(code);

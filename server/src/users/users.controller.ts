@@ -27,6 +27,11 @@ export class UsersController {
     return this.usersService.registerUser(registerUserDto);
   }
 
+  @Post('update-password')
+  updatePassword(@Body() registerUserDto: RegisterUserDto) {
+    return this.usersService.registerUser(registerUserDto);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();

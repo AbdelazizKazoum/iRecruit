@@ -6,22 +6,31 @@ import { signIn, signOut } from "./auth";
 import axios from "axios";
 
 // Login action
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
-) {
+export async function authenticate(formData: any) {
   try {
-    await signIn("credentials", formData);
+    const res = await signIn("credentials", formData);
+
+    return {
+      data: res,
+      success: true,
+      message: "",
+    };
   } catch (error) {
     if (error instanceof AuthError) {
       console.error("Authenticated failed !", error);
 
       switch (error.type) {
         case "CredentialsSignin":
-          return "Email ou mot de passe invalide. Veuillez réessayer.";
+          return {
+            success: false,
+            error: "Email ou mot de passe invalide. Veuillez réessayer.",
+          };
         default:
           console.log(error.message);
-          return "Somthing went wrong." + error.message;
+          return {
+            success: false,
+            error: "Email ou mot de passe invalide. Veuillez réessayer.",
+          };
       }
     }
     throw error;
@@ -39,18 +48,19 @@ export async function handleLogout() {
 // };
 
 // Send the verification link
-export async function sendVerificationLink(prevState: any, formData: FormData) {
+export async function sendVerificationLink(formData: any) {
   try {
     const res = await axios.post(
       "http://localhost:4000/api/auth/verify-email",
       {
-        email: formData.get("email"),
-        username: formData.get("username"),
+        email: formData.email,
+        username: formData.username,
       }
     );
     return {
       message: "Un link de vérification a été envoyé à votre e-mail",
       data: res.data,
+      success: true,
     };
   } catch (error: any) {
     switch (error.status) {
@@ -58,17 +68,20 @@ export async function sendVerificationLink(prevState: any, formData: FormData) {
         return {
           error: "Not found Error !",
           message: "",
+          success: false,
         };
       case 409:
         return {
           error: "L'utilisateur existe déjà",
           message: "",
+          success: false,
         };
 
       default:
         return {
           error: "Somthing wrong !",
           message: "",
+          success: false,
         };
     }
   }
@@ -127,7 +140,7 @@ export async function sendResetLink(email: string) {
       data: res.data,
       success: true,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
       error: error.message,

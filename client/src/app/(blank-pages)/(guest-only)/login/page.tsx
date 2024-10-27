@@ -1,42 +1,41 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { authenticate } from "@/libs/actions";
+
+import { authenticate } from "@/libs/actions"; // Adjust the import based on your login action
 import { cn } from "@/libs/utils";
 import { loginSchema } from "@/libs/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
+
+// Define form schema type
+type LoginFormData = {
+  email: string;
+  password: string;
+};
 
 const Page = () => {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  // state
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  // State for displaying messages
+  const [error, setError] = useState("");
 
-  // Validate form fields
-  const validate = (formData: { email: string; password: string }) => {
-    try {
-      loginSchema.parse(formData);
-      setErrors({ email: "", password: "" });
-      return true;
-    } catch (err: any) {
-      const zodErrors = err.errors.reduce(
-        (acc: any, error: any) => ({
-          ...acc,
-          [error.path[0]]: error.message,
-        }),
-        {}
-      );
-      setErrors(zodErrors);
-      return false;
+  // Form submission handler
+  const onSubmit = async (data: LoginFormData) => {
+    const response = await authenticate(data); // Replace with your actual login function
+
+    if (!response) return null;
+
+    if (response.error) {
+      setError(response.error || "");
     }
-  };
 
-  // Update form data on input change
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    validate({ ...formData, [name]: value });
+    console.log(response);
   };
 
   return (
@@ -44,14 +43,14 @@ const Page = () => {
       className="flex flex-col justify-center items-center bg-white h-[100vh]"
       style={{
         backgroundImage:
-          "url('https://tasklms.telangana.gov.in/img/login-top-bg.524c2de8.png')", // Remplacez par le chemin de votre image
+          "url('https://tasklms.telangana.gov.in/img/login-top-bg.524c2de8.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="mx-auto flex w-full flex-col justify-center px-5 pt-0 md:h-[unset]  lg:h-[100vh] min-h-[100vh]  lg:px-6">
+      <div className="mx-auto flex w-full flex-col justify-center px-5 pt-0 lg:h-[100vh] min-h-[100vh] lg:px-6">
         <a className="mt-10 w-fit text-zinc-950 dark:text-white" href="/home">
-          <div className="flex w-fit items-center lg:pl-0 lg:pt-0 xl:pt-0">
+          <div className="flex w-fit items-center">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -70,13 +69,14 @@ const Page = () => {
           </div>
         </a>
 
-        <div className="my-auto mb-auto mt-3 flex flex-col md:mt-[70px] w-[350px] max-w-[450px] mx-auto md:max-w-[450px] lg:mt-[100px] lg:max-w-[450px]">
+        <div className="my-auto mt-3 w-[350px] max-w-[450px] mx-auto lg:mt-[100px]">
           <p className="text-[32px] font-bold text-zinc-950 dark:text-white">
             Connexion
           </p>
           <p className="mb-2.5 mt-2.5 font-normal text-black-500 dark:text-gray-400">
-            Entrez votre email et votre mot de passe pour vous connecter !
+            Entrez vos identifiants pour vous connecter !
           </p>
+
           <div className="mt-8">
             <form className="pb-2">
               <input type="hidden" name="provider" value="google" />
@@ -134,72 +134,70 @@ const Page = () => {
             </div>
           </div>
 
-          <div>
-            <form className="mb-4" action={dispatch}>
-              <div className="grid gap-2">
-                <div className="grid gap-1">
-                  <label
-                    className="text-zinc-950 dark:text-white"
-                    htmlFor="email"
-                  >
-                    Email
-                  </label>
-                  <input
-                    className={cn(
-                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-black-600 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
-                      errors.email && "border-orange-500"
-                    )}
-                    id="email"
-                    placeholder="nom@exemple.com"
-                    type="email"
-                    autoCapitalize="none"
-                    autoComplete="email"
-                    autoCorrect="off"
-                    name="email"
-                    onChange={handleInputChange}
-                  />
-                  {errors.email && (
-                    <small className="text-orange-500">{errors.email}</small>
-                  )}
+          {/* Error Display */}
+          {error && (
+            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-orange-100 border border-orange-500 text-orange-500 rounded-md">
+              <span>{error}</span>
+            </div>
+          )}
 
-                  <label
-                    className="text-zinc-950 mt-2 dark:text-white"
-                    htmlFor="password"
-                  >
-                    Mot de passe
-                  </label>
-                  <input
-                    id="password"
-                    placeholder="Mot de passe"
-                    type="password"
-                    autoComplete="current-password"
-                    className={cn(
-                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-black-600 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
-                      errors.password && "border-orange-500"
-                    )}
-                    name="password"
-                    onChange={handleInputChange}
-                  />
-                  {errors.password && (
-                    <small className="text-orange-500">{errors.password}</small>
+          <div className="mt-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="pb-2">
+              <div className="grid gap-1">
+                <label
+                  className="text-zinc-950 dark:text-white"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className={cn(
+                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                    errors.email && "border-orange-500"
                   )}
-                </div>
+                  id="email"
+                  type="email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <small className="text-orange-500">
+                    {errors.email.message}
+                  </small>
+                )}
+
+                <label
+                  className="text-zinc-950 dark:text-white"
+                  htmlFor="password"
+                >
+                  Mot de passe
+                </label>
+                <input
+                  className={cn(
+                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                    errors.password && "border-orange-500"
+                  )}
+                  id="password"
+                  type="password"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <small className="text-orange-500">
+                    {errors.password.message}
+                  </small>
+                )}
+
                 <button
-                  disabled={
-                    (errors.email !== "" && errors.password !== "") ||
-                    (formData.email === "" && formData.password === "")
-                  }
+                  disabled={isSubmitting}
                   className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
                   type="submit"
                 >
-                  Se connecter
+                  {isSubmitting ? "Connexion..." : "Se connecter"}
                 </button>
-                <p className=" text-orange-500 ">{errorMessage}</p>
               </div>
             </form>
             <p>
               <a
-                href="/dashboard/signin/forgot_password"
+                href="/account/"
                 className="font-normal text-black-500 dark:text-white-500 text-sm"
               >
                 Mot de passe oublié ?

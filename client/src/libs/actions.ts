@@ -88,11 +88,11 @@ export async function sendVerificationLink(formData: any) {
 }
 
 // Send the verification link
-export async function createPassword(prevState: any, formData: FormData) {
+export async function createPassword(code: string, password: string) {
   try {
     const res = await axios.post("http://localhost:4000/api/users/register", {
-      password: formData.get("password"),
-      code: prevState.code,
+      password,
+      code,
     });
     return {
       sucess: true,
@@ -106,13 +106,13 @@ export async function createPassword(prevState: any, formData: FormData) {
         return {
           error: "Not found Error !",
           message: "",
-          code: prevState.code,
+          code: code,
         };
       case 401:
         return {
           error: "Le code de vérification est invalide !",
           message: "",
-          code: prevState.code,
+          code: code,
         };
       case 409:
         return {
@@ -124,7 +124,7 @@ export async function createPassword(prevState: any, formData: FormData) {
         return {
           error: "Une erreur s'est produite !",
           message: "",
-          code: prevState.code,
+          code: code,
         };
     }
   }
@@ -144,6 +144,30 @@ export async function sendResetLink(email: string) {
     return {
       success: false,
       error: error.message,
+    };
+  }
+}
+
+// Update passworf
+export async function updatePassword(code: string, password: string) {
+  try {
+    const res = await axios.post(
+      `${process.env.BACKEND_API}/auth/update-password/`,
+      {
+        code,
+        password,
+      }
+    );
+
+    return {
+      data: res.data,
+      success: true,
+    };
+  } catch (error: any) {
+    return {
+      error: error.message,
+      success: false,
+      message: "",
     };
   }
 }

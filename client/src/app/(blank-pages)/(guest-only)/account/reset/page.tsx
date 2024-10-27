@@ -86,7 +86,7 @@ const Page: React.FC = () => {
 
           {/* Message Display */}
           {message && (
-            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-green-100 border border-green-400 text-green-500 rounded-md">
+            <div className="flex flex-col items-center justify-center mt-4 p-4 bg-green-500/10 border border-green-500 text-green-500 rounded-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100"
@@ -113,45 +113,47 @@ const Page: React.FC = () => {
           )}
 
           {/* Form Display */}
-          <div className="mt-8">
-            <form className="pb-2" onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid gap-1">
-                <label
-                  className="text-zinc-950 dark:text-white"
-                  htmlFor="email"
-                >
-                  Email
-                </label>
-                <input
-                  className={cn(
-                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
-                    errors.email && "border-orange-500"
+          {!message && (
+            <div className="mt-8">
+              <form className="pb-2" onSubmit={handleSubmit(onSubmit)}>
+                <div className="grid gap-1">
+                  <label
+                    className="text-zinc-950 dark:text-white"
+                    htmlFor="email"
+                  >
+                    Email
+                  </label>
+                  <input
+                    className={cn(
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      errors.email && "border-orange-500"
+                    )}
+                    id="email"
+                    placeholder="nom@exemple.com"
+                    type="email"
+                    autoCapitalize="none"
+                    autoComplete="email"
+                    autoCorrect="off"
+                    {...register("email")} // Register the email input
+                  />
+                  {errors.email && (
+                    <small className="text-orange-500">
+                      {errors.email.message}
+                    </small>
                   )}
-                  id="email"
-                  placeholder="nom@exemple.com"
-                  type="email"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  autoCorrect="off"
-                  {...register("email")} // Register the email input
-                />
-                {errors.email && (
-                  <small className="text-orange-500">
-                    {errors.email.message}
-                  </small>
-                )}
-                <button
-                  disabled={isSubmitting} // Disable button while submitting
-                  className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
-                  type="submit"
-                >
-                  {isSubmitting
-                    ? "Envoi en cours..."
-                    : "Envoyer le lien de réinitialisation"}
-                </button>
-              </div>
-            </form>
-          </div>
+                  <button
+                    disabled={isSubmitting} // Disable button while submitting
+                    className="whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-500 text-orange-100 hover:bg-primary/90 mt-2 flex h-[unset] w-full items-center justify-center rounded-lg px-4 py-4 text-sm font-medium"
+                    type="submit"
+                  >
+                    {isSubmitting
+                      ? "Envoi en cours..."
+                      : "Envoyer le lien de réinitialisation"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
 
           <p className="mb-8 mt-6 text-center text-sm text-black-500 dark:text-zinc-400">
             Vous avez déjà un compte ?{" "}

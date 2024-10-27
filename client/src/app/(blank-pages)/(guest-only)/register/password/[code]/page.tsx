@@ -60,7 +60,7 @@ const PasswordCreationPage = async ({
             <strong className=" text-primary-500 ">{user?.username}</strong> ,
             Veuillez créer un mot de passe pour votre compte.
           </p>
-          <div className="mt-8">
+          <div className="mt-4">
             <PasswordForm code={params.code} />
           </div>
         </div>

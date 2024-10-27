@@ -197,7 +197,7 @@ const Page = () => {
             </form>
             <p>
               <a
-                href="/account/"
+                href="/account/reset"
                 className="font-normal text-black-500 dark:text-white-500 text-sm"
               >
                 Mot de passe oublié ?

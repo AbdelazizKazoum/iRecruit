@@ -10,7 +10,9 @@ services:
     ports:
       - '4000:4000'
     environment:
+      - NODE_ENV=PROD
       - PORT=4000
+      - FRONTEND=http://localhost:3001
       - MONGO_HOST=iRecruit_db
       - MONGO_PASSWORD=example
       - MONGO_USER=root
@@ -22,6 +24,8 @@ services:
     restart: always
     volumes:
       - mongo_db:/data/db
+    ports:
+      - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example

@@ -1,14 +1,13 @@
-import Footer from "@/components/Layout/Footer";
-import Header from "@/components/Layout/Header";
 import Providers from "@/components/Providers";
+import AuthGuard from "@/hocs/AuthGuard";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+
+    
   return (
     <Providers>
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <AuthGuard>{children}</AuthGuard>
     </Providers>
   );
 };

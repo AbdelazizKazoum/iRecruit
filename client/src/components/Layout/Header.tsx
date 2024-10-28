@@ -6,8 +6,14 @@ import { Link as LinkScroll } from "react-scroll";
 import ButtonOutline from "../misc/ButtonOutline.";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { UserDropdown } from "../profile/userDropdown";
 
 const Header = () => {
+  // Hooks
+  const { status } = useSession();
+  console.log("🚀 ~ Header ~ session:", status);
+
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
   useEffect(() => {
@@ -108,14 +114,23 @@ const Header = () => {
               Contact
             </LinkScroll>
           </ul>
-          <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-            <Link href="/">
-              <span className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
-                Se connecter
-              </span>
-            </Link>
-            <ButtonOutline>S&apos;inscrire</ButtonOutline>
-          </div>
+
+          {status === "authenticated" ? (
+            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
+              <UserDropdown />
+            </div>
+          ) : (
+            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
+              <Link href="/login">
+                <span className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
+                  Se connecter
+                </span>
+              </Link>
+              <Link href="/register">
+                <ButtonOutline>S&apos;inscrire</ButtonOutline>
+              </Link>
+            </div>
+          )}
         </nav>
       </header>
       {/* Mobile Navigation */}

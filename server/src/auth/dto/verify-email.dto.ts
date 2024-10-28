@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-export class RegisterDto {
+export class VerifyEmailDto {
   email: string;
   username?: string;
 }

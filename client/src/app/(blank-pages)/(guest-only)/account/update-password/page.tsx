@@ -1,3 +1,4 @@
+import UpdatePasswordForm from "@/components/forms/UpdatePasswordForm";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -6,8 +7,9 @@ const Page = async ({ searchParams }: { searchParams: { code: string } }) => {
   let user = null;
   try {
     const res = await axios.get(
-      `${process.env.BACKEND_API}/auth/reset/${searchParams.code}`
+      `${process.env.BACKEND_API}/auth/verify-resetCode/${searchParams.code}`
     );
+    console.log("🚀 ~ Page ~ res:", res.data);
 
     user = res.data;
   } catch (error) {
@@ -48,15 +50,17 @@ const Page = async ({ searchParams }: { searchParams: { code: string } }) => {
 
         <div className="my-auto mb-auto mt-3 flex flex-col md:mt-[70px] w-[350px] max-w-[450px] mx-auto md:max-w-[450px] lg:mt-[100px] lg:max-w-[450px]">
           <p className="text-[32px] font-bold text-zinc-950 dark:text-white">
-            Créer un mot de passe
+            Réinitialiser votre mot de passe
           </p>
           <p className="mb-2.5 mt-2.5 font-normal text-zinc-950 dark:text-zinc-400">
-            Bounjour{" "}
-            <strong className=" text-primary-500 ">{user?.username}</strong> ,
-            Veuillez créer un mot de passe pour votre compte.
+            Bonjour{" "}
+            <strong className=" text-primary-500 ">{user?.username}</strong>,
+            Veuillez réinitialiser votre mot de passe pour accéder à votre
+            compte.
           </p>
+
           <div className="mt-8">
-            {/* <PasswordForm code={params.code} /> */}
+            <UpdatePasswordForm code={searchParams.code} />
           </div>
         </div>
       </div>

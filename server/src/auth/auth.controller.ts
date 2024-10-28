@@ -43,6 +43,11 @@ export class AuthController {
     return this.authService.resetPasswordLink(email);
   }
 
+  @Get('verify-resetCode/:code')
+  async verifyResetCodeValidity(@Param('code') code: string) {
+    return this.authService.checkResetLink(code);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('profile')
   getProfile(@Request() req) {

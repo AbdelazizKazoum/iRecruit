@@ -1,4 +1,5 @@
-import { createPassword } from "@/libs/actions"; // Update this import if needed
+"use client";
+import { updatePassword } from "@/libs/actions"; // Update this import if needed
 import { cn } from "@/libs/utils";
 import { passwordSchema } from "@/libs/zod";
 import React from "react";
@@ -7,15 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
-const PasswordForm = ({
-  code,
-}: {
-  code: string;
-  onSubmit: (data: {
-    password: string;
-    confirmPassword: string;
-  }) => Promise<void>;
-}) => {
+const UpdatePasswordForm = ({ code }: { code: string }) => {
   // Use React Hook Form
   const {
     register,
@@ -52,8 +45,6 @@ const PasswordForm = ({
       setSuccessMessage("");
     } else {
       setSuccessMessage("Votre mot de passe a été mis à jour avec succès !");
-      console.log("Password updated successfully!");
-      router.push("/login"); // Redirect to the login page or any desired page
     }
     reset(); // Clear the form fields after submission
   };
@@ -80,7 +71,7 @@ const PasswordForm = ({
           <span>{successMessage}</span>
 
           <Button
-            onClick={() => router.push("/login")}
+            onClick={() => router.replace("/login")}
             variant={"outline"}
             className="mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500"
           >
@@ -165,4 +156,4 @@ const PasswordForm = ({
   );
 };
 
-export default PasswordForm;
+export default UpdatePasswordForm;

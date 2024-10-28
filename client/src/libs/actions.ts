@@ -149,13 +149,13 @@ export async function sendResetLink(email: string) {
 }
 
 // Update passworf
-export async function updatePassword(code: string, password: string) {
+export async function updatePassword(code: string, newPassword: string) {
   try {
     const res = await axios.post(
-      `${process.env.BACKEND_API}/auth/update-password/`,
+      `${process.env.BACKEND_API}/users/update-password/`,
       {
         code,
-        password,
+        newPassword,
       }
     );
 

@@ -74,6 +74,10 @@ export class UsersService {
   }
 
   async updatePassword(updatePasswordDto: UpdatePasswordDto) {
+    console.log(
+      '🚀 ~ UsersService ~ updatePassword ~ updatePasswordDto:',
+      updatePasswordDto,
+    );
     // Find the user by email
     const user = await this.findOneByEmail(updatePasswordDto.email);
     if (!user) throw new NotFoundException("L'utilisateur n'existe pas");

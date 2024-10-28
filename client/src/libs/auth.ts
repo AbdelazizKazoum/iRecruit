@@ -57,9 +57,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async jwt({ account, user, token }) {
-      console.log("🚀 ~ jwt ~ account:", account);
-      console.log("🚀 ~ jwt ~ user:", user);
-
       if (account && user) {
         token.user = {
           email: user.email || "",
@@ -75,8 +72,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ token, session }: { session: Session; token: JWT }) {
-      console.log("🚀 ~ session ~ session:", session);
-
       if (token.user) {
         session.user = {
           email: token.user.email || "",

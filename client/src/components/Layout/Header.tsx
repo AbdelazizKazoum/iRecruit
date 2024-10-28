@@ -6,14 +6,10 @@ import { Link as LinkScroll } from "react-scroll";
 import ButtonOutline from "../misc/ButtonOutline.";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { UserDropdown } from "../profile/userDropdown";
+import { Session } from "next-auth";
+import { UserDropdown } from "../profile/UserDropdown";
 
-const Header = () => {
-  // Hooks
-  const { status } = useSession();
-  console.log("🚀 ~ Header ~ session:", status);
-
+const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
   useEffect(() => {
@@ -115,19 +111,14 @@ const Header = () => {
             </LinkScroll>
           </ul>
 
-          {status === "authenticated" ? (
+          {user ? (
             <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
               <UserDropdown />
             </div>
           ) : (
             <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
               <Link href="/login">
-                <span className="text-black-600 mx-2 sm:mx-4 capitalize tracking-wide hover:text-orange-500 transition-all">
-                  Se connecter
-                </span>
-              </Link>
-              <Link href="/register">
-                <ButtonOutline>S&apos;inscrire</ButtonOutline>
+                <ButtonOutline>Connexion</ButtonOutline>
               </Link>
             </div>
           )}

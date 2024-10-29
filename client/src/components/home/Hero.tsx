@@ -47,7 +47,7 @@ const Hero = ({
           <div className="flex w-full">
             <motion.div className="h-full w-full" variants={scrollAnimation}>
               <Image
-                src="/assets/Illustration1.png"
+                src="/assets/logoHome.png"
                 alt="VPN Illustrasi"
                 quality={100}
                 width={612}

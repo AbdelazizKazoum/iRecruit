@@ -27,12 +27,13 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
       >
         <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
           <div className="col-start-1 col-end-2 flex items-center">
-            <div className="h-8 w-auto">
+            <div className="h-10 w-48 relative">
               <Image
-                width={200}
-                height={200}
                 src="/assets/logo-ministere.png"
                 alt="logo"
+                layout="fill"
+                objectFit="contain"
+                priority
               />
             </div>
           </div>
@@ -49,8 +50,8 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
                 (activeLink === "about"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 a")
+                  ? " text-primary-500 animation-active "
+                  : " text-black-500 hover:text-primary-500 a")
               }
             >
               Accueil
@@ -67,8 +68,8 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
                 (activeLink === "annonces"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
+                  ? " text-primary-500 animation-active "
+                  : " text-black-500 hover:text-primary-500 ")
               }
             >
               Annonces de concours
@@ -85,8 +86,8 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
                 (activeLink === "pricing"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
+                  ? " text-primary-500 animation-active "
+                  : " text-black-500 hover:text-primary-500 ")
               }
             >
               Question/Réponse
@@ -103,8 +104,8 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
                 (activeLink === "contact"
-                  ? " text-orange-500 animation-active "
-                  : " text-black-500 hover:text-orange-500 ")
+                  ? " text-primary-500 animation-active "
+                  : " text-black-500 hover:text-primary-500 ")
               }
             >
               Contact
@@ -141,7 +142,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
                 (activeLink === "about"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary-500 text-primary-500"
                   : " border-transparent")
               }
             >
@@ -173,7 +174,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
                 (activeLink === "feature"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary-500 text-primary-500"
                   : " border-transparent ")
               }
             >
@@ -205,7 +206,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
                 (activeLink === "pricing"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary-500 text-primary-500"
                   : " border-transparent ")
               }
             >
@@ -237,7 +238,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               className={
                 "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
                 (activeLink === "testimoni"
-                  ? "  border-orange-500 text-orange-500"
+                  ? "  border-primary-500 text-primary-500"
                   : " border-transparent ")
               }
             >

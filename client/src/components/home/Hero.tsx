@@ -9,18 +9,18 @@ import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
 const Hero = ({
   listUser = [
     {
-      name: "Users",
-      number: "390",
+      name: "Offres d'emploi",
+      number: "10",
       icon: "/assets/Icon/heroicons_sm-user.svg",
     },
     {
-      name: "Locations",
-      number: "20",
+      name: "Candidats",
+      number: "450",
       icon: "/assets/Icon/gridicons_location.svg",
     },
     {
-      name: "Server",
-      number: "50",
+      name: "Entretiens planifiés",
+      number: "80",
       icon: "/assets/Icon/bx_bxs-server.svg",
     },
   ],
@@ -42,7 +42,7 @@ const Hero = ({
               Plateforme de recrutement dédiée au secteur de l&apos;Enseignement
               Supérieur, de la Recherche Scientifique et de l&apos;Innovation.
             </p>
-            <ButtonPrimary addClass={""}>Get Started</ButtonPrimary>
+            <ButtonPrimary addClass={""}>Lancez-vous</ButtonPrimary>
           </div>
           <div className="flex w-full">
             <motion.div className="h-full w-full" variants={scrollAnimation}>
@@ -68,8 +68,14 @@ const Hero = ({
               variants={scrollAnimation}
             >
               <div className="flex mx-auto w-40 sm:w-auto">
-                <div className="flex items-center justify-center bg-orange-100 w-12 h-12 mr-6 rounded-full">
-                  <img src={listUsers.icon} className="h-6 w-6" />
+                <div className="flex items-center justify-center bg-primary-300/10 w-12 h-12 mr-6 rounded-full">
+                  <Image
+                    alt="icon"
+                    src={listUsers.icon}
+                    width={40}
+                    height={40}
+                    className="h-6 w-6 "
+                  />
                 </div>
                 <div className="flex flex-col">
                   <p className="text-xl text-black-600 font-bold">

@@ -11,17 +11,17 @@ const Hero = ({
     {
       name: "Offres d'emploi",
       number: "10",
-      icon: "/assets/Icon/heroicons_sm-user.svg",
+      icon: "/assets/Icon/heroicons_sm-jobs.svg",
     },
     {
       name: "Candidats",
       number: "450",
-      icon: "/assets/Icon/gridicons_location.svg",
+      icon: "/assets/Icon/gridicons_candidats.svg",
     },
     {
       name: "Entretiens planifiés",
       number: "80",
-      icon: "/assets/Icon/bx_bxs-server.svg",
+      icon: "/assets/Icon/bx_bxs-planning.svg",
     },
   ],
 }) => {

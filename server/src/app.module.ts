@@ -13,7 +13,11 @@ import { MailerModule } from './mailer/mailer.module';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`,
+      `${
+        process.env.NODE_ENV !== 'PROD'
+          ? process.env.MONGO_LOCAL_CONNECT
+          : `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`
+      }`,
     ),
     CandidatureModule,
     AuthModule,

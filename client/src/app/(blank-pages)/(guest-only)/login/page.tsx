@@ -81,7 +81,7 @@ const Page = () => {
             <form className="pb-2">
               <input type="hidden" name="provider" value="google" />
               <button
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 w-full text-zinc-950 py-6 dark:text-white"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-400 bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 w-full text-zinc-950 py-6 dark:text-white"
                 type="submit"
               >
                 <span className="mr-2">
@@ -129,8 +129,8 @@ const Page = () => {
 
           <div className="relative my-4">
             <div className="relative flex items-center py-1">
-              <div className="grow border-t border-zinc-200 dark:border-zinc-700"></div>
-              <div className="grow border-t border-zinc-200 dark:border-zinc-700"></div>
+              <div className="grow border-t border-gray-400 dark:border-gray-400"></div>
+              <div className="grow border-t border-gray-400 dark:border-gray-400"></div>
             </div>
           </div>
 
@@ -152,7 +152,7 @@ const Page = () => {
                 </label>
                 <input
                   className={cn(
-                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-gray-400 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
                     errors.email && "border-orange-500"
                   )}
                   id="email"
@@ -173,7 +173,7 @@ const Page = () => {
                 </label>
                 <input
                   className={cn(
-                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                    "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-gray-400 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
                     errors.password && "border-orange-500"
                   )}
                   id="password"

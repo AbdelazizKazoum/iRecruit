@@ -119,7 +119,7 @@ const RegisterPage = () => {
                   </label>
                   <input
                     className={cn(
-                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-gray-400  bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
                       errors.username && "border-orange-500"
                     )}
                     id="username"
@@ -140,7 +140,7 @@ const RegisterPage = () => {
                   </label>
                   <input
                     className={cn(
-                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
+                      "mr-2.5 mb-2 h-full min-h-[44px] w-full rounded-lg border border-gray-400 bg-white px-4 py-3 text-sm font-medium text-zinc-950 placeholder:text-zinc-400 focus:outline-0 dark:border-zinc-800 dark:bg-transparent dark:text-white dark:placeholder:text-zinc-400",
                       errors.email && "border-orange-500"
                     )}
                     id="email"

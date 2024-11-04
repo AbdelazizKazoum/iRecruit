@@ -51,7 +51,7 @@ export async function handleLogout() {
 export async function sendVerificationLink(formData: any) {
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/auth/verify-email",
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`,
       {
         email: formData.email,
         username: formData.username,
@@ -90,7 +90,7 @@ export async function sendVerificationLink(formData: any) {
 // Send the verification link
 export async function createPassword(code: string, password: string) {
   try {
-    const res = await axios.post("http://localhost:4000/api/users/register", {
+    const res = await axios.post(`${process.env.BACKEND_API}/users/register`, {
       password,
       code,
     });

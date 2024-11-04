@@ -12,7 +12,7 @@ services:
     environment:
       - NODE_ENV=PROD
       - PORT=4000
-      - FRONTEND=http://localhost:3001
+      - FRONTEND=http://localhost:4400
       - MONGO_HOST=iRecruit_db
       - MONGO_PASSWORD=example
       - MONGO_USER=root

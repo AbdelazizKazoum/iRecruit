@@ -4,17 +4,24 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 const Page = async ({ searchParams }: { searchParams: { code: string } }) => {
+  const code = searchParams.code;
   let user = null;
+
+  if (!code) {
+    // Redirect if no code is provided in the URL
+    redirect("/login");
+    return null;
+  }
+
   try {
     const res = await axios.get(
-      `${process.env.BACKEND_API}/auth/verify-resetCode/${searchParams.code}`
+      `${process.env.BACKEND_API}/auth/verify-resetCode/${code}`
     );
     console.log("🚀 ~ Page ~ res:", res.data);
-
     user = res.data;
   } catch (error) {
-    console.error(error);
-    redirect("/login");
+    console.error("Failed to verify reset code:", error);
+    redirect("/login"); // Redirect if an error occurs
   }
 
   return (
@@ -60,7 +67,7 @@ const Page = async ({ searchParams }: { searchParams: { code: string } }) => {
           </p>
 
           <div className="mt-8">
-            <UpdatePasswordForm code={searchParams.code} />
+            <UpdatePasswordForm code={code} />
           </div>
         </div>
       </div>

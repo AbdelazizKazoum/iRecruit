@@ -20,10 +20,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         };
 
         try {
-          const res = await axios.post("http://localhost:4000/api/auth/login", {
-            email,
-            password,
-          });
+          const res = await axios.post(
+            `${process.env.BACKEND_API}/auth/login`,
+            {
+              email,
+              password,
+            }
+          );
 
           return res.data;
         } catch (error: any) {
@@ -43,6 +46,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+
+  //TrustHost
+  trustHost: true,
 
   // ** Please refer to https://next-auth.js.org/configuration/options#session for more `session` options
   session: {

@@ -51,7 +51,7 @@ export async function handleLogout() {
 export async function sendVerificationLink(formData: any) {
   try {
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-email`,
+      `${process.env.BACKEND_API}/auth/verify-email`,
       {
         email: formData.email,
         username: formData.username,
@@ -63,6 +63,13 @@ export async function sendVerificationLink(formData: any) {
       success: true,
     };
   } catch (error: any) {
+    console.log(
+      "🚀 ~ sendVerificationLink ~ NEXT_PUBLIC_API_URL:",
+      process.env.BACKEND_API
+    );
+
+    console.log("🚀 ~ sendVerificationLink ~ error:", error);
+
     switch (error.status) {
       case 404:
         return {

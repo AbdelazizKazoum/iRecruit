@@ -117,11 +117,11 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
     try {
       return await this.userModal.findOne({ email }).exec();
-      b;
     } catch (error) {
       throw new UnauthorizedException(error);
     }
   }
+
   async findOneById(id: string) {
     try {
       return await this.userModal.findById(id).select('-password').exec();
@@ -142,7 +142,6 @@ export class UsersService {
   private verifyVerificationCode(code: string): any {
     try {
       const payload = this.jwtService.verify(code);
-
       return payload;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {

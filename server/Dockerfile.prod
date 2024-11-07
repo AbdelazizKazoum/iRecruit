@@ -5,7 +5,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json ./
+COPY package.json .
 RUN npm install
 
 # Copy all other files
@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port the app runs on
-EXPOSE 4400
+EXPOSE 4000
 
 # Start the application
 CMD ["npm", "run", "start"]

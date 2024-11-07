@@ -14,7 +14,7 @@ import { MailerModule } from './mailer/mailer.module';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
       `${
-        process.env.NODE_ENV !== 'PROD'
+        process.env.MONGO_LOCAL_CONNECT
           ? process.env.MONGO_LOCAL_CONNECT
           : `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`
       }`,

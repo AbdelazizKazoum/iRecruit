@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-backend:
-    name: Deploy Backend to Render
+    name: Deploy Backend to Docker Hub and Trigger Render
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -25,16 +25,14 @@ jobs:
       - name: Build and Push Backend Image
         run: |
           docker build -t abdelazizkazoum/irecruit_app:backend -f ./server/Dockerfile.prod ./server
-          docker push abdelazizkazoum/irecruit_app:backend
+          docker push abdelazizkazoum/irecruit_app:irecruit_backend
 
-      - name: Deploy Backend to Render
+      - name: Trigger Backend Deployment on Render
         run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_BACKEND }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
-          -H "Content-Type: application/json"
+          curl -X POST "https://api.render.com/deploy/srv-csm989btq21c738eedng?key=y0pIoyvckAw"
 
   deploy-frontend:
-    name: Deploy Frontend to Render
+    name: Deploy Frontend to Docker Hub and Trigger Render
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -52,10 +50,8 @@ jobs:
       - name: Build and Push Frontend Image
         run: |
           docker build -t abdelazizkazoum/irecruit_app:frontend -f ./client/Dockerfile ./client
-          docker push abdelazizkazoum/irecruit_app:frontend
+          docker push abdelazizkazoum/irecruit_app:irecruit_frontend
 
-      - name: Deploy Frontend to Render
+      - name: Trigger Frontend Deployment on Render
         run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_FRONTEND }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
-          -H "Content-Type: application/json"
+          curl -X POST "https://api.render.com/deploy/srv-csm16frqf0us73fr30r0?key=ZTJNM3xL9kk"

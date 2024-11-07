@@ -24,9 +24,8 @@ jobs:
 
       - name: Build and Push Backend Image
         run: |
-          docker build -t your-backend-image-name -f ./server/Dockerfile.prod ./server
-          docker push your-backend-image-name
-
+          docker build -t irecruit_api -f ./server/Dockerfile.prod ./server
+          docker push irecruit_api
       # Optional: Trigger Render deployment using Render API
 
   deploy-frontend:
@@ -47,7 +46,7 @@ jobs:
 
       - name: Build and Push Frontend Image
         run: |
-          docker build -t your-frontend-image-name -f ./client/Dockerfile ./client
-          docker push your-frontend-image-name
+          docker build -t irecruit_web -f ./client/Dockerfile ./client
+          docker push irecruit_web
 
       # Optional: Trigger Render deployment using Render API

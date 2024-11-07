@@ -16,6 +16,9 @@ const Footer = () => {
           <p className="text-gray-400 ">
             ©{new Date().getFullYear()} - {themeConfig.templateName}
           </p>
+          <p className="text-gray-400 text-center">
+            Powered by <span className="font-semibold  ">Abdelaziz Kazoum</span>
+          </p>
         </div>
 
         {/* Navigation Links */}

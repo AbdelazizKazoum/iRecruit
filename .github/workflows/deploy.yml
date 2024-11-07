@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and Push Backend Image
         run: |
-          docker build -t abdelazizkazoum/irecruit_app:backend -f ./server/Dockerfile.prod ./server
+          docker build -t abdelazizkazoum/irecruit_app:irecruit_backend -f ./server/Dockerfile.prod ./server
           docker push abdelazizkazoum/irecruit_app:irecruit_backend
 
       - name: Trigger Backend Deployment on Render
@@ -49,7 +49,7 @@ jobs:
 
       - name: Build and Push Frontend Image
         run: |
-          docker build -t abdelazizkazoum/irecruit_app:frontend -f ./client/Dockerfile ./client
+          docker build -t abdelazizkazoum/irecruit_app:irecruit_frontend -f ./client/Dockerfile ./client
           docker push abdelazizkazoum/irecruit_app:irecruit_frontend
 
       - name: Trigger Frontend Deployment on Render

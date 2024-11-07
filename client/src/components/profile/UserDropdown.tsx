@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "./Avatar";
-import { handleLogout } from "@/libs/actions";
 import { signOut } from "next-auth/react";
 
 export function UserDropdown() {

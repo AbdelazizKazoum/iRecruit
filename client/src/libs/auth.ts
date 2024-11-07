@@ -20,10 +20,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         };
 
         try {
-          const res = await axios.post("http://localhost:4000/api/auth/login", {
-            email,
-            password,
-          });
+          const res = await axios.post(
+            `${process.env.BACKEND_API}/auth/login`,
+            {
+              email,
+              password,
+            }
+          );
 
           return res.data;
         } catch (error: any) {
@@ -44,6 +47,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 
+  //TrustHost
+  trustHost: true,
+
   // ** Please refer to https://next-auth.js.org/configuration/options#session for more `session` options
   session: {
     strategy: "jwt",
@@ -57,9 +63,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async jwt({ account, user, token }) {
-      console.log("🚀 ~ jwt ~ account:", account);
-      console.log("🚀 ~ jwt ~ user:", user);
-
       if (account && user) {
         token.user = {
           email: user.email || "",
@@ -75,8 +78,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ token, session }: { session: Session; token: JWT }) {
-      console.log("🚀 ~ session ~ session:", session);
-
       if (token.user) {
         session.user = {
           email: token.user.email || "",

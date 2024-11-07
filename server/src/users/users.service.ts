@@ -121,6 +121,7 @@ export class UsersService {
       throw new UnauthorizedException(error);
     }
   }
+
   async findOneById(id: string) {
     try {
       return await this.userModal.findById(id).select('-password').exec();
@@ -141,11 +142,10 @@ export class UsersService {
   private verifyVerificationCode(code: string): any {
     try {
       const payload = this.jwtService.verify(code);
-
-      console.log('🚀 ~ UsersService ~ verifyVerificationCode ~ code:', code);
       return payload;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.log('🚀 ~ UsersService ~ verifyVerificationCode ~ error:', error);
       throw new UnauthorizedException('Verification code is invalid!');
     }
   }

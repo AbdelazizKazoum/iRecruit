@@ -9,26 +9,26 @@ import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
 const Hero = ({
   listUser = [
     {
-      name: "Users",
-      number: "390",
-      icon: "/assets/Icon/heroicons_sm-user.svg",
+      name: "Offres d'emploi",
+      number: "10",
+      icon: "/assets/Icon/heroicons_sm-jobs.svg",
     },
     {
-      name: "Locations",
-      number: "20",
-      icon: "/assets/Icon/gridicons_location.svg",
+      name: "Candidats",
+      number: "450",
+      icon: "/assets/Icon/gridicons_candidats.svg",
     },
     {
-      name: "Server",
-      number: "50",
-      icon: "/assets/Icon/bx_bxs-server.svg",
+      name: "Entretiens planifiés",
+      number: "80",
+      icon: "/assets/Icon/bx_bxs-planning.svg",
     },
   ],
 }) => {
   const scrollAnimation = useMemo(() => getScrollAnimation(), []);
 
   return (
-    <div className="max-w-screen-xl mt-24 px-8 xl:px-16 mx-auto" id="accueil">
+    <div className="max-w-screen-2xl mt-24 px-8 xl:px-16 mx-auto" id="accueil">
       <ScrollAnimationWrapper className={""}>
         <motion.div
           className="grid grid-flow-row sm:grid-flow-col grid-rows-2 md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 sm:py-16"
@@ -42,12 +42,12 @@ const Hero = ({
               Plateforme de recrutement dédiée au secteur de l&apos;Enseignement
               Supérieur, de la Recherche Scientifique et de l&apos;Innovation.
             </p>
-            <ButtonPrimary addClass={""}>Get Started</ButtonPrimary>
+            <ButtonPrimary addClass={""}>Lancez-vous</ButtonPrimary>
           </div>
           <div className="flex w-full">
             <motion.div className="h-full w-full" variants={scrollAnimation}>
               <Image
-                src="/assets/Illustration1.png"
+                src="/assets/logoHome.png"
                 alt="VPN Illustrasi"
                 quality={100}
                 width={612}
@@ -68,8 +68,14 @@ const Hero = ({
               variants={scrollAnimation}
             >
               <div className="flex mx-auto w-40 sm:w-auto">
-                <div className="flex items-center justify-center bg-orange-100 w-12 h-12 mr-6 rounded-full">
-                  <img src={listUsers.icon} className="h-6 w-6" />
+                <div className="flex items-center justify-center bg-primary-300/10 w-12 h-12 mr-6 rounded-full">
+                  <Image
+                    alt="icon"
+                    src={listUsers.icon}
+                    width={40}
+                    height={40}
+                    className="h-6 w-6 "
+                  />
                 </div>
                 <div className="flex flex-col">
                   <p className="text-xl text-black-600 font-bold">

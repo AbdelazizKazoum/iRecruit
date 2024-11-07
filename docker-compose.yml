@@ -1,0 +1,61 @@
+version: "3.8" # Updated version
+services:
+  irecruit_api:
+    container_name: irecruit-app-container
+    build: ./server
+    volumes:
+      - ./server/src:/app/src
+      - ./server/node_modules:/app/node_modules # Make sure node_modules are also mounted
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=PROD
+      - PORT=4000
+      - FRONTEND=http://localhost:4400
+      - MONGO_HOST=iRecruit_db
+      - MONGO_PASSWORD=example
+      - MONGO_USER=root
+      - MONGO_PORT=27017
+    command: npm run start:dev
+
+  iRecruit_db:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./server/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    depends_on:
+      - irecruit_api
+
+  irecruit_web:
+    container_name: irecruit-web-container
+    build: ./client
+    ports:
+      - "4400:4400"
+    environment:
+      - BACKEND_API=http://irecruit_api:4000/api # Change localhost to the service name
+      - NEXT_PUBLIC_API_URL=http://irecruit_api:4000/api # Change localhost to the service name
+      - NEXTAUTH_URL=http://localhost:4400/api/auth # Keep this as localhost if accessing from outside the container network
+      - NEXTAUTH_SECRET=Kf/ptCrcSOQv8mjKbe7qh83x5NhgA9gOuyl038ClBVk=
+      - NEXT_PUBLIC_APP_URL=http://localhost:4400
+
+    command: npm run start
+    depends_on:
+      - irecruit_api
+
+volumes:
+  mongo_db:

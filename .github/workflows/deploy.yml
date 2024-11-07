@@ -26,7 +26,12 @@ jobs:
         run: |
           docker build -t abdelazizkazoum/irecruit_app:backend -f ./server/Dockerfile.prod ./server
           docker push abdelazizkazoum/irecruit_app:backend
-      # Optional: Trigger Render deployment using Render API
+
+      - name: Deploy Backend to Render
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_BACKEND }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
+          -H "Content-Type: application/json"
 
   deploy-frontend:
     name: Deploy Frontend to Render
@@ -49,15 +54,6 @@ jobs:
           docker build -t abdelazizkazoum/irecruit_app:frontend -f ./client/Dockerfile ./client
           docker push abdelazizkazoum/irecruit_app:frontend
 
-      # Optional: Trigger Render deployment using Render API
-
-      # Step 6: Deploy Backend to Render
-      - name: Deploy Backend to Render
-        run: |
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_BACKEND }}/deploys" \
-          -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
-          -H "Content-Type: application/json"
-      # Step 7: Deploy Frontend to Render
       - name: Deploy Frontend to Render
         run: |
           curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_FRONTEND }}/deploys" \

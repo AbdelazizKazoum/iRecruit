@@ -9,7 +9,10 @@ export const loginSchema = z.object({
     .regex(/[a-z]/, "Le mot de passe doit contenir une lettre minuscule")
     .regex(/[A-Z]/, "Le mot de passe doit contenir une lettre majuscule")
     .regex(/\d/, "Le mot de passe doit contenir un chiffre")
-    .regex(/[@$!%*?&]/, "Le mot de passe doit contenir un caractère spécial"),
+    .regex(
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/,
+      "Le mot de passe doit contenir un caractère spécial"
+    ),
 });
 
 // Define the Zod schema for register validation

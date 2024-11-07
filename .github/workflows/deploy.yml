@@ -29,7 +29,7 @@ jobs:
 
       - name: Trigger Backend Deployment on Render
         run: |
-          curl -X POST "https://api.render.com/deploy/srv-csm989btq21c738eedng?key=y0pIoyvckAw"
+          curl -X POST "https://api.render.com/deploy/srv-csmi5j3tq21c73aj0j60?key=W1N3-WpWioU"
 
   deploy-frontend:
     name: Deploy Frontend to Docker Hub and Trigger Render
@@ -54,4 +54,4 @@ jobs:
 
       - name: Trigger Frontend Deployment on Render
         run: |
-          curl -X POST "https://api.render.com/deploy/srv-csm16frqf0us73fr30r0?key=ZTJNM3xL9kk"
+          curl -X POST "https://api.render.com/deploy/srv-csmi0n5umphs73aim1og?key=BzL8O_Lo8rE"

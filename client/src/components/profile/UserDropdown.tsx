@@ -11,8 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "./Avatar";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { LogOut, LogOutIcon, MailOpen, Settings, UserIcon } from "lucide-react";
 
 export function UserDropdown() {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,28 +26,45 @@ export function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <div className="flex gap-2 justify-center items-center py-3 px-6 ">
+          <UserAvatar />
+          <div className="flex flex-col">
+            <p className="font-medium text-black-500">Kazoum Abdelaziz</p>
+            <span className=" text-sm text-gray-400  ">
+              abdukazoum@gmail.com
+            </span>
+          </div>
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            className=" cursor-pointer"
+            onClick={() => router.push("/profile")}
+          >
+            <UserIcon />
             Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className=" cursor-pointer"
+            onClick={() => router.push("/profile")}
+          >
+            <Settings />
+            Settings
+          </DropdownMenuItem>
+
+          <div className=" mx-2 my-2 ">
+            <Button
+              variant="destructive"
+              className="w-full h-8 [\&_svg\]:size-2  "
+              onClick={() => {
+                signOut({ callbackUrl: "/login" });
+              }}
+            >
+              <p>Sign out</p> <LogOutIcon className=" h-2 " />
+            </Button>
+          </div>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onSelect={() => {
-            signOut({ callbackUrl: "/login" });
-          }}
-        >
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

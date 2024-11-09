@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation"; // Import hooks for pathname and search params
+import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -17,17 +17,18 @@ export function ProfileSidebar({
   items,
   ...props
 }: SidebarNavProps) {
-  const pathname = usePathname(); // Get the current pathname
-  const searchParams = useSearchParams(); // Get the search params as a URLSearchParams object
-
-  const fullPathWithQuery = `${pathname}?${searchParams.toString()}`; // Combine pathname and query
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const fullPathWithQuery = `${pathname}?${
+    searchParams.toString() || "section=compte"
+  }`;
 
   console.log("🚀 ~ fullPathWithQuery:", fullPathWithQuery);
 
   return (
     <nav
       className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+        "grid gap-2 sm:grid-cols-2 lg:grid-cols-1 max-w-2xl m-auto m-4",
         className
       )}
       {...props}
@@ -41,11 +42,10 @@ export function ProfileSidebar({
             fullPathWithQuery === item.href
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:underline",
-            "justify-start"
+            "flex lg:justify-start"
           )}
         >
-          <label htmlFor="" className=" text-black-500 ">
-            {" "}
+          <label htmlFor="" className="text-black-600/85">
             {item.title}
           </label>
         </Link>

@@ -8,16 +8,20 @@ import React from "react";
 
 const sidebarNavItems = [
   {
-    title: "Profile",
-    href: "/profile?section=info",
+    title: "Compte",
+    href: "/profile?section=compte",
   },
   {
-    title: "Settings",
-    href: "/profile?section=settings",
+    title: "Mes Candidatures",
+    href: "/profile?section=candidatures",
   },
   {
-    title: "Applications",
-    href: "/profile?section=applications",
+    title: "Informations Personnelles",
+    href: "/profile?section=info-personnelles",
+  },
+  {
+    title: "Qualifications et Expériences",
+    href: "/profile?section=info-professionnelles",
   },
 ];
 
@@ -26,33 +30,18 @@ const ProfilePage = ({
 }: {
   searchParams: { section: string };
 }) => {
-  const section = searchParams.section || "info"; // Default to "info"
+  const section = searchParams.section || "compte"; // Default to "info"
 
   return (
-    <div className="max-w-screen-2xl mt-24 px-8 xl:px-16 mx-auto bourder-lg ">
+    <div className="max-w-screen-2xl mt-24 pb-24  px-4 sm:px-8 xl:px-16 mx-auto  ">
       <>
-        <div className="md:hidden">
-          <Image
-            src="/examples/forms-light.png"
-            width={1280}
-            height={791}
-            alt="Forms"
-            className="block dark:hidden"
-          />
-          <Image
-            src="/examples/forms-dark.png"
-            width={1280}
-            height={791}
-            alt="Forms"
-            className="hidden dark:block"
-          />
-          ProfileInfo
-        </div>
-        <div className="hidden space-y-6 p-10 pb-16 md:block">
+        <div className="space-y-6 py-10 lg:p-10 pb-16">
           <div className="space-y-0.5">
-            <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+            <h2 className="text-2xl font-bold tracking- text-black-600/90">
+              Espace Candidat
+            </h2>
             <p className="text-muted-foreground">
-              Manage your account settings and set e-mail preferences.
+              Gérez les paramètres de votre compte.{" "}
             </p>
           </div>
           <Separator className="my-6" />
@@ -71,9 +60,9 @@ const ProfilePage = ({
               <ProfileSidebar items={sidebarNavItems} />
             </aside>
             <main className="flex-1 lg:max-w-2xl">
-              {section === "info" && <ProfileInfo />}
-              {section === "settings" && <ProfileSettings />}
-              {section === "applications" && <ProfileApplications />}
+              {section === "compte" && <ProfileInfo />}
+              {section === "candidatures" && <ProfileSettings />}
+              {section === "info-professionnelles" && <ProfileApplications />}
             </main>
           </div>
         </div>

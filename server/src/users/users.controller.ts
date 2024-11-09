@@ -8,6 +8,7 @@ import {
   Param,
   Delete,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,6 +16,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { JwtService } from '@nestjs/jwt';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 
 @Controller('users')
 export class UsersController {
@@ -47,6 +49,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -57,11 +60,13 @@ export class UsersController {
   //   return this.usersService.findOne(+id);
   // }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);

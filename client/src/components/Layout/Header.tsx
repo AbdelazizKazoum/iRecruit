@@ -21,20 +21,22 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
     <>
       <header
         className={
-          "fixed top-0 w-full  z-50 bg-white-500 transition-all " +
+          " fixed top-0 w-full  z-50 bg-white-500 transition-all border-b-2 " +
           (scrollActive ? " shadow-md pt-0" : " pt-4")
         }
       >
         <nav className="max-w-screen-2xl  px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
           <div className="col-start-1 col-end-2 flex items-center">
             <div className="h-10 w-48 relative">
-              <Image
-                src="/assets/logo-ministere.png"
-                alt="logo"
-                layout="fill"
-                objectFit="contain"
-                priority
-              />
+              <Link href="/home">
+                <Image
+                  src="/assets/logo-ministere.png"
+                  alt="logo"
+                  layout="fill"
+                  objectFit="contain"
+                  priority
+                />
+              </Link>
             </div>
           </div>
           <ul className="hidden lg:flex col-start-4 col-end-8 text-black-500  items-center">
@@ -113,8 +115,10 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
           </ul>
 
           {user ? (
-            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-              <UserDropdown />
+            <div className="col-start-10 col-end-12  flex justify-end items-center">
+              <div className=" relative  ">
+                <UserDropdown />
+              </div>
             </div>
           ) : (
             <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">

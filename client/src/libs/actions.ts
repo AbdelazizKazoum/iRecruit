@@ -148,6 +148,8 @@ export async function sendResetLink(email: string) {
       success: true,
     };
   } catch (error: any) {
+    console.log("🚀 ~ sendResetLink ~ res:", error);
+
     return {
       success: false,
       error: error.message,

@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { cn } from "@/libs/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -27,40 +25,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
-
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-});
+import { profileFormSchema } from "@/libs/validation/profile-form";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-// This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
+  bio: "",
+  username: "abdu_kazoum",
+  email: "abdukazoum@gmail.com",
 };
 
 function ProfileForm() {
@@ -70,14 +42,9 @@ function ProfileForm() {
     mode: "onChange",
   });
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  });
-
   function onSubmit(data: ProfileFormValues) {
     toast({
-      title: "You submitted the following values:",
+      title: "Vous avez soumis les valeurs suivantes :",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
@@ -89,9 +56,9 @@ function ProfileForm() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">Profile</h3>
+        <h3 className="text-lg font-medium text-black-600/85">Compte</h3>
         <p className="text-sm text-muted-foreground">
-          This is how others will see you on the site.
+          C&apos;est ainsi que les autres vous verront sur le site.
         </p>
       </div>
       <Separator />
@@ -102,13 +69,13 @@ function ProfileForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Nom d&apos;utilisateur</FormLabel>
                 <FormControl>
                   <Input placeholder="shadcn" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name. It can be your real name or
-                  a pseudonym. You can only change this once every 30 days.
+                  C&apos;est votre nom affiché publiquement. Il peut s&apos;agir
+                  de votre vrai nom ou d&apos;un pseudonyme.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -126,19 +93,15 @@ function ProfileForm() {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a verified email to display" />
+                      <SelectValue placeholder="Sélectionnez un email vérifié à afficher" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="m@example.com">m@example.com</SelectItem>
-                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    <SelectItem value="abdukazoum@gmail.com">
+                      abdukazoum@gmail.com
+                    </SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  You can manage verified email addresses in your{" "}
-                  <Link href="/examples/forms">email settings</Link>.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -151,52 +114,22 @@ function ProfileForm() {
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Tell us a little bit about yourself"
+                    placeholder="Parlez-nous un peu de vous"
                     className="resize-none"
                     {...field}
                   />
                 </FormControl>
                 <FormDescription>
-                  You can <span>@mention</span> other users and organizations to
-                  link to them.
+                  Vous pouvez partager quelques informations sur vous-même,
+                  comme vos intérêts.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div>
-            {fields.map((field, index) => (
-              <FormField
-                control={form.control}
-                key={field.id}
-                name={`urls.${index}.value`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className={cn(index !== 0 && "sr-only")}>
-                      URLs
-                    </FormLabel>
-                    <FormDescription className={cn(index !== 0 && "sr-only")}>
-                      Add links to your website, blog, or social media profiles.
-                    </FormDescription>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              className="mt-2"
-              onClick={() => append({ value: "" })}
-            >
-              Add URL
-            </Button>
-          </div>
-          <Button type="submit">Update profile</Button>
+          <Button size="lg" type="submit">
+            Mettre à jour le profil
+          </Button>
         </form>
       </Form>
     </div>

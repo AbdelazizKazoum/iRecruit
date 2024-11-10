@@ -1,6 +1,6 @@
 "use client";
 
-import { sendVerificationLink } from "@/libs/actions";
+import { sendVerificationLink } from "@/libs/actions/authActions";
 import { cn } from "@/libs/utils";
 import { registerSchema } from "@/libs/zod";
 import { zodResolver } from "@hookform/resolvers/zod";

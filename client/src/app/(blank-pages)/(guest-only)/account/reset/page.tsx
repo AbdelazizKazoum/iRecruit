@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { sendResetLink } from "@/libs/actions"; // Import your function to send the reset link
+import { sendResetLink } from "@/libs/actions/authActions"; // Import your function to send the reset link
 import { cn } from "@/libs/utils";
 import { emailSchema } from "@/libs/zod"; // Ensure you have an email schema for validation
 import React, { useState } from "react";

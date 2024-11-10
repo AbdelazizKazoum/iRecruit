@@ -1,31 +1,62 @@
 "use server";
 
+type ResultType<T> = {
+  data?: T;
+  success: boolean;
+  message: string;
+  error?: string;
+};
+
 import { UserType } from "@/types/user.types";
 import userApi from "@/libs/api";
-console.log("🚀 ~ userApi:", userApi.defaults.baseURL);
 
 export async function getUserProfile(id: string) {
-  const { data } = await userApi.get(`/users/${id}`);
+  try {
+    const { data } = await userApi.get(`/users/${id}`);
 
-  return data;
+    return {
+      data,
+      success: true,
+      message: "Data loaded successfully",
+    };
+  } catch (error: unknown) {
+    let errorMessage = "An unknown error occurred";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    return {
+      success: false,
+      message: "",
+      error: errorMessage,
+    };
+  }
 }
 
-export async function updateProfile(id: string | undefined, newUser: UserType) {
+export async function updateProfile(
+  id: string | undefined,
+  newUser: UserType
+): Promise<ResultType<UserType>> {
   try {
     const { data } = await userApi.patch(`/users/${id}`, newUser);
 
     return {
       data,
-      sucess: true,
+      success: true,
       message: "Utilisateur mis à jour avec succès",
     };
   } catch (error: unknown) {
     console.log("🚀 ~ error:", error);
 
+    const errorMessage = "An unknown error occurred";
+    // if (error instanceof Error) {
+    //   errorMessage = error.message;
+    // }
+
     return {
-      error: error.message,
       success: false,
       message: "",
+      error: errorMessage,
     };
   }
 }

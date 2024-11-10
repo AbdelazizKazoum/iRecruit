@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthError } from "next-auth";
-import { signIn, signOut } from "./auth";
+import { signIn, signOut } from "../auth";
 import axios from "axios";
 
 // Login action

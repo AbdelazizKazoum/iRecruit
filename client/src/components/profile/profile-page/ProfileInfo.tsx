@@ -103,9 +103,9 @@ function ProfileForm({ user }: { user: UserType | null }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value={user?.email || ""}>
+                    {/* <SelectItem value={user?.email || ""}>
                       {user?.email}
-                    </SelectItem>
+                    </SelectItem> */}
                   </SelectContent>
                 </Select>
                 <FormMessage />

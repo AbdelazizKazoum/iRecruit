@@ -1,6 +1,6 @@
 "use client";
 
-import { authenticate } from "@/libs/actions"; // Adjust the import based on your login action
+import { authenticate } from "@/libs/actions/authActions"; // Adjust the import based on your login action
 import { cn } from "@/libs/utils";
 import { loginSchema } from "@/libs/zod";
 import { zodResolver } from "@hookform/resolvers/zod";

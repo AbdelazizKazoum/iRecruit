@@ -31,12 +31,7 @@ const ProfilePage = async ({
 
   const session = await auth();
   let user: UserType | null = null;
-
-  try {
-    user = await getUserProfile(session?.user.email || "");
-  } catch (error) {
-    console.error("Failed to fetch user profile:", error);
-  }
+  user = await getUserProfile(session?.user.email || "");
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">

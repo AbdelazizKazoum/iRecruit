@@ -2,7 +2,7 @@
 
 import type { AxiosRequestHeaders } from "axios";
 import axios from "axios";
-import { BACKEND_API } from "@/utils/constants";
+import { BACKEND_API } from "@/utils/constants/envVariables";
 import { auth } from "./auth";
 
 const userApi = axios.create({

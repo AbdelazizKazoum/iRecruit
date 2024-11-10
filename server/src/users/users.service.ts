@@ -116,7 +116,7 @@ export class UsersService {
 
   async findOneByEmail(email: string): Promise<User> {
     try {
-      return await this.userModal.findOne({ email }).exec();
+      return await this.userModal.findOne({ email }).select('-password').exec();
     } catch (error) {
       throw new UnauthorizedException(error);
     }

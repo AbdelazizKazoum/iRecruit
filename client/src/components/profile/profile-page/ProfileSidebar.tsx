@@ -23,12 +23,10 @@ export function ProfileSidebar({
     searchParams.toString() || "section=compte"
   }`;
 
-  console.log("🚀 ~ fullPathWithQuery:", fullPathWithQuery);
-
   return (
     <nav
       className={cn(
-        "grid gap-2 sm:grid-cols-2 lg:grid-cols-1 max-w-2xl m-auto m-4",
+        "grid gap-2 sm:grid-cols-2 lg:grid-cols-1 max-w-2xl m-auto",
         className
       )}
       {...props}

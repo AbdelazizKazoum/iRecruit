@@ -23,34 +23,40 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { profileFormSchema } from "@/libs/validation/profile-form";
+import { UserType } from "@/types/user.types";
+import { updateProfile } from "@/libs/actions/candidateActions";
+import { toast } from "react-toastify";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "",
-  username: "abdu_kazoum",
-  email: "abdukazoum@gmail.com",
-};
+function ProfileForm({ user }: { user: UserType | null }) {
+  const defaultValues: Partial<ProfileFormValues> = {
+    bio: user?.bio,
+    username: user?.username,
+    email: user?.email,
+  };
 
-function ProfileForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
   });
 
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "Vous avez soumis les valeurs suivantes :",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  async function onSubmit(data: UserType) {
+    const res = await updateProfile(user?._id, data);
+    if (res.success) toast.success("succefully updated");
+    else toast.error(res.error);
+
+    // toast({
+    //   title: "Vous avez soumis les valeurs suivantes :",
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
   }
 
   return (
@@ -97,8 +103,8 @@ function ProfileForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="abdukazoum@gmail.com">
-                      abdukazoum@gmail.com
+                    <SelectItem value={user?.email || ""}>
+                      {user?.email}
                     </SelectItem>
                   </SelectContent>
                 </Select>

@@ -29,7 +29,11 @@ const Page = () => {
   const onSubmit = async (data: LoginFormData) => {
     const response = await authenticate(data); // Replace with your actual login function
 
-    if (!response) return null;
+    if (!response) {
+      console.log("🚀 ~ onSubmit ~ response:", response);
+
+      return null;
+    }
 
     if (response.error) {
       setError(response.error || "");

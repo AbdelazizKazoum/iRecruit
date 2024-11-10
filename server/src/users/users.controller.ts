@@ -9,6 +9,7 @@ import {
   Delete,
   UnauthorizedException,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +18,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
+import { Request } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -55,10 +57,12 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usersService.findOne(+id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get(':email')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  findOne(@Param('email') email: string, @Req() req: Request) {
+    return this.usersService.findOneByEmail(email);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')

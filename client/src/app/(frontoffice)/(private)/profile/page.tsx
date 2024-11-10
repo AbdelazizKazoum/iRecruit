@@ -3,18 +3,15 @@ import ProfileInfo from "@/components/profile/profile-page/ProfileInfo";
 import ProfileSettings from "@/components/profile/profile-page/ProfileSettings";
 import { ProfileSidebar } from "@/components/profile/profile-page/ProfileSidebar";
 import { Separator } from "@/components/ui/separator";
+import { getUserProfile } from "@/libs/actions/candidateActions";
+import { auth } from "@/libs/auth";
+import { UserType } from "@/types/user.types";
 import Image from "next/image";
 import React from "react";
 
 const sidebarNavItems = [
-  {
-    title: "Compte",
-    href: "/profile?section=compte",
-  },
-  {
-    title: "Mes Candidatures",
-    href: "/profile?section=candidatures",
-  },
+  { title: "Compte", href: "/profile?section=compte" },
+  { title: "Mes Candidatures", href: "/profile?section=candidatures" },
   {
     title: "Informations Personnelles",
     href: "/profile?section=info-personnelles",
@@ -25,48 +22,55 @@ const sidebarNavItems = [
   },
 ];
 
-const ProfilePage = ({
+const ProfilePage = async ({
   searchParams,
 }: {
   searchParams: { section: string };
 }) => {
-  const section = searchParams.section || "compte"; // Default to "info"
+  const section = searchParams.section || "compte";
+
+  const session = await auth();
+  let user: UserType | null = null;
+
+  try {
+    user = await getUserProfile(session?.user.email || "");
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
+  }
 
   return (
-    <div className="max-w-screen-2xl mt-24 pb-24  px-4 sm:px-8 xl:px-16 mx-auto  ">
-      <>
-        <div className="space-y-6 py-10 lg:p-10 pb-16">
-          <div className="space-y-0.5">
-            <h2 className="text-2xl font-bold tracking- text-black-600/90">
-              Espace Candidat
-            </h2>
-            <p className="text-muted-foreground">
-              Gérez les paramètres de votre compte.{" "}
-            </p>
-          </div>
-          <Separator className="my-6" />
-          <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-            <aside className="-mx-4 lg:w-1/5">
-              {/* Profile Image */}
-              <div className="profile-image flex justify-center items-center mb-6">
-                <Image
-                  src="https://github.com/shadcn.png" // Placeholder image URL
-                  alt="User Profile Image"
-                  width={120} // Adjust size as needed
-                  height={120}
-                  className="rounded-full border border-gray-300" // Rounded with border
-                />
-              </div>
-              <ProfileSidebar items={sidebarNavItems} />
-            </aside>
-            <main className="flex-1 lg:max-w-2xl">
-              {section === "compte" && <ProfileInfo />}
-              {section === "candidatures" && <ProfileSettings />}
-              {section === "info-professionnelles" && <ProfileApplications />}
-            </main>
-          </div>
+    <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
+      <div className="space-y-6 py-10 lg:p-10 pb-16">
+        <header className="space-y-0.5">
+          <h2 className="text-2xl font-bold text-black-600/90">
+            Espace Candidat
+          </h2>
+          <p className="text-muted-foreground">
+            Gérez les paramètres de votre compte.
+          </p>
+        </header>
+        <Separator className="my-6" />
+        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+          <aside className="lg:w-1/5">
+            <div className="profile-image flex justify-center items-center mb-6">
+              <Image
+                src="https://github.com/shadcn.png" // Placeholder image URL
+                alt="User Profile Image"
+                width={120}
+                height={120}
+                className="rounded-full border border-gray-300"
+              />
+            </div>
+            <ProfileSidebar items={sidebarNavItems} />
+          </aside>
+          <main className="flex-1 lg:max-w-2xl">
+            {section === "compte" && <ProfileInfo user={user} />}
+            {section === "candidatures" && <ProfileApplications />}
+            {section === "info-personnelles" && <ProfileInfo user={user} />}
+            {section === "info-professionnelles" && <ProfileSettings />}
+          </main>
         </div>
-      </>
+      </div>
     </div>
   );
 };

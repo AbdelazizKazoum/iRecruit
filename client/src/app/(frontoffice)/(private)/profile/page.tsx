@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { getUserProfile } from "@/libs/actions/candidateActions";
 import { auth } from "@/libs/auth";
 import { UserType } from "@/types/user.types";
+import { CustomError } from "@/utils/errors/CustomError";
 import Image from "next/image";
 import React from "react";
 
@@ -31,7 +32,13 @@ const ProfilePage = async ({
 
   const session = await auth();
   let user: UserType | null = null;
-  user = await getUserProfile(session?.user.email || "");
+
+  const res = await getUserProfile(session?.user.email || "");
+  if (!res.success) {
+    throw new CustomError("401");
+  }
+
+  user = res.data;
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">

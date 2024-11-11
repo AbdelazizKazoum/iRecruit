@@ -1,4 +1,4 @@
-import { AlbumArtwork } from "@/components/concours/album-atwork";
+import { ConcourItem } from "@/components/concours/ConcourItem";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { getUserProfile } from "@/libs/actions/candidateActions";
@@ -7,42 +7,66 @@ import { UserType } from "@/types/user.types";
 import { CustomError } from "@/utils/errors/CustomError";
 import React from "react";
 
-export const madeForYouAlbums = [
+export const jobList = [
   {
-    name: "Thinking Components",
-    artist: "Lena Logic",
-    cover:
-      "https://images.unsplash.com/photo-1615247001958-f4bc92fa6a4a?w=300&dpr=2&q=80",
+    title: "Agent Administratif",
+    description:
+      "Traitez et suivez les dossiers administratifs au sein de notre organisation.",
+    tag: "Administration",
+    datePublication: "01/11/2024",
+    depotAvant: "15/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/3182788/pexels-photo-3182788.jpeg",
   },
   {
-    name: "Functional Fury",
-    artist: "Beth Binary",
-    cover:
-      "https://images.unsplash.com/photo-1513745405825-efaf9a49315f?w=300&dpr=2&q=80",
+    title: "Responsable Informatique",
+    description:
+      "Gérez l’infrastructure informatique, la sécurité des données, et le support technique.",
+    tag: "Informatique",
+    datePublication: "01/11/2024",
+    depotAvant: "20/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg",
   },
   {
-    name: "React Rendezvous",
-    artist: "Ethan Byte",
-    cover:
-      "https://images.unsplash.com/photo-1614113489855-66422ad300a4?w=300&dpr=2&q=80",
+    title: "Chargé de Communication",
+    description:
+      "Développez des stratégies de communication et de promotion pour notre organisation.",
+    tag: "Communication",
+    datePublication: "05/11/2024",
+    depotAvant: "20/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/3183171/pexels-photo-3183171.jpeg",
   },
   {
-    name: "Stateful Symphony",
-    artist: "Beth Binary",
-    cover:
-      "https://images.unsplash.com/photo-1446185250204-f94591f7d702?w=300&dpr=2&q=80",
+    title: "Comptable",
+    description:
+      "Assurez la gestion des finances, des rapports financiers, et des analyses budgétaires.",
+    tag: "Comptabilité",
+    datePublication: "02/11/2024",
+    depotAvant: "18/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/6863422/pexels-photo-6863422.jpeg",
   },
   {
-    name: "Async Awakenings",
-    artist: "Nina Netcode",
-    cover:
-      "https://images.unsplash.com/photo-1468817814611-b7edf94b5d60?w=300&dpr=2&q=80",
+    title: "Assistant(e) RH",
+    description:
+      "Gérez les dossiers du personnel et soutenez le recrutement et la formation.",
+    tag: "Ressources Humaines",
+    datePublication: "03/11/2024",
+    depotAvant: "17/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/346807/pexels-photo-346807.jpeg",
   },
   {
-    name: "The Art of Reusability",
-    artist: "Lena Logic",
-    cover:
-      "https://images.unsplash.com/photo-1490300472339-79e4adc6be4a?w=300&dpr=2&q=80",
+    title: "Juriste",
+    description:
+      "Assurez la conformité légale et conseillez l'organisation sur les aspects juridiques.",
+    tag: "Juridique",
+    datePublication: "06/11/2024",
+    depotAvant: "25/11/2024",
+    imageUrl:
+      "https://images.pexels.com/photos/1181399/pexels-photo-1181399.jpeg",
   },
 ];
 
@@ -76,15 +100,17 @@ const Concours = async () => {
           <div className="border-none p-0 outline-none">
             <div className="relative">
               <div>
-                <div className="flex space-x-4 pb-4">
-                  {madeForYouAlbums.map((album) => (
-                    <AlbumArtwork
-                      key={album.name}
-                      album={album}
-                      className="w-[150px]"
-                      aspectRatio="square"
-                      width={150}
-                      height={150}
+                <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 pb-4 ">
+                  {jobList.map((item) => (
+                    <ConcourItem
+                      key={item.title}
+                      title={item.title}
+                      description={item.description}
+                      className=""
+                      imageUrl={item.imageUrl}
+                      depotAvant={item.depotAvant}
+                      datePublication={item.datePublication}
+                      tag=""
                     />
                   ))}
                 </div>

@@ -65,6 +65,15 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('/email/:email')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async findOneByEmail(@Param('email') email: string, @Req() req: Request) {
+    const { password, ...rest } = await this.usersService.findOneByEmail(email);
+
+    return rest;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);

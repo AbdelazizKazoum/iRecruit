@@ -12,7 +12,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/schemas/user.schema';
+import { User, UserDocument } from 'src/schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 import { JwtService } from '@nestjs/jwt';
@@ -116,13 +116,13 @@ export class UsersService {
 
   async findOneByEmail(email: string): Promise<User> {
     try {
-      return await this.userModal.findOne({ email }).exec();
+      return await this.userModal.findOne({ email }).lean().exec();
     } catch (error) {
       throw new UnauthorizedException(error);
     }
   }
 
-  async findOneById(id: string) {
+  async findOneById(id: string): Promise<UserDocument> {
     try {
       return await this.userModal.findById(id).select('-password').exec();
     } catch (error) {

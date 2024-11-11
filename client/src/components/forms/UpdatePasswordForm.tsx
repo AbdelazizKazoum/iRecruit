@@ -1,5 +1,5 @@
 "use client";
-import { updatePassword } from "@/libs/actions"; // Update this import if needed
+import { updatePassword } from "@/libs/actions/authActions"; // Update this import if needed
 import { cn } from "@/libs/utils";
 import { passwordSchema } from "@/libs/zod";
 import React from "react";

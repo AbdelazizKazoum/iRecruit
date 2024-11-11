@@ -42,14 +42,14 @@ const Annonces = () => {
     >
       <div className="grid grid-flow-row sm:grid-flow-col grid-cols-1 sm:grid-cols-2 gap-8 py-8 my-12">
         <ScrollAnimationWrapper className="flex w-full justify-end">
-          <motion.div className="h-full w-full p-4" variants={scrollAnimation}>
+          <motion.div className="h-full w-full p-4 " variants={scrollAnimation}>
             <Image
               src="/assets/steps.png"
               alt="Illustration des étapes de candidature"
               layout="responsive"
               quality={100}
-              height={414}
-              width={508}
+              height={314}
+              width={408}
             />
           </motion.div>
         </ScrollAnimationWrapper>

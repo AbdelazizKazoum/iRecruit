@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { createPassword } from "@/libs/actions";
+import { createPassword } from "@/libs/actions/authActions";
 import { cn } from "@/libs/utils";
 import { passwordSchema } from "@/libs/zod";
 import React from "react";

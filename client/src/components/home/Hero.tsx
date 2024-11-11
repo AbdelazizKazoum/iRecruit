@@ -1,10 +1,11 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import ButtonPrimary from "@/components/misc/ButtonPrimary";
 import { motion } from "framer-motion";
 import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
+import { Play, PlayCircle, PlayCircleIcon, PlaySquare } from "lucide-react"; // Import Play icon from Lucide React
 
 const Hero = ({
   listUser = [
@@ -26,6 +27,11 @@ const Hero = ({
   ],
 }) => {
   const scrollAnimation = useMemo(() => getScrollAnimation(), []);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const handleVideoClick = () => {
+    setIsVideoOpen(true);
+  };
 
   return (
     <div className="max-w-screen-2xl mt-24 px-8 xl:px-16 mx-auto" id="accueil">
@@ -34,7 +40,7 @@ const Hero = ({
           className="grid grid-flow-row sm:grid-flow-col md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 :py-16"
           variants={scrollAnimation}
         >
-          <div className=" flex flex-col justify-center items-start row-start-2 sm:row-start-1">
+          <div className="flex flex-col justify-center items-start row-start-2 sm:row-start-1">
             <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
               Bienvenue Sur La Plateforme de <strong>recrutement</strong>.
             </h1>
@@ -42,7 +48,24 @@ const Hero = ({
               Plateforme de recrutement dédiée au secteur de l&apos;Enseignement
               Supérieur, de la Recherche Scientifique et de l&apos;Innovation.
             </p>
-            <ButtonPrimary addClass={""}>Lancez-vous</ButtonPrimary>
+            <div className="flex space-x-8">
+              <ButtonPrimary addClass={""}>Lancez-vous</ButtonPrimary>
+              <div className="">
+                {/* Play button with text next to it */}
+                <button
+                  className="  hover:bg-primary-600 transition-all flex items-center justify-center  space-x-2"
+                  onClick={handleVideoClick}
+                >
+                  <PlayCircle size={60} className="text-primary " />{" "}
+                  {/* Play Icon */}
+                  <p className=" text-primary font-semibold">
+                    Tutoriel Vidéo : Publier une Offre
+                  </p>{" "}
+                </button>
+
+                {/* Text next to the button */}
+              </div>
+            </div>
           </div>
           <div className="flex w-full">
             <motion.div className="h-full w-full" variants={scrollAnimation}>
@@ -58,8 +81,35 @@ const Hero = ({
           </div>
         </motion.div>
       </ScrollAnimationWrapper>
+
+      {/* YouTube Video Modal */}
+      {isVideoOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="relative w-full max-w-4xl bg-white rounded-lg shadow-lg">
+            <div className="absolute top-0 right-0 p-4">
+              <button
+                className="text-black-600 font-bold text-xl"
+                onClick={() => setIsVideoOpen(false)}
+              >
+                X
+              </button>
+            </div>
+            <div className="relative pt-[56.25%]">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" // Replace with your YouTube video ID
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="relative w-full flex">
-        <ScrollAnimationWrapper className="rounded-lg w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-100 bg-white-500 z-10">
+        <ScrollAnimationWrapper className="rounded-lg w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-500 bg-white-500 z-10">
           {listUser.map((listUsers, index) => (
             <motion.div
               className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0"
@@ -74,7 +124,7 @@ const Hero = ({
                     src={listUsers.icon}
                     width={40}
                     height={40}
-                    className="h-6 w-6 "
+                    className="h-6 w-6"
                   />
                 </div>
                 <div className="flex flex-col">

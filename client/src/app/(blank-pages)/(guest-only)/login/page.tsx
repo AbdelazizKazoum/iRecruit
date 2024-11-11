@@ -1,6 +1,6 @@
 "use client";
 
-import { authenticate } from "@/libs/actions"; // Adjust the import based on your login action
+import { authenticate } from "@/libs/actions/authActions"; // Adjust the import based on your login action
 import { cn } from "@/libs/utils";
 import { loginSchema } from "@/libs/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +29,11 @@ const Page = () => {
   const onSubmit = async (data: LoginFormData) => {
     const response = await authenticate(data); // Replace with your actual login function
 
-    if (!response) return null;
+    if (!response) {
+      console.log("🚀 ~ onSubmit ~ response:", response);
+
+      return null;
+    }
 
     if (response.error) {
       setError(response.error || "");

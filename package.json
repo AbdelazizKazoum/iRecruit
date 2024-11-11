@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/AbdelazizKazoum/iRecruit/issues"
   },
-  "homepage": "https://github.com/AbdelazizKazoum/iRecruit#readme"
+  "homepage": "https://github.com/AbdelazizKazoum/iRecruit#readme",
+  "dependencies": {
+    "react-toastify": "^10.0.6"
+  }
 }

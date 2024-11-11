@@ -111,7 +111,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userModal.find().exec();
+    return this.userModal.find().select('-password').exec();
   }
 
   async findOneByEmail(email: string): Promise<User> {
@@ -130,10 +130,24 @@ export class UsersService {
     }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    console.log('🚀 ~ UsersService ~ update ~ id:', id);
+    try {
+      const updatedUser = await this.userModal
+        .findByIdAndUpdate(id, updateUserDto, {
+          new: true, // Return the updated document
+          runValidators: true, // Validate the update operation against the schema
+        })
+        .select('-password')
+        .exec();
 
+      if (!updatedUser) throw new NotFoundException('User not found!');
+
+      return updatedUser;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
   remove(id: string) {
     return this.userModal.deleteOne({ _id: id });
   }

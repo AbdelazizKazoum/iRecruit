@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthError } from "next-auth";
-import { signIn, signOut } from "./auth";
+import { signIn, signOut } from "../auth";
 import axios from "axios";
 
 // Login action
@@ -148,6 +148,8 @@ export async function sendResetLink(email: string) {
       success: true,
     };
   } catch (error: any) {
+    console.log("🚀 ~ sendResetLink ~ res:", error);
+
     return {
       success: false,
       error: error.message,

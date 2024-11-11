@@ -5,7 +5,7 @@ import ButtonPrimary from "@/components/misc/ButtonPrimary";
 import { motion } from "framer-motion";
 import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
-import { Play, PlayCircle, PlayCircleIcon, PlaySquare } from "lucide-react"; // Import Play icon from Lucide React
+import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
 
 const Hero = ({
   listUser = [
@@ -56,9 +56,9 @@ const Hero = ({
                   className="  hover:bg-primary-600 transition-all flex items-center justify-center  space-x-2"
                   onClick={handleVideoClick}
                 >
-                  <PlayCircle size={60} className="text-primary " />{" "}
+                  <PlayCircle size={60} className="text-primary text-sm " />{" "}
                   {/* Play Icon */}
-                  <p className=" text-primary font-semibold">
+                  <p className=" text-primary ">
                     Tutoriel Vidéo : Publier une Offre
                   </p>{" "}
                 </button>

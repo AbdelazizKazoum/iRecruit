@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["github.com"], // Add the domain you want to allow
+    domains: ["github.com", "images.unsplash.com"], // Add the domain you want to allow
   },
 };
 

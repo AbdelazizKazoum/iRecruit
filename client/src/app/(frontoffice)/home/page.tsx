@@ -1,12 +1,12 @@
 import React from "react";
 import Hero from "@/components/home/Hero";
-import Annonces from "@/components/home/Annonces";
+import Etapes from "@/components/home/Etapes";
 
 const Page = () => {
   return (
     <>
       <Hero />
-      <Annonces />
+      <Etapes />
     </>
   );
 };

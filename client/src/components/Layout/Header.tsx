@@ -60,21 +60,40 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
             </LinkScroll>
             <LinkScroll
               activeClass="active"
-              to="annonces"
+              to="concours"
               spy={true}
               smooth={true}
               duration={1000}
               onSetActive={() => {
-                setActiveLink("annonces");
+                setActiveLink("concours");
               }}
               className={
                 "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
-                (activeLink === "annonces"
+                (activeLink === "about"
+                  ? " text-primary-500 animation-active "
+                  : " text-black-500 hover:text-primary-500 a")
+              }
+            >
+              Annonces de concours
+            </LinkScroll>
+
+            <LinkScroll
+              activeClass="active"
+              to="etapes"
+              spy={true}
+              smooth={true}
+              duration={1000}
+              onSetActive={() => {
+                setActiveLink("etapes");
+              }}
+              className={
+                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
+                (activeLink === "etapes"
                   ? " text-primary-500 animation-active "
                   : " text-black-500 hover:text-primary-500 ")
               }
             >
-              Annonces de concours
+              Les étapes à suivre{" "}
             </LinkScroll>
             <LinkScroll
               activeClass="active"
@@ -92,7 +111,8 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
                   : " text-black-500 hover:text-primary-500 ")
               }
             >
-              Question/Réponse
+              {/* Question/Réponse */}
+              FAQ
             </LinkScroll>
             <LinkScroll
               activeClass="active"
@@ -115,7 +135,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
           </ul>
 
           {user ? (
-            <div className="col-start-10 col-end-12  flex justify-end items-center">
+            <div className="col-start-10 col-end-12  fannonceslex justify-end items-center">
               <div className=" relative  ">
                 <UserDropdown />
               </div>

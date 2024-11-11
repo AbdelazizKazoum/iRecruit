@@ -58,10 +58,10 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':email')
+  @Get(':id')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  findOne(@Param('email') email: string, @Req() req: Request) {
-    return this.usersService.findOneByEmail(email);
+  findOne(@Param('id') id: string, @Req() req: Request) {
+    return this.usersService.findOneById(id);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -13,23 +13,18 @@ export default function Error({
   error: Error & { type?: string; digest?: string };
   reset: () => void;
 }) {
+  console.log("🚀 ~ error: message", error.type);
   useEffect(() => {
-    console.error("Error in profile route:", error);
+    console.error("Error in profile route:", error.type);
   }, [error]);
 
   // Render the appropriate error component based on error type
-  switch (error.type) {
-    case "ACCESS_DENIED":
-      return (
-        <AccessDenied
-          message={error.message || ERROR_MESSAGES.ACCESS_DENIED.message}
-        />
-      );
-    case "NOT_FOUND":
-      return (
-        <NotFound message={error.message || ERROR_MESSAGES.NOT_FOUND.message} />
-      );
-    case "SOMETHING_WENT_WRONG":
+  switch (error.message) {
+    case "401":
+      return <AccessDenied message={ERROR_MESSAGES.ACCESS_DENIED.message} />;
+    case "404":
+      return <NotFound message={ERROR_MESSAGES.NOT_FOUND.message} />;
+    case "500":
     default:
       return (
         <SomethingWentWrong

@@ -20,6 +20,8 @@ export async function getUserProfile(id: string) {
       message: "Data loaded successfully",
     };
   } catch (error: unknown) {
+    console.log("🚀 ~ getUserProfile ~ error:", error);
+
     let errorMessage = "An unknown error occurred";
     if (error instanceof Error) {
       errorMessage = error.message;

@@ -81,3 +81,197 @@ body[data-scroll-locked] {
     @apply bg-background text-foreground;
   } */
 }
+
+/* globals.css or app/layout.module.css */
+
+/* Bubble overlay container */
+.bubble-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Base bubble styling */
+.bubble {
+  position: absolute;
+  background-color: rgba(173, 216, 230, 0.5); /* Soft blue */
+  border-radius: 50%;
+  animation: floatOneWay linear infinite;
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+}
+
+/* Bubbles with different sizes and animation durations, spread across the page */
+.bubble-1 {
+  width: 18px;
+  height: 18px;
+  top: 5%;
+  left: 8%;
+  animation-duration: 14s;
+}
+.bubble-2 {
+  width: 20px;
+  height: 20px;
+  top: 10%;
+  left: 25%;
+  animation-duration: 16s;
+}
+.bubble-3 {
+  width: 22px;
+  height: 22px;
+  top: 15%;
+  left: 45%;
+  animation-duration: 13s;
+}
+.bubble-4 {
+  width: 16px;
+  height: 16px;
+  top: 25%;
+  left: 20%;
+  animation-duration: 18s;
+}
+.bubble-5 {
+  width: 25px;
+  height: 25px;
+  top: 30%;
+  left: 60%;
+  animation-duration: 19s;
+}
+.bubble-6 {
+  width: 18px;
+  height: 18px;
+  top: 40%;
+  left: 75%;
+  animation-duration: 17s;
+}
+.bubble-7 {
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  left: 15%;
+  animation-duration: 21s;
+}
+.bubble-8 {
+  width: 20px;
+  height: 20px;
+  top: 60%;
+  left: 30%;
+  animation-duration: 12s;
+}
+.bubble-9 {
+  width: 23px;
+  height: 23px;
+  top: 70%;
+  left: 55%;
+  animation-duration: 16s;
+}
+.bubble-10 {
+  width: 19px;
+  height: 19px;
+  top: 80%;
+  left: 70%;
+  animation-duration: 14s;
+}
+.bubble-11 {
+  width: 21px;
+  height: 21px;
+  top: 85%;
+  left: 10%;
+  animation-duration: 20s;
+}
+.bubble-12 {
+  width: 26px;
+  height: 26px;
+  top: 90%;
+  left: 35%;
+  animation-duration: 13s;
+}
+.bubble-13 {
+  width: 16px;
+  height: 16px;
+  top: 12%;
+  left: 80%;
+  animation-duration: 19s;
+}
+.bubble-14 {
+  width: 18px;
+  height: 18px;
+  top: 23%;
+  left: 90%;
+  animation-duration: 15s;
+}
+.bubble-15 {
+  width: 20px;
+  height: 20px;
+  top: 33%;
+  left: 60%;
+  animation-duration: 17s;
+}
+.bubble-16 {
+  width: 22px;
+  height: 22px;
+  top: 43%;
+  left: 50%;
+  animation-duration: 18s;
+}
+.bubble-17 {
+  width: 15px;
+  height: 15px;
+  top: 55%;
+  left: 25%;
+  animation-duration: 14s;
+}
+.bubble-18 {
+  width: 19px;
+  height: 19px;
+  top: 65%;
+  left: 40%;
+  animation-duration: 19s;
+}
+.bubble-19 {
+  width: 21px;
+  height: 21px;
+  top: 75%;
+  left: 80%;
+  animation-duration: 20s;
+}
+.bubble-20 {
+  width: 17px;
+  height: 17px;
+  top: 85%;
+  left: 50%;
+  animation-duration: 16s;
+}
+
+/* Floating animation with varied movement */
+@keyframes floatOneWay {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(250px, -350px); /* Move towards the top-right */
+    opacity: 0; /* Gradually fades out */
+  }
+}
+
+/* Example media query for smaller screens */
+@media (max-width: 600px) {
+  .bubble {
+    width: 20px;
+    height: 20px;
+  }
+  .bubble:nth-child(2) {
+    width: 30px;
+    height: 30px;
+  }
+  .bubble:nth-child(3) {
+    width: 15px;
+    height: 15px;
+  }
+}

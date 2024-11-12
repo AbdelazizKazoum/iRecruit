@@ -48,7 +48,7 @@ function ProfileForm({ user }: { user: UserType | null }) {
   async function onSubmit(data: UserType) {
     const res = await updateProfile(user?._id, data);
     if (res.success) toast.success("Successfully updated");
-    else toast.error(res.error);
+    else toast.error("Somthing wrong, try again later");
   }
 
   return (

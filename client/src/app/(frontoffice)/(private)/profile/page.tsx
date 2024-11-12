@@ -38,7 +38,7 @@ const ProfilePage = async ({
     throw new CustomError("401");
   }
 
-  user = res.data;
+  user = res.data || null;
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">

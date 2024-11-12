@@ -1,13 +1,9 @@
 import { ConcourItem } from "@/components/concours/ConcourItem";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
-import { getUserProfile } from "@/libs/actions/candidateActions";
-import { auth } from "@/libs/auth";
-import { UserType } from "@/types/user.types";
-import { CustomError } from "@/utils/errors/CustomError";
 import React from "react";
 
-export const jobList = [
+const jobList = [
   {
     title: "Agent Administratif",
     description:
@@ -71,16 +67,8 @@ export const jobList = [
 ];
 
 const Concours = async () => {
-  const session = await auth();
-  let user: UserType | null = null;
-
-  const res = await getUserProfile(session?.user.email || "");
-  if (!res.success) {
-    throw new CustomError("401");
-  }
-
-  user = res.data;
-  console.log("🚀 ~ Concours ~ user:", user);
+  // user = res.data;
+  // console.log("🚀 ~ Concours ~ user:", user);
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">

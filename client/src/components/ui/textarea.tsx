@@ -1,9 +1,8 @@
 import * as React from "react";
-
 import { cn } from "@/libs/utils";
 
-export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+// Use a type alias instead of an interface to avoid the empty-interface warning
+export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
@@ -19,6 +18,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   }
 );
+
 Textarea.displayName = "Textarea";
 
 export { Textarea };

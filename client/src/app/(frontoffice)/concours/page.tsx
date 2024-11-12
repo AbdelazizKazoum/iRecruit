@@ -80,6 +80,7 @@ const Concours = async () => {
   }
 
   user = res.data;
+  console.log("🚀 ~ Concours ~ user:", user);
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
@@ -88,13 +89,6 @@ const Concours = async () => {
           title="Annonces de Concours"
           description="Consultez les dernières annonces de concours et postulez aux offres qui correspondent à votre profil."
         />
-        {/* <header className="space-y-0.5">
-          <h2 className="text-2xl font-bold text-black-600/90">
-            
-          </h2>
-          <p className="text-muted-foreground">
-          </p>
-        </header> */}
         <Separator className="my-6" />
         <div defaultValue="music" className="h-full space-y-6">
           <div className="border-none p-0 outline-none">

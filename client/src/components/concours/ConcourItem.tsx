@@ -32,7 +32,7 @@ export function ConcourItem({
     <Card
       className={cn(
         "flex flex-col relative overflow-hidden transition-all duration-300 ease-in-out",
-        "border border-transparent hover:border-primary hover:shadow-lg",
+        "border border-border hover:border-primary hover:shadow-lg",
         className
       )}
     >
@@ -61,13 +61,11 @@ export function ConcourItem({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex gap-4">
+      <CardFooter className="flex flex-wrap gap-4">
         <Button variant="outline" className="flex-1 items-center">
           <FileText className="mr-2" /> Details
         </Button>
-        <Button className="flex-1 items-center">
-          <Check className="mr-2" /> Postuler
-        </Button>
+        <Button className="flex-1 items-center">Postuler</Button>
       </CardFooter>
     </Card>
   );

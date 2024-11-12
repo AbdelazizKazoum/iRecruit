@@ -8,10 +8,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Session } from "next-auth";
 import { UserDropdown } from "../profile/UserDropdown";
+import { useRouter } from "next/navigation";
 
 const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
+
+  // Hooks
+  const router = useRouter();
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setScrollActive(window.scrollY > 20);
@@ -61,6 +65,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
             <LinkScroll
               activeClass="active"
               to="concours"
+              onClick={() => router.push("/concours")}
               spy={true}
               smooth={true}
               duration={1000}

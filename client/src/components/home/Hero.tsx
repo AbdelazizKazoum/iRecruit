@@ -56,9 +56,9 @@ const Hero = ({
                   className="  hover:bg-primary-600 transition-all flex items-center justify-center  space-x-2"
                   onClick={handleVideoClick}
                 >
-                  <PlayCircle size={60} className="text-primary text-sm " />{" "}
+                  <PlayCircle size={60} className="text-primary " />{" "}
                   {/* Play Icon */}
-                  <p className=" text-primary ">
+                  <p className=" text-primary font-semibold">
                     Tutoriel Vidéo : Publier une Offre
                   </p>{" "}
                 </button>

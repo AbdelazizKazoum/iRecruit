@@ -10,9 +10,9 @@ type ResultType<T> = {
 import { UserType } from "@/types/user.types";
 import userApi from "@/libs/api";
 
-export async function getUserProfile(id: string) {
+export async function getUserProfile(email: string) {
   try {
-    const { data } = await userApi.get(`/users/${id}`);
+    const { data } = await userApi.get(`/users/email/${email}`);
 
     return {
       data,

@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Loader } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -46,17 +47,8 @@ function ProfileForm({ user }: { user: UserType | null }) {
 
   async function onSubmit(data: UserType) {
     const res = await updateProfile(user?._id, data);
-    if (res.success) toast.success("succefully updated");
+    if (res.success) toast.success("Successfully updated");
     else toast.error(res.error);
-
-    // toast({
-    //   title: "Vous avez soumis les valeurs suivantes :",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
   }
 
   return (
@@ -133,7 +125,14 @@ function ProfileForm({ user }: { user: UserType | null }) {
               </FormItem>
             )}
           />
-          <Button size="lg" type="submit">
+          <Button
+            size="lg"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader className="animate-spin mr-2 h-4 w-4" />
+            ) : null}
             Mettre à jour le profil
           </Button>
         </form>

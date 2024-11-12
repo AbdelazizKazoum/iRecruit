@@ -13,12 +13,12 @@ export default function Error({
   error: Error & { type?: string; digest?: string };
   reset: () => void;
 }) {
-  console.log("🚀 ~ error: message", error.type);
+  console.log("🚀 ~ error: message", error.message);
   useEffect(() => {
-    console.error("Error in profile route:", error.type);
+    console.error("Error in profile message:", error.message);
   }, [error]);
 
-  // Render the appropriate error component based on error type
+  // Render the appropriate error compo''nent based on error type
   switch (error.message) {
     case "401":
       return <AccessDenied message={ERROR_MESSAGES.ACCESS_DENIED.message} />;

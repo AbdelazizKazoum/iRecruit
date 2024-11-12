@@ -4,16 +4,13 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "./Avatar";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { LogOut, LogOutIcon, MailOpen, Settings, UserIcon } from "lucide-react";
+import { LogOutIcon, Settings, UserIcon } from "lucide-react";
 
 export function UserDropdown() {
   const router = useRouter();

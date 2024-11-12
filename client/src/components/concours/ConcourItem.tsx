@@ -1,4 +1,4 @@
-import { BellRing, Check, FileText } from "lucide-react"; // Importing FileText as a PDF icon
+import { BellRing, FileText } from "lucide-react"; // Importing FileText as a PDF icon
 import { cn } from "@/libs/utils";
 import { Button } from "@/components/ui/button";
 import {

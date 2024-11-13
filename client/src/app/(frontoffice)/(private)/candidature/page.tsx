@@ -1,23 +1,23 @@
 // src/pages/CandidateFormPage.tsx
 "use client";
+import { CandidatureSidebar } from "@/components/candidature/CandidatureSidebar";
 import DynamicForm from "@/components/form/DynamicForm";
 import PageHeader from "@/components/PageHeader";
-import { ProfileSidebar } from "@/components/profile/profile-page/ProfileSidebar";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
-import Image from "next/image";
+import { BriefcaseBusiness, Users } from "lucide-react";
 import React from "react";
 
-const sidebarNavItems = [
-  { title: "Compte", href: "/profile?section=compte" },
-  { title: "Mes Candidatures", href: "/profile?section=candidatures" },
+const steps = [
   {
     title: "Informations Personnelles",
-    href: "/profile?section=info-personnelles",
+    href: "/candidature?section=info-personnelles",
+    icon: <Users />,
   },
   {
-    title: "Qualifications et Expériences",
-    href: "/profile?section=info-professionnelles",
+    title: "Qualifications/Expériences",
+    href: "/candidature?section=info-professionnelles",
+    icon: <BriefcaseBusiness />,
   },
 ];
 
@@ -34,7 +34,7 @@ const CandidateFormPage = () => {
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="lg:w-1/5">
             <div className="profile-image flex justify-center items-center mb-6"></div>
-            <ProfileSidebar items={sidebarNavItems} />
+            <CandidatureSidebar items={steps} />
           </aside>
           <main className="flex-1 lg:max-w-2xl">
             <DynamicForm category="candidate" schema={candidateFormSchema} />

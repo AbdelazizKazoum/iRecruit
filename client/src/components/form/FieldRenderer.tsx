@@ -3,9 +3,9 @@
 
 import React from "react";
 import TextInput from "./fields/TextInput";
-import DatePicker from "./fields/DatePicker";
 import SelectField from "./fields/SelectFieldProps";
 import CheckboxField from "./fields/CheckboxField";
+import DatePicker from "./fields/DatePicker";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
@@ -58,15 +58,16 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         />
       );
 
-    // case "date":
-    //   return (
-    //     <DatePicker
-    //       selectedDate={value}
-    //       // onChange={onChange as (date: Date | null) => void}
-    //       fieldConfig={fieldConfig}
-    //       field={field}
-    //     />
-    //   );
+    case "date":
+      return (
+        <DatePicker
+          selectedDate={value}
+          // onChange={onChange as (date: Date | null) => void}
+          fieldConfig={fieldConfig}
+          field={field}
+          error={error}
+        />
+      );
     default:
       return null;
   }

@@ -26,7 +26,7 @@ const CheckboxField: React.FC<TextInputProps> = ({
   error,
 }) => {
   return (
-    <FormItem style={{ marginTop: "15px" }}>
+    <FormItem style={{ marginTop: "15px", marginBottom: "15px" }}>
       <div
         className={cn(
           "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4  ",

@@ -65,8 +65,8 @@ function ProfileForm({ user }: { user: UserType | null }) {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
-                name="username"
                 control={form.control}
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nom d&apos;utilisateur</FormLabel>
@@ -76,6 +76,52 @@ function ProfileForm({ user }: { user: UserType | null }) {
                     <FormDescription>
                       C&apos;est votre nom affiché publiquement. Il peut
                       s&apos;agir de votre vrai nom ou d&apos;un pseudonyme.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sélectionnez un email vérifié à afficher" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={user?.email || ""}>
+                          {user?.email}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Parlez-nous un peu de vous"
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Vous pouvez partager quelques informations sur vous-même,
+                      comme vos intérêts.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

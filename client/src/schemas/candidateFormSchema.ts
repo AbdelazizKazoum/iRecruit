@@ -10,13 +10,13 @@ export const candidateFormSchema = z.object({
     .max(15, { message: "Phone number should not exceed 15 digits" }),
   gender: z.enum(["male", "female", "other"]),
   experience: z.boolean(),
-  // availableStartDate: z.string().refine(
-  //   (date) => {
-  //     const parsedDate = new Date(date);
-  //     return !isNaN(parsedDate.getTime());
-  //   },
-  //   { message: "Invalid date" }
-  // ),
+  availableStartDate: z.string().refine(
+    (date) => {
+      const parsedDate = new Date(date);
+      return !isNaN(parsedDate.getTime());
+    },
+    { message: "Invalid date" }
+  ),
 });
 
 // TypeScript type inference from the schema

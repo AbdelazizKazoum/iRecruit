@@ -15,40 +15,58 @@ import { CalendarIcon } from "lucide-react";
 import React from "react";
 import { Calendar } from "@/components/ui/calendar";
 import "react-datepicker/dist/react-datepicker.css";
+import { Popover } from "@radix-ui/react-popover";
+import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface DatePickerProps {
   fieldConfig: any;
   selectedDate: Date | null;
   // onChange: (date: Date | null) => void;
   field: any;
+  error: any;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => (
+const DatePicker: React.FC<DatePickerProps> = ({
+  fieldConfig,
+  field,
+  error,
+}) => (
   <div>
     <FormItem className="flex flex-col">
-      <FormLabel>Date of birth</FormLabel>
-      <FormControl>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[240px] pl-3 text-left font-normal",
-            !field.value && "text-muted-foreground"
-          )}
-        >
-          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-        </Button>
-      </FormControl>
-      <Calendar
-        mode="single"
-        selected={field.value}
-        onSelect={field.onChange}
-        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-        initialFocus
-      />
-      <FormDescription>
-        Your date of birth is used to calculate your age.
-      </FormDescription>
+      <FormLabel>{fieldConfig.label}</FormLabel>
+      <Popover>
+        <PopoverTrigger asChild>
+          <FormControl>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "pl-3 text-left font-normal",
+                !field.value && "text-muted-foreground",
+                error[fieldConfig.name] && " border-destructive"
+              )}
+            >
+              {field.value ? (
+                format(field.value, "PPP")
+              ) : (
+                <span>{fieldConfig.placeholder}</span>
+              )}
+              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            </Button>
+          </FormControl>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={field.value}
+            onSelect={field.onChange}
+            disabled={(date) =>
+              date > new Date() || date < new Date("1900-01-01")
+            }
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+      <FormDescription>{fieldConfig.description}</FormDescription>
       <FormMessage />
     </FormItem>
   </div>

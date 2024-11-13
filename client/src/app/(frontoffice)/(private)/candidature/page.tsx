@@ -2,9 +2,24 @@
 "use client";
 import DynamicForm from "@/components/form/DynamicForm";
 import PageHeader from "@/components/PageHeader";
+import { ProfileSidebar } from "@/components/profile/profile-page/ProfileSidebar";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
+import Image from "next/image";
 import React from "react";
+
+const sidebarNavItems = [
+  { title: "Compte", href: "/profile?section=compte" },
+  { title: "Mes Candidatures", href: "/profile?section=candidatures" },
+  {
+    title: "Informations Personnelles",
+    href: "/profile?section=info-personnelles",
+  },
+  {
+    title: "Qualifications et Expériences",
+    href: "/profile?section=info-professionnelles",
+  },
+];
 
 const CandidateFormPage = () => {
   return (
@@ -17,6 +32,10 @@ const CandidateFormPage = () => {
 
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+          <aside className="lg:w-1/5">
+            <div className="profile-image flex justify-center items-center mb-6"></div>
+            <ProfileSidebar items={sidebarNavItems} />
+          </aside>
           <main className="flex-1 lg:max-w-2xl">
             <DynamicForm category="candidate" schema={candidateFormSchema} />
           </main>

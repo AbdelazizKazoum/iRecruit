@@ -1,33 +1,46 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/form/fields/DatePicker.tsx
 
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import React from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface DatePickerProps {
-  label: string;
-  name: string;
+  fieldConfig: any;
   selectedDate: Date | null;
-  onChange: (date: Date | null) => void;
-  error?: string;
+  form: any;
+  // onChange: (date: Date | null) => void;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({
-  label,
-  name,
-  selectedDate,
-  onChange,
-  error,
-}) => (
-  <div className="form-group">
-    <label htmlFor={name}>{label}</label>
-    <ReactDatePicker
-      selected={selectedDate}
-      onChange={onChange}
-      className={`form-control ${error ? "is-invalid" : ""}`}
-      dateFormat="yyyy-MM-dd"
+const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, form }) => (
+  <div>
+    <FormField
+      control={form.control}
+      name={fieldConfig.name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormControl>
+            <ReactDatePicker
+              selected={new Date()}
+              // className={`form-control ${error ? "is-invalid" : ""}`}
+              dateFormat="yyyy-MM-dd"
+              {...field}
+            />
+          </FormControl>
+          <FormDescription>{fieldConfig.description}</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
     />
-    {error && <div className="invalid-feedback">{error}</div>}
   </div>
 );
 

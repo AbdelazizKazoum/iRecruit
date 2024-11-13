@@ -5,15 +5,18 @@ import { create } from "zustand";
 
 interface FormState {
   formData: { [key: string]: any };
-  setFormData: (category: string, value: any) => void;
+  setFormData: (category: string, fieldName: string, value: any) => void;
   resetFormData: () => void;
 }
 
 export const useFormStore = create<FormState>((set) => ({
   formData: {},
-  setFormData: (category, data) =>
+  setFormData: (category, fieldName, value) =>
     set((state) => ({
-      formData: { ...state.formData, [category]: data },
+      formData: {
+        ...state.formData,
+        [category]: { ...state.formData[category], [fieldName]: value },
+      },
     })),
   resetFormData: () => set({ formData: {} }),
 }));

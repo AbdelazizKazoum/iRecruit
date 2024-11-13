@@ -1,37 +1,48 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/form/fields/TextInput.tsx
 
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import React from "react";
 
 interface TextInputProps {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
-  placeholder?: string;
+  fieldConfig: any;
+  // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  form: any;
+  value: any;
 }
 
-const TextInput: React.FC<TextInputProps> = ({
-  label,
-  name,
-  value,
-  onChange,
-  error,
-  placeholder,
-}) => (
-  <div className="form-group">
-    <label htmlFor={name}>{label}</label>
-    <input
-      type="text"
-      id={name}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={`form-control ${error ? "is-invalid" : ""}`}
-    />
-    {error && <div className="invalid-feedback">{error}</div>}
-  </div>
-);
+const TextInput: React.FC<TextInputProps> = ({ form, fieldConfig, value }) => {
+  console.log("🚀 ~ fieldConfig:", fieldConfig);
+  return (
+    <div>
+      <FormField
+        control={form.control}
+        name={fieldConfig.name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{fieldConfig.label}</FormLabel>
+            <FormControl>
+              <Input
+                placeholder={fieldConfig.placeholder}
+                {...field}
+                // defaultValue={value}
+              />
+            </FormControl>
+            <FormDescription>{fieldConfig.description}</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  );
+};
 
 export default TextInput;

@@ -4,21 +4,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormStore } from "@/stores/useFormStore";
 
 const useDynamicForm = (schema: any, category: string) => {
-  const { control, handleSubmit, reset, formState } = useForm({
+  const form = useForm({
     resolver: zodResolver(schema),
   });
-  const { errors } = formState;
-  const setFormData = useFormStore((state: any) => state.updateFormData);
 
-  const onSubmit = (data: any) => {
+  const { handleSubmit } = form;
+  const setFormData = useFormStore((state: any) => state.setFormData);
+
+  const onSubmit = (data) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
+
     setFormData(category, data);
   };
 
   return {
-    control,
     handleSubmit: handleSubmit(onSubmit),
-    errors,
-    reset,
+    form,
   };
 };
 

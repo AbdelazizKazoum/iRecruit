@@ -5,70 +5,59 @@ import React from "react";
 import TextInput from "./fields/TextInput";
 import DatePicker from "./fields/DatePicker";
 import SelectField from "./fields/SelectFieldProps";
-import CheckboxField from "./fields/CheckboxField";
+// import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
-  field: any;
-  value: any;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
-  ) => void;
-  error?: string;
+  fieldConfig: any;
+  value?: any;
+  // onChange: (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
+  // ) => void;
+  form: any;
 }
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
-  field,
+  fieldConfig,
   value,
-  onChange,
-  error,
+  // onChange,
+  // error,
+  form,
 }) => {
-  switch (field.type) {
+  switch (fieldConfig.type) {
     case "text":
       return (
         <TextInput
-          label={field.label}
-          name={field.name}
+          form={form}
+          fieldConfig={fieldConfig}
           value={value}
-          onChange={
-            onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
-          }
-          error={error}
-          placeholder={field.placeholder}
+          // onChange={
+          //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
+          // }
         />
       );
     case "select":
       return (
-        <SelectField
-          label={field.label}
-          name={field.name}
-          options={field.options}
-          value={value}
-          onChange={
-            onChange as (e: React.ChangeEvent<HTMLSelectElement>) => void
-          }
-          error={error}
-        />
+        <SelectField value={value} form={form} fieldConfig={fieldConfig} />
       );
-    case "checkbox":
-      return (
-        <CheckboxField
-          label={field.label}
-          name={field.name}
-          checked={value}
-          onChange={
-            onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
-          }
-          error={error}
-        />
-      );
+    // case "checkbox":
+    //   return (
+    //     <CheckboxField
+    //       label={field.label}
+    //       name={field.name}
+    //       checked={value}
+    //       onChange={
+    //         onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
+    //       }
+    //       error={error}
+    //     />
+    //   );
     case "date":
       return (
         <DatePicker
-          label={field.label}
-          name={field.name}
           selectedDate={value}
-          onChange={onChange as (date: Date | null) => void}
-          error={error}
+          // onChange={onChange as (date: Date | null) => void}
+          form={form}
+          fieldConfig={fieldConfig}
         />
       );
     default:

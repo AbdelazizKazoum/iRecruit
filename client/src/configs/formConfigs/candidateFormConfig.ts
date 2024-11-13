@@ -10,7 +10,7 @@ export const candidateFormConfig = {
       placeholder: "Enter your full name",
     },
     {
-      type: "email",
+      type: "text",
       name: "email",
       label: "Email Address",
       placeholder: "Enter your email",

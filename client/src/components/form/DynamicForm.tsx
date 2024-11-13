@@ -7,8 +7,9 @@ import { formConfigFactory } from "../../utils/formConfigFactory";
 import { useFormStore } from "@/stores/useFormStore";
 import FieldRenderer from "./FieldRenderer";
 import { Button } from "../ui/button";
-import { Form } from "../ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { Separator } from "../ui/separator";
+import { Loader } from "lucide-react";
 
 const DynamicForm = ({ category, schema }: any) => {
   const config = formConfigFactory(category);
@@ -31,18 +32,37 @@ const DynamicForm = ({ category, schema }: any) => {
         </div>
         <Separator />
         <Form {...form}>
-          <form onSubmit={handleSubmit}>
+          <form
+            className="space-y-2"
+            onSubmit={form.handleSubmit(handleSubmit)}
+          >
             {config.fields.map((fieldConfig: any) => (
-              <div key={fieldConfig.name}>
-                <FieldRenderer
-                  fieldConfig={fieldConfig}
-                  form={form}
-                  value={formData[category]?.[fieldConfig.name]}
-                  // onChange={handleFieldChange}
-                />
-              </div>
+              <FormField
+                key={fieldConfig.name}
+                control={form.control}
+                name={fieldConfig.name}
+                render={({ field }) => (
+                  <FieldRenderer
+                    fieldConfig={fieldConfig}
+                    field={field}
+                    value={formData[category]?.[fieldConfig.name]}
+                    // onChange={handleFieldChange}
+                    error={form.formState.errors}
+                  />
+                )}
+              />
             ))}
-            <Button type="submit">Submit</Button>
+            <Button
+              size="lg"
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              style={{ marginTop: "15px" }}
+            >
+              {form.formState.isSubmitting ? (
+                <Loader className="animate-spin mr-2 h-4 w-4" />
+              ) : null}
+              Enregistrer
+            </Button>{" "}
           </form>
         </Form>
       </div>

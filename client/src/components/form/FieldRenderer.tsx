@@ -5,6 +5,7 @@ import React from "react";
 import TextInput from "./fields/TextInput";
 import DatePicker from "./fields/DatePicker";
 import SelectField from "./fields/SelectFieldProps";
+import CheckboxField from "./fields/CheckboxField";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
@@ -13,23 +14,26 @@ interface FieldRendererProps {
   // onChange: (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
-  form: any;
+  field: any;
+  error?: any;
 }
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
   fieldConfig,
   value,
+  error,
   // onChange,
   // error,
-  form,
+  field,
 }) => {
   switch (fieldConfig.type) {
     case "text":
       return (
         <TextInput
-          form={form}
           fieldConfig={fieldConfig}
+          field={field}
           value={value}
+          error={error}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -37,29 +41,32 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
       );
     case "select":
       return (
-        <SelectField value={value} form={form} fieldConfig={fieldConfig} />
-      );
-    // case "checkbox":
-    //   return (
-    //     <CheckboxField
-    //       label={field.label}
-    //       name={field.name}
-    //       checked={value}
-    //       onChange={
-    //         onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
-    //       }
-    //       error={error}
-    //     />
-    //   );
-    case "date":
-      return (
-        <DatePicker
-          selectedDate={value}
-          // onChange={onChange as (date: Date | null) => void}
-          form={form}
+        <SelectField
+          value={value}
           fieldConfig={fieldConfig}
+          field={field}
+          error={error}
         />
       );
+    case "checkbox":
+      return (
+        <CheckboxField
+          value={value}
+          fieldConfig={fieldConfig}
+          field={field}
+          error={error}
+        />
+      );
+
+    // case "date":
+    //   return (
+    //     <DatePicker
+    //       selectedDate={value}
+    //       // onChange={onChange as (date: Date | null) => void}
+    //       fieldConfig={fieldConfig}
+    //       field={field}
+    //     />
+    //   );
     default:
       return null;
   }

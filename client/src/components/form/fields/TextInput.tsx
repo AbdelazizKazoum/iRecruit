@@ -4,44 +4,37 @@
 import {
   FormControl,
   FormDescription,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/libs/utils";
 import React from "react";
 
 interface TextInputProps {
   fieldConfig: any;
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  form: any;
-  value: any;
+  value?: any;
+  field: any;
+  error?: any;
 }
 
-const TextInput: React.FC<TextInputProps> = ({ form, fieldConfig, value }) => {
-  console.log("🚀 ~ fieldConfig:", fieldConfig);
+const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field, error }) => {
   return (
-    <div>
-      <FormField
-        control={form.control}
-        name={fieldConfig.name}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{fieldConfig.label}</FormLabel>
-            <FormControl>
-              <Input
-                placeholder={fieldConfig.placeholder}
-                {...field}
-                // defaultValue={value}
-              />
-            </FormControl>
-            <FormDescription>{fieldConfig.description}</FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </div>
+    <FormItem>
+      <FormLabel>{fieldConfig.label}</FormLabel>
+      <FormControl>
+        <Input
+          placeholder={fieldConfig.placeholder}
+          {...field}
+          className={cn(error[fieldConfig.name] && "border-destructive ")}
+          // defaultValue={value}
+        />
+      </FormControl>
+      <FormDescription>{fieldConfig.description}</FormDescription>
+      <FormMessage />
+    </FormItem>
   );
 };
 

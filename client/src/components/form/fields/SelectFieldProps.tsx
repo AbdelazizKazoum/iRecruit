@@ -3,7 +3,6 @@
 
 import {
   FormControl,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
@@ -15,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/libs/utils";
 import React from "react";
 
 interface Option {
@@ -24,40 +24,38 @@ interface Option {
 
 interface SelectFieldProps {
   fieldConfig: any;
-  form: any;
   value?: string | number;
   // onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  field: any;
+  error: any;
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({
-  form,
   fieldConfig,
+  field,
   // onChange,
+  error,
 }) => (
-  <FormField
-    control={form.control}
-    name="email"
-    render={({ field }) => (
-      <FormItem>
-        <FormLabel>{fieldConfig.label}</FormLabel>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
-          <FormControl>
-            <SelectTrigger>
-              <SelectValue placeholder={fieldConfig.placeholder} />
-            </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            {fieldConfig.options.map((item: Option, index: number) => (
-              <SelectItem key={index} value={item?.value || ""}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </FormItem>
-    )}
-  />
+  <FormItem>
+    <FormLabel>{fieldConfig.label}</FormLabel>
+    <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <FormControl>
+        <SelectTrigger
+          className={cn(error[fieldConfig?.name] && " border-destructive ")}
+        >
+          <SelectValue placeholder={fieldConfig.placeholder} />
+        </SelectTrigger>
+      </FormControl>
+      <SelectContent>
+        {fieldConfig.options.map((item: Option, index: number) => (
+          <SelectItem key={index} value={item?.value || ""}>
+            {item.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+    <FormMessage />
+  </FormItem>
 );
 
 export default SelectField;

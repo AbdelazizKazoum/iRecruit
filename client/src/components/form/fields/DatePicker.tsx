@@ -32,15 +32,15 @@ const DatePicker: React.FC<DatePickerProps> = ({
   error,
 }) => (
   <div>
-    <FormItem className="flex flex-col">
-      <FormLabel>{fieldConfig.label}</FormLabel>
+    <FormItem className="flex flex-col justify-end  align-bottom ">
+      <FormLabel className=" h-[18.4px] ">{fieldConfig.label}</FormLabel>
       <Popover>
         <PopoverTrigger asChild>
           <FormControl>
             <Button
               variant={"outline"}
               className={cn(
-                "pl-3 text-left font-normal",
+                "pl-3 m-0 text-left font-normal ",
                 !field.value && "text-muted-foreground",
                 error[fieldConfig.name] && " border-destructive"
               )}

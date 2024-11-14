@@ -16,26 +16,18 @@ const DynamicForm = ({ category, schema }: any) => {
   const { form, handleSubmit } = useDynamicForm(schema, config.category);
 
   const { formData } = useFormStore();
-
-  // const handleFieldChange = (name: string, value: string) => {
-  //   setFormData(category, name, value); // Update the global store with category-based data
-  // };
-
   return (
-    <div className="flex-1 lg:max-w-2xl">
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-black-600/85">Candidature</h3>
-          <p className="text-sm text-muted-foreground">
-            C&apos;est ainsi que les autres vous verront sur le site.
-          </p>
-        </div>
-        <Separator />
-        <Form {...form}>
-          <form
-            className="space-y-2"
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium text-black-600/85">Candidature</h3>
+        <p className="text-sm text-muted-foreground">
+          C&apos;est ainsi que les autres vous verront sur le site.
+        </p>
+      </div>
+      <Separator />
+      <Form {...form}>
+        <form className="space-y-2" onSubmit={form.handleSubmit(handleSubmit)}>
+          <div className=" grid grid-cols-2 gap-4 ">
             {config.fields.map((fieldConfig: any) => (
               <FormField
                 key={fieldConfig.name}
@@ -52,20 +44,20 @@ const DynamicForm = ({ category, schema }: any) => {
                 )}
               />
             ))}
-            <Button
-              size="lg"
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              style={{ marginTop: "15px" }}
-            >
-              {form.formState.isSubmitting ? (
-                <Loader className="animate-spin mr-2 h-4 w-4" />
-              ) : null}
-              Enregistrer
-            </Button>{" "}
-          </form>
-        </Form>
-      </div>
+          </div>
+          <Button
+            size="lg"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            style={{ marginTop: "15px" }}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader className="animate-spin mr-2 h-4 w-4" />
+            ) : null}
+            Enregistrer
+          </Button>{" "}
+        </form>
+      </Form>
     </div>
   );
 };

@@ -45,7 +45,7 @@ export function CandidatureSidebar({
         >
           <div
             className={cn(
-              "flex items-center justify-center w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
+              "flex items-center justify-center min-w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
               fullPathWithQuery === item.href && "text-white-500 bg-primary  "
             )}
           >

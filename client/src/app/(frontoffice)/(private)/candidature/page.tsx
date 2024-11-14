@@ -1,7 +1,7 @@
 // src/pages/CandidateFormPage.tsx
 "use client";
 import { CandidatureSidebar } from "@/components/candidature/CandidatureSidebar";
-import DynamicForm from "@/components/form/DynamicForm";
+import DynamicNormalForm from "@/components/form/DynamicNormalForm";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
@@ -37,7 +37,10 @@ const CandidateFormPage = () => {
             <CandidatureSidebar items={steps} />
           </aside>
           <main className="flex-1 ">
-            <DynamicForm category="candidate" schema={candidateFormSchema} />
+            <DynamicNormalForm
+              category="candidate"
+              schema={candidateFormSchema}
+            />
           </main>
         </div>
       </div>

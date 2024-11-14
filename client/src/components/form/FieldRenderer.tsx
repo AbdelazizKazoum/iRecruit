@@ -15,13 +15,12 @@ interface FieldRendererProps {
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
   field: any;
-  error?: any;
+  watch: any;
 }
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
   fieldConfig,
   value,
-  error,
   // onChange,
   // error,
   field,
@@ -33,7 +32,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           fieldConfig={fieldConfig}
           field={field}
           value={value}
-          error={error}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -41,21 +39,11 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
       );
     case "select":
       return (
-        <SelectField
-          value={value}
-          fieldConfig={fieldConfig}
-          field={field}
-          error={error}
-        />
+        <SelectField value={value} fieldConfig={fieldConfig} field={field} />
       );
     case "checkbox":
       return (
-        <CheckboxField
-          value={value}
-          fieldConfig={fieldConfig}
-          field={field}
-          error={error}
-        />
+        <CheckboxField value={value} fieldConfig={fieldConfig} field={field} />
       );
 
     case "date":
@@ -65,7 +53,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           // onChange={onChange as (date: Date | null) => void}
           fieldConfig={fieldConfig}
           field={field}
-          error={error}
         />
       );
     default:

@@ -83,16 +83,81 @@ export const candidateFormConfig = {
       label: "Numéro de téléphone*",
       placeholder: "Entrez votre numéro de téléphone",
     },
+
     {
       type: "text",
       name: "email",
       label: "Email*",
       placeholder: "Entrez votre adresse email",
     },
+
+    {
+      type: "group",
+      title: "Do you have work experience?",
+      description: "",
+
+      group: [
+        {
+          type: "checkbox",
+          name: "fonctionnaire",
+          label: "Fonctionnaire ?",
+        },
+
+        {
+          type: "text",
+          name: "fonction",
+          label: "Organisme/établissement*",
+          placeholder: "",
+          depondsOn: ["fonctionnaire"],
+        },
+        {
+          type: "text",
+          name: "ppr",
+          label: "P.P.R / Matricule*",
+          placeholder: "",
+          depondsOn: ["fonctionnaire"],
+        },
+        {
+          type: "text",
+          name: "attestation",
+          label: "Attestation de travail (Pdf, Max 10Mo)*",
+          placeholder: "",
+          depondsOn: ["fonctionnaire"],
+        },
+      ],
+    },
+
+    {
+      type: "group",
+      title: "Do you have work experience?",
+      description: "",
+
+      group: [
+        {
+          type: "checkbox",
+          name: "handicap",
+          label: "Situation de handicap ?",
+        },
+
+        {
+          type: "text",
+          name: "fonction",
+          label: "TypeHandicap*",
+          placeholder: "",
+          depondsOn: ["handicap"],
+        },
+      ],
+    },
+
     {
       type: "checkbox",
-      name: "experience",
-      label: "Do you have work experience?",
+      name: "AncienCombattant",
+      label: "Ancien combattant ?",
+    },
+    {
+      type: "checkbox",
+      name: "PupillesNation",
+      label: "Pupilles de la nation ?",
     },
   ],
 };

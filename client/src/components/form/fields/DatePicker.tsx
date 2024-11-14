@@ -4,7 +4,6 @@
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
-  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
@@ -31,11 +30,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
   field,
   error,
 }) => (
-  <div>
-    <FormItem className="flex flex-col justify-end  align-bottom ">
+  <>
+    <FormItem className="flex flex-col justify-end ">
       <FormLabel className=" h-[18.4px] ">{fieldConfig.label}</FormLabel>
       <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="flex">
           <FormControl>
             <Button
               variant={"outline"}
@@ -66,10 +65,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
           />
         </PopoverContent>
       </Popover>
-      <FormDescription>{fieldConfig.description}</FormDescription>
+      {/* <FormDescription>{fieldConfig.description}</FormDescription> */}
       <FormMessage />
     </FormItem>
-  </div>
+  </>
 );
 
 export default DatePicker;

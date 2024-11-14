@@ -11,16 +11,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/libs/utils";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
   fieldConfig: any;
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
-  error?: any;
 }
 
-const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field, error }) => {
+const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const watchValues = watch();
+  console.log("🚀 ~ watchValues:", watchValues);
   return (
     <FormItem>
       <FormLabel>{fieldConfig.label}</FormLabel>
@@ -28,7 +35,7 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field, error }) => {
         <Input
           placeholder={fieldConfig.placeholder}
           {...field}
-          className={cn(error[fieldConfig.name] && "border-destructive ")}
+          className={cn(errors[fieldConfig.name] && "border-destructive ")}
           // defaultValue={value}
         />
       </FormControl>

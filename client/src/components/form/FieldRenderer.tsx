@@ -15,7 +15,6 @@ interface FieldRendererProps {
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
   field: any;
-  watch: any;
 }
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({

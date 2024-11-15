@@ -58,7 +58,6 @@ const DynamicNormalForm = ({ category, schema }: any) => {
                           field={field}
                           value={formData[category]?.[fieldConfig.name]}
                           // onChange={handleFieldChange}
-                          error={form.formState.errors}
                         />
                       )}
                     />

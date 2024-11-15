@@ -11,26 +11,26 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/libs/utils";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
   fieldConfig: any;
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
-  error: any;
 }
 
-const CheckboxField: React.FC<TextInputProps> = ({
-  fieldConfig,
-  field,
-  error,
-}) => {
+const CheckboxField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <FormItem style={{ marginTop: "15px", marginBottom: "15px" }}>
       <div
         className={cn(
           "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4  ",
-          error[fieldConfig.name] && "border-destructive"
+          errors[fieldConfig.name] && "border-destructive"
         )}
       >
         <FormControl>

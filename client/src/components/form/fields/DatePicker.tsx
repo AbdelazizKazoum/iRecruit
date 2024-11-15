@@ -16,59 +16,67 @@ import { Calendar } from "@/components/ui/calendar";
 import "react-datepicker/dist/react-datepicker.css";
 import { Popover } from "@radix-ui/react-popover";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useFormContext } from "react-hook-form";
 
 interface DatePickerProps {
   fieldConfig: any;
   selectedDate: Date | null;
   // onChange: (date: Date | null) => void;
   field: any;
-  error: any;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({
-  fieldConfig,
-  field,
-  error,
-}) => (
-  <>
-    <FormItem className="flex flex-col justify-end ">
-      <FormLabel className=" h-[18.4px] ">{fieldConfig.label}</FormLabel>
-      <Popover>
-        <PopoverTrigger asChild className="flex">
-          <FormControl>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "pl-3 m-0 text-left font-normal ",
-                !field.value && "text-muted-foreground",
-                error[fieldConfig.name] && " border-destructive"
-              )}
-            >
-              {field.value ? (
-                format(field.value, "PPP")
-              ) : (
-                <span>{fieldConfig.placeholder}</span>
-              )}
-              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-            </Button>
-          </FormControl>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={field.value}
-            onSelect={field.onChange}
-            disabled={(date) =>
-              date > new Date() || date < new Date("1900-01-01")
-            }
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-      {/* <FormDescription>{fieldConfig.description}</FormDescription> */}
-      <FormMessage />
-    </FormItem>
-  </>
-);
+const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const dependsOn = watch(fieldConfig.dependsOn);
+  console.log("🚀 ~ dependsOn:", dependsOn);
+
+  return (
+    <>
+      {dependsOn && (
+        <FormItem className="flex flex-col justify-end ">
+          <FormLabel className=" h-[18.4px] ">{fieldConfig.label}</FormLabel>
+          <Popover>
+            <PopoverTrigger asChild className="flex">
+              <FormControl>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "pl-3 m-0 text-left font-normal ",
+                    !field.value && "text-muted-foreground",
+                    errors[fieldConfig.name] && " border-destructive"
+                  )}
+                >
+                  {field.value ? (
+                    format(field.value, "PPP")
+                  ) : (
+                    <span>{fieldConfig.placeholder}</span>
+                  )}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={field.value}
+                onSelect={field.onChange}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          {/* <FormDescription>{fieldConfig.description}</FormDescription> */}
+          <FormMessage />
+        </FormItem>
+      )}
+    </>
+  );
+};
 
 export default DatePicker;

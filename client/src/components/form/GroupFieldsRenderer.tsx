@@ -29,8 +29,6 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   category,
   // error,
 }) => {
-  console.log("🚀 ~ form:", form.watch);
-
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
@@ -49,9 +47,7 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
                     fieldConfig={fieldGroup}
                     field={field}
                     value={formData[category]?.[fieldGroup.name]}
-                    watch={form.watch}
                     // onChange={handleFieldChange}
-                    error={form.formState.errors}
                   />
                 )}
               />

@@ -36,30 +36,39 @@ const SelectField: React.FC<SelectFieldProps> = ({
   // onChange,
 }) => {
   const {
+    watch,
     formState: { errors },
   } = useFormContext();
 
+  const dependsOn = watch(fieldConfig.dependsOn);
+  console.log("🚀 ~ dependsOn:", dependsOn);
   return (
-    <FormItem>
-      <FormLabel>{fieldConfig.label}</FormLabel>
-      <Select onValueChange={field.onChange} defaultValue={field.value}>
-        <FormControl>
-          <SelectTrigger
-            className={cn(errors[fieldConfig?.name] && " border-destructive ")}
-          >
-            <SelectValue placeholder={fieldConfig.placeholder} />
-          </SelectTrigger>
-        </FormControl>
-        <SelectContent>
-          {fieldConfig.options.map((item: Option, index: number) => (
-            <SelectItem key={index} value={item?.value || ""}>
-              {item.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <FormMessage />
-    </FormItem>
+    <>
+      {dependsOn && (
+        <FormItem>
+          <FormLabel>{fieldConfig.label}</FormLabel>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger
+                className={cn(
+                  errors[fieldConfig?.name] && " border-destructive "
+                )}
+              >
+                <SelectValue placeholder={fieldConfig.placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {fieldConfig.options.map((item: Option, index: number) => (
+                <SelectItem key={index} value={item?.value || ""}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    </>
   );
 };
 

@@ -26,22 +26,27 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
     formState: { errors },
   } = useFormContext();
 
-  const watchValues = watch();
-  console.log("🚀 ~ watchValues:", watchValues);
+  const dependsOn = watch(fieldConfig.dependsOn);
+  console.log("🚀 ~ dependsOn:", dependsOn);
+
   return (
-    <FormItem>
-      <FormLabel>{fieldConfig.label}</FormLabel>
-      <FormControl>
-        <Input
-          placeholder={fieldConfig.placeholder}
-          {...field}
-          className={cn(errors[fieldConfig.name] && "border-destructive ")}
-          // defaultValue={value}
-        />
-      </FormControl>
-      <FormDescription>{fieldConfig.description}</FormDescription>
-      <FormMessage />
-    </FormItem>
+    <>
+      {dependsOn && (
+        <FormItem>
+          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormControl>
+            <Input
+              placeholder={fieldConfig.placeholder}
+              {...field}
+              className={cn(errors[fieldConfig.name] && "border-destructive ")}
+              // defaultValue={value}
+            />
+          </FormControl>
+          <FormDescription>{fieldConfig.description}</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    </>
   );
 };
 

@@ -32,7 +32,6 @@ const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
   } = useFormContext();
 
   const dependsOn = watch(fieldConfig.dependsOn);
-  console.log("🚀 ~ dependsOn:", dependsOn);
 
   return (
     <>

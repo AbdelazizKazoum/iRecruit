@@ -141,7 +141,7 @@ export const candidateFormConfig = {
 
         {
           type: "text",
-          name: "fonction",
+          name: "typeHandicap",
           label: "TypeHandicap*",
           placeholder: "",
           dependsOn: "handicap",

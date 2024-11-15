@@ -27,7 +27,6 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
   } = useFormContext();
 
   const dependsOn = watch(fieldConfig.dependsOn);
-  console.log("🚀 ~ dependsOn:", dependsOn);
 
   return (
     <>

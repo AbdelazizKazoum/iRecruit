@@ -41,7 +41,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
   } = useFormContext();
 
   const dependsOn = watch(fieldConfig.dependsOn);
-  console.log("🚀 ~ dependsOn:", dependsOn);
   return (
     <>
       {dependsOn && (

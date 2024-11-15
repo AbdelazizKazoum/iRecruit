@@ -14,6 +14,11 @@ const useDynamicForm = (schema: any, category: string) => {
 
   const onSubmit = (data: any) => {
     console.log("🚀 ~ onSubmit ~ data:", data);
+    const formData = new FormData();
+    // Append user data (other form fields)
+    formData.append("userData", data);
+
+    console.log("🚀 ~ onSubmit ~ formData:", formData);
 
     setFormData(category, data);
   };

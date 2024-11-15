@@ -38,7 +38,21 @@ export const candidateFormSchema = z
     // Other Fields
     ancienCombattant: z.boolean().optional(),
     pupillesNation: z.boolean().optional(),
+    test: z.any(),
+
+    cinPdf: z.any(), // Check if the input is a File object
+    // // .refine((file) => file.size <= 5 * 1024 * 1024, {
+    // //   // Validate file size (5MB max)
+    // //   message: "File must be less than 5MB",
+    // // })
+    // // .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
+    // //   // Validate file type (JPEG/PNG)
+    // //   message: "Only JPEG and PNG files are allowed",
+    // // }),
+    // bacPdf: z.string(), // Check if the input is a File object
+    // cvPdf: z.string(), // Check if the input is a File object
   })
+
   .superRefine((data, ctx) => {
     // Validation for "fonctionnaire"
     if (data.fonctionnaire) {

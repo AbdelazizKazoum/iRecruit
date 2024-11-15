@@ -6,31 +6,31 @@ export const candidateFormConfig = {
     {
       type: "text",
       name: "prenom",
-      label: "Prénom*",
+      label: "Prénom *",
       placeholder: "Entrez votre prénom",
     },
     {
       type: "text",
       name: "prenomAr",
-      label: "الإسم الشخصي*",
+      label: "الإسم الشخصي *",
       placeholder: "أدخل الإسم الشخصي",
     },
     {
       type: "text",
       name: "nom",
-      label: "Nom*",
+      label: "Nom *",
       placeholder: "Entrez votre nom",
     },
     {
       type: "text",
       name: "nomAr",
-      label: "الإسم العائلي*",
+      label: "الإسم العائلي *",
       placeholder: "أدخل الإسم العائلي",
     },
     {
       type: "text",
       name: "adresse",
-      label: "Adresse personnelle*",
+      label: "Adresse personnelle *",
       placeholder: "Entrez votre adresse personnelle",
     },
     {
@@ -42,25 +42,25 @@ export const candidateFormConfig = {
     {
       type: "text",
       name: "lieuNaissance",
-      label: "Lieu de naissance*",
+      label: "Lieu de naissance *",
       placeholder: "Entrez votre lieu de naissance",
     },
     {
       type: "text",
       name: "cin",
-      label: "CIN*",
+      label: "CIN *",
       placeholder: "Entrez votre CIN",
     },
     {
       type: "date",
       name: "dateNaissance",
-      label: "Date de naissance*",
+      label: "Date de naissance *",
       placeholder: "Sélectionnez votre date de naissance",
     },
     {
       type: "select",
       name: "sexe",
-      label: "Sexe*",
+      label: "Sexe *",
       options: [
         { value: "feminin", label: "Féminin" },
         { value: "masculin", label: "Masculin" },
@@ -80,14 +80,14 @@ export const candidateFormConfig = {
     {
       type: "text",
       name: "telephone",
-      label: "Numéro de téléphone*",
+      label: "Numéro de téléphone *",
       placeholder: "Entrez votre numéro de téléphone",
     },
 
     {
       type: "text",
       name: "email",
-      label: "Email*",
+      label: "Email *",
       placeholder: "Entrez votre adresse email",
     },
 
@@ -106,14 +106,14 @@ export const candidateFormConfig = {
         {
           type: "text",
           name: "fonction",
-          label: "Organisme/établissement*",
+          label: "Organisme/établissement *",
           placeholder: "",
           dependsOn: "fonctionnaire",
         },
         {
           type: "text",
           name: "ppr",
-          label: "P.P.R / Matricule*",
+          label: "P.P.R / Matricule *",
           placeholder: "",
           dependsOn: "fonctionnaire",
         },
@@ -129,7 +129,7 @@ export const candidateFormConfig = {
 
     {
       type: "group",
-      title: "Do you have work experience?",
+      title: "Avez-vous une expérience professionnelle ?",
       description: "",
 
       group: [
@@ -158,6 +158,21 @@ export const candidateFormConfig = {
       type: "checkbox",
       name: "PupillesNation",
       label: "Pupilles de la nation ?",
+    },
+    {
+      type: "file",
+      name: "cinPdf",
+      label: "CIN (Pdf, Max 10Mo) *",
+    },
+    {
+      type: "file",
+      name: "bacPdf",
+      label: "Bac (Pdf, Max 10Mo) *",
+    },
+    {
+      type: "file",
+      name: "cvPdf",
+      label: "CV (Pdf, Max 10Mo) *",
     },
   ],
 };

@@ -6,6 +6,7 @@ import TextInput from "./fields/TextInput";
 import SelectField from "./fields/SelectFieldProps";
 import CheckboxField from "./fields/CheckboxField";
 import DatePicker from "./fields/DatePicker";
+import FileInput from "./fields/FileInput";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
@@ -36,6 +37,17 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           // }
         />
       );
+    case "file":
+      return (
+        <FileInput
+          fieldConfig={fieldConfig}
+          field={field}
+          value={value}
+          // onChange={
+          //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
+          // }
+        />
+      );
     case "select":
       return (
         <SelectField value={value} fieldConfig={fieldConfig} field={field} />
@@ -54,6 +66,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           field={field}
         />
       );
+
     default:
       return null;
   }

@@ -26,7 +26,7 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
   // error,
 }) => {
-  const { control, trigger } = useFormContext();
+  const { control } = useFormContext();
   return (
     <>
       <Accordion type="single" collapsible className="w-full">

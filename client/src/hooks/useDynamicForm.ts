@@ -14,13 +14,26 @@ const useDynamicForm = (schema: any, category: string) => {
 
   const onSubmit = (data: any) => {
     console.log("🚀 ~ onSubmit ~ data:", data);
+
     const formData = new FormData();
-    // Append user data (other form fields)
-    formData.append("userData", data);
 
-    console.log("🚀 ~ onSubmit ~ formData:", formData);
+    // Append each field in 'data' dynamically to formData
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        if (value instanceof File || value instanceof Blob) {
+          // If the field is a file or Blob, append it directly
+          formData.append(key, value);
+        } else if (typeof value === "object") {
+          // Convert objects to JSON strings
+          formData.append(key, JSON.stringify(value));
+        } else {
+          // Append other values as they are (ensure they are strings)
+          formData.append(key, String(value));
+        }
+      }
+    });
 
-    setFormData(category, data);
+    setFormData(category, data); // Assuming setFormData accepts formData
   };
 
   return {

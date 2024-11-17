@@ -1,6 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 
-export const candidateFormSchema = z
+// TypeScript interface to define the structure
+export interface CandidateForm {
+  prenom: string;
+  prenomAr: string;
+  nom: string;
+  nomAr: string;
+  adresse: string;
+  adresseAr: string;
+  lieuNaissance: string;
+  cin: string;
+  dateNaissance: Date | string;
+  sexe: "feminin" | "masculin";
+  situation: "celibataire" | "divorce" | "marie" | "veuf";
+  telephone: string;
+  email: string;
+  fonctionnaire?: boolean;
+  fonction?: string;
+  ppr?: string;
+  attestation?: string;
+  handicap?: boolean;
+  TypeHandicap?: string;
+  AncienCombattant?: boolean;
+  PupillesNation?: boolean;
+}
+
+// Zod schema with conditional validation logic
+export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
   .object({
     prenom: z.string().min(1, "Le prénom est requis"),
     prenomAr: z.string().min(1, "الإسم الشخصي مطلوب"),
@@ -10,9 +37,12 @@ export const candidateFormSchema = z
     adresseAr: z.string().min(1, "العنوان الشخصي مطلوب"),
     lieuNaissance: z.string().min(1, "Le lieu de naissance est requis"),
     cin: z.string().min(1, "Le CIN est requis"),
-    dateNaissance: z.date().refine((date) => !isNaN(date.getTime()), {
-      message: "Date de naissance invalide",
-    }),
+    dateNaissance: z
+      .union([z.string(), z.date()])
+      .transform((date) => (typeof date === "string" ? new Date(date) : date))
+      .refine((date) => !isNaN(date.getTime()), {
+        message: "Date de naissance invalide",
+      }),
     sexe: z.enum(["feminin", "masculin"], {
       errorMap: () => ({ message: "Veuillez sélectionner votre sexe" }),
     }),
@@ -23,71 +53,86 @@ export const candidateFormSchema = z
       .string()
       .regex(/^\+?[0-9]{10,15}$/, "Numéro de téléphone invalide"),
     email: z.string().email("Adresse email invalide"),
-    experience: z.boolean().optional(),
 
-    // Fonctionnaire Fields
+    // Group fields with conditional validation
     fonctionnaire: z.boolean().optional(),
     fonction: z.string().optional(),
     ppr: z.string().optional(),
     attestation: z.string().optional(),
-
-    // Handicap Fields
     handicap: z.boolean().optional(),
-    typeHandicap: z.string().optional(),
+    TypeHandicap: z.string().optional(),
+    AncienCombattant: z.boolean().optional(),
+    PupillesNation: z.boolean().optional(),
 
-    // Other Fields
-    ancienCombattant: z.boolean().optional(),
-    pupillesNation: z.boolean().optional(),
-    test: z.any(),
-
-    cinPdf: z.any(), // Check if the input is a File object
-    // // .refine((file) => file.size <= 5 * 1024 * 1024, {
-    // //   // Validate file size (5MB max)
-    // //   message: "File must be less than 5MB",
-    // // })
-    // // .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
-    // //   // Validate file type (JPEG/PNG)
-    // //   message: "Only JPEG and PNG files are allowed",
-    // // }),
-    // bacPdf: z.string(), // Check if the input is a File object
-    // cvPdf: z.string(), // Check if the input is a File object
+    cinPdf: z
+      .instanceof(File) // Ensure it's a File object
+      .refine((file) => file.size <= 5 * 1024 * 1024, {
+        message: "File must be less than 5MB",
+      })
+      .refine(
+        (file) =>
+          [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
+            file.type
+          ),
+        { message: "Only PDF files are allowed" }
+      ),
+    bacPdf: z
+      .instanceof(File) // Ensure it's a File object
+      .refine((file) => file.size <= 5 * 1024 * 1024, {
+        message: "File must be less than 5MB",
+      })
+      .refine(
+        (file) =>
+          [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
+            file.type
+          ),
+        { message: "Only PDF files are allowed" }
+      ),
+    cvPdf: z
+      .instanceof(File) // Ensure it's a File object
+      .refine((file) => file.size <= 5 * 1024 * 1024, {
+        message: "File must be less than 5MB",
+      })
+      .refine(
+        (file) =>
+          [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
+            file.type
+          ),
+        { message: "Only PDF files are allowed" }
+      ),
   })
-
-  .superRefine((data, ctx) => {
-    // Validation for "fonctionnaire"
+  .superRefine((data: any, ctx: any) => {
+    // Conditional validation for fields depending on 'fonctionnaire'
     if (data.fonctionnaire) {
       if (!data.fonction) {
         ctx.addIssue({
-          code: "custom",
           path: ["fonction"],
           message:
-            "Organisme/établissement est requis si vous êtes fonctionnaire",
+            "L'organisme/établissement est requis si vous êtes fonctionnaire",
         });
       }
       if (!data.ppr) {
         ctx.addIssue({
-          code: "custom",
           path: ["ppr"],
-          message: "P.P.R / Matricule est requis si vous êtes fonctionnaire",
+          message: "Le P.P.R / Matricule est requis si vous êtes fonctionnaire",
         });
       }
       if (!data.attestation) {
         ctx.addIssue({
-          code: "custom",
           path: ["attestation"],
           message:
-            "Attestation de travail est requise si vous êtes fonctionnaire",
+            "L'attestation de travail est requise si vous êtes fonctionnaire",
         });
       }
     }
 
-    // Validation for "handicap"
-    if (data.handicap && !data.typeHandicap) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["typeHandicap"],
-        message:
-          "Type de handicap est requis si vous êtes en situation de handicap",
-      });
+    // Conditional validation for fields depending on 'handicap'
+    if (data.handicap) {
+      if (!data.TypeHandicap) {
+        ctx.addIssue({
+          path: ["TypeHandicap"],
+          message: "Le type de handicap est requis si vous avez un handicap",
+        });
+      }
     }
   });

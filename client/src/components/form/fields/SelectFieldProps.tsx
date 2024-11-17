@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/libs/utils";
-import React from "react";
+import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface Option {
@@ -71,4 +71,4 @@ const SelectField: React.FC<SelectFieldProps> = ({
   );
 };
 
-export default SelectField;
+export default memo(SelectField);

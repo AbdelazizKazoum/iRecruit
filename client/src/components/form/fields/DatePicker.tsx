@@ -11,7 +11,7 @@ import {
 import { cn } from "@/libs/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import React from "react";
+import React, { memo } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import "react-datepicker/dist/react-datepicker.css";
 import { Popover } from "@radix-ui/react-popover";
@@ -78,4 +78,4 @@ const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
   );
 };
 
-export default DatePicker;
+export default memo(DatePicker);

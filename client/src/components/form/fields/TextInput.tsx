@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/libs/utils";
-import React from "react";
+import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
@@ -38,6 +38,7 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
               placeholder={fieldConfig.placeholder}
               {...field}
               className={cn(errors[fieldConfig.name] && "border-destructive ")}
+
               // defaultValue={value}
             />
           </FormControl>
@@ -49,4 +50,4 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
   );
 };
 
-export default TextInput;
+export default memo(TextInput);

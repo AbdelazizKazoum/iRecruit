@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/form/FieldRenderer.tsx
 
-import React from "react";
+import React, { memo } from "react";
 import TextInput from "./fields/TextInput";
 import SelectField from "./fields/SelectFieldProps";
 import CheckboxField from "./fields/CheckboxField";
@@ -31,7 +31,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         <TextInput
           fieldConfig={fieldConfig}
           field={field}
-          value={value}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -42,7 +41,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         <FileInput
           fieldConfig={fieldConfig}
           field={field}
-          value={value}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -72,4 +70,4 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
   }
 };
 
-export default FieldRenderer;
+export default memo(FieldRenderer);

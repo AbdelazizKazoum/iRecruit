@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/form/FieldRenderer.tsx
 
-import React from "react";
+import React, { memo } from "react";
 import { FormField } from "../ui/form";
 import FieldRenderer from "./FieldRenderer";
 import {
@@ -10,12 +10,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { useFormContext } from "react-hook-form";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface GroupFieldRendererProps {
   fieldConfig: any;
-  form: any;
-  formData: any;
+  formData?: any;
   // onChange: (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
@@ -24,11 +24,9 @@ interface GroupFieldRendererProps {
 
 const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
-  form,
-  formData,
-  category,
   // error,
 }) => {
+  const { control, trigger } = useFormContext();
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
@@ -40,13 +38,13 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
             {fieldConfig.group.map((fieldGroup: any) => (
               <FormField
                 key={fieldGroup.name}
-                control={form.control}
+                control={control}
                 name={fieldGroup.name}
                 render={({ field }) => (
                   <FieldRenderer
                     fieldConfig={fieldGroup}
                     field={field}
-                    value={formData[category]?.[fieldGroup.name]}
+                    // value={formData[category]?.[fieldGroup.name] || ""}
                     // onChange={handleFieldChange}
                   />
                 )}
@@ -59,4 +57,4 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   );
 };
 
-export default GroupFieldsRenderer;
+export default memo(GroupFieldsRenderer);

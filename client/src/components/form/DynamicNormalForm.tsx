@@ -17,7 +17,6 @@ const DynamicNormalForm = ({ category, schema }: any) => {
   const config = formConfigFactory(category);
   const { form, handleSubmit } = useDynamicForm(schema, config.category);
 
-  const { formData } = useFormStore();
   return (
     <div className="space-y-6">
       <div>
@@ -33,15 +32,14 @@ const DynamicNormalForm = ({ category, schema }: any) => {
             className="space-y-2"
             onSubmit={form.handleSubmit(handleSubmit)}
           >
-            <div className=" grid grid-cols-2 gap-4 ">
-              {config.fields.map((fieldConfig: any) => {
+            <div key="1" className=" grid grid-cols-2 gap-4 ">
+              {config.fields.map((fieldConfig: any, index: number) => {
                 if (fieldConfig.type === "group") {
                   return (
-                    <div key={fieldConfig.name} className=" col-span-2  ">
+                    <div key={index} className=" col-span-2  ">
                       <GroupFieldsRenderer
                         fieldConfig={fieldConfig}
-                        form={form}
-                        formData={formData}
+                        // formData={formData}
                         category={category}
                       />
                     </div>
@@ -49,14 +47,15 @@ const DynamicNormalForm = ({ category, schema }: any) => {
                 } else {
                   return (
                     <FormField
-                      key={fieldConfig.name}
+                      key={index}
                       control={form.control}
                       name={fieldConfig.name}
+                      // defaultValue=""
                       render={({ field }) => (
                         <FieldRenderer
                           fieldConfig={fieldConfig}
                           field={field}
-                          value={formData[category]?.[fieldConfig.name]}
+                          // value={formData[category]?.[fieldConfig.name]}
                           // onChange={handleFieldChange}
                         />
                       )}

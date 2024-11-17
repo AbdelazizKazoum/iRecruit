@@ -15,7 +15,9 @@ const FileUpload = React.forwardRef<HTMLInputElement, InputProps>(
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       console.log("🚀 ~ handleFileChange ~ file:", file);
-      setValue("test", file);
+      setValue("cinPdf", file);
+      setValue("nam", file);
+
       setFileName(file ? file.name : null);
     };
 
@@ -45,6 +47,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, InputProps>(
           className="sr-only"
           ref={ref}
           {...props}
+          name=""
           onChange={(event) => {
             handleFileChange(event);
             props.onChange?.(event); // Call the provided onChange handler if it exists

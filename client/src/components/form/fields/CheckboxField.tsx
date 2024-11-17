@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/libs/utils";
-import React from "react";
+import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
@@ -46,4 +46,4 @@ const CheckboxField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
   );
 };
 
-export default CheckboxField;
+export default memo(CheckboxField);

@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
 import { BriefcaseBusiness, Users } from "lucide-react";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 const steps = [
@@ -21,7 +22,15 @@ const steps = [
   },
 ];
 
-const CandidateFormPage = () => {
+const CandidateFormPage = ({
+  searchParams,
+}: {
+  searchParams: { section: string };
+}) => {
+  const section = searchParams.section || "info-personnelles";
+  const { data } = useSession();
+  console.log("🚀 ~ session:", data);
+
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
       <div className="space-y-6 py-10 lg:p-10 pb-16">
@@ -37,10 +46,18 @@ const CandidateFormPage = () => {
             <CandidatureSidebar items={steps} />
           </aside>
           <main className="flex-1 ">
-            <DynamicNormalForm
-              category="candidate"
-              schema={candidateFormSchema}
-            />
+            {section === "info-personnelles" && (
+              <DynamicNormalForm
+                category="candidate"
+                schema={candidateFormSchema}
+              />
+            )}
+            {section === "info-professionnelles" && (
+              <DynamicNormalForm
+                category="candidate"
+                schema={candidateFormSchema}
+              />
+            )}
           </main>
         </div>
       </div>

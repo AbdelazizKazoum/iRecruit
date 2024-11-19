@@ -1,13 +1,48 @@
 // src/formConfigs/jobSeekerFormConfig.ts
 
-export const jobSeekerFormConfig = {
-  category: "jobSeeker",
+export const infoProfessionnellesFormConfig = {
+  category: "info-professionnelles",
   fields: [
     {
-      type: "text",
-      name: "resumeLink",
-      label: "Resume Link",
-      placeholder: "Enter a link to your resume",
+      type: "group",
+      title: "Parcours et diplômes",
+      description:
+        "Merci d'ajouter tous vos diplômes après le bac. C'est obligatoire",
+
+      group: [
+        {
+          type: "select",
+          name: "origine",
+          label: "Origine *",
+          options: [
+            { value: "etranger", label: "Etranger" },
+            { value: "marocainPrive", label: "Marocain privé" },
+            { value: "marocainPublic", label: "Marocain public" },
+          ],
+        },
+
+        {
+          type: "text",
+          name: "fonction",
+          label: "Organisme/établissement *",
+          placeholder: "",
+          dependsOn: "fonctionnaire",
+        },
+        {
+          type: "text",
+          name: "ppr",
+          label: "P.P.R / Matricule *",
+          placeholder: "",
+          dependsOn: "fonctionnaire",
+        },
+        {
+          type: "text",
+          name: "attestation",
+          label: "Attestation de travail (Pdf, Max 10Mo)*",
+          placeholder: "",
+          dependsOn: "fonctionnaire",
+        },
+      ],
     },
     {
       type: "text",

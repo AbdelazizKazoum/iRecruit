@@ -1,6 +1,6 @@
 // src/formConfigs/index.ts
 
 import { candidateFormConfig } from "./candidateFormConfig";
-import { jobSeekerFormConfig } from "./jobSeekerFormConfig";
+import { infoProfessionnellesFormConfig } from "./infoProfessionnellesFormConfig";
 
-export { candidateFormConfig, jobSeekerFormConfig };
+export { candidateFormConfig, infoProfessionnellesFormConfig };

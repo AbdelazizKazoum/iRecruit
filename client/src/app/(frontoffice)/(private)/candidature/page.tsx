@@ -5,6 +5,7 @@ import DynamicNormalForm from "@/components/form/DynamicNormalForm";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
+import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
 import { BriefcaseBusiness, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React from "react";
@@ -54,8 +55,8 @@ const CandidateFormPage = ({
             )}
             {section === "info-professionnelles" && (
               <DynamicNormalForm
-                category="candidate"
-                schema={candidateFormSchema}
+                category="info-professionnelles"
+                schema={infoProfessionnellesValidationSchema}
               />
             )}
           </main>

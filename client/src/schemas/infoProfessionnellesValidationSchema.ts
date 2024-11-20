@@ -19,26 +19,39 @@ export const infoProfessionnellesValidationSchema = z.object({
       .string()
       .min(1, "La spécialité est obligatoire")
       .max(255, "La spécialité ne doit pas dépasser 255 caractères"),
-    mention: z.string().optional(), // Optional as it depends on "fonctionnaire"
+    mention: z.string(), // Optional as it depends on "fonctionnaire"
     etablissement: z
       .string()
       .min(1, "L'établissement est obligatoire")
       .max(255, "L'établissement ne doit pas dépasser 255 caractères"),
-    diplomePdf: z.any(),
+    diplomePdf: z
+      .instanceof(File) // Ensure it's a File object
+      .refine((file) => file.size <= 5 * 1024 * 1024, {
+        message: "File must be less than 5MB",
+      })
+      .refine(
+        (file) =>
+          [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
+            file.type
+          ),
+        { message: "Only PDF files are allowed" }
+      ),
   }),
-  niveauxLangues: z
-    .object({
-      langue: z.string().min(1, "La langue est obligatoire"),
-      niveau: z.string(),
-      certificatLangue: z
-        .instanceof(File)
-        .optional()
-        .refine(
-          (file) =>
-            !file ||
-            (file.type === "application/pdf" && file.size <= 10 * 1024 * 1024),
-          "Le certificat doit être un fichier PDF de 10 Mo maximum"
-        ),
-    })
-    .optional(), // Optional based on the form description
+
+  niveauxLangues: z.object({
+    langue: z.string().min(1, "La langue est obligatoire"),
+    niveau: z.string(),
+    certificatLanguePdf: z
+      .instanceof(File) // Ensure it's a File object
+      .refine((file) => file.size <= 5 * 1024 * 1024, {
+        message: "File must be less than 5MB",
+      })
+      .refine(
+        (file) =>
+          [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
+            file.type
+          ),
+        { message: "Only PDF files are allowed" }
+      ),
+  }), // Optional based on the form description
 });

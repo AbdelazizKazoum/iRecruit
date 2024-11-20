@@ -710,6 +710,8 @@ export const infoProfessionnellesFormConfig = {
           name: "niveauxLangues.niveau",
           label: "Nuveau *",
           placeholder: "",
+          dependsOn: "niveauxLangues.langue",
+
           options: [
             {
               label: " Avancé",
@@ -728,8 +730,9 @@ export const infoProfessionnellesFormConfig = {
         {
           type: "file",
           label: "Cértificat (Pdf, Max 10Mo, Optionnel)",
-          name: "niveauxLangues.certificatLangue",
+          name: "niveauxLangues.certificatLanguePdf",
           placeholder: "",
+          dependsOn: "niveauxLangues.langue",
         },
       ],
     },
@@ -742,7 +745,7 @@ export const infoProfessionnellesFormConfig = {
         {
           type: "number",
           label: "Expérience pédagogique en heures *",
-          name: "experiencePedagogiqueEnHeures",
+          name: "experiencePedagogique.experiencePedagogiqueEnHeures",
           placeholder: "",
         },
       ],
@@ -756,8 +759,164 @@ export const infoProfessionnellesFormConfig = {
         {
           type: "text",
           label: "Titre *",
-          name: "titre",
+          name: "publications.titre",
           placeholder: "titre",
+        },
+        {
+          type: "number",
+          label: "Année de publication de l'article *",
+          name: "publications.anneePublication",
+          placeholder: "Année de publication de l'article",
+          dependsOn: "publications.titre",
+        },
+        {
+          type: "select",
+          label: "Type *",
+          name: "publications.type",
+          placeholder: "",
+          dependsOn: "publications.titre",
+
+          options: [
+            {
+              id: 1,
+              label:
+                "Articles dans des revues indexées (Scopus et/ou WoS), selon Q1, Q2, Q3 et Q4 et selon premier auteur ou non",
+              value:
+                "Articles dans des revues indexées (Scopus et/ou WoS), selon Q1, Q2, Q3 et Q4 et selon premier auteur ou non",
+
+              labelAr:
+                "Articles dans des revues indexées (Scopus et/ou WoS), selon Q1, Q2, Q3 et Q4 et selon premier auteur ou non",
+            },
+            {
+              id: 2,
+              value:
+                "Publications dans les proceedings indexés (Scopus et/ou Wos), selon premier auteur au non",
+              label:
+                "Publications dans les proceedings indexés (Scopus et/ou Wos), selon premier auteur au non",
+              labelAr:
+                "Publications dans les proceedings indexés (Scopus et/ou Wos), selon premier auteur au non",
+            },
+            {
+              id: 3,
+              value:
+                "Articles dans des revues indexées dans le Portail des Revues Scientifiques Marocaines (PRSM), selon premier auteur ou non",
+              label:
+                "Articles dans des revues indexées dans le Portail des Revues Scientifiques Marocaines (PRSM), selon premier auteur ou non",
+              labelAr:
+                "Articles dans des revues indexées dans le Portail des Revues Scientifiques Marocaines (PRSM), selon premier auteur ou non",
+            },
+            {
+              id: 4,
+              label: "Brevets enregistrés (marocain, PCT)",
+              value: "Brevets enregistrés (marocain, PCT)",
+
+              labelAr: "Brevets enregistrés (marocain, PCT)",
+            },
+            {
+              id: 5,
+              label: "Ouvrages avec ISBN et indexés",
+              value: "Ouvrages avec ISBN et indexés",
+
+              labelAr: "Ouvrages avec ISBN et indexés",
+            },
+            {
+              id: 6,
+              label: "Chapitre d'ouvrage avec ISBN et indexé",
+              value: "Chapitre d'ouvrage avec ISBN et indexé",
+
+              labelAr: "Chapitre d'ouvrage avec ISBN et indexé",
+            },
+            {
+              id: 7,
+              label: "Autre",
+              value: "Autre",
+              labelAr: "Autre",
+            },
+          ],
+        },
+        {
+          type: "text",
+          label: "URL",
+          name: "publications.url",
+          placeholder: "URL",
+          dependsOn: "publications.titre",
+        },
+        {
+          type: "file",
+          label: "Publication (Pdf, Max 10Mo) *",
+          name: "publications.publicationPdf",
+          placeholder: "",
+          dependsOn: "publications.titre",
+        },
+      ],
+    },
+    {
+      type: "group",
+      title: "Communications",
+      name: "communications",
+      description: "",
+      group: [
+        {
+          type: "text",
+          label: "Titre *",
+          name: "communications.titre",
+          placeholder: "titre",
+        },
+        {
+          type: "number",
+          label: "Année de publication de la communication *",
+          name: "communications.anneePublication",
+          placeholder: "Année de publication de la communication",
+          dependsOn: "communications.titre",
+        },
+        {
+          type: "text",
+          label: "URL",
+          name: "communications.url",
+          placeholder: "URL",
+          dependsOn: "communications.titre",
+        },
+        {
+          type: "file",
+          label: "Communication (Pdf, Max 10Mo) *",
+          name: "communications.communicationPdf",
+          placeholder: "",
+          dependsOn: "communications.titre",
+        },
+      ],
+    },
+    {
+      type: "group",
+      title: "Résidanat",
+      name: "residanat",
+      description: "",
+      group: [
+        {
+          type: "file",
+          label: "Résidanat",
+          name: "residanat.residanatPdf",
+          placeholder: "",
+        },
+      ],
+    },
+    {
+      type: "group",
+      title: "Autres documents",
+      name: "autresDocuments",
+      description: "",
+      group: [
+        {
+          type: "text",
+          label: "Intitulé",
+          name: "autresDocuments.intexperiencePedagogiqueitule",
+          placeholder: "",
+        },
+        {
+          type: "file",
+          label: "Document (Pdf, Max 10Mo) *",
+          name: "autresDocuments.documentPdf",
+          placeholder: "",
+          dependsOn: "autresDocuments.intexperiencePedagogiqueitule",
         },
       ],
     },

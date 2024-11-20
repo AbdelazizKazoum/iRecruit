@@ -26,8 +26,7 @@ export const infoProfessionnellesFormConfig = {
           type: "text",
           name: "intituleDiplome",
           placeholder: "",
-          label:
-            "Intitulé de votre diplôme avec précision (tel qu'il apparaît sur le diplôme) *",
+          label: "Intitulé de votre diplôme avec précision *",
         },
 
         {
@@ -592,7 +591,7 @@ export const infoProfessionnellesFormConfig = {
         },
         {
           type: "text",
-          name: "specialite *",
+          name: "specialite",
           label: "Spécialité *",
           placeholder: "",
           dependsOn: "",

@@ -22,7 +22,7 @@ export function CandidatureSidebar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const fullPathWithQuery = `${pathname}?${
-    searchParams.toString() || "section=compte"
+    searchParams.toString() || "section=info-personnelles"
   }`;
 
   return (

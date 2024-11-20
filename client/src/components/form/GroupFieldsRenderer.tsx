@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { useFormContext } from "react-hook-form";
+import { cn } from "@/libs/utils";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface GroupFieldRendererProps {
@@ -26,12 +27,24 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
   // error,
 }) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1">
-          <AccordionTrigger className=" text-primary text-base font-normal">
+        <AccordionItem
+          value={fieldConfig.name}
+          className={errors[fieldConfig.name] && "border-destructive"}
+        >
+          <AccordionTrigger
+            className={cn(
+              " text-primary text-base font-normal",
+              errors[fieldConfig.name] && "text-destructive"
+            )}
+          >
             {fieldConfig.title}
           </AccordionTrigger>
           <AccordionContent className="grid grid-cols-2 gap-4 ">

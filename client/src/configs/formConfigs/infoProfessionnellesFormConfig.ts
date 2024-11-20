@@ -6,13 +6,14 @@ export const infoProfessionnellesFormConfig = {
     {
       type: "group",
       title: "Parcours et diplômes",
+      name: "parcoursEtDiplomes",
       description:
         "Merci d'ajouter tous vos diplômes après le bac. C'est obligatoire",
 
       group: [
         {
           type: "select",
-          name: "origine",
+          name: "parcoursEtDiplomes.origine",
           label: "Origine *",
           placeholder: "",
           options: [
@@ -24,14 +25,14 @@ export const infoProfessionnellesFormConfig = {
 
         {
           type: "text",
-          name: "intituleDiplome",
+          name: "parcoursEtDiplomes.intituleDiplome",
           placeholder: "",
           label: "Intitulé de votre diplôme avec précision *",
         },
 
         {
           type: "select",
-          name: "diplomeType",
+          name: "parcoursEtDiplomes.diplomeType",
           label: "Diplôme ou diplôme équivalent * ",
           placeholder: "",
           options: [
@@ -584,34 +585,34 @@ export const infoProfessionnellesFormConfig = {
 
         {
           type: "text",
-          name: "anneeObtention",
+          name: "parcoursEtDiplomes.anneeObtention",
           label: "Année d'obtention du diplôme *",
           placeholder: "",
-          dependsOn: "",
+          dependsOn: null,
         },
         {
           type: "text",
-          name: "specialite",
+          name: "parcoursEtDiplomes.specialite",
           label: "Spécialité *",
           placeholder: "",
-          dependsOn: "",
+          dependsOn: null,
         },
         {
           type: "text",
-          name: "mention",
+          name: "parcoursEtDiplomes.mention",
           label: "Mention *",
           placeholder: "",
-          dependsOn: "fonctionnaire",
+          dependsOn: null,
         },
         {
           type: "text",
-          name: "etablissement",
+          name: "parcoursEtDiplomes.etablissement",
           label: "Etablissement *",
           placeholder: "Enter a link to your portfolio",
         },
         {
           type: "file",
-          name: "diplomePdf",
+          name: "parcoursEtDiplomes.diplomePdf",
           label: "Diplôme scané (Pdf, Max 10Mo) *",
         },
       ],
@@ -625,7 +626,7 @@ export const infoProfessionnellesFormConfig = {
       group: [
         {
           type: "select",
-          name: "langue",
+          name: "niveauxLangues.langue",
           label: "Langue *",
           placeholder: "",
           options: [
@@ -706,7 +707,7 @@ export const infoProfessionnellesFormConfig = {
         },
         {
           type: "select",
-          name: "niveau",
+          name: "niveauxLangues.niveau",
           label: "Nuveau *",
           placeholder: "",
           options: [
@@ -727,8 +728,36 @@ export const infoProfessionnellesFormConfig = {
         {
           type: "file",
           label: "Cértificat (Pdf, Max 10Mo, Optionnel)",
-          name: "certificatLangue",
+          name: "niveauxLangues.certificatLangue",
           placeholder: "",
+        },
+      ],
+    },
+    {
+      type: "group",
+      title: "Expérience pédagogique",
+      name: "experiencePedagogique",
+      description: "",
+      group: [
+        {
+          type: "number",
+          label: "Expérience pédagogique en heures *",
+          name: "experiencePedagogiqueEnHeures",
+          placeholder: "",
+        },
+      ],
+    },
+    {
+      type: "group",
+      title: "Publications",
+      name: "publications",
+      description: "",
+      group: [
+        {
+          type: "text",
+          label: "Titre *",
+          name: "titre",
+          placeholder: "titre",
         },
       ],
     },

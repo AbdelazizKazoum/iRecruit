@@ -7,6 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from "@/components/ui/form";
 import { cn } from "@/libs/utils";
 import { format } from "date-fns";
@@ -26,10 +27,8 @@ interface DatePickerProps {
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
-  const {
-    watch,
-    formState: { errors },
-  } = useFormContext();
+  const { watch } = useFormContext();
+  const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
 
@@ -46,7 +45,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
                   className={cn(
                     "pl-3 m-0 text-left font-normal ",
                     !field.value && "text-muted-foreground",
-                    errors[fieldConfig.name] && " border-destructive"
+                    error && " border-destructive"
                   )}
                 >
                   {field.value ? (

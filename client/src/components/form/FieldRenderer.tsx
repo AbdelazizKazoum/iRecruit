@@ -27,6 +27,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
 }) => {
   switch (fieldConfig.type) {
     case "text":
+    case "number":
       return (
         <TextInput
           fieldConfig={fieldConfig}

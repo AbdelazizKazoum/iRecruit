@@ -7,6 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from "@/components/ui/form";
 import { cn } from "@/libs/utils";
 import { CheckCircleIcon, UploadIcon } from "lucide-react";
@@ -23,17 +24,13 @@ interface TextInputProps {
 const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
   const [fileName, setFileName] = React.useState<string | null>(null);
 
-  const {
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
+  const { watch, setValue } = useFormContext();
+  const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log("🚀 ~ handleFileChange ~ file:", file);
     setValue(fieldConfig.name, file);
 
     setFileName(file ? file.name : null);
@@ -47,7 +44,8 @@ const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
           <FormControl>
             <label
               className={cn(
-                "flex h-9 cursor-pointer w-full items-center justify-between rounded-md border border-gray-400 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-within:outline-none focus-within:border-2 focus-within:border-primary focus-within:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                "flex h-9 cursor-pointer w-full items-center justify-between rounded-md border border-gray-400 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-within:outline-none focus-within:border-2 focus-within:border-primary focus-within:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                error && "border-destructive"
               )}
             >
               <div className="flex items-center gap-2">
@@ -72,10 +70,7 @@ const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
                 name={fieldConfig.name}
                 placeholder={fieldConfig.placeholder}
                 onChange={(e) => handleFileChange(e)}
-                className={cn(
-                  "sr-only z-50",
-                  errors[fieldConfig.name] && "border-destructive "
-                )}
+                className={cn("sr-only z-50", "border-destructive ")}
                 // defaultValue={value}
               />
             </label>

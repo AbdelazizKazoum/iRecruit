@@ -6,6 +6,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from "@/components/ui/form";
 import {
   Select,
@@ -35,10 +36,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
   field,
   // onChange,
 }) => {
-  const {
-    watch,
-    formState: { errors },
-  } = useFormContext();
+  const { watch } = useFormContext();
+  const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
   return (
@@ -48,11 +47,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           <FormLabel>{fieldConfig.label}</FormLabel>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger
-                className={cn(
-                  errors[fieldConfig?.name] && " border-destructive "
-                )}
-              >
+              <SelectTrigger className={cn(error && " border-destructive ")}>
                 <SelectValue placeholder={fieldConfig.placeholder} />
               </SelectTrigger>
             </FormControl>

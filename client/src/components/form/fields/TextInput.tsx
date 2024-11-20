@@ -7,6 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/libs/utils";
@@ -21,10 +22,8 @@ interface TextInputProps {
 }
 
 const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
-  const {
-    watch,
-    formState: { errors },
-  } = useFormContext();
+  const { watch } = useFormContext();
+  const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
 
@@ -36,9 +35,9 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
           <FormControl>
             <Input
               placeholder={fieldConfig.placeholder}
+              type={fieldConfig.type}
               {...field}
-              className={cn(errors[fieldConfig.name] && "border-destructive ")}
-
+              className={cn(error && "border-destructive ")}
               // defaultValue={value}
             />
           </FormControl>

@@ -8,6 +8,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useFormField,
 } from "@/components/ui/form";
 import { cn } from "@/libs/utils";
 import React, { memo } from "react";
@@ -21,16 +22,15 @@ interface TextInputProps {
 }
 
 const CheckboxField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
-  const {
-    formState: { errors },
-  } = useFormContext();
+  const {} = useFormContext();
+  const { error } = useFormField();
 
   return (
     <FormItem style={{ marginTop: "15px", marginBottom: "15px" }}>
       <div
         className={cn(
           "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4  ",
-          errors[fieldConfig.name] && "border-destructive"
+          error && "border-destructive"
         )}
       >
         <FormControl>

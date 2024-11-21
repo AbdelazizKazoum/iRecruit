@@ -109,43 +109,44 @@ export const candidateFormConfig = {
           name: "experiences.fonction",
           label: "Organisme/établissement *",
           placeholder: "",
-          dependsOn: "fonctionnaire",
+          dependsOn: "experiences.fonctionnaire",
         },
         {
           type: "text",
           name: "experiences.ppr",
           label: "P.P.R / Matricule *",
           placeholder: "",
-          dependsOn: "fonctionnaire",
+          dependsOn: "experiences.fonctionnaire",
         },
         {
           type: "text",
-          name: "attestation",
+          name: "experiences.attestation",
           label: "Attestation de travail (Pdf, Max 10Mo)*",
           placeholder: "",
-          dependsOn: "fonctionnaire",
+          dependsOn: "experiences.fonctionnaire",
         },
       ],
     },
 
     {
       type: "group",
+      name: "situationDeHandicap",
       title: "Avez-vous une expérience professionnelle ?",
       description: "",
 
       group: [
         {
           type: "checkbox",
-          name: "handicap",
+          name: "situationDeHandicap.handicap",
           label: "Situation de handicap ?",
         },
 
         {
           type: "text",
-          name: "typeHandicap",
-          label: "TypeHandicap*",
+          name: "situationDeHandicap.typeHandicap",
+          label: "TypeHandicap *",
           placeholder: "",
-          dependsOn: "handicap",
+          dependsOn: "situationDeHandicap.handicap",
         },
       ],
     },

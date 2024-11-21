@@ -16,12 +16,19 @@ export interface CandidateForm {
   situation: "celibataire" | "divorce" | "marie" | "veuf";
   telephone: string;
   email: string;
-  fonctionnaire?: boolean;
-  fonction?: string;
-  ppr?: string;
-  attestation?: string;
-  handicap?: boolean;
-  TypeHandicap?: string;
+
+  experiences: {
+    fonctionnaire?: boolean;
+    fonction?: string;
+    ppr?: string;
+    attestation?: string;
+  };
+
+  situationDeHandicap: {
+    handicap?: boolean;
+    typeHandicap?: string;
+  };
+
   AncienCombattant?: boolean;
   PupillesNation?: boolean;
 }
@@ -54,13 +61,20 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
       .regex(/^\+?[0-9]{10,15}$/, "Numéro de téléphone invalide"),
     email: z.string().email("Adresse email invalide"),
 
-    // Group fields with conditional validation
-    fonctionnaire: z.boolean().optional(),
-    fonction: z.string().optional(),
-    ppr: z.string().optional(),
-    attestation: z.string().optional(),
-    handicap: z.boolean().optional(),
-    TypeHandicap: z.string().optional(),
+    // Group experiences
+    experiences: z.object({
+      fonctionnaire: z.boolean().optional(),
+      fonction: z.string().optional(),
+      ppr: z.string().optional(),
+      attestation: z.string().optional(),
+    }),
+
+    // Group experiences
+    situationDeHandicap: z.object({
+      handicap: z.boolean().optional(),
+      typeHandicap: z.string().optional(),
+    }),
+
     AncienCombattant: z.boolean().optional(),
     PupillesNation: z.boolean().optional(),
 
@@ -101,25 +115,25 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
         { message: "Only PDF files are allowed" }
       ),
   })
-  .superRefine((data: any, ctx: any) => {
+  .superRefine((data, ctx) => {
     // Conditional validation for fields depending on 'fonctionnaire'
-    if (data.fonctionnaire) {
-      if (!data.fonction) {
+    if (data.experiences.fonctionnaire) {
+      if (!data.experiences.fonction) {
         ctx.addIssue({
-          path: ["fonction"],
+          path: ["experiences", "fonction"],
           message:
             "L'organisme/établissement est requis si vous êtes fonctionnaire",
         });
       }
-      if (!data.ppr) {
+      if (!data.experiences.ppr) {
         ctx.addIssue({
-          path: ["ppr"],
+          path: ["experiences", "ppr"],
           message: "Le P.P.R / Matricule est requis si vous êtes fonctionnaire",
         });
       }
-      if (!data.attestation) {
+      if (!data.experiences.attestation) {
         ctx.addIssue({
-          path: ["attestation"],
+          path: ["experiences", "attestation"],
           message:
             "L'attestation de travail est requise si vous êtes fonctionnaire",
         });
@@ -127,10 +141,10 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
     }
 
     // Conditional validation for fields depending on 'handicap'
-    if (data.handicap) {
-      if (!data.TypeHandicap) {
+    if (data.situationDeHandicap.handicap) {
+      if (!data.situationDeHandicap.typeHandicap) {
         ctx.addIssue({
-          path: ["TypeHandicap"],
+          path: ["situationDeHandicap", "typeHandicap"],
           message: "Le type de handicap est requis si vous avez un handicap",
         });
       }

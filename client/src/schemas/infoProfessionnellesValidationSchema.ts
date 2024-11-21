@@ -33,7 +33,6 @@ export const infoProfessionnellesValidationSchema = z
         ),
       diplomePdf: z
         .instanceof(File)
-        .optional()
         .refine((file) => !file || file.size <= 5 * 1024 * 1024, {
           message: "Le fichier du diplôme doit être inférieur à 5 Mo.",
         })

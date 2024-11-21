@@ -93,26 +93,27 @@ export const candidateFormConfig = {
 
     {
       type: "group",
+      name: "experiences",
       title: "Do you have work experience?",
       description: "",
 
       group: [
         {
           type: "checkbox",
-          name: "fonctionnaire",
+          name: "experiences.fonctionnaire",
           label: "Fonctionnaire ?",
         },
 
         {
           type: "text",
-          name: "fonction",
+          name: "experiences.fonction",
           label: "Organisme/établissement *",
           placeholder: "",
           dependsOn: "fonctionnaire",
         },
         {
           type: "text",
-          name: "ppr",
+          name: "experiences.ppr",
           label: "P.P.R / Matricule *",
           placeholder: "",
           dependsOn: "fonctionnaire",

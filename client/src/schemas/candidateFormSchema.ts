@@ -120,6 +120,7 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
     if (data.experiences.fonctionnaire) {
       if (!data.experiences.fonction) {
         ctx.addIssue({
+          code: "custom", // Specify the issue type
           path: ["experiences", "fonction"],
           message:
             "L'organisme/établissement est requis si vous êtes fonctionnaire",
@@ -127,12 +128,14 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
       }
       if (!data.experiences.ppr) {
         ctx.addIssue({
+          code: "custom",
           path: ["experiences", "ppr"],
           message: "Le P.P.R / Matricule est requis si vous êtes fonctionnaire",
         });
       }
       if (!data.experiences.attestation) {
         ctx.addIssue({
+          code: "custom",
           path: ["experiences", "attestation"],
           message:
             "L'attestation de travail est requise si vous êtes fonctionnaire",
@@ -144,6 +147,7 @@ export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
     if (data.situationDeHandicap.handicap) {
       if (!data.situationDeHandicap.typeHandicap) {
         ctx.addIssue({
+          code: "custom",
           path: ["situationDeHandicap", "typeHandicap"],
           message: "Le type de handicap est requis si vous avez un handicap",
         });

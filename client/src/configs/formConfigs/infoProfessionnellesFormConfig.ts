@@ -758,7 +758,7 @@ export const infoProfessionnellesFormConfig = {
       group: [
         {
           type: "text",
-          label: "Titre *",
+          label: "Titre",
           name: "publications.titre",
           placeholder: "titre",
         },
@@ -858,15 +858,15 @@ export const infoProfessionnellesFormConfig = {
       group: [
         {
           type: "text",
-          label: "Titre *",
+          label: "Titre",
           name: "communications.titre",
           placeholder: "titre",
         },
         {
           type: "number",
           label: "Année de publication de la communication *",
-          name: "communications.anneePublication",
-          placeholder: "Année de publication de la communication",
+          name: "communications.anneeCommunication",
+          placeholder: "Année de la communication",
           dependsOn: "communications.titre",
         },
         {
@@ -908,7 +908,7 @@ export const infoProfessionnellesFormConfig = {
         {
           type: "text",
           label: "Intitulé",
-          name: "autresDocuments.intexperiencePedagogiqueitule",
+          name: "autresDocuments.intitule",
           placeholder: "",
         },
         {
@@ -916,7 +916,7 @@ export const infoProfessionnellesFormConfig = {
           label: "Document (Pdf, Max 10Mo) *",
           name: "autresDocuments.documentPdf",
           placeholder: "",
-          dependsOn: "autresDocuments.intexperiencePedagogiqueitule",
+          dependsOn: "autresDocuments.intitule",
         },
       ],
     },

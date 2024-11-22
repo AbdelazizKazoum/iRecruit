@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
 import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
 import { BriefcaseBusiness, Users } from "lucide-react";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 const steps = [

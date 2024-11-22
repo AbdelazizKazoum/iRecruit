@@ -76,7 +76,7 @@ export class AuthService {
       link: verificationLink,
     };
 
-    return { message: 'Verification email sent' };
+    return { message: 'Verification email sent ' };
   }
 
   async checkEmail(code: string) {

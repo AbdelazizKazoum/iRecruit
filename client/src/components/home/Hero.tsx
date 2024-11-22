@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
 import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
+import { useRouter } from "next/navigation";
 
 const Hero = ({
   listUser = [
@@ -29,6 +30,9 @@ const Hero = ({
   const scrollAnimation = useMemo(() => getScrollAnimation(), []);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
+  // Hooks
+  const router = useRouter();
+
   const handleVideoClick = () => {
     setIsVideoOpen(true);
   };
@@ -49,7 +53,12 @@ const Hero = ({
               Supérieur, de la Recherche Scientifique et de l&apos;Innovation.
             </p>
             <div className="flex space-x-8">
-              <ButtonPrimary addClass={""}>Lancez-vous</ButtonPrimary>
+              <ButtonPrimary
+                addClass={""}
+                onClick={() => router.push("/candidature")}
+              >
+                Lancez-vous
+              </ButtonPrimary>
               <div className="">
                 {/* Play button with text next to it */}
                 <button

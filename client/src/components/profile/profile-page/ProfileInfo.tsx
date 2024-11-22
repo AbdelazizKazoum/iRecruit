@@ -52,92 +52,96 @@ function ProfileForm({ user }: { user: UserType | null }) {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium text-black-600/85">Compte</h3>
-        <p className="text-sm text-muted-foreground">
-          C&apos;est ainsi que les autres vous verront sur le site.
-        </p>
-      </div>
-      <Separator />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nom d&apos;utilisateur</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  C&apos;est votre nom affiché publiquement. Il peut s&apos;agir
-                  de votre vrai nom ou d&apos;un pseudonyme.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez un email vérifié à afficher" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value={user?.email || ""}>
-                      {user?.email}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="bio"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bio</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Parlez-nous un peu de vous"
-                    className="resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Vous pouvez partager quelques informations sur vous-même,
-                  comme vos intérêts.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            size="lg"
-            type="submit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? (
-              <Loader className="animate-spin mr-2 h-4 w-4" />
-            ) : null}
-            Mettre à jour le profil
-          </Button>
-        </form>
-      </Form>
-    </div>
+    <>
+      <main className="flex-1 lg:max-w-2xl">
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-lg font-medium text-black-600/85">Compte</h3>
+            <p className="text-sm text-muted-foreground">
+              C&apos;est ainsi que les autres vous verront sur le site.
+            </p>
+          </div>
+          <Separator />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nom d&apos;utilisateur</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      C&apos;est votre nom affiché publiquement. Il peut
+                      s&apos;agir de votre vrai nom ou d&apos;un pseudonyme.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sélectionnez un email vérifié à afficher" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={user?.email || ""}>
+                          {user?.email}
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Bio</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Parlez-nous un peu de vous"
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Vous pouvez partager quelques informations sur vous-même,
+                      comme vos intérêts.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                size="lg"
+                type="submit"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader className="animate-spin mr-2 h-4 w-4" />
+                ) : null}
+                Mettre à jour le profil
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </main>
+    </>
   );
 }
 

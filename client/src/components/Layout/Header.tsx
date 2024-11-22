@@ -33,13 +33,13 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
           <div className="col-start-1 col-end-2 flex items-center">
             <div className="h-10 w-48 relative">
               <Link href="/home">
-                <Image
+                {/* <Image
                   src="/assets/logo-ministere.png"
                   alt="logo"
                   layout="fill"
                   objectFit="contain"
                   priority
-                />
+                /> */}
               </Link>
             </div>
           </div>

@@ -39,6 +39,31 @@ const faqs = {
       answer:
         "Vous pouvez nous joindre via le formulaire de contact disponible sur la page 'Contactez-nous' ou en envoyant un e-mail à support@votresite.com.",
     },
+    {
+      question: "Puis-je modifier mes informations personnelles ?",
+      answer:
+        "Oui, vous pouvez modifier vos informations personnelles en accédant à la section 'Mon profil' après vous être connecté à votre compte.",
+    },
+    {
+      question: "Comment suivre l’état de ma candidature ?",
+      answer:
+        "Après avoir postulé à une offre, vous pouvez suivre l’état de votre candidature dans la section 'Mes candidatures' de votre compte.",
+    },
+    {
+      question: "Est-ce que mes données personnelles sont sécurisées ?",
+      answer:
+        "Oui, nous utilisons des technologies avancées pour assurer la sécurité de vos données personnelles conformément à notre politique de confidentialité.",
+    },
+    {
+      question: "Comment supprimer mon compte ?",
+      answer:
+        "Pour supprimer votre compte, veuillez nous contacter via le formulaire de contact ou envoyer un e-mail à support@votresite.com avec une demande de suppression.",
+    },
+    {
+      question: "Puis-je me désinscrire des e-mails promotionnels ?",
+      answer:
+        "Oui, vous pouvez vous désinscrire en cliquant sur le lien 'Se désabonner' présent en bas de chaque e-mail promotionnel que vous recevez.",
+    },
   ],
 };
 

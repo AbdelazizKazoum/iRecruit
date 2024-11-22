@@ -29,8 +29,7 @@ const CandidateFormPage = ({
   searchParams: { section: string };
 }) => {
   const section = searchParams.section || "info-personnelles";
-  const { data } = useSession();
-  console.log("🚀 ~ session:", data);
+  // const { data } = useSession();
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">

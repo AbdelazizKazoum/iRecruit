@@ -32,8 +32,6 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
     formState: { errors },
   } = useFormContext();
 
-  console.log("🚀 ~ errors:", errors);
-
   return (
     <>
       <Accordion type="single" collapsible className="w-full">

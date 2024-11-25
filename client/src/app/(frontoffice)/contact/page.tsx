@@ -2,6 +2,8 @@ import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
+import ContactForm from "@/components/normal-forms/ContactForm";
+import { Button } from "@/components/ui/button";
 
 const page = () => {
   return (
@@ -13,76 +15,22 @@ const page = () => {
 "
         />
         <Separator className="my-6" />
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-          <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className=" flex items-center justify-center bg-gray-50 p-6">
+          <div className=" flex items-center justify-center bg-gray-50 p-6">
+            <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 bg-white shadow-md border rounded-lg overflow-hidden">
               {/* Left Side: Contact Form */}
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  Contactez-nous
-                </h2>
-                <form className="space-y-4">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Nom complet
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Entrez votre nom"
-                      className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Adresse e-mail
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="Entrez votre email"
-                      className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      placeholder="Entrez votre message"
-                      className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                      rows="4"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition"
-                  >
-                    Envoyer
-                  </button>
-                </form>
-              </div>
+              <ContactForm />
 
               {/* Right Side: Contact Info */}
               <div className="bg-indigo-50 p-8 flex flex-col justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-indigo-800 mb-6">
+                  <h2 className="text-2xl font-bold text-primary mb-6">
                     Nos coordonnées
                   </h2>
-                  <ul className="space-y-4 text-gray-700">
+                  <ul className="space-y-4 text-black-500">
                     <li className="flex items-center">
                       <MapPin className="w-6 h-6 text-indigo-600 mr-3" />
-                      <span>123 Rue de l'Entreprise, Paris, France</span>
+                      <span>123 Rue de l&apos;Entreprise, Paris, France</span>
                     </li>
                     <li className="flex items-center">
                       <Phone className="w-6 h-6 text-indigo-600 mr-3" />
@@ -96,18 +44,21 @@ const page = () => {
                 </div>
 
                 {/* Call-to-Action Section */}
-                <div className="mt-8 bg-indigo-100 p-6 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-indigo-800 mb-4">
+                <div className="mt-8 bg-primary/10 -100 p-6 rounded-lg shadow-sm">
+                  <h3 className="text-lg font-semibold text-black-600/80 mb-4">
                     Restez connecté
                   </h3>
-                  <p className="text-gray-700 mb-6">
+                  <p className="text-black-500 mb-6">
                     Abonnez-vous à notre newsletter pour recevoir des mises à
                     jour et des offres spéciales directement dans votre boîte de
                     réception.
                   </p>
-                  <button className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
-                    S'abonner à la newsletter
-                  </button>
+                  <Button
+                    variant={"outline"}
+                    className=" px-4 py-2  transition"
+                  >
+                    S&apos;abonner à la newsletter
+                  </Button>
                 </div>
               </div>
             </div>

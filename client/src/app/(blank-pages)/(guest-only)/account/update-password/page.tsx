@@ -1,4 +1,4 @@
-import UpdatePasswordForm from "@/components/forms/UpdatePasswordForm";
+import UpdatePasswordForm from "@/components/normal-forms/UpdatePasswordForm";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import React from "react";

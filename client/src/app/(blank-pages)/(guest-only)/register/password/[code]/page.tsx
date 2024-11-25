@@ -1,4 +1,4 @@
-import PasswordForm from "@/components/forms/Password";
+import PasswordForm from "@/components/normal-forms/Password";
 import { redirect } from "next/navigation";
 import React from "react";
 

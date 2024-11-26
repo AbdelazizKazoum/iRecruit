@@ -56,7 +56,7 @@ const Etapes = () => {
             />
           </motion.div>
         </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
+        <ScrollAnimationWrapper className="">
           <motion.div
             className="flex flex-col items-start justify-center w-full lg:w-9/12"
             variants={scrollAnimation}

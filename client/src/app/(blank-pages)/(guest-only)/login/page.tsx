@@ -1,24 +1,19 @@
-"use client";
-
 import { LoginForm } from "@/components/normal-forms/LoginForm";
-import { authenticate } from "@/libs/actions/authActions";
-import { cn } from "@/libs/utils";
-import { loginSchema } from "@/libs/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-
-type LoginFormData = {
-  email: string;
-  password: string;
-};
+import Image from "next/image";
+import React from "react";
 
 const Page = () => {
   return (
-    <div className="flex items-center justify-center bg-primary-300/5 min-h-screen">
+    <div className="flex flex-col items-center justify-center bg-primary-300/5 min-h-screen">
       {/* Logo above the form */}
-      <div className="absolute top-10 text-center">
-        <img src="/logo.png" alt="Logo" className="h-16 w-16 mx-auto" />
+      <div className="h-20 w-60 relative block  mb-8">
+        <Image
+          src="/assets/logo-ministere.png"
+          alt="logo"
+          layout="fill"
+          objectFit="contain"
+          priority
+        />
       </div>
 
       <div className="w-full max-w-md bg-white-500 rounded-lg shadow-md p-6">

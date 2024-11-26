@@ -1,5 +1,5 @@
+"use client";
 import { authenticate } from "@/libs/actions/authActions";
-import { cn } from "@/libs/utils";
 import { loginSchema } from "@/libs/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
@@ -9,11 +9,12 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { AlertDestructive } from "../alerts/AlertDestructive";
+import { Mail, Lock } from "lucide-react"; // Lucide icons
 
 type LoginFormData = {
   email: string;
@@ -26,7 +27,7 @@ export const LoginForm = () => {
   });
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = form;
 
   const [error, setError] = useState("");
@@ -51,34 +52,47 @@ export const LoginForm = () => {
       {/* Form */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-4">
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                {/* <FormLabel>Email</FormLabel> */}
                 <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                {/* <FormLabel>Mot de passe</FormLabel> */}
-                <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <div className="relative">
+                    <Mail className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                    <Input placeholder="Email" className="pl-10" {...field} />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button disabled={isSubmitting} className="w-full  transition ">
+          {/* Password Field */}
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative">
+                    <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="Password"
+                      type="password"
+                      className="pl-10"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Submit Button */}
+          <Button disabled={isSubmitting} className="w-full transition">
             {isSubmitting ? "Connexion..." : "Se connecter"}
           </Button>
         </form>
@@ -86,7 +100,9 @@ export const LoginForm = () => {
 
       {/* Error Display */}
       {error && (
-        <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+        <div className="mt-4">
+          <AlertDestructive message={error} />
+        </div>
       )}
 
       <p className="mt-6 text-center text-sm">

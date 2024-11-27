@@ -1,5 +1,5 @@
 "use client";
-import { updatePassword } from "@/libs/actions/authActions";
+import { createPassword } from "@/libs/actions/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
 import { Lock } from "lucide-react"; // Lucide icons
-// import Link from "next/link";
+import Link from "next/link";
 import { passwordSchema } from "@/schemas/authSchema";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +24,7 @@ type RegisterFormData = {
   confirmPassword: string;
 };
 
-export const UpdatePasswordForm = ({ code }: { code: string }) => {
+export const PasswordForm = ({ code }: { code: string }) => {
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(passwordSchema),
   });
@@ -46,18 +46,16 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
     password: string;
     confirmPassword: string;
   }) => {
-    const response = await updatePassword(code, data.password); // Send the new password to your backend API
+    const response = await createPassword(code, data.password);
 
     if (response.error) {
-      // Handle error (display a message, etc.)
-      setError(
-        "La mise à jour de votre mot de passe a échoué. Veuillez réessayer plus tard."
-      );
+      setError(response.error);
       setMessage("");
     } else {
-      setMessage("Votre mot de passe a été mis à jour avec succès !");
+      setError("");
+      setMessage(response.message);
+      reset(); // Clear the form fields
     }
-    reset(); // Clear the form fields after submission
   };
 
   return (
@@ -150,12 +148,12 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
 
             {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
-              {isSubmitting ? "Creation..." : "Mettre à jour le mot de passe"}
+              {isSubmitting ? "Creation..." : "Créer le mot de passe"}
             </Button>
           </form>
         </Form>
       )}
-      {/* 
+
       <p className="mt-4 text-center text-sm text-black-600/60">
         Vous avez déjà un compte ?{" "}
         <Link
@@ -164,7 +162,7 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
         >
           Se connecter
         </Link>
-      </p> */}
+      </p>
     </div>
   );
 };

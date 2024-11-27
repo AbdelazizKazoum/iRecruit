@@ -1,7 +1,7 @@
 // src/pages/CandidateFormPage.tsx
 "use client";
 import { CandidatureSidebar } from "@/components/candidature/CandidatureSidebar";
-import DynamicNormalForm from "@/components/form/DynamicNormalForm";
+import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";

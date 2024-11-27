@@ -1,5 +1,5 @@
 "use client";
-import { updatePassword } from "@/libs/actions/authActions";
+import { sendResetLink } from "@/libs/actions/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,51 +13,45 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
-import { Lock } from "lucide-react"; // Lucide icons
-// import Link from "next/link";
-import { passwordSchema } from "@/schemas/authSchema";
-import { useRouter } from "next/navigation";
+import { Mail } from "lucide-react"; // Lucide icons
+import Link from "next/link";
+import { emailSchema } from "@/schemas/authSchema";
 
 // Define form schema type
-type RegisterFormData = {
-  password: string;
-  confirmPassword: string;
-};
+interface ResetPasswordFormType {
+  email: string;
+}
 
-export const UpdatePasswordForm = ({ code }: { code: string }) => {
-  const form = useForm<RegisterFormData>({
-    resolver: zodResolver(passwordSchema),
+export const ResetPasswordForm = () => {
+  const form = useForm<ResetPasswordFormType>({
+    resolver: zodResolver(emailSchema),
   });
 
   const {
     formState: { isSubmitting },
-    reset,
   } = form;
 
   // State for displaying messages
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  // Hooks
-  const router = useRouter();
-
   // Handle form submission
-  const onSubmit = async (data: {
-    password: string;
-    confirmPassword: string;
-  }) => {
-    const response = await updatePassword(code, data.password); // Send the new password to your backend API
+  const onSubmit = async (data: ResetPasswordFormType) => {
+    console.log(data);
 
-    if (response.error) {
-      // Handle error (display a message, etc.)
+    const response = await sendResetLink(data.email);
+
+    if (response.success) {
+      setMessage("Un lien de réinitialisation a été envoyé à votre email.");
+      setError("");
+    } else {
       setError(
-        "La mise à jour de votre mot de passe a échoué. Veuillez réessayer plus tard."
+        "Erreur lors de l'envoi du lien de réinitialisation. Veuillez réessayer."
       );
       setMessage("");
-    } else {
-      setMessage("Votre mot de passe a été mis à jour avec succès !");
     }
-    reset(); // Clear the form fields after submission
+
+    console.log(response);
   };
 
   return (
@@ -80,14 +74,6 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
             <path d="M20 6 9 17l-5-5" />
           </svg>
           <span>{message}</span>
-
-          <Button
-            onClick={() => router.push("/login")}
-            variant={"outline"}
-            className=" mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500 "
-          >
-            Connexion
-          </Button>
         </div>
       )}
 
@@ -108,36 +94,14 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
             {/* Username Field */}
             <FormField
               control={form.control}
-              name="password"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <div className="relative">
-                      <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                      <Mail className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Mot de passe"
-                        className="pl-10"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Password Field */}
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative">
-                      <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                      <Input
-                        placeholder="Confirmer le mot de passe"
-                        type="password"
+                        placeholder="Entrer cotre email"
                         className="pl-10"
                         {...field}
                       />
@@ -150,12 +114,14 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
 
             {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
-              {isSubmitting ? "Creation..." : "Mettre à jour le mot de passe"}
+              {isSubmitting
+                ? "Envoi en cours.."
+                : "Envoyer le lien de réinitialisation"}
             </Button>
           </form>
         </Form>
       )}
-      {/* 
+
       <p className="mt-4 text-center text-sm text-black-600/60">
         Vous avez déjà un compte ?{" "}
         <Link
@@ -164,7 +130,7 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
         >
           Se connecter
         </Link>
-      </p> */}
+      </p>
     </div>
   );
 };

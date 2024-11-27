@@ -41,8 +41,11 @@ const Etapes = () => {
       id="etapes"
     >
       <div className="grid grid-flow-row sm:grid-flow-col grid-cols-1 sm:grid-cols-2 gap-8 py-8 my-12">
-        <ScrollAnimationWrapper className="flex w-full justify-end">
-          <motion.div className="h-full w-full p-4 " variants={scrollAnimation}>
+        <ScrollAnimationWrapper className="flex w-full justify-center">
+          <motion.div
+            className="h-full w-full max-w-lg    p-4 "
+            variants={scrollAnimation}
+          >
             <Image
               src="/assets/steps.png"
               alt="Illustration des étapes de candidature"
@@ -53,7 +56,7 @@ const Etapes = () => {
             />
           </motion.div>
         </ScrollAnimationWrapper>
-        <ScrollAnimationWrapper>
+        <ScrollAnimationWrapper className="">
           <motion.div
             className="flex flex-col items-start justify-center w-full lg:w-9/12"
             variants={scrollAnimation}

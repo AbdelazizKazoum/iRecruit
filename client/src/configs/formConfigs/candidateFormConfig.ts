@@ -176,5 +176,10 @@ export const candidateFormConfig = {
       name: "cvPdf",
       label: "CV (Pdf, Max 10Mo) *",
     },
+    {
+      type: "arabic",
+      name: "cvPdf",
+      label: "CV (Pdf, Max 10Mo) *",
+    },
   ],
 };

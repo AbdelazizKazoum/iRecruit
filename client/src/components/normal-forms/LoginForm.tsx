@@ -1,6 +1,5 @@
 "use client";
 import { authenticate } from "@/libs/actions/authActions";
-import { loginSchema } from "@/libs/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
 import { Mail, Lock } from "lucide-react"; // Lucide icons
+import { loginSchema } from "@/schemas/authSchema";
 
 type LoginFormData = {
   email: string;

@@ -27,6 +27,7 @@ export class ArabicKeyboard extends LitElement {
       showEnglishValue: { type: String },
       state: { type: Object },
       desktop_button_groups: { type: Array },
+      isKeyboardVisible: { type: Boolean }, // New property for toggling keyboard
     };
   }
 
@@ -67,46 +68,101 @@ export class ArabicKeyboard extends LitElement {
     }
 
     .keyboard_wrapper {
-      max-width: var(--max-keyboard-width);
-      width: 100%;
-      align-items: center;
       display: flex;
-      flex
       flex-direction: column;
       gap: 4px;
-      position: relative;
+      padding-top: 5px;
       font-family: var(--font-family);
+      position: relative;
+      justify-content: center;
     }
 
     .keyboard {
       display: flex;
+      position: absolute;
       width: 100%;
       flex-direction: column;
-      align-items: center;
       border-radius: var(--border-radius);
       gap: 4px;
+      top: 70px;
+      background-color: #ffffff;
+      padding: 8px;
     }
 
     .space {
       width: 100%;
     }
 
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      font-family: inherit;
+      font-feature-settings: inherit;
+      font-variation-settings: inherit;
+      font-size: 100%;
+      font-weight: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
+      color: rgb(11 19 42 / 0.8);
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
     .textarea {
-      width: 100%;
+      padding-left: 0.75rem;
+      padding-right: 2.5rem;
+
       border-radius: calc(var(--radius) - 2px);
       direction: rtl;
-      max-width: 100%;
-      min-width: 100%;
-      text-align: right;
-      font-size: 0.85rem;
-      color: #3e3a3a;
+      height: 2.25rem;
+      display: flex;
+
+      margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+      margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+
+      border-width: 1px;
+      border-style: solid; /* Ensure it's using solid borders */
+
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+
       --tw-border-opacity: 1;
-      border-color: rgb(175 181 192 / var(--tw-border-opacity));
+      border-color: rgb(175 181 192 / var(--tw-border-opacity)); /* Fallback */
+
+      /* Explicitly set each side's border color */
+      border-top-color: var(
+        --primary-border-top,
+        rgb(175 181 192 / var(--tw-border-opacity))
+      );
+      border-right-color: var(
+        --primary-border-right,
+        rgb(175 181 192 / var(--tw-border-opacity))
+      );
+      outline: none;
+      position: relative;
+
+      :focus {
+        border-color: red;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+    }
+    .toggle-icon {
+      font-size: 25px;
+      position: absolute;
+      bottom: -0.8px;
+      right: 5px;
     }
     .label {
       line-height: 1;
-      font-weight: 500;
+      font-weight: bold;
       font-size: 0.875rem;
+      color: rgb(11 19 42 / 0.8);
     }
 
     .keyboard_row {
@@ -203,7 +259,6 @@ export class ArabicKeyboard extends LitElement {
     .button_value {
       color: var(--button-color);
       font-size: 16px;
-      font-weight: bold;
       padding: 0;
       margin: 0;
     }
@@ -480,13 +535,18 @@ export class ArabicKeyboard extends LitElement {
       cursorPosition: 0,
     });
   }
+
+  toggleKeyboard() {
+    this.isKeyboardVisible = !this.isKeyboardVisible;
+  }
+
   render() {
     return html`
       <section class="keyboard_wrapper">
         <label class="label" for=":R2hrefnjt9uj6:-form-item"
           >CV (Pdf, Max 10Mo) *</label
         >
-        <textarea
+        <input
           contenteditable="true"
           aria-label="Text Area"
           type="text"
@@ -502,21 +562,25 @@ export class ArabicKeyboard extends LitElement {
           @click="${this.handleTextareaClick}"
           .value=${this.state.textValue}
         >
-        </textarea>
-        <div class="keyboard">
-          ${this.buttonGroups.map((buttonGroup) => {
-            const { buttons, name } = buttonGroup;
-            return html`
-              <div class="keyboard_row ${name}">
-                ${buttons.map((button) => {
-                  const cryptedClass = crypt("salt", button.en);
-                  return html`
+          <span class="toggle-icon" @click=${this.toggleKeyboard}>⌨️</span>
+        </input>
+
+${
+  this.isKeyboardVisible
+    ? html` <div class="keyboard">
+        ${this.buttonGroups.map((buttonGroup) => {
+          const { buttons, name } = buttonGroup;
+          return html`
+            <div class="keyboard_row ${name}">
+              ${buttons.map((button) => {
+                const cryptedClass = crypt("salt", button.en);
+                return html`
                   <button
                     value="${button.en}"
                     type="button"
                     class="button button_${cryptedClass} ${
-                    button.modifierClass
-                  }"
+                  button.modifierClass
+                }"
                     title="${button.title}"
                     aria-label="${button.title}"
                     @click="${this.handleClick}"
@@ -526,11 +590,14 @@ export class ArabicKeyboard extends LitElement {
                   <p class="button_value">${button.ar}</p>
                 </button>
               </div>`;
-                })}
-              </div>
-            `;
-          })}
-        </div>
+              })}
+            </div>
+          `;
+        })}
+      </div>`
+    : ""
+}
+
       </section>
     `;
   }

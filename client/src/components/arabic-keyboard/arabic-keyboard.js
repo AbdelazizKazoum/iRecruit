@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { LitElement, html, css } from "lit";
 
-import * as Types from "./constants/types.js";
 import {
   desktop_button_groups,
   shifted_desktop_button_groups,
@@ -27,12 +27,14 @@ export class ArabicKeyboard extends LitElement {
       showEnglishValue: { type: String },
       state: { type: Object },
       desktop_button_groups: { type: Array },
-      isKeyboardVisible: { type: Boolean }, // New property for toggling keyboard
+      isKeyboardVisible: { type: Boolean },
+      fieldConfig: { type: Object }, // Define fieldConfig as a property
+      error: { type: Object }, // Define error as a property
     };
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.textarea = null;
     this.buttonGroups = desktop_button_groups;
     this.isMobile = false;
@@ -71,7 +73,6 @@ export class ArabicKeyboard extends LitElement {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      padding-top: 5px;
       font-family: var(--font-family);
       position: relative;
       justify-content: center;
@@ -541,16 +542,17 @@ export class ArabicKeyboard extends LitElement {
   }
 
   render() {
+    const { fieldConfig, error } = this;
+
     return html`
       <section class="keyboard_wrapper">
-        <label class="label" for=":R2hrefnjt9uj6:-form-item"
-          >CV (Pdf, Max 10Mo) *</label
-        >
         <input
           contenteditable="true"
           aria-label="Text Area"
           type="text"
           class="textarea"
+          name=${fieldConfig.name}
+          placeholder=${fieldConfig.placeholder}
           lang="ar"
           cols="10"
           @keydown="${this.handleKeyDown}"
@@ -564,7 +566,6 @@ export class ArabicKeyboard extends LitElement {
         >
           <span class="toggle-icon" @click=${this.toggleKeyboard}>⌨️</span>
         </input>
-
 ${
   this.isKeyboardVisible
     ? html` <div class="keyboard">
@@ -597,10 +598,11 @@ ${
       </div>`
     : ""
 }
-
       </section>
     `;
   }
 }
 
 customElements.define("arabic-keyboard", ArabicKeyboard);
+
+export default ArabicKeyboard;

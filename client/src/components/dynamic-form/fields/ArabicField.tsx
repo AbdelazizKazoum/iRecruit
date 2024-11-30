@@ -9,19 +9,9 @@ import {
   FormMessage,
   useFormField,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/libs/utils";
 import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
-
-import { ArabicKeyboard as ArabicKeyboardWC } from "@/components/arabic-keyboard/arabic-keyboard";
-import { createComponent } from "@lit/react";
-
-const ArabicKeyboard = createComponent({
-  tagName: "arabic-keyboard",
-  elementClass: ArabicKeyboardWC,
-  react: React,
-});
+import ArabicKeyboard from "@/components/arabic-keyboard/ArabicKeyboard";
 
 interface TextInputProps {
   fieldConfig: any;
@@ -32,7 +22,6 @@ interface TextInputProps {
 
 const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
   const { watch } = useFormContext();
-  const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
 
@@ -49,9 +38,9 @@ const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
               className={cn(error && "border-destructive ")}
               // defaultValue={value}
             /> */}
-            <ArabicKeyboard fieldConfig={fieldConfig} error={error} />
+            <ArabicKeyboard fieldConfig={fieldConfig} />
           </FormControl>
-          <FormDescription>{fieldConfig.description}</FormDescription>
+          {/* <FormDescription>{fieldConfig.description}</FormDescription> */}
           <FormMessage />
         </FormItem>
       )}

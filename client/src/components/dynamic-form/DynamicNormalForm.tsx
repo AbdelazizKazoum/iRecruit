@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/form/DynamicForm.tsx
 
-import useDynamicForm from "@/hooks/useDynamicForm";
 import { formConfigFactory } from "../../utils/formConfigFactory";
 import FieldRenderer from "./FieldRenderer";
 import { Button } from "../ui/button";
@@ -11,10 +10,39 @@ import { Separator } from "../ui/separator";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider } from "react-hook-form";
+import { memo, useMemo } from "react";
+import useDynamicForm from "@/hooks/useDynamicForm";
 
 const DynamicNormalForm = ({ category, schema }: any) => {
   const config = formConfigFactory(category);
   const { form, handleSubmit } = useDynamicForm(schema, config.category);
+
+  console.log("helloo ----------------------------------");
+  const renderedFields = useMemo(() => {
+    return config.fields.map((fieldConfig: any, index: number) => {
+      if (fieldConfig.type === "group") {
+        return (
+          <div key={index} className="col-span-2">
+            <GroupFieldsRenderer
+              fieldConfig={fieldConfig}
+              category={category}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <FormField
+            key={index}
+            control={form.control}
+            name={fieldConfig.name}
+            render={({ field }) => (
+              <FieldRenderer fieldConfig={fieldConfig} field={field} />
+            )}
+          />
+        );
+      }
+    });
+  }, [config.fields, category, form.control]);
 
   return (
     <div className="space-y-6">
@@ -31,38 +59,7 @@ const DynamicNormalForm = ({ category, schema }: any) => {
             className="space-y-2"
             onSubmit={form.handleSubmit(handleSubmit)}
           >
-            <div key="1" className=" grid grid-cols-2 gap-4 ">
-              {config.fields.map((fieldConfig: any, index: number) => {
-                if (fieldConfig.type === "group") {
-                  return (
-                    <div key={index} className=" col-span-2  ">
-                      <GroupFieldsRenderer
-                        fieldConfig={fieldConfig}
-                        // formData={formData}
-                        category={category}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <FormField
-                      key={index}
-                      control={form.control}
-                      name={fieldConfig.name}
-                      // defaultValue=""
-                      render={({ field }) => (
-                        <FieldRenderer
-                          fieldConfig={fieldConfig}
-                          field={field}
-                          // value={formData[category]?.[fieldConfig.name]}
-                          // onChange={handleFieldChange}
-                        />
-                      )}
-                    />
-                  );
-                }
-              })}
-            </div>
+            <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
             <Button
               size="lg"
               type="submit"
@@ -73,7 +70,7 @@ const DynamicNormalForm = ({ category, schema }: any) => {
                 <Loader className="animate-spin mr-2 h-4 w-4" />
               ) : null}
               Enregistrer
-            </Button>{" "}
+            </Button>
           </form>
         </Form>
       </FormProvider>
@@ -81,4 +78,4 @@ const DynamicNormalForm = ({ category, schema }: any) => {
   );
 };
 
-export default DynamicNormalForm;
+export default memo(DynamicNormalForm);

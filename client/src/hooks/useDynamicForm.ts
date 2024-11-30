@@ -6,7 +6,6 @@ import { useFormStore } from "@/stores/useFormStore";
 const useDynamicForm = (schema: any, category: string) => {
   const form = useForm<any>({
     resolver: zodResolver(schema),
-    mode: "onChange",
   });
 
   const { handleSubmit } = form;

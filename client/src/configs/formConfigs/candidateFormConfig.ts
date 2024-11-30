@@ -10,7 +10,7 @@ export const candidateFormConfig = {
       placeholder: "Entrez votre prénom",
     },
     {
-      type: "text",
+      type: "arabic",
       name: "prenomAr",
       label: "الإسم الشخصي *",
       placeholder: "أدخل الإسم الشخصي",
@@ -22,7 +22,7 @@ export const candidateFormConfig = {
       placeholder: "Entrez votre nom",
     },
     {
-      type: "text",
+      type: "arabic",
       name: "nomAr",
       label: "الإسم العائلي *",
       placeholder: "أدخل الإسم العائلي",
@@ -34,7 +34,7 @@ export const candidateFormConfig = {
       placeholder: "Entrez votre adresse personnelle",
     },
     {
-      type: "text",
+      type: "arabic",
       name: "adresseAr",
       label: "العنوان الشخصي*",
       placeholder: "أدخل العنوان الشخصي",
@@ -173,11 +173,6 @@ export const candidateFormConfig = {
     },
     {
       type: "file",
-      name: "cvPdf",
-      label: "CV (Pdf, Max 10Mo) *",
-    },
-    {
-      type: "arabic",
       name: "cvPdf",
       label: "CV (Pdf, Max 10Mo) *",
     },

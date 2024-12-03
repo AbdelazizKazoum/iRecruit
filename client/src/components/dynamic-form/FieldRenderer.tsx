@@ -7,6 +7,7 @@ import SelectField from "./fields/SelectFieldProps";
 import CheckboxField from "./fields/CheckboxField";
 import DatePicker from "./fields/DatePicker";
 import FileInput from "./fields/FileInput";
+import ArabicField from "./fields/ArabicField";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
@@ -59,6 +60,15 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
     case "date":
       return (
         <DatePicker
+          selectedDate={value}
+          // onChange={onChange as (date: Date | null) => void}
+          fieldConfig={fieldConfig}
+          field={field}
+        />
+      );
+    case "arabic":
+      return (
+        <ArabicField
           selectedDate={value}
           // onChange={onChange as (date: Date | null) => void}
           fieldConfig={fieldConfig}

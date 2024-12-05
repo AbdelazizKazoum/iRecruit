@@ -5,5 +5,24 @@
     "faq": "FAQ",
     "contact": "Contact",
     "steps": "Steps to Follow"
+  },
+  "concours": {
+    "title": "Competition Announcements",
+    "description": "Check out the latest competition announcements and apply to offers that match your profile.",
+    "publishedOn": "Published on",
+    "deadline": "Deadline",
+    "details": "Details",
+    "apply": "Apply"
+  },
+  "hero": {
+    "title": "Welcome to the Recruitment Platform.",
+    "description": "A recruitment platform dedicated to the Higher Education, Scientific Research, and Innovation sector.",
+    "button": "Get Started",
+    "videoText": "Video Tutorial: Post a Job Offer",
+    "stats": {
+      "jobs": "Job Offers",
+      "candidates": "Candidates",
+      "interviews": "Scheduled Interviews"
+    }
   }
 }

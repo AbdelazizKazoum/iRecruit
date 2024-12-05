@@ -1,11 +1,15 @@
 import React from "react";
 import Hero from "@/components/home/Hero";
 import Etapes from "@/components/home/Etapes";
+import { getDictionary } from "@/utils/getDictionary";
+import { Locale } from "@/configs/i18n";
 
-const Page = () => {
+const Page = async ({ params }: { params: { lang: Locale } }) => {
+  const dictionary = await getDictionary(params.lang);
+
   return (
     <>
-      <Hero />
+      <Hero dictionary={dictionary} locale={params.lang} />
       <Etapes />
     </>
   );

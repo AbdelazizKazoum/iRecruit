@@ -5,5 +5,24 @@
     "faq": "FAQ",
     "contact": "Contact",
     "steps": "Les étapes à suivre"
+  },
+  "concours": {
+    "title": "Annonces de Concours",
+    "description": "Consultez les dernières annonces de concours et postulez aux offres qui correspondent à votre profil.",
+    "publishedOn": "Publié le",
+    "deadline": "Dépôt avant",
+    "details": "Détails",
+    "apply": "Postuler"
+  },
+  "hero": {
+    "title": "Bienvenue Sur La Plateforme de recrutement.",
+    "description": "Plateforme de recrutement dédiée au secteur de l'Enseignement Supérieur, de la Recherche Scientifique et de l'Innovation.",
+    "button": "Lancez-vous",
+    "videoText": "Tutoriel Vidéo : Publier une Offre",
+    "stats": {
+      "jobs": "Offres d'emploi",
+      "candidates": "Candidats",
+      "interviews": "Entretiens planifiés"
+    }
   }
 }

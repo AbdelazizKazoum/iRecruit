@@ -7,22 +7,29 @@ import ButtonOutline from "../misc/ButtonOutline.";
 import Image from "next/image";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { UserDropdown } from "../profile/UserDropdown";
+import { UserDropdown } from "./shared/UserDropdown";
 import { HelpCircle, Home, Phone, StepForward, BookCopy } from "lucide-react";
 import { getDictionary } from "@/utils/getDictionary";
+import { LanguageDropdown } from "./shared/LanguageDropdown";
+import { useParams } from "next/navigation";
 
+// Define the keys for the menu dictionary
+type MenuKey = "home" | "concours" | "faq" | "contact" | "steps";
+
+// Menu link type
 type menuType = {
-  name: string;
+  name: MenuKey;
   path: string;
-  icon: any;
+  icon: React.ReactNode;
 };
+
 // Menu links array with icons and labels
-const menuLinks = [
+const menuLinks: menuType[] = [
   { name: "home", path: "/home", icon: <Home /> },
   { name: "concours", path: "/concours", icon: <BookCopy /> },
   { name: "faq", path: "/FAQ", icon: <HelpCircle /> },
   { name: "contact", path: "/contact", icon: <Phone /> },
-] as menuType[];
+];
 
 const Header = ({
   user,
@@ -34,18 +41,25 @@ const Header = ({
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
 
-  console.log("test -------------------------", dictionary);
+  // Hooks
+  const params = useParams();
+
+  // Vars
+  const { lang: locale } = params;
+
   useEffect(() => {
     // Update active link based on the current route
     setActiveLink(window.location.pathname);
 
     // Add scroll listener
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
       setScrollActive(window.scrollY > 20);
-    });
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -75,7 +89,7 @@ const Header = ({
             {menuLinks.map((link) => (
               <Link
                 key={link.path}
-                href={link.path}
+                href={`/${locale}/${link.path}`}
                 className={
                   "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative" +
                   (activeLink === link.path
@@ -104,19 +118,20 @@ const Header = ({
               {dictionary["menu"]["steps"]}
             </LinkScroll>
           </ul>
-          {user ? (
-            <div className="col-start-10 col-end-12 flex justify-end items-center">
-              <div className="relative">
+
+          <div className="col-start-10 col-end-12 flex justify-end items-center">
+            <div className="relative flex justify-center gap-3">
+              <LanguageDropdown />
+
+              {user ? (
                 <UserDropdown />
-              </div>
+              ) : (
+                <Link href={`/${locale}/login`}>
+                  <ButtonOutline>Connexion</ButtonOutline>
+                </Link>
+              )}
             </div>
-          ) : (
-            <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
-              <Link href="/login">
-                <ButtonOutline>Connexion</ButtonOutline>
-              </Link>
-            </div>
-          )}
+          </div>
         </nav>
       </header>
 
@@ -136,9 +151,9 @@ const Header = ({
                     : " border-transparent")
                 }
               >
-                <div className="flex flex-col gap-1 items-center ">
+                <div className="flex flex-col gap-1 items-center">
                   <span className="w-6 h-6">{link.icon}</span>
-                  <span> {dictionary["menu"][link.name]}</span>
+                  <span>{dictionary["menu"][link.name]}</span>
                 </div>
               </Link>
             ))}
@@ -156,11 +171,11 @@ const Header = ({
                   : " border-transparent")
               }
             >
-              <div className="flex flex-col gap-1 items-center ">
-                <span className="w-6 h-6 text-black-600/80 ">
-                  {<StepForward />}
+              <div className="flex flex-col gap-1 items-center">
+                <span className="w-6 h-6 text-black-600/80">
+                  <StepForward />
                 </span>
-                <span> {dictionary["menu"]["steps"]} </span>
+                <span>{dictionary["menu"]["steps"]}</span>
               </div>
             </LinkScroll>
           </ul>

@@ -1,8 +1,8 @@
 // Config Imports
 import { i18n } from "@/configs/i18n";
+import { ensurePrefix } from "./string";
 
 // Util Imports
-import { ensurePrefix } from "@/utils/string";
 
 // Check if the url is missing the locale
 export const isUrlMissingLocale = (url: string) => {

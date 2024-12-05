@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+// import localFont from "next/font/local";
+import "../globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,16 +15,16 @@ import TranslationWrapper from "@/hocs/TranslationWrapper";
 import { i18n } from "@/configs/i18n";
 import { headers } from "next/headers";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// const geistSans = localFont({
+//   src: "./fonts/GeistVF.woff",
+//   variable: "--font-geist-sans",
+//   weight: "100 900",
+// });
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -42,9 +42,7 @@ const RootLayout = ({
   return (
     <TranslationWrapper headersList={headersList} lang={params.lang}>
       <html id="__next" lang={params.lang} dir={direction}>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className="">
           <ToastContainer />
           {children}
         </body>

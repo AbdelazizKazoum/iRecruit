@@ -3,13 +3,21 @@ import Header from "@/components/Layout/Header";
 import Providers from "@/components/Providers";
 import React from "react";
 import { auth } from "@/libs/auth";
+import { ChildrenType } from "@/types/types";
+import { i18n, Locale } from "@/configs/i18n";
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({
+  children,
+  params,
+}: ChildrenType & { params: { lang: Locale } }) => {
+  // Vars
+  const direction = i18n.langDirection[params.lang];
+
   const session = await auth();
   return (
     <Providers>
       <Header user={session?.user} />
-      <main>
+      <main dir={direction}>
         {/* Bubble overlay effect */}
         {/* Bubble container */}
         <div className="bubble-overlay">

@@ -1,11 +1,15 @@
 import Providers from "@/components/Providers";
+import { Locale } from "@/configs/i18n";
 import GuestOnlyRoute from "@/hocs/GuestOnlyRoute";
-import React, { ReactNode } from "react";
+import { ChildrenType } from "@/types/types";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = async ({
+  children,
+  params,
+}: ChildrenType & { params: { lang: Locale } }) => {
   return (
     <Providers>
-      <GuestOnlyRoute>{children}</GuestOnlyRoute>
+      <GuestOnlyRoute lang={params.lang}>{children}</GuestOnlyRoute>
     </Providers>
   );
 };

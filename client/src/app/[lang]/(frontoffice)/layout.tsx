@@ -5,6 +5,7 @@ import React from "react";
 import { auth } from "@/libs/auth";
 import { ChildrenType } from "@/types/types";
 import { i18n, Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 
 const Layout = async ({
   children,
@@ -12,11 +13,12 @@ const Layout = async ({
 }: ChildrenType & { params: { lang: Locale } }) => {
   // Vars
   const direction = i18n.langDirection[params.lang];
+  const dictionary = await getDictionary(params.lang);
 
   const session = await auth();
   return (
     <Providers>
-      <Header user={session?.user} />
+      <Header user={session?.user} dictionary={dictionary} />
       <main dir={direction}>
         {/* Bubble overlay effect */}
         {/* Bubble container */}

@@ -1,6 +1,9 @@
 {
-  "navigation": {
+  "menu": {
     "home": "Home",
-    "about": "About"
+    "concours": "Competition Announcements",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "steps": "Steps to Follow"
   }
 }

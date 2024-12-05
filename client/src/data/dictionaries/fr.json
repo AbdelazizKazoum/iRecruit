@@ -1,6 +1,9 @@
 {
-  "navigation": {
-    "dashboards": "Tableaux de bord",
-    "crm": "GRC"
+  "menu": {
+    "home": "Home",
+    "concours": "Competition Announcements",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "steps": "Les étapes à suivre"
   }
 }

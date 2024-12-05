@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -8,19 +9,32 @@ import Link from "next/link";
 import { Session } from "next-auth";
 import { UserDropdown } from "../profile/UserDropdown";
 import { HelpCircle, Home, Phone, StepForward, BookCopy } from "lucide-react";
+import { getDictionary } from "@/utils/getDictionary";
 
+type menuType = {
+  name: string;
+  path: string;
+  icon: any;
+};
 // Menu links array with icons and labels
 const menuLinks = [
-  { label: "Accueil", path: "/home", icon: <Home /> },
-  { label: "Annonces de concours", path: "/concours", icon: <BookCopy /> },
-  { label: "FAQ", path: "/FAQ", icon: <HelpCircle /> },
-  { label: "Contact", path: "/contact", icon: <Phone /> },
-];
+  { name: "home", path: "/home", icon: <Home /> },
+  { name: "concours", path: "/concours", icon: <BookCopy /> },
+  { name: "faq", path: "/FAQ", icon: <HelpCircle /> },
+  { name: "contact", path: "/contact", icon: <Phone /> },
+] as menuType[];
 
-const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
+const Header = ({
+  user,
+  dictionary,
+}: {
+  user: Session["user"] | null | undefined;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
 
+  console.log("test -------------------------", dictionary);
   useEffect(() => {
     // Update active link based on the current route
     setActiveLink(window.location.pathname);
@@ -70,7 +84,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
                 }
                 onClick={() => setActiveLink(link.path)}
               >
-                {link.label}
+                {dictionary["menu"][link.name]}
               </Link>
             ))}
             <LinkScroll
@@ -87,7 +101,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
                   : " text-black-500 hover:text-primary-500 ")
               }
             >
-              Les étapes à suivre
+              {dictionary["menu"]["steps"]}
             </LinkScroll>
           </ul>
           {user ? (
@@ -124,7 +138,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
               >
                 <div className="flex flex-col gap-1 items-center ">
                   <span className="w-6 h-6">{link.icon}</span>
-                  <span>{link.label}</span>
+                  <span> {dictionary["menu"][link.name]}</span>
                 </div>
               </Link>
             ))}
@@ -146,7 +160,7 @@ const Header = ({ user }: { user: Session["user"] | null | undefined }) => {
                 <span className="w-6 h-6 text-black-600/80 ">
                   {<StepForward />}
                 </span>
-                <span> Les étapes</span>
+                <span> {dictionary["menu"]["steps"]} </span>
               </div>
             </LinkScroll>
           </ul>

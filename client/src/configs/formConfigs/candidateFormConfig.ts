@@ -2,6 +2,16 @@
 
 export const candidateFormConfig = {
   category: "candidate",
+  title: {
+    en: "Application",
+    fr: "Candidature",
+    ar: "طلب التوظيف",
+  },
+  description: {
+    en: "This is how others will see you on the site.",
+    fr: "C'est ainsi que les autres vous verront sur le site.",
+    ar: "هكذا سيراك الآخرون على الموقع.",
+  },
   fields: [
     {
       type: "text",
@@ -121,6 +131,7 @@ export const candidateFormConfig = {
         {
           type: "text",
           name: "experiences.attestation",
+
           label: "Attestation de travail (Pdf, Max 10Mo)*",
           placeholder: "",
           dependsOn: "experiences.fonctionnaire",

@@ -12,12 +12,20 @@ import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider } from "react-hook-form";
 import { memo, useMemo } from "react";
 import useDynamicForm from "@/hooks/useDynamicForm";
+import { Locale } from "@/configs/i18n";
 
-const DynamicNormalForm = ({ category, schema }: any) => {
+const DynamicNormalForm = ({
+  category,
+  schema,
+  local,
+}: {
+  category: string;
+  schema: any;
+  local: Locale;
+}) => {
   const config = formConfigFactory(category);
   const { form, handleSubmit } = useDynamicForm(schema, config.category);
 
-  console.log("helloo ----------------------------------");
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
       if (fieldConfig.type === "group") {
@@ -47,9 +55,11 @@ const DynamicNormalForm = ({ category, schema }: any) => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-black-600/85">Candidature</h3>
+        <h3 className="text-lg font-medium text-black-600/85">
+          {config.title[local]}
+        </h3>
         <p className="text-sm text-muted-foreground">
-          C&apos;est ainsi que les autres vous verront sur le site.
+          {config.description[local]}
         </p>
       </div>
       <Separator />

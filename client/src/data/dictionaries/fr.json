@@ -1,7 +1,7 @@
 {
   "menu": {
-    "home": "Home",
-    "concours": "Competition Announcements",
+    "home": "Accueil",
+    "concours": "Annonces de Concours",
     "faq": "FAQ",
     "contact": "Contact",
     "steps": "Les étapes à suivre"
@@ -23,6 +23,56 @@
       "jobs": "Offres d'emploi",
       "candidates": "Candidats",
       "interviews": "Entretiens planifiés"
+    }
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "description": "Vous avez des questions ou besoin d'aide ? Notre équipe est là pour vous répondre. N'hésitez pas à nous contacter via le formulaire ci-dessous ou par les moyens indiqués.",
+    "detailsTitle": "Nos coordonnées",
+    "address": "123 Rue de l'Entreprise, Paris, France",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@votresite.com",
+    "ctaTitle": "Restez connecté",
+    "ctaDescription": "Abonnez-vous à notre newsletter pour recevoir des mises à jour et des offres spéciales directement dans votre boîte de réception.",
+    "ctaButton": "S'abonner à la newsletter",
+    "form": {
+      "labels": {
+        "name": "Nom d'utilisateur",
+        "email": "Adresse e-mail",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Entrez votre nom",
+        "email": "Entrez votre email",
+        "message": "Entrez votre message"
+      },
+      "button": "Envoyer"
+    }
+  },
+  "candidature": {
+    "title": "Portail de Candidature",
+    "description": "Créez votre profil et postulez aux offres d'emploi correspondant à vos compétences et expériences.",
+    "sections": {
+      "personalInfo": "Informations Personnelles",
+      "education": "Éducation",
+      "experience": "Expériences",
+      "skills": "Compétences",
+      "applications": "Candidatures Soumises"
+    },
+    "actions": {
+      "save": "Enregistrer",
+      "submit": "Soumettre",
+      "cancel": "Annuler"
+    },
+    "status": {
+      "draft": "Brouillon",
+      "submitted": "Soumis",
+      "accepted": "Accepté",
+      "rejected": "Rejeté"
+    },
+    "notifications": {
+      "success": "La candidature a été enregistrée avec succès.",
+      "error": "Une erreur s'est produite lors du traitement de la candidature."
     }
   }
 }

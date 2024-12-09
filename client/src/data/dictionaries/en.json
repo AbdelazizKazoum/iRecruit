@@ -1,28 +1,78 @@
 {
   "menu": {
     "home": "Home",
-    "concours": "Competition Announcements",
+    "concours": "Job Announcements",
     "faq": "FAQ",
     "contact": "Contact",
     "steps": "Steps to Follow"
   },
   "concours": {
-    "title": "Competition Announcements",
-    "description": "Check out the latest competition announcements and apply to offers that match your profile.",
+    "title": "Job Announcements",
+    "description": "Check out the latest job announcements and apply for opportunities that match your profile.",
     "publishedOn": "Published on",
-    "deadline": "Deadline",
+    "deadline": "Apply before",
     "details": "Details",
     "apply": "Apply"
   },
   "hero": {
     "title": "Welcome to the Recruitment Platform.",
-    "description": "A recruitment platform dedicated to the Higher Education, Scientific Research, and Innovation sector.",
+    "description": "A recruitment platform dedicated to Higher Education, Scientific Research, and Innovation.",
     "button": "Get Started",
-    "videoText": "Video Tutorial: Post a Job Offer",
+    "videoText": "Video Tutorial: Posting a Job Offer",
     "stats": {
       "jobs": "Job Offers",
       "candidates": "Candidates",
       "interviews": "Scheduled Interviews"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have questions or need assistance? Our team is here to help. Feel free to reach out using the form below or via the contact information provided.",
+    "detailsTitle": "Our Contact Information",
+    "address": "123 Enterprise Street, Paris, France",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@yourwebsite.com",
+    "ctaTitle": "Stay Connected",
+    "ctaDescription": "Subscribe to our newsletter to receive updates and special offers directly in your inbox.",
+    "ctaButton": "Subscribe to Newsletter",
+    "form": {
+      "labels": {
+        "name": "Username",
+        "email": "Email Address",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Enter your name",
+        "email": "Enter your email",
+        "message": "Enter your message"
+      },
+      "button": "Send"
+    }
+  },
+  "candidature": {
+    "title": "Application Portal",
+    "description": "Create your profile and apply for job offers that match your skills and experiences.",
+    "sections": {
+      "personalInfo": "Personal Information",
+      "education": "Education",
+      "experience": "Work Experience",
+      "skills": "Skills",
+      "applications": "Submitted Applications"
+    },
+    "actions": {
+      "save": "Save",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "status": {
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "notifications": {
+      "success": "The application has been saved successfully.",
+      "error": "An error occurred while processing the application."
     }
   }
 }

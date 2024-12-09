@@ -2,6 +2,16 @@
 
 export const infoProfessionnellesFormConfig = {
   category: "info-professionnelles",
+  title: {
+    en: "Application",
+    fr: "Candidature",
+    ar: "طلب التوظيف",
+  },
+  description: {
+    en: "This is how others will see you on the site.",
+    fr: "C'est ainsi que les autres vous verront sur le site.",
+    ar: "هكذا سيراك الآخرون على الموقع.",
+  },
   fields: [
     {
       type: "group",

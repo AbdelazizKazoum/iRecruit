@@ -1,63 +1,41 @@
-// src/pages/CandidateFormPage.tsx
-"use client";
+import { CandidatureApplication } from "@/components/candidature/CandidatureApplication";
 import { CandidatureSidebar } from "@/components/candidature/CandidatureSidebar";
-import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
-import { candidateFormSchema } from "@/schemas/candidateFormSchema";
-import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
-import { BriefcaseBusiness, Users } from "lucide-react";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
-const steps = [
-  {
-    title: "Informations Personnelles",
-    href: "/candidature?section=info-personnelles",
-    icon: <Users />,
-  },
-  {
-    title: "Qualifications/Expériences",
-    href: "/candidature?section=info-professionnelles",
-    icon: <BriefcaseBusiness />,
-  },
-];
-
-const CandidateFormPage = ({
+const CandidateFormPage = async ({
   searchParams,
+  params,
 }: {
   searchParams: { section: string };
+  params: { lang: Locale };
 }) => {
   const section = searchParams.section || "info-personnelles";
   // const { data } = useSession();
+
+  const dictionary = await getDictionary(params.lang);
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
       <div className="space-y-6 py-10 lg:p-10 pb-16">
         <PageHeader
-          title="Concours et Offres d'Emploi"
-          description="Explorez les concours et annonces d'emploi en cours et postulez pour saisir les meilleures opportunités correspondant à vos compétences et aspirations."
+          title={dictionary["candidature"].title}
+          description={dictionary["candidature"].description}
         />
 
         <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <div className="flex flex-col gap-6 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="">
-            <div className="profile-image flex justify-center items-center mb-6"></div>
-            <CandidatureSidebar items={steps} />
+            <CandidatureSidebar
+              local={params.lang}
+              classname=""
+              dictionary={dictionary}
+            />
           </aside>
-          <main className="flex-1 ">
-            {section === "info-personnelles" && (
-              <DynamicNormalForm
-                category="candidate"
-                schema={candidateFormSchema}
-              />
-            )}
-            {section === "info-professionnelles" && (
-              <DynamicNormalForm
-                category="info-professionnelles"
-                schema={infoProfessionnellesValidationSchema}
-              />
-            )}
-          </main>
+          <CandidatureApplication section={section} local={params.lang} />
         </div>
       </div>
     </div>

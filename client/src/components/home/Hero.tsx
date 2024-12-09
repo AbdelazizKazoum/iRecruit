@@ -74,7 +74,7 @@ const Hero = ({
             <div className="flex gap-3">
               <ButtonPrimary
                 addClass={""}
-                onClick={() => router.push("/candidature")}
+                onClick={() => router.push(`/${locale}/candidature`)}
               >
                 {dictionary["hero"].button}
               </ButtonPrimary>

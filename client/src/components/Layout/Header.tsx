@@ -82,7 +82,7 @@ const Header = ({
                   objectFit="contain"
                   priority
                 />
-              </Link>
+              </Link>{" "}
             </div>
           </div>
           <ul className="hidden lg:flex col-start-4 col-end-8 text-black-500 items-center">

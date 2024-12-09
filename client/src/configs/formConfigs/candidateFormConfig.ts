@@ -1,5 +1,3 @@
-// src/formConfigs/candidateFormConfig.ts
-
 export const candidateFormConfig = {
   category: "candidate",
   title: {
@@ -16,176 +14,181 @@ export const candidateFormConfig = {
     {
       type: "text",
       name: "prenom",
-      label: "Prénom *",
-      placeholder: "Entrez votre prénom",
-    },
-    {
-      type: "arabic",
-      name: "prenomAr",
-      label: "الإسم الشخصي *",
-      placeholder: "أدخل الإسم الشخصي",
+      label: {
+        en: "First Name *",
+        fr: "Prénom *",
+        ar: "الإسم الشخصي *",
+      },
+      placeholder: {
+        en: "Enter your first name",
+        fr: "Entrez votre prénom",
+        ar: "أدخل الإسم الشخصي",
+      },
     },
     {
       type: "text",
       name: "nom",
-      label: "Nom *",
-      placeholder: "Entrez votre nom",
-    },
-    {
-      type: "arabic",
-      name: "nomAr",
-      label: "الإسم العائلي *",
-      placeholder: "أدخل الإسم العائلي",
+      label: {
+        en: "Last Name *",
+        fr: "Nom *",
+        ar: "الإسم العائلي *",
+      },
+      placeholder: {
+        en: "Enter your last name",
+        fr: "Entrez votre nom",
+        ar: "أدخل الإسم العائلي",
+      },
     },
     {
       type: "text",
       name: "adresse",
-      label: "Adresse personnelle *",
-      placeholder: "Entrez votre adresse personnelle",
-    },
-    {
-      type: "arabic",
-      name: "adresseAr",
-      label: "العنوان الشخصي*",
-      placeholder: "أدخل العنوان الشخصي",
+      label: {
+        en: "Personal Address *",
+        fr: "Adresse personnelle *",
+        ar: "العنوان الشخصي *",
+      },
+      placeholder: {
+        en: "Enter your personal address",
+        fr: "Entrez votre adresse personnelle",
+        ar: "أدخل العنوان الشخصي",
+      },
     },
     {
       type: "text",
       name: "lieuNaissance",
-      label: "Lieu de naissance *",
-      placeholder: "Entrez votre lieu de naissance",
+      label: {
+        en: "Place of Birth *",
+        fr: "Lieu de naissance *",
+        ar: "مكان الولادة *",
+      },
+      placeholder: {
+        en: "Enter your place of birth",
+        fr: "Entrez votre lieu de naissance",
+        ar: "أدخل مكان الولادة",
+      },
     },
     {
       type: "text",
       name: "cin",
-      label: "CIN *",
-      placeholder: "Entrez votre CIN",
+      label: {
+        en: "CIN *",
+        fr: "CIN *",
+        ar: "البطاقة الوطنية *",
+      },
+      placeholder: {
+        en: "Enter your CIN",
+        fr: "Entrez votre CIN",
+        ar: "أدخل البطاقة الوطنية",
+      },
     },
     {
       type: "date",
       name: "dateNaissance",
-      label: "Date de naissance *",
-      placeholder: "Sélectionnez votre date de naissance",
+      label: {
+        en: "Date of Birth *",
+        fr: "Date de naissance *",
+        ar: "تاريخ الولادة *",
+      },
+      placeholder: {
+        en: "Select your date of birth",
+        fr: "Sélectionnez votre date de naissance",
+        ar: "اختر تاريخ الولادة",
+      },
     },
     {
       type: "select",
       name: "sexe",
-      label: "Sexe *",
+      label: {
+        en: "Gender *",
+        fr: "Sexe *",
+        ar: "الجنس *",
+      },
       options: [
-        { value: "feminin", label: "Féminin" },
-        { value: "masculin", label: "Masculin" },
+        {
+          value: "feminin",
+          label: { en: "Female", fr: "Féminin", ar: "أنثى" },
+        },
+        { value: "masculin", label: { en: "Male", fr: "Masculin", ar: "ذكر" } },
       ],
     },
     {
       type: "select",
       name: "situation",
-      label: "Situation*",
+      label: {
+        en: "Marital Status *",
+        fr: "Situation *",
+        ar: "الوضع العائلي *",
+      },
       options: [
-        { value: "celibataire", label: "Célibataire" },
-        { value: "divorce", label: "Divorcé(e)" },
-        { value: "marie", label: "Marié(e)" },
-        { value: "veuf", label: "Veuf(ve)" },
+        {
+          value: "celibataire",
+          label: { en: "Single", fr: "Célibataire", ar: "أعزب" },
+        },
+        {
+          value: "divorce",
+          label: { en: "Divorced", fr: "Divorcé(e)", ar: "مطلق" },
+        },
+        {
+          value: "marie",
+          label: { en: "Married", fr: "Marié(e)", ar: "متزوج" },
+        },
+        { value: "veuf", label: { en: "Widowed", fr: "Veuf(ve)", ar: "أرمل" } },
       ],
     },
     {
       type: "text",
       name: "telephone",
-      label: "Numéro de téléphone *",
-      placeholder: "Entrez votre numéro de téléphone",
+      label: {
+        en: "Phone Number *",
+        fr: "Numéro de téléphone *",
+        ar: "رقم الهاتف *",
+      },
+      placeholder: {
+        en: "Enter your phone number",
+        fr: "Entrez votre numéro de téléphone",
+        ar: "أدخل رقم الهاتف",
+      },
     },
-
     {
       type: "text",
       name: "email",
-      label: "Email *",
-      placeholder: "Entrez votre adresse email",
-    },
-
-    {
-      type: "group",
-      name: "experiences",
-      title: "Do you have work experience?",
-      description: "",
-
-      group: [
-        {
-          type: "checkbox",
-          name: "experiences.fonctionnaire",
-          label: "Fonctionnaire ?",
-        },
-
-        {
-          type: "text",
-          name: "experiences.fonction",
-          label: "Organisme/établissement *",
-          placeholder: "",
-          dependsOn: "experiences.fonctionnaire",
-        },
-        {
-          type: "text",
-          name: "experiences.ppr",
-          label: "P.P.R / Matricule *",
-          placeholder: "",
-          dependsOn: "experiences.fonctionnaire",
-        },
-        {
-          type: "text",
-          name: "experiences.attestation",
-
-          label: "Attestation de travail (Pdf, Max 10Mo)*",
-          placeholder: "",
-          dependsOn: "experiences.fonctionnaire",
-        },
-      ],
-    },
-
-    {
-      type: "group",
-      name: "situationDeHandicap",
-      title: "Avez-vous une expérience professionnelle ?",
-      description: "",
-
-      group: [
-        {
-          type: "checkbox",
-          name: "situationDeHandicap.handicap",
-          label: "Situation de handicap ?",
-        },
-
-        {
-          type: "text",
-          name: "situationDeHandicap.typeHandicap",
-          label: "TypeHandicap *",
-          placeholder: "",
-          dependsOn: "situationDeHandicap.handicap",
-        },
-      ],
-    },
-
-    {
-      type: "checkbox",
-      name: "AncienCombattant",
-      label: "Ancien combattant ?",
-    },
-    {
-      type: "checkbox",
-      name: "PupillesNation",
-      label: "Pupilles de la nation ?",
+      label: {
+        en: "Email *",
+        fr: "Email *",
+        ar: "البريد الإلكتروني *",
+      },
+      placeholder: {
+        en: "Enter your email address",
+        fr: "Entrez votre adresse email",
+        ar: "أدخل البريد الإلكتروني",
+      },
     },
     {
       type: "file",
       name: "cinPdf",
-      label: "CIN (Pdf, Max 10Mo) *",
+      label: {
+        en: "CIN (PDF, Max 10MB) *",
+        fr: "CIN (Pdf, Max 10Mo) *",
+        ar: "البطاقة الوطنية (Pdf, Max 10Mo) *",
+      },
     },
     {
       type: "file",
       name: "bacPdf",
-      label: "Bac (Pdf, Max 10Mo) *",
+      label: {
+        en: "High School Diploma (PDF, Max 10MB) *",
+        fr: "Bac (Pdf, Max 10Mo) *",
+        ar: "شهادة البكالوريا (Pdf, Max 10Mo) *",
+      },
     },
     {
       type: "file",
       name: "cvPdf",
-      label: "CV (Pdf, Max 10Mo) *",
+      label: {
+        en: "CV (PDF, Max 10MB) *",
+        fr: "CV (Pdf, Max 10Mo) *",
+        ar: "السيرة الذاتية (Pdf, Max 10Mo) *",
+      },
     },
   ],
 };

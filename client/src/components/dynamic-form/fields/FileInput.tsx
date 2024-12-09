@@ -9,6 +9,7 @@ import {
   FormMessage,
   useFormField,
 } from "@/components/ui/form";
+import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
 import { CheckCircleIcon, UploadIcon } from "lucide-react";
 import React, { memo } from "react";
@@ -19,9 +20,10 @@ interface TextInputProps {
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
+  locale: Locale;
 }
 
-const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
+const FileInput: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
   const [fileName, setFileName] = React.useState<string | null>(null);
 
   const { watch, setValue } = useFormContext();
@@ -40,7 +42,7 @@ const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
     <>
       {dependsOn && (
         <FormItem>
-          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormLabel>{fieldConfig.label[locale]}</FormLabel>
           <FormControl>
             <label
               className={cn(
@@ -68,7 +70,9 @@ const FileInput: React.FC<TextInputProps> = ({ fieldConfig }) => {
               <input
                 type="file"
                 name={fieldConfig.name}
-                placeholder={fieldConfig.placeholder}
+                placeholder={
+                  fieldConfig.placeholder && fieldConfig.placeholder[locale]
+                }
                 onChange={(e) => handleFileChange(e)}
                 className={cn("sr-only z-50", "border-destructive ")}
                 // defaultValue={value}

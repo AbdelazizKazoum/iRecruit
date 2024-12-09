@@ -34,6 +34,7 @@ const DynamicNormalForm = ({
             <GroupFieldsRenderer
               fieldConfig={fieldConfig}
               category={category}
+              locale={local}
             />
           </div>
         );
@@ -44,7 +45,11 @@ const DynamicNormalForm = ({
             control={form.control}
             name={fieldConfig.name}
             render={({ field }) => (
-              <FieldRenderer fieldConfig={fieldConfig} field={field} />
+              <FieldRenderer
+                fieldConfig={fieldConfig}
+                field={field}
+                locale={local}
+              />
             )}
           />
         );

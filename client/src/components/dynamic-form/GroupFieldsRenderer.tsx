@@ -12,6 +12,7 @@ import {
 } from "../ui/accordion";
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/libs/utils";
+import { Locale } from "@/configs/i18n";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface GroupFieldRendererProps {
@@ -21,11 +22,13 @@ interface GroupFieldRendererProps {
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
   category: string;
+  locale: Locale;
 }
 
 const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
   // error,
+  locale,
 }) => {
   const {
     control,
@@ -57,6 +60,7 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
                   <FieldRenderer
                     fieldConfig={fieldGroup}
                     field={field}
+                    locale={locale}
                     // value={formData[category]?.[fieldGroup.name] || ""}
                     // onChange={handleFieldChange}
                   />

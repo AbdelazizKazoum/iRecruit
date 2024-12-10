@@ -105,5 +105,69 @@
         "becomePartner": "Devenir partenaire"
       }
     }
+  },
+  "profilePage": {
+    "header": {
+      "title": "Espace Candidat",
+      "subtitle": "Gérez les paramètres de votre compte."
+    },
+    "sidebar": {
+      "navItems": [
+        { "title": "Compte", "href": "/profile?section=compte" },
+        {
+          "title": "Mes Candidatures",
+          "href": "/profile?section=candidatures"
+        },
+        {
+          "title": "Informations Personnelles",
+          "href": "/profile?section=info-personnelles"
+        },
+        {
+          "title": "Qualifications et Expériences",
+          "href": "/profile?section=info-professionnelles"
+        }
+      ]
+    },
+    "sections": {
+      "compte": {
+        "title": "Compte",
+        "subtitle": "C'est ainsi que les autres vous verront sur le site.",
+        "form": {
+          "fields": {
+            "username": {
+              "label": "Nom d'utilisateur",
+              "placeholder": "shadcn",
+              "description": "C'est votre nom affiché publiquement. Il peut s'agir de votre vrai nom ou d'un pseudonyme."
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Sélectionnez un email vérifié à afficher"
+            },
+            "bio": {
+              "label": "Bio",
+              "placeholder": "Parlez-nous un peu de vous",
+              "description": "Vous pouvez partager quelques informations sur vous-même, comme vos intérêts."
+            }
+          },
+          "button": {
+            "submit": "Mettre à jour le profil",
+            "loading": "Chargement..."
+          },
+          "messages": {
+            "success": "Profil mis à jour avec succès",
+            "error": "Quelque chose s'est mal passé, veuillez réessayer plus tard"
+          }
+        }
+      },
+      "candidatures": {
+        "title": "Mes Candidatures"
+      },
+      "info-personnelles": {
+        "title": "Informations Personnelles"
+      },
+      "info-professionnelles": {
+        "title": "Qualifications et Expériences"
+      }
+    }
   }
 }

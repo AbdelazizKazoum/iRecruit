@@ -104,5 +104,66 @@
         "becomePartner": "Become a Partner"
       }
     }
+  },
+  "profilePage": {
+    "header": {
+      "title": "User Space",
+      "subtitle": "Manage your account settings."
+    },
+    "sidebar": {
+      "navItems": [
+        { "title": "Account", "href": "/profile?section=compte" },
+        { "title": "My Applications", "href": "/profile?section=candidatures" },
+        {
+          "title": "Personal Information",
+          "href": "/profile?section=info-personnelles"
+        },
+        {
+          "title": "Qualifications and Experiences",
+          "href": "/profile?section=info-professionnelles"
+        }
+      ]
+    },
+    "sections": {
+      "compte": {
+        "title": "Account",
+        "subtitle": "This is how others will see you on the site.",
+        "form": {
+          "fields": {
+            "username": {
+              "label": "Username",
+              "placeholder": "shadcn",
+              "description": "This is your publicly displayed name. It can be your real name or a nickname."
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Select a verified email to display"
+            },
+            "bio": {
+              "label": "Bio",
+              "placeholder": "Tell us a little about yourself",
+              "description": "You can share some information about yourself, like your interests."
+            }
+          },
+          "button": {
+            "submit": "Update Profile",
+            "loading": "Loading..."
+          },
+          "messages": {
+            "success": "Profile successfully updated",
+            "error": "Something went wrong, please try again later"
+          }
+        }
+      },
+      "candidatures": {
+        "title": "My Applications"
+      },
+      "info-personnelles": {
+        "title": "Personal Information"
+      },
+      "info-professionnelles": {
+        "title": "Qualifications and Experiences"
+      }
+    }
   }
 }

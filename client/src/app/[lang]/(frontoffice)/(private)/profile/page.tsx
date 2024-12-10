@@ -3,32 +3,60 @@ import ProfileInfo from "@/components/profile/profile-page/ProfileInfo";
 import ProfileSettings from "@/components/profile/profile-page/ProfileSettings";
 import { ProfileSidebar } from "@/components/profile/profile-page/ProfileSidebar";
 import { Separator } from "@/components/ui/separator";
+import { Locale } from "@/configs/i18n";
 import { getUserProfile } from "@/libs/actions/candidateActions";
 import { auth } from "@/libs/auth";
 import { UserType } from "@/types/user.types";
 import { CustomError } from "@/utils/errors/CustomError";
+import { getDictionary } from "@/utils/getDictionary";
 import Image from "next/image";
 import React from "react";
 
 const sidebarNavItems = [
-  { title: "Compte", href: "/profile?section=compte" },
-  { title: "Mes Candidatures", href: "/profile?section=candidatures" },
   {
-    title: "Informations Personnelles",
+    title: {
+      en: "Account",
+      fr: "Compte",
+      ar: "الحساب",
+    },
+    href: "/profile?section=compte",
+  },
+  {
+    title: {
+      en: "My Applications",
+      fr: "Mes Candidatures",
+      ar: "طلباتي",
+    },
+    href: "/profile?section=candidatures",
+  },
+  {
+    title: {
+      en: "Personal Information",
+      fr: "Informations Personnelles",
+      ar: "المعلومات الشخصية",
+    },
     href: "/profile?section=info-personnelles",
   },
   {
-    title: "Qualifications et Expériences",
+    title: {
+      en: "Qualifications and Experiences",
+      fr: "Qualifications et Expériences",
+      ar: "المؤهلات والخبرات",
+    },
     href: "/profile?section=info-professionnelles",
   },
 ];
 
 const ProfilePage = async ({
   searchParams,
+  params,
 }: {
   searchParams: { section: string };
+  params: { lang: Locale };
 }) => {
   const section = searchParams.section || "compte";
+
+  const dictionary = await getDictionary(params.lang);
 
   const session = await auth();
   let user: UserType | null = null;
@@ -45,14 +73,14 @@ const ProfilePage = async ({
       <div className="space-y-6 py-10 lg:p-10 pb-16">
         <header className="space-y-0.5">
           <h2 className="text-2xl font-bold text-black-600/90">
-            Espace Candidat
+            {dictionary.profilePage.header.title}
           </h2>
           <p className="text-muted-foreground">
-            Gérez les paramètres de votre compte.
+            {dictionary.profilePage.header.subtitle}
           </p>
         </header>
         <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <div className="flex flex-col gap-6 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="lg:w-1/5">
             <div className="profile-image flex justify-center items-center mb-6">
               <Image
@@ -63,13 +91,21 @@ const ProfilePage = async ({
                 className="rounded-full border border-gray-300"
               />
             </div>
-            <ProfileSidebar items={sidebarNavItems} />
+            <ProfileSidebar items={sidebarNavItems} locale={params.lang} />
           </aside>
           <main className="flex-1 lg:max-w-2xl">
-            {section === "compte" && <ProfileInfo user={user} />}
-            {section === "candidatures" && <ProfileApplications />}
-            {section === "info-personnelles" && <ProfileInfo user={user} />}
-            {section === "info-professionnelles" && <ProfileSettings />}
+            {section === "compte" && (
+              <ProfileInfo user={user} dictionary={dictionary} />
+            )}
+            {section === "candidatures" && (
+              <ProfileApplications dictionary={dictionary} />
+            )}
+            {section === "info-personnelles" && (
+              <ProfileInfo user={user} dictionary={dictionary} />
+            )}
+            {section === "info-professionnelles" && (
+              <ProfileSettings dictionary={dictionary} />
+            )}
           </main>
         </div>
       </div>

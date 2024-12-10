@@ -104,5 +104,66 @@
         "becomePartner": "كن شريكًا"
       }
     }
+  },
+  "profilePage": {
+    "header": {
+      "title": "مساحة المستخدم",
+      "subtitle": "قم بإدارة إعدادات حسابك."
+    },
+    "sidebar": {
+      "navItems": [
+        { "title": "الحساب", "href": "/profile?section=compte" },
+        { "title": "طلباتي", "href": "/profile?section=candidatures" },
+        {
+          "title": "المعلومات الشخصية",
+          "href": "/profile?section=info-personnelles"
+        },
+        {
+          "title": "المؤهلات والخبرات",
+          "href": "/profile?section=info-professionnelles"
+        }
+      ]
+    },
+    "sections": {
+      "compte": {
+        "title": "الحساب",
+        "subtitle": "هذا هو الاسم الذي سيراه الآخرون على الموقع.",
+        "form": {
+          "fields": {
+            "username": {
+              "label": "اسم المستخدم",
+              "placeholder": "shadcn",
+              "description": "هذا هو الاسم الذي يظهر علناً. يمكن أن يكون اسمك الحقيقي أو اسم مستعار."
+            },
+            "email": {
+              "label": "البريد الإلكتروني",
+              "placeholder": "اختر بريدًا إلكترونيًا تم التحقق منه للعرض"
+            },
+            "bio": {
+              "label": "السيرة الذاتية",
+              "placeholder": "أخبرنا قليلاً عن نفسك",
+              "description": "يمكنك مشاركة بعض المعلومات عن نفسك، مثل اهتماماتك."
+            }
+          },
+          "button": {
+            "submit": "تحديث الملف الشخصي",
+            "loading": "جارٍ التحميل..."
+          },
+          "messages": {
+            "success": "تم تحديث الملف الشخصي بنجاح",
+            "error": "حدث خطأ ما، يرجى المحاولة لاحقاً"
+          }
+        }
+      },
+      "candidatures": {
+        "title": "طلباتي"
+      },
+      "info-personnelles": {
+        "title": "المعلومات الشخصية"
+      },
+      "info-professionnelles": {
+        "title": "المؤهلات والخبرات"
+      }
+    }
   }
 }

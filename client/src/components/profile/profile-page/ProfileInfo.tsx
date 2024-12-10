@@ -29,10 +29,17 @@ import { profileFormSchema } from "@/libs/validation/profile-form";
 import { UserType } from "@/types/user.types";
 import { updateProfile } from "@/libs/actions/candidateActions";
 import { toast } from "react-toastify";
+import { getDictionary } from "@/utils/getDictionary";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-function ProfileForm({ user }: { user: UserType | null }) {
+function ProfileForm({
+  user,
+  dictionary,
+}: {
+  user: UserType | null;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) {
   const defaultValues: Partial<ProfileFormValues> = {
     bio: user?.bio,
     username: user?.username,
@@ -56,9 +63,12 @@ function ProfileForm({ user }: { user: UserType | null }) {
       <main className="flex-1 lg:max-w-2xl">
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium text-black-600/85">Compte</h3>
+            <h3 className="text-lg font-medium text-black-600/85">
+              {" "}
+              {dictionary.profilePage.sections.compte.title}{" "}
+            </h3>
             <p className="text-sm text-muted-foreground">
-              C&apos;est ainsi que les autres vous verront sur le site.
+              {dictionary.profilePage.sections.compte.subtitle}{" "}
             </p>
           </div>
           <Separator />
@@ -69,13 +79,20 @@ function ProfileForm({ user }: { user: UserType | null }) {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nom d&apos;utilisateur</FormLabel>
+                    <FormLabel>
+                      {
+                        dictionary.profilePage.sections.compte.form.fields
+                          .username.label
+                      }{" "}
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="shadcn" {...field} />
                     </FormControl>
                     <FormDescription>
-                      C&apos;est votre nom affiché publiquement. Il peut
-                      s&apos;agir de votre vrai nom ou d&apos;un pseudonyme.
+                      {
+                        dictionary.profilePage.sections.compte.form.fields
+                          .username.description
+                      }
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -86,7 +103,12 @@ function ProfileForm({ user }: { user: UserType | null }) {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>
+                      {
+                        dictionary.profilePage.sections.compte.form.fields.email
+                          .label
+                      }{" "}
+                    </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -111,7 +133,12 @@ function ProfileForm({ user }: { user: UserType | null }) {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Bio</FormLabel>
+                    <FormLabel>
+                      {
+                        dictionary.profilePage.sections.compte.form.fields.bio
+                          .label
+                      }
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Parlez-nous un peu de vous"
@@ -120,8 +147,10 @@ function ProfileForm({ user }: { user: UserType | null }) {
                       />
                     </FormControl>
                     <FormDescription>
-                      Vous pouvez partager quelques informations sur vous-même,
-                      comme vos intérêts.
+                      {
+                        dictionary.profilePage.sections.compte.form.fields.bio
+                          .description
+                      }
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -133,9 +162,15 @@ function ProfileForm({ user }: { user: UserType | null }) {
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting ? (
-                  <Loader className="animate-spin mr-2 h-4 w-4" />
-                ) : null}
-                Mettre à jour le profil
+                  <>
+                    <Loader className="animate-spin mr-2 h-4 w-4" />
+                    {
+                      dictionary.profilePage.sections.compte.form.button.loading
+                    }{" "}
+                  </>
+                ) : (
+                  dictionary.profilePage.sections.compte.form.button.submit
+                )}
               </Button>
             </form>
           </Form>

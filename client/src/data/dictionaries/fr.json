@@ -74,5 +74,36 @@
       "success": "La candidature a été enregistrée avec succès.",
       "error": "Une erreur s'est produite lors du traitement de la candidature."
     }
+  },
+  "footer": {
+    "description": "est une plateforme de recrutement dédiée à simplifier le processus de candidature pour les candidats et les entreprises.",
+    "copyright": "©{new Date().getFullYear()} -",
+    "poweredBy": "Propulsé par",
+
+    "navigationLinks": {
+      "product": {
+        "title": "Produit",
+        "download": "Télécharger",
+        "pricing": "Tarification",
+        "locations": "Emplacements",
+        "servers": "Serveurs",
+        "countries": "Pays",
+        "blog": "Blog"
+      },
+      "engagement": {
+        "title": "Engagement",
+        "why": "Pourquoi est-ce une plateforme de recrutement ?",
+        "faq": "FAQ",
+        "tutorials": "Tutoriels",
+        "aboutUs": "À propos de nous",
+        "privacyPolicy": "Politique de confidentialité",
+        "termsOfUse": "Conditions d’utilisation"
+      },
+      "opportunities": {
+        "title": "Opportunités",
+        "affiliation": "Affiliation",
+        "becomePartner": "Devenir partenaire"
+      }
+    }
   }
 }

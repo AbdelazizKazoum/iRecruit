@@ -26,6 +26,20 @@ export const candidateFormConfig = {
       },
     },
     {
+      type: "arabic",
+      name: "prenomAr",
+      label: {
+        fr: "Prénom en arabe *",
+        en: "First Name (in Arabic) *",
+        ar: "الإسم الشخصي (بالعربية) *",
+      },
+      placeholder: {
+        fr: "Entrez votre prénom en arabe",
+        en: "Enter your first name in Arabic",
+        ar: "أدخل الإسم الشخصي بالعربية",
+      },
+    },
+    {
       type: "text",
       name: "nom",
       label: {
@@ -40,6 +54,20 @@ export const candidateFormConfig = {
       },
     },
     {
+      type: "arabic",
+      name: "nomAr",
+      label: {
+        en: "Last Name (in Arabic) *",
+        fr: "Nom en arabe *",
+        ar: "الإسم العائلي (بالعربية) *",
+      },
+      placeholder: {
+        en: "Enter your last name in Arabic",
+        fr: "Entrez votre nom en arabe",
+        ar: "أدخل الإسم العائلي بالعربية",
+      },
+    },
+    {
       type: "text",
       name: "adresse",
       label: {
@@ -51,6 +79,20 @@ export const candidateFormConfig = {
         en: "Enter your personal address",
         fr: "Entrez votre adresse personnelle",
         ar: "أدخل العنوان الشخصي",
+      },
+    },
+    {
+      type: "text",
+      name: "adresseAr",
+      label: {
+        en: "Personal Address (in Arabic) *",
+        fr: "Adresse personnelle (en arabe) *",
+        ar: "العنوان الشخصي (باللغة العربية) *",
+      },
+      placeholder: {
+        en: "Enter your personal address in Arabic",
+        fr: "Entrez votre adresse personnelle en arabe",
+        ar: "أدخل العنوان الشخصي باللغة العربية",
       },
     },
     {
@@ -163,6 +205,136 @@ export const candidateFormConfig = {
         ar: "أدخل البريد الإلكتروني",
       },
     },
+
+    {
+      type: "group",
+      name: "experiences",
+      title: {
+        en: "Do you have work experience?",
+        fr: "Avez-vous une expérience professionnelle ?",
+        ar: "هل لديك خبرة عمل ؟",
+      },
+      description: {
+        en: "Please specify if you have any relevant work experience.",
+        fr: "Veuillez indiquer si vous avez une expérience professionnelle pertinente.",
+        ar: "الرجاء تحديد ما إذا كنت تملك خبرة عمل ذات صلة.",
+      },
+      group: [
+        {
+          type: "checkbox",
+          name: "experiences.fonctionnaire",
+          label: {
+            en: "Are you a government employee?",
+            fr: "Êtes-vous fonctionnaire ?",
+            ar: "هل أنت موظف حكومي؟",
+          },
+        },
+        {
+          type: "text",
+          name: "experiences.fonction",
+          label: {
+            en: "Organization/Institution *",
+            fr: "Organisme/établissement *",
+            ar: "المنظمة / المؤسسة *",
+          },
+          placeholder: {
+            en: "Enter the name of the organization/institution",
+            fr: "Entrez le nom de l'organisme/établissement",
+            ar: "أدخل اسم المنظمة / المؤسسة",
+          },
+          dependsOn: "experiences.fonctionnaire",
+        },
+        {
+          type: "text",
+          name: "experiences.ppr",
+          label: {
+            en: "P.P.R / Employee ID *",
+            fr: "P.P.R / Matricule *",
+            ar: "رقم الموظف / الرقم الوظيفي *",
+          },
+          placeholder: {
+            en: "Enter your employee ID or P.P.R",
+            fr: "Entrez votre matricule ou P.P.R",
+            ar: "أدخل رقم الموظف أو الرقم الوظيفي",
+          },
+          dependsOn: "experiences.fonctionnaire",
+        },
+        {
+          type: "text",
+          name: "experiences.attestation",
+          label: {
+            en: "Work certificate (PDF, max 10MB) *",
+            fr: "Attestation de travail (Pdf, max 10 Mo) *",
+            ar: "شهادة العمل (PDF، الحد الأقصى 10 ميغابايت) *",
+          },
+          placeholder: {
+            en: "Upload your work certificate",
+            fr: "Téléchargez votre attestation de travail",
+            ar: "قم بتحميل شهادة العمل الخاصة بك",
+          },
+          dependsOn: "experiences.fonctionnaire",
+        },
+      ],
+    },
+    {
+      type: "group",
+      name: "situationDeHandicap",
+      title: {
+        en: "Do you have a disability status?",
+        fr: "Avez-vous une situation de handicap ?",
+        ar: "هل لديك حالة إعاقة؟",
+      },
+      description: {
+        en: "Please indicate if you have a disability status.",
+        fr: "Veuillez indiquer si vous êtes en situation de handicap.",
+        ar: "الرجاء تحديد ما إذا كنت في حالة إعاقة.",
+      },
+      group: [
+        {
+          type: "checkbox",
+          name: "situationDeHandicap.handicap",
+          label: {
+            en: "Disability status?",
+            fr: "Situation de handicap ?",
+            ar: "حالة إعاقة ؟",
+          },
+        },
+        {
+          type: "text",
+          name: "situationDeHandicap.typeHandicap",
+          label: {
+            en: "Type of Disability *",
+            fr: "Type de handicap *",
+            ar: "نوع الإعاقة *",
+          },
+          placeholder: {
+            en: "Enter the type of disability",
+            fr: "Entrez le type de handicap",
+            ar: "أدخل نوع الإعاقة",
+          },
+          dependsOn: "situationDeHandicap.handicap",
+        },
+      ],
+    },
+    {
+      type: "checkbox",
+      name: "AncienCombattant",
+      label: {
+        en: "Are you a former combatant?",
+        fr: "Ancien combattant ?",
+        ar: "هل أنت مُحارب قديم؟",
+      },
+    },
+    {
+      type: "checkbox",
+      name: "PupillesNation",
+      label: {
+        en: "Are you a child of the nation?",
+        fr: "Pupilles de la nation ?",
+        ar: "هل أنت من أبناء الوطن؟",
+      },
+    },
+
     {
       type: "file",
       name: "cinPdf",

@@ -8,7 +8,6 @@ const useDynamicForm = (schema: any, category: string) => {
     resolver: zodResolver(schema),
   });
 
-  const { handleSubmit } = form;
   const setFormData = useFormStore((state: any) => state.setFormData);
 
   const onSubmit = (data: any) => {
@@ -36,7 +35,7 @@ const useDynamicForm = (schema: any, category: string) => {
   };
 
   return {
-    handleSubmit: handleSubmit(onSubmit),
+    onSubmit,
     form,
   };
 };

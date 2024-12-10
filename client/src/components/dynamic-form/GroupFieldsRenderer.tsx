@@ -48,7 +48,7 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
               errors[fieldConfig.name] && "text-destructive"
             )}
           >
-            {fieldConfig.title}
+            {fieldConfig.title[locale]}
           </AccordionTrigger>
           <AccordionContent className="grid grid-cols-2 gap-4 ">
             {fieldConfig.group.map((fieldGroup: any) => (

@@ -74,5 +74,35 @@
       "success": "The application has been saved successfully.",
       "error": "An error occurred while processing the application."
     }
+  },
+  "footer": {
+    "description": "is a recruitment platform dedicated to simplifying the application process for candidates and companies.",
+    "copyright": "©{new Date().getFullYear()} -",
+    "poweredBy": "Powered by Abdelaziz Kazoum",
+    "navigationLinks": {
+      "product": {
+        "title": "Product",
+        "download": "Download",
+        "pricing": "Pricing",
+        "locations": "Locations",
+        "servers": "Servers",
+        "countries": "Countries",
+        "blog": "Blog"
+      },
+      "engagement": {
+        "title": "Engagement",
+        "why": "Why is this a recruitment platform?",
+        "faq": "FAQ",
+        "tutorials": "Tutorials",
+        "aboutUs": "About Us",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfUse": "Terms of Use"
+      },
+      "opportunities": {
+        "title": "Opportunities",
+        "affiliation": "Affiliation",
+        "becomePartner": "Become a Partner"
+      }
+    }
   }
 }

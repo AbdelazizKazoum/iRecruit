@@ -74,7 +74,7 @@ const Header = ({
         <nav className="max-w-screen-2xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
           <div className="col-start-1 col-end-2 flex items-center">
             <div className="h-10 w-48 relative">
-              <Link href="/home">
+              <Link href={`/${locale}/home`}>
                 <Image
                   src="/assets/logo-ministere.png"
                   alt="logo"

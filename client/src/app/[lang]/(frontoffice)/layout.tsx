@@ -46,7 +46,7 @@ const Layout = async ({
         </div>
         {children}
       </main>
-      <Footer />
+      <Footer dictionary={dictionary} />
     </Providers>
   );
 };

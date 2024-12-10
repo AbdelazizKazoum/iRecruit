@@ -24,7 +24,8 @@ const DynamicNormalForm = ({
   local: Locale;
 }) => {
   const config = formConfigFactory(category);
-  const { form, handleSubmit } = useDynamicForm(schema, config.category);
+  const { form, onSubmit } = useDynamicForm(schema, config.category);
+  console.log("🚀 ~ form:", form.formState.errors);
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -55,7 +56,7 @@ const DynamicNormalForm = ({
         );
       }
     });
-  }, [config.fields, category, form.control]);
+  }, [config.fields, category, form.control, local]);
 
   return (
     <div className="space-y-6">
@@ -70,10 +71,7 @@ const DynamicNormalForm = ({
       <Separator />
       <FormProvider {...form}>
         <Form {...form}>
-          <form
-            className="space-y-2"
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
+          <form className="space-y-2" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
             <Button
               size="lg"

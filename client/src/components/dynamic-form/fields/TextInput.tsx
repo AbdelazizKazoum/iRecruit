@@ -41,7 +41,7 @@ const TextInput: React.FC<TextInputProps> = ({
           <FormControl>
             <Input
               placeholder={
-                fieldConfig.placeholder[locale] || fieldConfig.placeholder
+                fieldConfig.placeholder && fieldConfig.placeholder[locale]
               }
               type={fieldConfig.type}
               {...field}

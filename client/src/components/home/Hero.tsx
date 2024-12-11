@@ -7,25 +7,45 @@ import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
 import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
 import { useRouter } from "next/navigation";
+import { getDictionary } from "@/utils/getDictionary";
+import { Locale } from "@/configs/i18n";
+
+const listUser = [
+  {
+    name: {
+      fr: "Offres d'emploi",
+      en: "Job Offers",
+      ar: "عروض العمل",
+    },
+    number: "10",
+    icon: "/assets/Icon/heroicons_sm-jobs.svg",
+  },
+  {
+    name: {
+      fr: "Candidats",
+      en: "Candidates",
+      ar: "المرشحون",
+    },
+    number: "450",
+    icon: "/assets/Icon/gridicons_candidats.svg",
+  },
+  {
+    name: {
+      fr: "Entretiens planifiés",
+      en: "Scheduled Interviews",
+      ar: "المقابلات المخطط لها",
+    },
+    number: "80",
+    icon: "/assets/Icon/bx_bxs-planning.svg",
+  },
+];
 
 const Hero = ({
-  listUser = [
-    {
-      name: "Offres d'emploi",
-      number: "10",
-      icon: "/assets/Icon/heroicons_sm-jobs.svg",
-    },
-    {
-      name: "Candidats",
-      number: "450",
-      icon: "/assets/Icon/gridicons_candidats.svg",
-    },
-    {
-      name: "Entretiens planifiés",
-      number: "80",
-      icon: "/assets/Icon/bx_bxs-planning.svg",
-    },
-  ],
+  dictionary,
+  locale,
+}: {
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  locale: Locale;
 }) => {
   const scrollAnimation = useMemo(() => getScrollAnimation(), []);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -46,29 +66,28 @@ const Hero = ({
         >
           <div className="flex flex-col justify-center items-start row-start-2 sm:row-start-1">
             <h1 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-black-600 leading-normal">
-              Bienvenue Sur La Plateforme de <strong>recrutement</strong>.
+              {dictionary["hero"].title}
             </h1>
             <p className="text-black-500 mt-4 mb-6">
-              Plateforme de recrutement dédiée au secteur de l&apos;Enseignement
-              Supérieur, de la Recherche Scientifique et de l&apos;Innovation.
+              {dictionary["hero"].description}
             </p>
-            <div className="flex space-x-8">
+            <div className="flex gap-3">
               <ButtonPrimary
                 addClass={""}
-                onClick={() => router.push("/candidature")}
+                onClick={() => router.push(`/${locale}/candidature`)}
               >
-                Lancez-vous
+                {dictionary["hero"].button}
               </ButtonPrimary>
               <div className="">
                 {/* Play button with text next to it */}
                 <button
-                  className="  hover:bg-primary-600 transition-all flex items-center justify-center  space-x-2"
+                  className="  hover:bg-primary-600 transition-all flex items-center justify-center gap-2 "
                   onClick={handleVideoClick}
                 >
                   <PlayCircle size={60} className="text-primary " />{" "}
                   {/* Play Icon */}
                   <p className=" text-primary font-semibold">
-                    Tutoriel Vidéo : Publier une Offre
+                    {dictionary["hero"].videoText}
                   </p>{" "}
                 </button>
 
@@ -126,7 +145,7 @@ const Hero = ({
               custom={{ duration: 2 + index }}
               variants={scrollAnimation}
             >
-              <div className="flex mx-auto w-40 sm:w-auto">
+              <div className="flex mx-auto w-40 sm:w-auto gap-2">
                 <div className="flex items-center justify-center bg-primary-300/10 w-12 h-12 mr-6 rounded-full">
                   <Image
                     alt="icon"
@@ -140,7 +159,9 @@ const Hero = ({
                   <p className="text-xl text-black-600 font-bold">
                     {listUsers.number}+
                   </p>
-                  <p className="text-lg text-black-500">{listUsers.name}</p>
+                  <p className="text-lg text-black-500">
+                    {listUsers.name[locale]}
+                  </p>
                 </div>
               </div>
             </motion.div>

@@ -6,10 +6,8 @@ import { useFormStore } from "@/stores/useFormStore";
 const useDynamicForm = (schema: any, category: string) => {
   const form = useForm<any>({
     resolver: zodResolver(schema),
-    mode: "onChange",
   });
 
-  const { handleSubmit } = form;
   const setFormData = useFormStore((state: any) => state.setFormData);
 
   const onSubmit = (data: any) => {
@@ -37,7 +35,7 @@ const useDynamicForm = (schema: any, category: string) => {
   };
 
   return {
-    handleSubmit: handleSubmit(onSubmit),
+    onSubmit,
     form,
   };
 };

@@ -1,0 +1,173 @@
+{
+  "menu": {
+    "home": "الرئيسية",
+    "concours": "إعلانات المسابقات",
+    "faq": "الأسئلة الشائعة",
+    "contact": "اتصل بنا",
+    "steps": "الخطوات الواجب اتباعها"
+  },
+  "concours": {
+    "title": "إعلانات المسابقات",
+    "description": "اطلع على أحدث إعلانات المسابقات وتقدم للفرص التي تتناسب مع ملفك الشخصي.",
+    "publishedOn": "نشر في",
+    "deadline": "آخر أجل للتقديم",
+    "details": "التفاصيل",
+    "apply": "قدم الطلب"
+  },
+  "hero": {
+    "title": "مرحبًا بكم في منصة التوظيف.",
+    "description": "منصة توظيف مخصصة لقطاع التعليم العالي والبحث العلمي والابتكار.",
+    "button": "ابدأ الآن",
+    "videoText": "فيديو تعليمي: نشر عرض عمل",
+    "stats": {
+      "jobs": "عروض العمل",
+      "candidates": "المرشحون",
+      "interviews": "المقابلات المخطط لها"
+    }
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "description": "هل لديك أسئلة أو تحتاج إلى مساعدة؟ فريقنا هنا لمساعدتك. لا تتردد في الاتصال بنا عبر النموذج أدناه أو من خلال وسائل الاتصال الموضحة.",
+    "detailsTitle": "معلومات الاتصال الخاصة بنا",
+    "address": "123 شارع المؤسسة، باريس، فرنسا",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@yourwebsite.com",
+    "ctaTitle": "ابق على اتصال",
+    "ctaDescription": "اشترك في النشرة الإخبارية الخاصة بنا لتلقي التحديثات والعروض الخاصة مباشرة في بريدك الوارد.",
+    "ctaButton": "اشترك في النشرة الإخبارية",
+    "form": {
+      "labels": {
+        "name": "اسم المستخدم",
+        "email": "عنوان البريد الإلكتروني",
+        "message": "الرسالة"
+      },
+      "placeholders": {
+        "name": "أدخل اسمك",
+        "email": "أدخل بريدك الإلكتروني",
+        "message": "أدخل رسالتك"
+      },
+      "button": "إرسال"
+    }
+  },
+  "candidature": {
+    "title": "بوابة تقديم الطلبات",
+    "description": "قم بإنشاء ملف تعريفك الشخصي وقدم الطلبات للوظائف التي تتناسب مع مهاراتك وخبراتك.",
+    "sections": {
+      "personalInfo": "المعلومات الشخصية",
+      "education": "التعليم",
+      "experience": "الخبرات",
+      "skills": "المهارات",
+      "applications": "الطلبات المقدمة"
+    },
+    "actions": {
+      "save": "حفظ",
+      "submit": "إرسال",
+      "cancel": "إلغاء"
+    },
+    "status": {
+      "draft": "مسودة",
+      "submitted": "تم الإرسال",
+      "accepted": "تم القبول",
+      "rejected": "تم الرفض"
+    },
+    "notifications": {
+      "success": "تم حفظ الطلب بنجاح.",
+      "error": "حدث خطأ أثناء معالجة الطلب."
+    }
+  },
+  "footer": {
+    "description": "هي منصة توظيف مكرسة لتبسيط عملية التقديم للمرشحين والشركات.",
+    "copyright": "©{new Date().getFullYear()} -",
+    "poweredBy": "مدعومة من عبد العزيز كزوم",
+    "navigationLinks": {
+      "product": {
+        "title": "المنتج",
+        "download": "تحميل",
+        "pricing": "التسعير",
+        "locations": "المواقع",
+        "servers": "الخوادم",
+        "countries": "الدول",
+        "blog": "مدونة"
+      },
+      "engagement": {
+        "title": "الالتزام",
+        "why": "لماذا تعتبر هذه منصة توظيف؟",
+        "faq": "الأسئلة الشائعة",
+        "tutorials": "الدروس التعليمية",
+        "aboutUs": "معلومات عنا",
+        "privacyPolicy": "سياسة الخصوصية",
+        "termsOfUse": "شروط الاستخدام"
+      },
+      "opportunities": {
+        "title": "الفرص",
+        "affiliation": "الانضمام",
+        "becomePartner": "كن شريكًا"
+      }
+    }
+  },
+  "profilePage": {
+    "header": {
+      "title": "مساحة المستخدم",
+      "subtitle": "قم بإدارة إعدادات حسابك."
+    },
+    "sidebar": {
+      "navItems": [
+        { "title": "الحساب", "href": "/profile?section=compte" },
+        { "title": "طلباتي", "href": "/profile?section=candidatures" },
+        {
+          "title": "المعلومات الشخصية",
+          "href": "/profile?section=info-personnelles"
+        },
+        {
+          "title": "المؤهلات والخبرات",
+          "href": "/profile?section=info-professionnelles"
+        }
+      ]
+    },
+    "sections": {
+      "compte": {
+        "title": "الحساب",
+        "subtitle": "هذا هو الاسم الذي سيراه الآخرون على الموقع.",
+        "form": {
+          "fields": {
+            "username": {
+              "label": "اسم المستخدم",
+              "placeholder": "shadcn",
+              "description": "هذا هو الاسم الذي يظهر علناً. يمكن أن يكون اسمك الحقيقي أو اسم مستعار."
+            },
+            "email": {
+              "label": "البريد الإلكتروني",
+              "placeholder": "اختر بريدًا إلكترونيًا تم التحقق منه للعرض"
+            },
+            "bio": {
+              "label": "السيرة الذاتية",
+              "placeholder": "أخبرنا قليلاً عن نفسك",
+              "description": "يمكنك مشاركة بعض المعلومات عن نفسك، مثل اهتماماتك."
+            }
+          },
+          "button": {
+            "submit": "تحديث الملف الشخصي",
+            "loading": "جارٍ التحميل..."
+          },
+          "messages": {
+            "success": "تم تحديث الملف الشخصي بنجاح",
+            "error": "حدث خطأ ما، يرجى المحاولة لاحقاً"
+          }
+        }
+      },
+      "candidatures": {
+        "title": "طلباتي"
+      },
+      "info-personnelles": {
+        "title": "المعلومات الشخصية"
+      },
+      "info-professionnelles": {
+        "title": "المؤهلات والخبرات"
+      }
+    }
+  },
+  "steps": {
+    "title": "الخطوات للتقديم على وظيفة",
+    "subtitle": "اتبع هذه الخطوات البسيطة لتقديم طلبك وتتبع تقدمه عبر الإنترنت."
+  }
+}

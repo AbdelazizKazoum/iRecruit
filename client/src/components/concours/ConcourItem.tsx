@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import { getDictionary } from "@/utils/getDictionary";
 
 export function ConcourItem({
   className,
@@ -19,6 +20,7 @@ export function ConcourItem({
   tag,
   datePublication,
   depotAvant,
+  dictionary,
 }: {
   className: string;
   title: string;
@@ -27,6 +29,7 @@ export function ConcourItem({
   tag: string;
   datePublication: string;
   depotAvant: string;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) {
   return (
     <Card
@@ -52,20 +55,28 @@ export function ConcourItem({
         <div className="mt-2 text-blue-600 text-sm font-semibold">{tag}</div>
         <div className="flex justify-between items-center text-gray-600 text-sm">
           <div className="flex flex-col text-black-600/80">
-            <span className="font-semibold">Publié le</span>
+            <span className="font-semibold">
+              {" "}
+              {dictionary["concours"].publishedOn}{" "}
+            </span>
             <span className=" text-muted-foreground "> {datePublication}</span>
           </div>
           <div className="flex flex-col text-black-600/80">
-            <span className="font-semibold">Dépôt avant</span>
+            <span className="font-semibold">
+              {dictionary["concours"].deadline}{" "}
+            </span>
             <span className=" text-orange-500 ">{depotAvant}</span>
           </div>
         </div>
       </CardContent>
       <CardFooter className="flex flex-wrap gap-4">
         <Button variant="outline" className="flex-1 items-center">
-          <FileText className="mr-2" /> Details
+          <FileText className="mr-2" /> {dictionary["concours"].details}
         </Button>
-        <Button className="flex-1 items-center">Postuler</Button>
+        <Button className="flex-1 items-center">
+          {" "}
+          {dictionary["concours"].apply}{" "}
+        </Button>
       </CardFooter>
     </Card>
   );

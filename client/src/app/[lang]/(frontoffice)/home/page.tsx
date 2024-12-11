@@ -10,7 +10,7 @@ const Page = async ({ params }: { params: { lang: Locale } }) => {
   return (
     <>
       <Hero dictionary={dictionary} locale={params.lang} />
-      <Etapes />
+      <Etapes locale={params.lang} dictionary={dictionary} />
     </>
   );
 };

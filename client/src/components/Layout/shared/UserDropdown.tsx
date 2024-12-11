@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,11 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "./Avatar";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation"; // Correct import for App Directory (useParams, useRouter)
 import { LogOutIcon, Settings, UserIcon } from "lucide-react";
 
 export function UserDropdown() {
-  const router = useRouter();
+  const router = useRouter(); // Only use the one from next/navigation
+  const params = useParams();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,30 +38,30 @@ export function UserDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
-            className=" cursor-pointer"
-            onClick={() => router.push("/profile")}
+            className="cursor-pointer"
+            onClick={() => router.push(`/${params.lang}/profile`)} // Navigates to the profile page
           >
             <UserIcon />
             Profile
           </DropdownMenuItem>
 
           <DropdownMenuItem
-            className=" cursor-pointer"
-            onClick={() => router.push("/profile")}
+            className="cursor-pointer"
+            onClick={() => router.push("/settings")} // Navigates to the settings page
           >
             <Settings />
             Settings
           </DropdownMenuItem>
 
-          <div className=" mx-2 my-2 ">
+          <div className="mx-2 my-2 ">
             <Button
               variant="destructive"
-              className="w-full h-8 [\&_svg\]:size-2  "
+              className="w-full h-8 [\&_svg\]:size-2"
               onClick={() => {
-                signOut({ callbackUrl: "/login" });
+                signOut({ callbackUrl: `/${params.lang}/login` }); // Sign out the user
               }}
             >
-              <p>Sign out</p> <LogOutIcon className=" h-2 " />
+              <p>Sign out</p> <LogOutIcon className="h-2" />
             </Button>
           </div>
         </DropdownMenuGroup>

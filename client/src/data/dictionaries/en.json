@@ -165,5 +165,9 @@
         "title": "Qualifications and Experiences"
       }
     }
+  },
+  "steps": {
+    "title": "Steps to Apply for a Job",
+    "subtitle": "Follow these simple steps to submit your application and track its progress online."
   }
 }

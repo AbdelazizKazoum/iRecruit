@@ -4,6 +4,7 @@ import DynamicNormalForm from "../dynamic-form/DynamicNormalForm";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
 import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
 import { Locale } from "@/configs/i18n";
+import DiplomesForm from "@/components/candidature/info-professionnelles/index";
 
 export const CandidatureApplication = ({
   section,
@@ -22,8 +23,8 @@ export const CandidatureApplication = ({
         />
       )}
       {section === "info-professionnelles" && (
-        <DynamicNormalForm
-          category="info-professionnelles"
+        <DiplomesForm
+          category="diplomes"
           schema={infoProfessionnellesValidationSchema}
           local={local}
         />

@@ -23,30 +23,23 @@ interface GroupFieldRendererProps {
   // ) => void;
   category: string;
   locale: Locale;
+  control: any;
 }
 
 const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
   // error,
   locale,
+  control,
 }) => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
+  console.log("first");
 
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem
-          value={fieldConfig.name}
-          className={errors[fieldConfig.name] && "border-destructive"}
-        >
+        <AccordionItem value={fieldConfig.name}>
           <AccordionTrigger
-            className={cn(
-              " text-primary text-base font-normal",
-              errors[fieldConfig.name] && "text-destructive"
-            )}
+            className={cn(" text-primary text-base font-normal")}
           >
             {fieldConfig.title[locale]}
           </AccordionTrigger>

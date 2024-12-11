@@ -13,7 +13,6 @@ import { Locale } from "@/configs/i18n";
 
 interface FieldRendererProps {
   fieldConfig: any;
-  value?: any;
   // onChange: (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
@@ -23,12 +22,12 @@ interface FieldRendererProps {
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
   fieldConfig,
-  value,
   // onChange,
   // error,
   field,
   locale,
 }) => {
+  console.log("first");
   switch (fieldConfig.type) {
     case "text":
     case "number":
@@ -55,17 +54,11 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
       );
     case "select":
       return (
-        <SelectField
-          value={value}
-          fieldConfig={fieldConfig}
-          field={field}
-          locale={locale}
-        />
+        <SelectField fieldConfig={fieldConfig} field={field} locale={locale} />
       );
     case "checkbox":
       return (
         <CheckboxField
-          value={value}
           fieldConfig={fieldConfig}
           field={field}
           locale={locale}
@@ -75,7 +68,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
     case "date":
       return (
         <DatePicker
-          selectedDate={value}
           // onChange={onChange as (date: Date | null) => void}
           fieldConfig={fieldConfig}
           field={field}

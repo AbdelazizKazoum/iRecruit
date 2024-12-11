@@ -22,7 +22,6 @@ import { Locale } from "@/configs/i18n";
 
 interface DatePickerProps {
   fieldConfig: any;
-  selectedDate: Date | null;
   // onChange: (date: Date | null) => void;
   field: any;
   locale: Locale;

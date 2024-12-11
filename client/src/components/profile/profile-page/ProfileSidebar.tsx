@@ -4,17 +4,20 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { Locale } from "@/configs/i18n";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
+  locale: Locale;
   items: {
     href: string;
-    title: string;
+    title: { en: string; ar: string; fr: string };
   }[];
 }
 
 export function ProfileSidebar({
   className,
   items,
+  locale,
   ...props
 }: SidebarNavProps) {
   const pathname = usePathname();
@@ -34,17 +37,17 @@ export function ProfileSidebar({
       {items.map((item) => (
         <Link
           key={item.href}
-          href={item.href}
+          href={`/${locale}` + item.href}
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            fullPathWithQuery === item.href
+            fullPathWithQuery === `/${locale}${item.href}`
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:underline",
             "flex lg:justify-start"
           )}
         >
           <label htmlFor="" className="text-black-600/85">
-            {item.title}
+            {item.title[locale]}
           </label>
         </Link>
       ))}

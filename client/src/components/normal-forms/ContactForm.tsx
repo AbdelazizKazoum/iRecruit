@@ -14,8 +14,13 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { getDictionary } from "@/utils/getDictionary";
 
-const ContactForm = () => {
+const ContactForm = ({
+  dictionaty,
+}: {
+  dictionaty: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   interface contactType {
     nom: string;
     email: string;
@@ -41,9 +46,12 @@ const ContactForm = () => {
             name="nom"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nom d&apos;utilisateur</FormLabel>
+                <FormLabel> {dictionaty["contact"].form.labels.name}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Entrez votre nom" {...field} />
+                  <Input
+                    placeholder={dictionaty["contact"].form.placeholders.name}
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -55,11 +63,11 @@ const ContactForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Adresse e-mail</FormLabel>
+                <FormLabel>{dictionaty["contact"].form.labels.email}</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="Entrez votre email"
+                    placeholder={dictionaty["contact"].form.placeholders.email}
                     {...field}
                   />
                 </FormControl>
@@ -73,11 +81,15 @@ const ContactForm = () => {
             name="mssg"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Message</FormLabel>
+                <FormLabel>
+                  {dictionaty["contact"].form.labels.message}
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     rows={5}
-                    placeholder="Entrez votre message"
+                    placeholder={
+                      dictionaty["contact"].form.placeholders.message
+                    }
                     {...field}
                   />
                 </FormControl>
@@ -91,7 +103,7 @@ const ContactForm = () => {
             type="submit"
             className="w-full  py-3 rounded-md hover:bg-indigo-700 transition"
           >
-            Envoyer
+            {dictionaty["contact"].form.button}
           </Button>
         </form>
       </Form>

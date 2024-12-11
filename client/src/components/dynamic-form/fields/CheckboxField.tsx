@@ -10,6 +10,7 @@ import {
   FormMessage,
   useFormField,
 } from "@/components/ui/form";
+import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
 import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
@@ -19,9 +20,14 @@ interface TextInputProps {
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
+  locale: Locale;
 }
 
-const CheckboxField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
+const CheckboxField: React.FC<TextInputProps> = ({
+  fieldConfig,
+  field,
+  locale,
+}) => {
   const {} = useFormContext();
   const { error } = useFormField();
 
@@ -37,7 +43,7 @@ const CheckboxField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
           <Checkbox checked={field.value} onCheckedChange={field.onChange} />
         </FormControl>
         <div className="space-y-1 leading-none">
-          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormLabel>{fieldConfig.label[locale]}</FormLabel>
           <FormDescription>{fieldConfig.description}</FormDescription>
         </div>
       </div>

@@ -1,0 +1,173 @@
+{
+  "menu": {
+    "home": "Home",
+    "concours": "Job Announcements",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "steps": "Steps to Follow"
+  },
+  "concours": {
+    "title": "Job Announcements",
+    "description": "Check out the latest job announcements and apply for opportunities that match your profile.",
+    "publishedOn": "Published on",
+    "deadline": "Apply before",
+    "details": "Details",
+    "apply": "Apply"
+  },
+  "hero": {
+    "title": "Welcome to the Recruitment Platform.",
+    "description": "A recruitment platform dedicated to Higher Education, Scientific Research, and Innovation.",
+    "button": "Get Started",
+    "videoText": "Video Tutorial: Posting a Job Offer",
+    "stats": {
+      "jobs": "Job Offers",
+      "candidates": "Candidates",
+      "interviews": "Scheduled Interviews"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have questions or need assistance? Our team is here to help. Feel free to reach out using the form below or via the contact information provided.",
+    "detailsTitle": "Our Contact Information",
+    "address": "123 Enterprise Street, Paris, France",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@yourwebsite.com",
+    "ctaTitle": "Stay Connected",
+    "ctaDescription": "Subscribe to our newsletter to receive updates and special offers directly in your inbox.",
+    "ctaButton": "Subscribe to Newsletter",
+    "form": {
+      "labels": {
+        "name": "Username",
+        "email": "Email Address",
+        "message": "Message"
+      },
+      "placeholders": {
+        "name": "Enter your name",
+        "email": "Enter your email",
+        "message": "Enter your message"
+      },
+      "button": "Send"
+    }
+  },
+  "candidature": {
+    "title": "Application Portal",
+    "description": "Create your profile and apply for job offers that match your skills and experiences.",
+    "sections": {
+      "personalInfo": "Personal Information",
+      "education": "Education",
+      "experience": "Work Experience",
+      "skills": "Skills",
+      "applications": "Submitted Applications"
+    },
+    "actions": {
+      "save": "Save",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "status": {
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "notifications": {
+      "success": "The application has been saved successfully.",
+      "error": "An error occurred while processing the application."
+    }
+  },
+  "footer": {
+    "description": "is a recruitment platform dedicated to simplifying the application process for candidates and companies.",
+    "copyright": "©{new Date().getFullYear()} -",
+    "poweredBy": "Powered by Abdelaziz Kazoum",
+    "navigationLinks": {
+      "product": {
+        "title": "Product",
+        "download": "Download",
+        "pricing": "Pricing",
+        "locations": "Locations",
+        "servers": "Servers",
+        "countries": "Countries",
+        "blog": "Blog"
+      },
+      "engagement": {
+        "title": "Engagement",
+        "why": "Why is this a recruitment platform?",
+        "faq": "FAQ",
+        "tutorials": "Tutorials",
+        "aboutUs": "About Us",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfUse": "Terms of Use"
+      },
+      "opportunities": {
+        "title": "Opportunities",
+        "affiliation": "Affiliation",
+        "becomePartner": "Become a Partner"
+      }
+    }
+  },
+  "profilePage": {
+    "header": {
+      "title": "User Space",
+      "subtitle": "Manage your account settings."
+    },
+    "sidebar": {
+      "navItems": [
+        { "title": "Account", "href": "/profile?section=compte" },
+        { "title": "My Applications", "href": "/profile?section=candidatures" },
+        {
+          "title": "Personal Information",
+          "href": "/profile?section=info-personnelles"
+        },
+        {
+          "title": "Qualifications and Experiences",
+          "href": "/profile?section=info-professionnelles"
+        }
+      ]
+    },
+    "sections": {
+      "compte": {
+        "title": "Account",
+        "subtitle": "This is how others will see you on the site.",
+        "form": {
+          "fields": {
+            "username": {
+              "label": "Username",
+              "placeholder": "shadcn",
+              "description": "This is your publicly displayed name. It can be your real name or a nickname."
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Select a verified email to display"
+            },
+            "bio": {
+              "label": "Bio",
+              "placeholder": "Tell us a little about yourself",
+              "description": "You can share some information about yourself, like your interests."
+            }
+          },
+          "button": {
+            "submit": "Update Profile",
+            "loading": "Loading..."
+          },
+          "messages": {
+            "success": "Profile successfully updated",
+            "error": "Something went wrong, please try again later"
+          }
+        }
+      },
+      "candidatures": {
+        "title": "My Applications"
+      },
+      "info-personnelles": {
+        "title": "Personal Information"
+      },
+      "info-professionnelles": {
+        "title": "Qualifications and Experiences"
+      }
+    }
+  },
+  "steps": {
+    "title": "Steps to Apply for a Job",
+    "subtitle": "Follow these simple steps to submit your application and track its progress online."
+  }
+}

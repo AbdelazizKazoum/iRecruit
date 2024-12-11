@@ -1,7 +1,12 @@
 import themeConfig from "@/configs/themeConfig";
+import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
-const Footer = () => {
+const Footer = ({
+  dictionary,
+}: {
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   return (
     <div className="bg-gray-100 pt-20 pb-10">
       <div className="max-w-screen-xl w-full mx-auto px-6 sm:px-8 lg:px-16 grid grid-rows-6 sm:grid-rows-1 grid-flow-row sm:grid-flow-col grid-cols-3 sm:grid-cols-12 gap-4">
@@ -10,63 +15,68 @@ const Footer = () => {
           <div className="h-8 w-auto mb-6" />
           <p className="mb-4">
             <strong className="font-medium">{themeConfig.templateName} </strong>{" "}
-            est une plateforme de recrutement dédiée à simplifier le processus
-            de candidature pour les candidats et les entreprises.
+            {dictionary.footer.description}
           </p>
           <p className="text-gray-400 ">
             ©{new Date().getFullYear()} - {themeConfig.templateName}
           </p>
           <p className="text-gray-400 text-center">
-            Powered by <span className="font-semibold  ">Abdelaziz Kazoum</span>
+            {dictionary.footer.poweredBy}{" "}
+            <span className="font-semibold  ">Abdelaziz Kazoum</span>
           </p>
         </div>
 
         {/* Navigation Links */}
         <div className="row-span-2 sm:col-span-2 sm:col-start-7 sm:col-end-9 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Produit</p>
+          <p className="text-black-600 mb-4 font-medium text-lg">
+            {dictionary.footer.navigationLinks.product.title}
+          </p>
           <ul className="text-black-500">
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Télécharger
+              {dictionary.footer.navigationLinks.product.download}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Tarification
+              {dictionary.footer.navigationLinks.product.pricing}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Emplacements
+              {dictionary.footer.navigationLinks.product.locations}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Serveurs
+              {dictionary.footer.navigationLinks.product.servers}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Pays
+              {dictionary.footer.navigationLinks.product.countries}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Blog
+              {dictionary.footer.navigationLinks.product.blog}{" "}
             </li>
           </ul>
         </div>
 
         {/* Engagement Links */}
         <div className="row-span-2 sm:col-span-2 sm:col-start-9 sm:col-end-11 flex flex-col">
-          <p className="text-black-600 mb-4 font-medium text-lg">Engagement</p>
+          <p className="text-black-600 mb-4 font-medium text-lg">
+            {dictionary.footer.navigationLinks.engagement.title}
+          </p>
           <ul className="text-black-500">
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Pourquoi {themeConfig.templateName} ?
+              {dictionary.footer.navigationLinks.engagement.why}{" "}
+              {themeConfig.templateName} ?
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              FAQ
+              {dictionary.footer.navigationLinks.engagement.faq}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Tutoriels
+              {dictionary.footer.navigationLinks.engagement.tutorials}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              À propos de nous
+              {dictionary.footer.navigationLinks.engagement.aboutUs}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Politique de confidentialité
+              {dictionary.footer.navigationLinks.engagement.privacyPolicy}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Conditions d’utilisation
+              {dictionary.footer.navigationLinks.engagement.termsOfUse}{" "}
             </li>
           </ul>
         </div>
@@ -74,14 +84,14 @@ const Footer = () => {
         {/* Partnership Links */}
         <div className="row-span-2 sm:col-span-2 sm:col-start-11 sm:col-end-13 flex flex-col">
           <p className="text-black-600 mb-4 font-medium text-lg">
-            Opportunités
+            {dictionary.footer.navigationLinks.opportunities.title}{" "}
           </p>
           <ul className="text-black-500">
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Affiliation
+              {dictionary.footer.navigationLinks.opportunities.affiliation}{" "}
             </li>
             <li className="my-2 hover:text-blue-500 cursor-pointer transition-all">
-              Devenir partenaire
+              {dictionary.footer.navigationLinks.opportunities.becomePartner}{" "}
             </li>
           </ul>
         </div>

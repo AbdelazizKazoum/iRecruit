@@ -3,24 +3,24 @@
 
 import {
   FormControl,
-  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField,
 } from "@/components/ui/form";
 import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import ArabicKeyboard from "@/components/arabic-keyboard/ArabicKeyboard";
+import { Locale } from "@/configs/i18n";
 
 interface TextInputProps {
   fieldConfig: any;
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
+  locale: Locale;
 }
 
-const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
+const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
   const { watch } = useFormContext();
 
   const dependsOn = watch(fieldConfig.dependsOn);
@@ -29,7 +29,7 @@ const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
     <>
       {dependsOn && (
         <FormItem>
-          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormLabel>{fieldConfig.label[locale]}</FormLabel>
           <FormControl>
             {/* <Input
               placeholder={fieldConfig.placeholder}

@@ -10,6 +10,7 @@ import {
   useFormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
 import React, { memo } from "react";
 import { useFormContext } from "react-hook-form";
@@ -19,9 +20,14 @@ interface TextInputProps {
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: any;
   field: any;
+  locale: Locale;
 }
 
-const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
+const TextInput: React.FC<TextInputProps> = ({
+  fieldConfig,
+  field,
+  locale,
+}) => {
   const { watch } = useFormContext();
   const { error } = useFormField();
 
@@ -31,10 +37,12 @@ const TextInput: React.FC<TextInputProps> = ({ fieldConfig, field }) => {
     <>
       {dependsOn && (
         <FormItem>
-          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormLabel>{fieldConfig.label[locale]}</FormLabel>
           <FormControl>
             <Input
-              placeholder={fieldConfig.placeholder}
+              placeholder={
+                fieldConfig.placeholder && fieldConfig.placeholder[locale]
+              }
               type={fieldConfig.type}
               {...field}
               className={cn(error && "border-destructive ")}

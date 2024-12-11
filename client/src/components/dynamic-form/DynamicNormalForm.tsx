@@ -12,12 +12,21 @@ import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider } from "react-hook-form";
 import { memo, useMemo } from "react";
 import useDynamicForm from "@/hooks/useDynamicForm";
+import { Locale } from "@/configs/i18n";
 
-const DynamicNormalForm = ({ category, schema }: any) => {
+const DynamicNormalForm = ({
+  category,
+  schema,
+  local,
+}: {
+  category: string;
+  schema: any;
+  local: Locale;
+}) => {
   const config = formConfigFactory(category);
-  const { form, handleSubmit } = useDynamicForm(schema, config.category);
+  const { form, onSubmit } = useDynamicForm(schema, config.category);
+  console.log("🚀 ~ form:", form.formState.errors);
 
-  console.log("helloo ----------------------------------");
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
       if (fieldConfig.type === "group") {
@@ -26,6 +35,7 @@ const DynamicNormalForm = ({ category, schema }: any) => {
             <GroupFieldsRenderer
               fieldConfig={fieldConfig}
               category={category}
+              locale={local}
             />
           </div>
         );
@@ -36,29 +46,32 @@ const DynamicNormalForm = ({ category, schema }: any) => {
             control={form.control}
             name={fieldConfig.name}
             render={({ field }) => (
-              <FieldRenderer fieldConfig={fieldConfig} field={field} />
+              <FieldRenderer
+                fieldConfig={fieldConfig}
+                field={field}
+                locale={local}
+              />
             )}
           />
         );
       }
     });
-  }, [config.fields, category, form.control]);
+  }, [config.fields, category, form.control, local]);
 
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-black-600/85">Candidature</h3>
+        <h3 className="text-lg font-medium text-black-600/85">
+          {config.title[local]}
+        </h3>
         <p className="text-sm text-muted-foreground">
-          C&apos;est ainsi que les autres vous verront sur le site.
+          {config.description[local]}
         </p>
       </div>
       <Separator />
       <FormProvider {...form}>
         <Form {...form}>
-          <form
-            className="space-y-2"
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
+          <form className="space-y-2" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
             <Button
               size="lg"

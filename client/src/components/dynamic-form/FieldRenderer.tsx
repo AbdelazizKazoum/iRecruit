@@ -8,6 +8,7 @@ import CheckboxField from "./fields/CheckboxField";
 import DatePicker from "./fields/DatePicker";
 import FileInput from "./fields/FileInput";
 import ArabicField from "./fields/ArabicField";
+import { Locale } from "@/configs/i18n";
 // import CheckboxField from "./fields/CheckboxField";
 
 interface FieldRendererProps {
@@ -17,6 +18,7 @@ interface FieldRendererProps {
   //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | Date | null
   // ) => void;
   field: any;
+  locale: Locale;
 }
 
 const FieldRenderer: React.FC<FieldRendererProps> = ({
@@ -25,6 +27,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
   // onChange,
   // error,
   field,
+  locale,
 }) => {
   switch (fieldConfig.type) {
     case "text":
@@ -33,6 +36,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         <TextInput
           fieldConfig={fieldConfig}
           field={field}
+          locale={locale}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -43,6 +47,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
         <FileInput
           fieldConfig={fieldConfig}
           field={field}
+          locale={locale}
           // onChange={
           //   onChange as (e: React.ChangeEvent<HTMLInputElement>) => void
           // }
@@ -50,11 +55,21 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
       );
     case "select":
       return (
-        <SelectField value={value} fieldConfig={fieldConfig} field={field} />
+        <SelectField
+          value={value}
+          fieldConfig={fieldConfig}
+          field={field}
+          locale={locale}
+        />
       );
     case "checkbox":
       return (
-        <CheckboxField value={value} fieldConfig={fieldConfig} field={field} />
+        <CheckboxField
+          value={value}
+          fieldConfig={fieldConfig}
+          field={field}
+          locale={locale}
+        />
       );
 
     case "date":
@@ -64,16 +79,12 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           // onChange={onChange as (date: Date | null) => void}
           fieldConfig={fieldConfig}
           field={field}
+          locale={locale}
         />
       );
     case "arabic":
       return (
-        <ArabicField
-          selectedDate={value}
-          // onChange={onChange as (date: Date | null) => void}
-          fieldConfig={fieldConfig}
-          field={field}
-        />
+        <ArabicField fieldConfig={fieldConfig} field={field} locale={locale} />
       );
 
     default:

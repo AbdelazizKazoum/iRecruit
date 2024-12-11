@@ -18,15 +18,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Popover } from "@radix-ui/react-popover";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useFormContext } from "react-hook-form";
+import { Locale } from "@/configs/i18n";
 
 interface DatePickerProps {
   fieldConfig: any;
   selectedDate: Date | null;
   // onChange: (date: Date | null) => void;
   field: any;
+  locale: Locale;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
+const DatePicker: React.FC<DatePickerProps> = ({
+  fieldConfig,
+  field,
+  locale,
+}) => {
   const { watch } = useFormContext();
   const { error } = useFormField();
 
@@ -36,7 +42,9 @@ const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
     <>
       {dependsOn && (
         <FormItem className="flex flex-col justify-end ">
-          <FormLabel className=" h-[18.4px] ">{fieldConfig.label}</FormLabel>
+          <FormLabel className=" h-[18.4px] ">
+            {fieldConfig.label[locale]}
+          </FormLabel>
           <Popover>
             <PopoverTrigger asChild className="flex">
               <FormControl>
@@ -51,7 +59,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ fieldConfig, field }) => {
                   {field.value ? (
                     format(field.value, "PPP")
                   ) : (
-                    <span>{fieldConfig.placeholder}</span>
+                    <span>{fieldConfig.placeholder[locale]}</span>
                   )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>

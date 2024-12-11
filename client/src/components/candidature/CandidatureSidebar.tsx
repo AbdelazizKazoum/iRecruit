@@ -38,7 +38,7 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 
 export function CandidatureSidebar({
   className,
-  dictionary,
+  // dictionary,
   local,
   ...props
 }: SidebarNavProps) {

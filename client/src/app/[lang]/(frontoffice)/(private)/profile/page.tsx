@@ -97,15 +97,11 @@ const ProfilePage = async ({
             {section === "compte" && (
               <ProfileInfo user={user} dictionary={dictionary} />
             )}
-            {section === "candidatures" && (
-              <ProfileApplications dictionary={dictionary} />
-            )}
+            {section === "candidatures" && <ProfileApplications />}
             {section === "info-personnelles" && (
               <ProfileInfo user={user} dictionary={dictionary} />
             )}
-            {section === "info-professionnelles" && (
-              <ProfileSettings dictionary={dictionary} />
-            )}
+            {section === "info-professionnelles" && <ProfileSettings />}
           </main>
         </div>
       </div>

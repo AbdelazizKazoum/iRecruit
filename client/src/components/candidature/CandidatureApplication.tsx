@@ -2,9 +2,9 @@
 import React from "react";
 import DynamicNormalForm from "../dynamic-form/DynamicNormalForm";
 import { candidateFormSchema } from "@/schemas/candidateFormSchema";
-import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
 import { Locale } from "@/configs/i18n";
-import DiplomesForm from "@/components/candidature/info-professionnelles/index";
+import InfoProfessionnelles from "./info-professionnelles/Index";
+import { Separator } from "../ui/separator";
 
 export const CandidatureApplication = ({
   section,
@@ -16,18 +16,25 @@ export const CandidatureApplication = ({
   return (
     <main className="flex-1 ">
       {section === "info-personnelles" && (
-        <DynamicNormalForm
-          category="candidate"
-          schema={candidateFormSchema}
-          local={local}
-        />
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-lg font-medium text-black-600/85">
+              Application{" "}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Cest ainsi que les autres vous verront sur le site.{" "}
+            </p>
+          </div>
+          <Separator />
+          <DynamicNormalForm
+            category="candidate"
+            schema={candidateFormSchema}
+            local={local}
+          />
+        </div>
       )}
       {section === "info-professionnelles" && (
-        <DiplomesForm
-          category="diplomes"
-          schema={infoProfessionnellesValidationSchema}
-          local={local}
-        />
+        <InfoProfessionnelles locale={local} />
       )}
     </main>
   );

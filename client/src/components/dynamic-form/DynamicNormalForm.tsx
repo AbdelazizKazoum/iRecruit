@@ -6,7 +6,6 @@ import { formConfigFactory } from "../../utils/formConfigFactory";
 import FieldRenderer from "./FieldRenderer";
 import { Button } from "../ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { Separator } from "../ui/separator";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider } from "react-hook-form";
@@ -36,6 +35,7 @@ const DynamicNormalForm = ({
               fieldConfig={fieldConfig}
               category={category}
               locale={local}
+              control={form.control}
             />
           </div>
         );
@@ -60,15 +60,6 @@ const DynamicNormalForm = ({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium text-black-600/85">
-          {config.title[local]}
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          {config.description[local]}
-        </p>
-      </div>
-      <Separator />
       <FormProvider {...form}>
         <Form {...form}>
           <form className="space-y-2" onSubmit={form.handleSubmit(onSubmit)}>

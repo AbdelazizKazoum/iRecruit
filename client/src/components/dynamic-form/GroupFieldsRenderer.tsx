@@ -32,14 +32,22 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   locale,
   control,
 }) => {
-  console.log("first");
+  const {
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <>
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value={fieldConfig.name}>
+        <AccordionItem
+          value={fieldConfig.name}
+          className={errors[fieldConfig.name] && "border-destructive"}
+        >
           <AccordionTrigger
-            className={cn(" text-primary text-base font-normal")}
+            className={cn(
+              " text-primary text-base font-normal",
+              errors[fieldConfig.name] && "text-destructive"
+            )}
           >
             {fieldConfig.title[locale]}
           </AccordionTrigger>
@@ -54,8 +62,6 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
                     fieldConfig={fieldGroup}
                     field={field}
                     locale={locale}
-                    // value={formData[category]?.[fieldGroup.name] || ""}
-                    // onChange={handleFieldChange}
                   />
                 )}
               />

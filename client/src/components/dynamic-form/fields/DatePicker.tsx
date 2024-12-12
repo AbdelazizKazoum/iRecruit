@@ -58,7 +58,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
                   {field.value ? (
                     format(field.value, "PPP")
                   ) : (
-                    <span>{fieldConfig.placeholder[locale]}</span>
+                    <span>
+                      {fieldConfig.placeholder &&
+                        fieldConfig.placeholder[locale]}
+                    </span>
                   )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>

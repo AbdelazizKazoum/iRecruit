@@ -4,6 +4,7 @@ import DiplomesForm from "./DiplomesForm";
 import { Locale } from "@/configs/i18n";
 import LanquesForm from "./LanquesForm";
 import PublicationsForm from "./PublicationsForm";
+import CommunicationsForm from "./CommunicationsForm";
 
 const InfoProfessionnelles = ({ locale }: { locale: Locale }) => {
   return (
@@ -18,6 +19,7 @@ const InfoProfessionnelles = ({ locale }: { locale: Locale }) => {
       <DiplomesForm locale={locale} />
       <LanquesForm locale={locale} />
       <PublicationsForm locale={locale} />
+      <CommunicationsForm locale={locale} />
     </div>
   );
 };

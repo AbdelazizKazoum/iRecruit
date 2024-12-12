@@ -1,3 +1,4 @@
+import { communicationsFormConfig } from "./communicationsForm.config";
 import { publicationsFormConfig } from "./publicationsForm.config";
 import { languesFormConfig } from "./languesForm.config";
 import { diplomesFormConfig } from "./diplomsForm.config";
@@ -12,4 +13,5 @@ export {
   diplomesFormConfig,
   languesFormConfig,
   publicationsFormConfig,
+  communicationsFormConfig,
 };

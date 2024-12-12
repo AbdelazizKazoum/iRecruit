@@ -2,6 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import React from "react";
 import DiplomesForm from "./DiplomesForm";
 import { Locale } from "@/configs/i18n";
+import LanquesForm from "./LanquesForm";
+import PublicationsForm from "./PublicationsForm";
 
 const InfoProfessionnelles = ({ locale }: { locale: Locale }) => {
   return (
@@ -14,6 +16,8 @@ const InfoProfessionnelles = ({ locale }: { locale: Locale }) => {
       </div>
       <Separator />
       <DiplomesForm locale={locale} />
+      <LanquesForm locale={locale} />
+      <PublicationsForm locale={locale} />
     </div>
   );
 };

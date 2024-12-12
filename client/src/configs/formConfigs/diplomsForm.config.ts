@@ -9,7 +9,7 @@ export const diplomesFormConfig = {
   fields: [
     {
       type: "select",
-      name: "parcoursEtDiplomes.origine",
+      name: "origine",
       label: {
         en: "Origin *",
         fr: "Origine *",
@@ -40,7 +40,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "text",
-      name: "parcoursEtDiplomes.intituleDiplome",
+      name: "intituleDiplome",
       label: {
         en: "Diploma Title with Details *",
         fr: "Intitulé de votre diplôme avec précision *",
@@ -49,7 +49,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "select",
-      name: "parcoursEtDiplomes.diplomeType",
+      name: "diplomeType",
       label: {
         en: "Diploma or Equivalent *",
         fr: "Diplôme ou diplôme équivalent *",
@@ -588,7 +588,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "text",
-      name: "parcoursEtDiplomes.anneeObtention",
+      name: "anneeObtention",
       label: {
         en: "Year of Graduation *",
         fr: "Année d'obtention du diplôme *",
@@ -597,7 +597,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "text",
-      name: "parcoursEtDiplomes.specialite",
+      name: "specialite",
       label: {
         en: "Specialty *",
         fr: "Spécialité *",
@@ -606,7 +606,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "text",
-      name: "parcoursEtDiplomes.mention",
+      name: "mention",
       label: {
         en: "Mention *",
         fr: "Mention *",
@@ -615,7 +615,7 @@ export const diplomesFormConfig = {
     },
     {
       type: "text",
-      name: "parcoursEtDiplomes.etablissement",
+      name: "etablissement",
       label: {
         en: "Institution *",
         fr: "Etablissement *",

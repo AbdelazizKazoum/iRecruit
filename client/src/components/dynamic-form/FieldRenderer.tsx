@@ -27,7 +27,6 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
   field,
   locale,
 }) => {
-  console.log("first field");
   switch (fieldConfig.type) {
     case "text":
     case "number":

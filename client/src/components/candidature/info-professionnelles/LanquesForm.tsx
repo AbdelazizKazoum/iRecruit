@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import DynamicGridForm from "@/components/dynamic-form/DynamicGridForm";
 import { Locale } from "@/configs/i18n";
-import { diplomesSchema } from "@/schemas/diplomes.schema";
+import { languesSchema } from "@/schemas/langues.schema";
 import React from "react";
 
-const DiplomesForm = ({ locale }: { locale: Locale }) => {
+const LanquesForm = ({ locale }: { locale: Locale }) => {
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -12,8 +12,8 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
     <div>
       <DynamicGridForm
         onSubmit={onSubmit}
-        category="diplomes"
-        schema={diplomesSchema}
+        category="langues"
+        schema={languesSchema}
         locale={locale}
         data={[]}
       />
@@ -21,4 +21,4 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
   );
 };
 
-export default DiplomesForm;
+export default LanquesForm;

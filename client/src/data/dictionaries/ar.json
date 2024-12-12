@@ -1,4 +1,24 @@
 {
+  "buttons": {
+    "save": "حفظ",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "send": "إرسال",
+    "apply": "تقديم",
+    "details": "تفاصيل",
+    "loading": "جاري التحميل..."
+  },
+  "status": {
+    "draft": "مسودة",
+    "submitted": "تم الإرسال",
+    "accepted": "مقبول",
+    "rejected": "مرفوض"
+  },
+  "notifications": {
+    "success": "تم حفظ الطلب بنجاح.",
+    "error": "حدث خطأ أثناء معالجة الطلب."
+  },
+
   "menu": {
     "home": "الرئيسية",
     "concours": "إعلانات المسابقات",

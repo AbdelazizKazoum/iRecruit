@@ -10,6 +10,10 @@ export const formConfigFactory = (category: string) => {
     // Add more categories as needed
     case "diplomes":
       return formConfigs.diplomesFormConfig;
+    case "langues":
+      return formConfigs.languesFormConfig;
+    case "publications":
+      return formConfigs.publicationsFormConfig;
     // Add more categories as needed
     default:
       throw new Error(`Unknown form category: ${category}`);

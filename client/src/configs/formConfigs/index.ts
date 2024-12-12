@@ -1,3 +1,5 @@
+import { publicationsFormConfig } from "./publicationsForm.config";
+import { languesFormConfig } from "./languesForm.config";
 import { diplomesFormConfig } from "./diplomsForm.config";
 // src/formConfigs/index.ts
 
@@ -8,4 +10,6 @@ export {
   candidateFormConfig,
   infoProfessionnellesFormConfig,
   diplomesFormConfig,
+  languesFormConfig,
+  publicationsFormConfig,
 };

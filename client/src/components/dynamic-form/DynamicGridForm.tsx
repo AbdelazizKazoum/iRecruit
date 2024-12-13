@@ -18,30 +18,7 @@ import {
 } from "../ui/accordion";
 import { cn } from "@/libs/utils";
 
-const gridTranslation = {
-  title: {
-    en: "Submitted Data",
-    fr: "Données Soumises",
-    ar: "البيانات المرسلة",
-  },
-  empty: {
-    en: "No data submitted yet.",
-    fr: "Aucune donnée soumise pour le moment.",
-    ar: "لم يتم إرسال أي بيانات حتى الآن.",
-  },
-  buttons: {
-    save: {
-      en: "Save",
-      fr: "Enregistrer",
-      ar: "حفظ",
-    },
-    loading: {
-      en: "Loading...",
-      fr: "Chargement...",
-      ar: "جاري التحميل...",
-    },
-  },
-};
+import { Download } from "lucide-react"; // Import the download icon
 
 const DynamicGridForm = ({
   category,
@@ -60,12 +37,35 @@ const DynamicGridForm = ({
   const form = useForm<any>({
     resolver: zodResolver(schema),
   });
+  console.log("🚀 ~ form:", form.formState.errors);
   const { fields } = config;
-  // Extract labels for headers
   const headers = fields.map((field) => field.label && field.label[locale]);
-
-  // State to hold submitted data
   const [submittedData, setSubmittedData] = useState<any[]>(data);
+
+  const gridTranslation = {
+    title: {
+      en: "Submitted Data",
+      fr: "Données Soumises",
+      ar: "البيانات المرسلة",
+    },
+    empty: {
+      en: "No data submitted yet.",
+      fr: "Aucune donnée soumise pour le moment.",
+      ar: "لم يتم إرسال أي بيانات حتى الآن.",
+    },
+    buttons: {
+      save: {
+        en: "Save",
+        fr: "Enregistrer",
+        ar: "حفظ",
+      },
+      loading: {
+        en: "Loading...",
+        fr: "Chargement...",
+        ar: "جاري التحميل...",
+      },
+    },
+  };
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -99,14 +99,33 @@ const DynamicGridForm = ({
     });
   }, [config.fields, category, form.control, locale]);
 
+  // File open
+  const handleOpenFile = (value: any) => {
+    const fileData = Object.entries(value)[0][1];
+
+    if (fileData) {
+      if (fileData instanceof Blob) {
+        // If it's a Blob, create an object URL
+        const fileURL = URL.createObjectURL(fileData);
+        window.open(fileURL, "_blank");
+        // Optionally, revoke the object URL later to free memory
+        setTimeout(() => URL.revokeObjectURL(fileURL), 10000); // Adjust timeout as needed
+      } else if (typeof fileData === "string") {
+        // If it's already a URL
+        window.open(fileData, "_blank");
+      } else {
+        console.error("Unsupported file type");
+      }
+    } else {
+      console.error(`File not found for key: ${value}`);
+    }
+  };
+
   const addToList = (data: any) => {
-    // Update the submitted data list
+    console.log("🚀 ~ addToList ~ data:", data);
+
     setSubmittedData((prev) => [...prev, data]);
-
-    // Call the onSubmit callback if provided
     onSubmit([...submittedData, data]);
-
-    // Reset the form after submission
     form.reset({});
   };
 
@@ -146,10 +165,7 @@ const DynamicGridForm = ({
                 {gridTranslation.title[locale]}
               </h2>
               {submittedData.length === 0 ? (
-                <p className="text-gray-500">
-                  {" "}
-                  {gridTranslation.empty[locale]}
-                </p>
+                <p className="text-gray-500">{gridTranslation.empty[locale]}</p>
               ) : (
                 <table className="table-auto w-full border-collapse border border-gray-300">
                   <thead>
@@ -165,15 +181,62 @@ const DynamicGridForm = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {submittedData.map((data, index) => (
-                      <tr key={index}>
-                        {Object.values(data).map((value, i) => (
-                          <td
-                            key={i}
-                            className="border border-gray-300 px-4 py-2"
-                          >
-                            {String(value)}
-                          </td>
+                    {submittedData.map((entry, index) => (
+                      <tr key={index} className="text-center">
+                        {Object.entries(entry).map(([key, value], i) => (
+                          <>
+                            {key === "files" && typeof value === "object" ? (
+                              Object.keys(value).map((fileKey) => (
+                                <td
+                                  key={i}
+                                  className="border border-gray-300 px-4 py-2 text-center"
+                                >
+                                  <div
+                                    key={fileKey}
+                                    className="flex items-center justify-center"
+                                  >
+                                    {/* <span className="mr-2">{fileKey}</span> */}
+                                    <Button
+                                      variant="outline"
+                                      size="icon"
+                                      onClick={() => handleOpenFile(value)}
+                                    >
+                                      <Download className="h-4 w-4 text-blue-500" />
+                                    </Button>
+                                  </div>
+                                </td>
+                              ))
+                            ) : (
+                              <td
+                                key={i}
+                                className="border border-gray-300 px-4 py-2 text-center"
+                              >
+                                {String(value)}
+                              </td>
+                            )}
+                          </>
+                          // <td
+                          //   key={i}
+                          //   className="border border-gray-300 px-4 py-2 text-center"
+                          // >
+                          //   {key === "files" && typeof value === "object"
+                          //     ? Object.keys(value).map((fileKey) => (
+                          //         <div
+                          //           key={fileKey}
+                          //           className="flex items-center justify-center"
+                          //         >
+                          //           {/* <span className="mr-2">{fileKey}</span> */}
+                          //           <Button
+                          //             variant="outline"
+                          //             size="icon"
+                          //             onClick={() => handleOpenFile(value)}
+                          //           >
+                          //             <Download className="h-4 w-4 text-blue-500" />
+                          //           </Button>
+                          //         </div>
+                          //       ))
+                          //     : String(value)}
+                          // </td>
                         ))}
                       </tr>
                     ))}

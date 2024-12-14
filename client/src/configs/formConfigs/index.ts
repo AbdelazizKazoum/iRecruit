@@ -4,11 +4,11 @@ import { languesFormConfig } from "./languesForm.config";
 import { diplomesFormConfig } from "./diplomsForm.config";
 // src/formConfigs/index.ts
 
-import { candidateFormConfig } from "./candidateFormConfig";
+import { personalInformationsConfig } from "./personalInformationsForm.config";
 import { infoProfessionnellesFormConfig } from "./infoProfessionnellesFormConfig";
 
 export {
-  candidateFormConfig,
+  personalInformationsConfig,
   infoProfessionnellesFormConfig,
   diplomesFormConfig,
   languesFormConfig,

@@ -1,4 +1,4 @@
-export const candidateFormConfig = {
+export const personalInformationsConfig = {
   category: "candidate",
   title: {
     en: "Application",

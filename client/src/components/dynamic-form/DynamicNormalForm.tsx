@@ -16,15 +16,16 @@ import { Locale } from "@/configs/i18n";
 const DynamicNormalForm = ({
   category,
   schema,
-  local,
+  locale,
+  onSubmit,
 }: {
   category: string;
   schema: any;
-  local: Locale;
+  locale: Locale;
+  onSubmit: (data: any) => void;
 }) => {
   const config = formConfigFactory(category);
-  const { form, onSubmit } = useDynamicForm(schema, config.category);
-  console.log("🚀 ~ form:", form.formState.errors);
+  const { form } = useDynamicForm(schema, config.category);
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -34,7 +35,7 @@ const DynamicNormalForm = ({
             <GroupFieldsRenderer
               fieldConfig={fieldConfig}
               category={category}
-              locale={local}
+              locale={locale}
               control={form.control}
             />
           </div>
@@ -49,14 +50,14 @@ const DynamicNormalForm = ({
               <FieldRenderer
                 fieldConfig={fieldConfig}
                 field={field}
-                locale={local}
+                locale={locale}
               />
             )}
           />
         );
       }
     });
-  }, [config.fields, category, form.control, local]);
+  }, [config.fields, category, form.control, locale]);
 
   return (
     <div className="space-y-6">

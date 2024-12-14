@@ -35,7 +35,7 @@ const CandidateFormPage = async ({
               dictionary={dictionary}
             />
           </aside>
-          <CandidatureApplication section={section} local={params.lang} />
+          <CandidatureApplication section={section} locale={params.lang} />
         </div>
       </div>
     </div>

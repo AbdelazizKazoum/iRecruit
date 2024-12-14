@@ -34,7 +34,7 @@ export interface CandidateForm {
 }
 
 // Zod schema with conditional validation logic
-export const candidateFormSchema: z.ZodSchema<CandidateForm> = z
+export const personalInformationSchema: z.ZodSchema<CandidateForm> = z
   .object({
     prenom: z.string().min(1, "Le prénom est requis"),
     prenomAr: z.string().min(1, "الإسم الشخصي مطلوب"),

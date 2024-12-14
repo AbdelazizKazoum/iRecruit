@@ -4,8 +4,8 @@ import * as formConfigs from "@/configs/formConfigs";
 
 export const formConfigFactory = (category: string) => {
   switch (category) {
-    case "candidate":
-      return formConfigs.candidateFormConfig;
+    case "personal-informations":
+      return formConfigs.personalInformationsConfig;
     case "info-professionnelles":
     // Add more categories as needed
     case "diplomes":

@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, userSchema } from 'src/schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { FileUploadService } from './services/file-upload.service';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { jwtConstants } from './constants';
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  providers: [UserUtilsService],
-  exports: [UserUtilsService, MongooseModule, JwtModule],
+  providers: [UserUtilsService, FileUploadService],
+  exports: [UserUtilsService, FileUploadService, MongooseModule, JwtModule],
 })
 export class SharedModule {}

@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-
 import type { AxiosRequestHeaders } from "axios";
 import axios from "axios";
 import { BACKEND_API } from "@/utils/constants/envVariables";
@@ -33,5 +32,7 @@ userApi.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+console.log(userApi);
 
 export default userApi;

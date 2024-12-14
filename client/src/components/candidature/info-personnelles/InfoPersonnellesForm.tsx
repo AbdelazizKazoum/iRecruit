@@ -1,12 +1,44 @@
+"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { Locale } from "@/configs/i18n";
 import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
+import userApi from "@/libs/api";
 
 const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
-  function onSubmit(data: any) {
+  async function onSubmit(data: any) {
     console.log(data);
+
+    // Create a new FormData instance
+    const formData = new FormData();
+
+    // Add the rest of the data as a JSON string under the key 'data'
+    const { files, ...rest } = data; // Destructure to separate files from other data
+    formData.append("personalInformations", JSON.stringify(rest));
+
+    // Add files under the 'files' key
+    if (files && Array.isArray(files)) {
+      files.forEach((file: File) => {
+        formData.append("files", file);
+      });
+    }
+
+    try {
+      const res = await userApi.post(
+        `/candidature/personal-informations`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(res);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   }
 
   return (

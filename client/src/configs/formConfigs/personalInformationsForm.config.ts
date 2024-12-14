@@ -260,8 +260,8 @@ export const personalInformationsConfig = {
           dependsOn: "experiences.fonctionnaire",
         },
         {
-          type: "text",
-          name: "experiences.attestation",
+          type: "file",
+          name: "files.attestation",
           label: {
             en: "Work certificate (PDF, max 10MB) *",
             fr: "Attestation de travail (Pdf, max 10 Mo) *",
@@ -337,7 +337,7 @@ export const personalInformationsConfig = {
 
     {
       type: "file",
-      name: "cinPdf",
+      name: "files.cinPdf",
       label: {
         en: "CIN (PDF, Max 10MB) *",
         fr: "CIN (Pdf, Max 10Mo) *",
@@ -346,7 +346,7 @@ export const personalInformationsConfig = {
     },
     {
       type: "file",
-      name: "bacPdf",
+      name: "files.bacPdf",
       label: {
         en: "High School Diploma (PDF, Max 10MB) *",
         fr: "Bac (Pdf, Max 10Mo) *",
@@ -355,7 +355,7 @@ export const personalInformationsConfig = {
     },
     {
       type: "file",
-      name: "cvPdf",
+      name: "files.cvPdf",
       label: {
         en: "CV (PDF, Max 10MB) *",
         fr: "CV (Pdf, Max 10Mo) *",

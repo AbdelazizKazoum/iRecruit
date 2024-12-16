@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { User } from './user.schema';
 
 // Define the types
 export type UserDetailsDocument = HydratedDocument<UserDetails>;
@@ -8,6 +9,7 @@ export type UserDetailsDocument = HydratedDocument<UserDetails>;
 // UserDetails Schema
 @Schema()
 export class UserDetails {
+  user: User;
   // Personal Information
   @Prop({ type: Object, required: true })
   personalInformation: {

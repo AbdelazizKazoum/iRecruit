@@ -1,11 +1,6 @@
-import {
-  MulterField,
-  MulterOptions,
-} from './../../node_modules/@nestjs/platform-express/multer/interfaces/multer-options.interface.d';
 /* eslint-disable prettier/prettier */
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateCandidatureDto } from './dto/create-candidature.dto';
-import { UpdateCandidatureDto } from './dto/update-candidature.dto';
+import { Injectable } from '@nestjs/common';
+import { PersonalInformationDto } from './dto/create-candidature.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Candidature } from 'src/schemas/candidature.schema';
 import { Model } from 'mongoose';
@@ -20,26 +15,54 @@ export class CandidatureService {
   ) {}
 
   //-------------------------------------------------------------------------
-  // Save Personal information
+  // Save Personal Information
   async savePersonalInformations(
-    createCandidaturedto: CreateCandidatureDto,
+    personalInformationDto: PersonalInformationDto,
     files: any,
+    user: any, // The user object passed in the request
   ) {
-    console.log(createCandidaturedto);
-    console.log(files);
+    const { cin } = personalInformationDto;
 
-    return files;
+    // Define upload path dynamically
+    const uploadPath = `uploads/candidats/${cin}`;
+    const allowedFormats = ['pdf']; // Define allowed formats
 
-    // try {
-    //   const createdCandidature = new this.candidatureModel(
-    //     createCandidaturedto,
-    //   );
+    // Upload files and get their paths
+    const filePaths = await this.fileUploadService.uploadFiles(
+      files,
+      uploadPath,
+      allowedFormats,
+    );
 
-    //   return await createdCandidature.save();
-    // } catch (error) {
-    //   throw new InternalServerErrorException(error);
-    // }
+    // Check if a candidature already exists for the given user
+    const existingCandidature = await this.candidatureModel.findOne({
+      user: user._id,
+    });
+
+    if (existingCandidature) {
+      // Update only the personalInformation field and preserve professionalInformation
+      existingCandidature.personalInformation = {
+        ...personalInformationDto,
+        files: filePaths,
+      };
+
+      // Save the updated candidature
+      return existingCandidature.save();
+    }
+
+    // If no existing candidature, create a new one
+    const newCandidature = new this.candidatureModel({
+      user: user._id, // Associate with the user
+      personalInformation: {
+        ...personalInformationDto,
+        files: filePaths,
+      },
+      professionalInformation: {}, // Initialize empty professionalInformation
+    });
+
+    return newCandidature.save();
   }
+
   // ----------------------------------------------------------------------------
 
   async findAll(): Promise<Candidature[]> {
@@ -50,9 +73,9 @@ export class CandidatureService {
     return `This action returns a #${id} candidature`;
   }
 
-  update(id: number, updateCandidatureDto: UpdateCandidatureDto) {
-    return `This action updates a #${id} candidature`;
-  }
+  // update(id: number, updateCandidatureDto: PersonalInformationDto) {
+  //   return `This action updates a #${id} candidature`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} candidature`;

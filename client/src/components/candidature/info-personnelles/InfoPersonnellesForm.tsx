@@ -18,9 +18,12 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
     formData.append("personalInformations", JSON.stringify(rest));
 
     // Add files under the 'files' key
-    if (files && Array.isArray(files)) {
-      files.forEach((file: File) => {
-        formData.append("files", file);
+    if (files) {
+      Object.entries(files).map((item) => {
+        const file = item[1] as File;
+        const key = item[0] + `.${file.name.split(".")[1]}`;
+
+        formData.append("files", file, key);
       });
     }
 

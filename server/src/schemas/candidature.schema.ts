@@ -38,7 +38,7 @@ export class Candidature {
       handicap?: boolean;
       typeHandicap?: string;
     };
-    files: string[];
+    files: any;
   };
 
   // Professional Information

@@ -21,12 +21,7 @@ export class CandidatureService {
     files: any,
     user: any, // The user object passed in the request
   ) {
-    console.log(
-      '🚀 ~ CandidatureService ~ personalInformationDto:',
-      personalInformationDto,
-    );
     const { cin } = personalInformationDto;
-    console.log('🚀 ~ CandidatureService ~ cin:', cin);
 
     // Define upload path dynamically
     const uploadPath = `uploads/candidats/${cin}`;

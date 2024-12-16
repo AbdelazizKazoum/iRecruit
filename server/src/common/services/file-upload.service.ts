@@ -15,13 +15,13 @@ export class FileUploadService {
    * @param files - Array of files to upload
    * @param uploadPath - Directory where files will be stored
    * @param allowedFormats - Array of allowed file formats (e.g., ['pdf', 'png'])
-   * @returns Array of file paths for the uploaded files
+   * @returns Object with original file names (without extensions) as keys and their paths as values
    */
   async uploadFiles(
     files: UploadedFile[],
     uploadPath: string,
     allowedFormats: string[],
-  ): Promise<string[]> {
+  ): Promise<Record<string, string>> {
     if (!files || files.length === 0) {
       throw new BadRequestException('No files provided for upload');
     }
@@ -31,7 +31,7 @@ export class FileUploadService {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
 
-    const uploadedFilePaths: string[] = [];
+    const uploadedFiles: Record<string, string> = {};
 
     for (const file of files) {
       const fileExtension = file.originalname.split('.').pop().toLowerCase();
@@ -48,9 +48,17 @@ export class FileUploadService {
 
       // Save the file
       fs.writeFileSync(filePath, file.buffer);
-      uploadedFilePaths.push(filePath);
+
+      // Extract file name without extension
+      const fileNameWithoutExtension = path.basename(
+        file.originalname,
+        `.${fileExtension}`,
+      );
+
+      // Add to the result object
+      uploadedFiles[fileNameWithoutExtension] = filePath;
     }
 
-    return uploadedFilePaths;
+    return uploadedFiles;
   }
 }

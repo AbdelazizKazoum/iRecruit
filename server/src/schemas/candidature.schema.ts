@@ -1,13 +1,16 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { User } from './user.schema';
 
 export type CandidatureDocument = HydratedDocument<Candidature>;
 
 @Schema()
 export class Candidature {
-  // Personal Information
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user: User;
 
+  // Personal Information
   @Prop({ type: Object, required: true })
   personalInformation: {
     prenom: string;
@@ -36,15 +39,10 @@ export class Candidature {
       typeHandicap?: string;
     };
     files: string[];
-    //  : {
-    //   cinPdf: string;
-    //   bacPdf: string;
-    //   cvPdf: string;
-    // };
   };
 
   // Professional Information
-  @Prop({ type: Object, required: true })
+  @Prop({ type: Object })
   professionalInformation: {
     parcoursEtDiplomes?: {
       origine: 'etranger' | 'marocainPrive' | 'marocainPublic';

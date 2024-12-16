@@ -4,9 +4,11 @@ import React from "react";
 import { Locale } from "@/configs/i18n";
 import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
-import userApi from "@/libs/api";
+import useApiClient from "@/hooks/ApiClient";
 
 const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
+  const apiClient = useApiClient();
+
   async function onSubmit(data: any) {
     console.log(data);
 
@@ -28,14 +30,9 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
     }
 
     try {
-      const res = await userApi.post(
+      const res = await apiClient.post(
         `/candidature/personal-informations`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       console.log(res);

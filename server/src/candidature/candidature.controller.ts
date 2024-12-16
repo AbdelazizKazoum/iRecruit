@@ -9,31 +9,29 @@ import {
   UseInterceptors,
   UploadedFiles,
   UseGuards,
-  Req,
+  Request,
 } from '@nestjs/common';
 import { CandidatureService } from './candidature.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { PersonalInformationDto } from './dto/create-candidature.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
-import { Request } from 'express';
 
-UseGuards(JwtAuthGuard);
 @Controller('candidature')
 export class CandidatureController {
   constructor(private readonly candidatureService: CandidatureService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('personal-informations')
   @UseInterceptors(FilesInterceptor('files')) // 'files' must match the form-data field name
   async savePersonalInformations(
     @UploadedFiles() files: any,
-    @Body('personalInformations') personalInformations: PersonalInformationDto,
-    @Req() req: Request, // Access the request object
+    @Body('personalInformations') personalInformations: string,
+    @Request() req, // Access the request object
   ) {
     const user = req.user; // Extract the user from the request
-    console.log('🚀 ~ CandidatureController ~ user:', user);
+    const data = JSON.parse(personalInformations);
 
     return await this.candidatureService.savePersonalInformations(
-      personalInformations,
+      data,
       files,
       user,
     );

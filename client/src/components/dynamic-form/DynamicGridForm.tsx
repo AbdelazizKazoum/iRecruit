@@ -125,7 +125,7 @@ const DynamicGridForm = ({
     console.log("🚀 ~ addToList ~ data:", data);
 
     setSubmittedData((prev) => [...prev, data]);
-    onSubmit([...submittedData, data]);
+    onSubmit(data);
     form.reset({});
   };
 

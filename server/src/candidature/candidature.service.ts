@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PersonalInformationDto } from './dto/create-candidature.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Candidature } from 'src/schemas/candidature.schema';
@@ -62,8 +62,45 @@ export class CandidatureService {
 
     return newCandidature.save();
   }
-
   // ----------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------
+  // Save diplomes
+  async saveDiplomes(
+    data,
+    files: any,
+    user: any, // The user object passed in the request
+  ) {
+    const { cin } = data;
+
+    // Define upload path dynamically
+    const uploadPath = `uploads/candidats/${cin}/diplomes`;
+    const allowedFormats = ['pdf']; // Define allowed formats
+
+    // Upload files and get their paths
+    const filePaths = await this.fileUploadService.uploadFiles(
+      files,
+      uploadPath,
+      allowedFormats,
+    );
+
+    // Check if a candidature already exists for the given user
+    const existingCandidature = await this.candidatureModel.findOne({
+      user: user._id,
+    });
+
+    if (existingCandidature) {
+      // Update only the personalInformation field and preserve professionalInformation
+      existingCandidature.professionalInformation.parcoursEtDiplomes = {
+        ...data,
+        files: filePaths,
+      };
+
+      // Save the updated candidature
+      return existingCandidature.save();
+    } else throw new NotFoundException('Not found !');
+  }
+
   async findAll(): Promise<Candidature[]> {
     return this.candidatureModel.find().exec();
   }

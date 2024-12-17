@@ -37,6 +37,22 @@ export class CandidatureController {
     );
   }
 
+  // Save diplomes
+  @UseGuards(JwtAuthGuard)
+  @Post('diplomes')
+  @UseInterceptors(FilesInterceptor('files')) // 'files' must match the form-data field name
+  async saveDoplomes(
+    @UploadedFiles() files: any,
+    @Body('diplomes') diplomes,
+    @Request() req, // Access the request object
+  ) {
+    console.log('🚀 ~ CandidatureController ~ files:', files);
+    const user = req.user; // Extract the user from the request
+    const data = JSON.parse(diplomes);
+
+    return await this.candidatureService.saveDiplomes(data, files, user);
+  }
+
   @Get()
   findAll() {
     return this.candidatureService.findAll();

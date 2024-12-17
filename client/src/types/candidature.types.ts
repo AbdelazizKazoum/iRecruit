@@ -42,12 +42,12 @@ export interface CandidatureType {
       mention: string;
       etablissement: string;
       diplomePdf: string;
-    };
+    }[];
     niveauxLangues?: {
       langue: string;
       niveau: "avance" | "basique" | "intermediare";
       certificatLanguePdf?: string;
-    };
+    }[];
     experiencePedagogique?: {
       experiencePedagogiqueEnHeures: number;
     };
@@ -57,13 +57,13 @@ export interface CandidatureType {
       type: string;
       url: string;
       publicationPdf: string;
-    };
+    }[];
     communications?: {
       titre: string;
       anneeCommunication: number;
       url: string;
       communicationPdf: string;
-    };
+    }[];
     residanat?: {
       residanatPdf?: string;
     };

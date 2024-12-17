@@ -1,5 +1,5 @@
 import userApi from "@/libs/api";
-import axios, { AxiosRequestHeaders } from "axios";
+import { AxiosRequestHeaders } from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 
@@ -25,7 +25,7 @@ const useApiClient = () => {
     );
 
     return () => {
-      axios.interceptors.request.eject(requestIntercept);
+      userApi.interceptors.request.eject(requestIntercept);
     };
   }, [session]);
 

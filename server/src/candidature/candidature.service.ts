@@ -1,5 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PersonalInformationDto } from './dto/create-candidature.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Candidature } from 'src/schemas/candidature.schema';
@@ -57,7 +61,15 @@ export class CandidatureService {
         ...personalInformationDto,
         files: filePaths,
       },
-      professionalInformation: {}, // Initialize empty professionalInformation
+      professionalInformation: {
+        parcoursEtDiplomes: [],
+        niveauxLangues: [],
+        experiencePedagogique: [],
+        publications: [],
+        communications: [],
+        residanat: [],
+        autresDocuments: [],
+      }, // Initialize empty professionalInformation
     });
 
     return newCandidature.save();
@@ -66,15 +78,18 @@ export class CandidatureService {
 
   //-------------------------------------------------------------------------
   // Save diplomes
-  async saveDiplomes(
-    data,
-    files: any,
-    user: any, // The user object passed in the request
-  ) {
-    const { cin } = data;
+  async saveDiplomes(data, files: any, user: any) {
+    // Check if a candidature already exists for the given user
+    const existingCandidature = await this.candidatureModel.findOne({
+      user: user._id,
+    });
+
+    if (!existingCandidature) {
+      throw new NotFoundException('Not found!');
+    }
 
     // Define upload path dynamically
-    const uploadPath = `uploads/candidats/${cin}/diplomes`;
+    const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/diplomes`;
     const allowedFormats = ['pdf']; // Define allowed formats
 
     // Upload files and get their paths
@@ -84,21 +99,24 @@ export class CandidatureService {
       allowedFormats,
     );
 
-    // Check if a candidature already exists for the given user
-    const existingCandidature = await this.candidatureModel.findOne({
-      user: user._id,
-    });
+    // Update only the professionalInformation
+    existingCandidature.professionalInformation = {
+      ...existingCandidature.professionalInformation,
+      parcoursEtDiplomes: [
+        ...existingCandidature.professionalInformation.parcoursEtDiplomes,
+        { ...data, files: filePaths },
+      ],
+    };
 
-    if (existingCandidature) {
-      // Update only the personalInformation field and preserve professionalInformation
-      existingCandidature.professionalInformation.parcoursEtDiplomes = {
-        ...data,
-        files: filePaths,
-      };
+    // Save the updated candidature
+    try {
+      const savedCandidature = await existingCandidature.save(); // Make sure to await here
 
-      // Save the updated candidature
-      return existingCandidature.save();
-    } else throw new NotFoundException('Not found !');
+      return savedCandidature;
+    } catch (error) {
+      console.error('Error saving candidature:', error);
+      throw new InternalServerErrorException('Failed to save data');
+    }
   }
 
   async findAll(): Promise<Candidature[]> {

@@ -56,7 +56,7 @@ export class FileUploadService {
       );
 
       // Add to the result object
-      uploadedFiles[fileNameWithoutExtension] = filePath;
+      uploadedFiles[fileNameWithoutExtension.split('-')[0]] = filePath;
     }
 
     return uploadedFiles;

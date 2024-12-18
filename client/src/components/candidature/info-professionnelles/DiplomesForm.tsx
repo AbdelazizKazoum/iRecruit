@@ -3,10 +3,18 @@ import DynamicGridForm from "@/components/dynamic-form/DynamicGridForm";
 import { Locale } from "@/configs/i18n";
 import useApiClient from "@/hooks/ApiClient";
 import { diplomesSchema } from "@/schemas/diplomes.schema";
-import React from "react";
+import { fetchSession } from "@/utils/getSession";
+import React, { useEffect } from "react";
 
 const DiplomesForm = ({ locale }: { locale: Locale }) => {
   const apiClient = useApiClient();
+
+  useEffect(() => {
+    (async () => {
+      const session = await fetchSession();
+      console.log("🚀 form dipmo -------------- ~ session:", session);
+    })();
+  });
 
   const onSubmit = async (data: any) => {
     const formData = new FormData();
@@ -20,7 +28,8 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
     if (files) {
       Object.entries(files).map((item) => {
         const file = item[1] as File;
-        const key = item[0] + rest.diplomeType + `.${file.name.split(".")[1]}`;
+        const key =
+          item[0] + "-" + rest.diplomeType + `.${file.name.split(".")[1]}`;
 
         formData.append("files", file, key);
       });

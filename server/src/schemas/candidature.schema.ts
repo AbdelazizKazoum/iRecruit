@@ -52,36 +52,36 @@ export class Candidature {
       specialite: string;
       mention: string;
       etablissement: string;
-      diplomePdf: string;
-    };
+      files: any;
+    }[];
     niveauxLangues?: {
       langue: string;
       niveau: 'avance' | 'basique' | 'intermediare';
       certificatLanguePdf?: string;
-    };
+    }[];
     experiencePedagogique?: {
       experiencePedagogiqueEnHeures: number;
-    };
+    }[];
     publications?: {
       titre: string;
       anneePublication: number;
       type: string;
       url: string;
       publicationPdf: string;
-    };
+    }[];
     communications?: {
       titre: string;
       anneeCommunication: number;
       url: string;
       communicationPdf: string;
-    };
+    }[];
     residanat?: {
       residanatPdf?: string;
-    };
+    }[];
     autresDocuments?: {
       intitule: string;
       documentPdf?: string;
-    };
+    }[];
   };
 }
 

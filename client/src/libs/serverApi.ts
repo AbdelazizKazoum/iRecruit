@@ -1,11 +1,11 @@
 import { AxiosRequestHeaders } from "axios";
 import userApi from "./api";
-import { auth } from "./auth";
+import { fetchSession } from "@/utils/getSession";
 
 const serverApi = userApi;
 serverApi.interceptors.request.use(
   async (config) => {
-    const session = await auth();
+    const session = await fetchSession();
 
     const token = session?.user.accessToken || "";
 

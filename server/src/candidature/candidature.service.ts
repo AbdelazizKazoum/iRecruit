@@ -112,7 +112,7 @@ export class CandidatureService {
     try {
       const savedCandidature = await existingCandidature.save(); // Make sure to await here
 
-      return savedCandidature;
+      return savedCandidature.professionalInformation.parcoursEtDiplomes;
     } catch (error) {
       console.error('Error saving candidature:', error);
       throw new InternalServerErrorException('Failed to save data');
@@ -121,6 +121,14 @@ export class CandidatureService {
 
   async findAll(): Promise<Candidature[]> {
     return this.candidatureModel.find().exec();
+  }
+
+  async findMyCandidature(user): Promise<Candidature> {
+    try {
+      return await this.candidatureModel.findOne({ user: user._id }).exec();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   findOne(id: number) {

@@ -4,17 +4,19 @@ import React from "react";
 import { Locale } from "@/configs/i18n";
 import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
-import useApiClient from "@/hooks/ApiClient";
+import { useCandidatureStore } from "@/stores/candidature.store";
 
 const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
-  const apiClient = useApiClient();
+  // Hooks
+  const { candidatureData, setPersonalInformation, submitPersonalInformation } =
+    useCandidatureStore();
 
   async function onSubmit(data: any) {
     console.log(data);
+    setPersonalInformation(data);
 
     // Create a new FormData instance
     const formData = new FormData();
-
     // Add the rest of the data as a JSON string under the key 'data'
     const { files, ...rest } = data; // Destructure to separate files from other data
     formData.append("personalInformations", JSON.stringify(rest));
@@ -29,16 +31,7 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    try {
-      const res = await apiClient.post(
-        `/candidature/personal-informations`,
-        formData
-      );
-
-      console.log(res);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+    await submitPersonalInformation(formData);
   }
 
   return (
@@ -55,6 +48,7 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
           category="personal-informations"
           schema={personalInformationSchema}
           locale={locale}
+          defaultValues={candidatureData?.personalInformation}
         />
       </div>
     </div>

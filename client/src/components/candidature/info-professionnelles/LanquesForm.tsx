@@ -16,6 +16,7 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
         schema={languesSchema}
         locale={locale}
         data={[]}
+        checkKey=""
       />
     </div>
   );

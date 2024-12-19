@@ -8,25 +8,29 @@ import { Button } from "../ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { memo, useMemo } from "react";
-import useDynamicForm from "@/hooks/useDynamicForm";
 import { Locale } from "@/configs/i18n";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const DynamicNormalForm = ({
   category,
   schema,
   locale,
   onSubmit,
+  defaultValues,
 }: {
   category: string;
   schema: any;
   locale: Locale;
   onSubmit: (data: any) => void;
+  defaultValues: any;
 }) => {
   const config = formConfigFactory(category);
-  const { form } = useDynamicForm(schema, config.category);
-
+  const form = useForm<any>({
+    resolver: zodResolver(schema),
+    defaultValues: defaultValues,
+  });
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
       if (fieldConfig.type === "group") {

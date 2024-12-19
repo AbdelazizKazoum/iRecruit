@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Locale } from "@/configs/i18n";
 import InfoProfessionnelles from "./info-professionnelles/Index";
 import InfoPersonnelles from "./info-personnelles/InfoPersonnellesForm";
+import { useCandidatureStore } from "@/stores/candidature.store";
 
 export const CandidatureApplication = ({
   section,
@@ -11,6 +12,18 @@ export const CandidatureApplication = ({
   section: string;
   locale: Locale;
 }) => {
+  const { fetchCandidatureData } = useCandidatureStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      await fetchCandidatureData();
+      setLoading(false);
+    })();
+  }, [fetchCandidatureData]);
+
+  if (loading) return <>loading ...</>;
+
   return (
     <main className="flex-1">
       {section === "info-personnelles" && <InfoPersonnelles locale={locale} />}

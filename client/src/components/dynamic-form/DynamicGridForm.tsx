@@ -19,6 +19,7 @@ import {
 import { cn } from "@/libs/utils";
 
 import { Download } from "lucide-react"; // Import the download icon
+import { toast } from "react-toastify";
 
 const DynamicGridForm = ({
   category,
@@ -26,18 +27,19 @@ const DynamicGridForm = ({
   locale,
   onSubmit,
   data,
+  checkKey, // New prop for specifying the key to check
 }: {
   category: string;
   schema: any;
   locale: Locale;
   onSubmit: (data: any) => void;
   data: any;
+  checkKey: string; // Key to check for duplicates
 }) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({
     resolver: zodResolver(schema),
   });
-  console.log("🚀 ~ form:", form.formState.errors);
   const { fields } = config;
   const headers = fields.map((field) => field.label && field.label[locale]);
   const [submittedData, setSubmittedData] = useState<any[]>(data);
@@ -124,8 +126,19 @@ const DynamicGridForm = ({
   const addToList = (data: any) => {
     console.log("🚀 ~ addToList ~ data:", data);
 
-    setSubmittedData((prev) => [...prev, data]);
+    // Check if the key specified in `checkKey` already exists in `submittedData`
+    const exists = submittedData.some(
+      (item) => item[checkKey] === data[checkKey]
+    );
+
+    if (exists) {
+      toast.error(`Déjà existant`);
+      return; // Do not add duplicate data
+    }
+
     onSubmit(data);
+
+    setSubmittedData((prev) => [...prev, data]);
     form.reset({});
   };
 

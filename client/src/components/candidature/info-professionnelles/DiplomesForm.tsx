@@ -1,26 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import DynamicGridForm from "@/components/dynamic-form/DynamicGridForm";
 import { Locale } from "@/configs/i18n";
-import useApiClient from "@/hooks/ApiClient";
 import { diplomesSchema } from "@/schemas/diplomes.schema";
-import { fetchSession } from "@/utils/getSession";
-import React, { useEffect } from "react";
+import { useCandidatureStore } from "@/stores/candidature.store";
+import { ParcoursEtDiplomesTypes } from "@/types/candidature.types";
+import React from "react";
 
 const DiplomesForm = ({ locale }: { locale: Locale }) => {
-  const apiClient = useApiClient();
+  // Hooks
+  // Hooks
+  const { candidatureData, submitDiplome } = useCandidatureStore();
+  console.log("🚀 ~ DiplomesForm ~ candidatureData:", candidatureData);
 
-  useEffect(() => {
-    (async () => {
-      const session = await fetchSession();
-      console.log("🚀 form dipmo -------------- ~ session:", session);
-    })();
-  });
-
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ParcoursEtDiplomesTypes) => {
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'
     const { files, ...rest } = data; // Destructure to separate files from other data
     console.log("🚀 ~ onSubmit ~ rest:", rest);
+
+    // setDiplomes(data);
 
     formData.append("diplomes", JSON.stringify(rest));
 
@@ -35,16 +33,11 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    try {
-      const res = await apiClient.post(`/candidature/diplomes`, formData);
-
-      console.log(res);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+    submitDiplome(formData);
 
     console.log(data);
   };
+
   return (
     <div>
       <DynamicGridForm
@@ -53,6 +46,7 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
         schema={diplomesSchema}
         locale={locale}
         data={[]}
+        checkKey="diplomeType"
       />
     </div>
   );

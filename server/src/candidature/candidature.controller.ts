@@ -58,9 +58,11 @@ export class CandidatureController {
     return this.candidatureService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.candidatureService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @Get('mine')
+  getCandidature(@Request() req) {
+    const user = req.user;
+    return this.candidatureService.findMyCandidature(user);
   }
 
   // @Patch(':id')

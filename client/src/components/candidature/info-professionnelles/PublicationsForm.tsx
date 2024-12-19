@@ -16,6 +16,7 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
         schema={publicationsSchema}
         locale={locale}
         data={[]}
+        checkKey=""
       />
     </div>
   );

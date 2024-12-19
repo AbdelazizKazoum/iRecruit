@@ -6,35 +6,6 @@ import { useFormStore } from "@/stores/useFormStore";
 const useDynamicForm = (schema: any, category: string) => {
   const form = useForm<any>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      prenom: "Abdelaziz",
-      prenomAr: "عبدالعزيز",
-      nom: "test",
-      nomAr: "كزوم",
-      adresse: "dr boughanim assads ouled teima",
-      adresseAr: "دوار بوغانيم اصادص اولاد تايمة",
-      lieuNaissance: "dqfsg",
-      cin: "JT74799",
-      dateNaissance: "2024-12-03T23:00:00.000Z",
-      sexe: "masculin",
-      situation: "celibataire",
-      telephone: "0636888888",
-      email: "akaka0303@gmail.com",
-      experiences: {
-        fonctionnaire: true,
-        fonction: "gr",
-        ppr: "66006/C",
-      },
-      situationDeHandicap: {},
-      AncienCombattant: true,
-      PupillesNation: true,
-      files: {
-        attestation: {},
-        cinPdf: {},
-        bacPdf: {},
-        cvPdf: {},
-      },
-    },
   });
 
   const setFormData = useFormStore((state: any) => state.setFormData);

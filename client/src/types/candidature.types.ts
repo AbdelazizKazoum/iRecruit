@@ -33,16 +33,7 @@ export interface CandidatureType {
 
   // Professional Information
   professionalInformation: {
-    parcoursEtDiplomes?: {
-      origine: "etranger" | "marocainPrive" | "marocainPublic";
-      intituleDiplome: string;
-      diplomeType: string;
-      anneeObtention: number;
-      specialite: string;
-      mention: string;
-      etablissement: string;
-      diplomePdf: string;
-    }[];
+    parcoursEtDiplomes?: ParcoursEtDiplomesTypes[];
     niveauxLangues?: {
       langue: string;
       niveau: "avance" | "basique" | "intermediare";
@@ -71,5 +62,18 @@ export interface CandidatureType {
       intitule: string;
       documentPdf?: string;
     };
+  };
+}
+
+export interface ParcoursEtDiplomesTypes {
+  origine: string;
+  intituleDiplome: string;
+  diplomeType: string;
+  anneeObtention: number;
+  specialite: string;
+  mention: string;
+  etablissement: string;
+  files: {
+    diplomePdf: File;
   };
 }

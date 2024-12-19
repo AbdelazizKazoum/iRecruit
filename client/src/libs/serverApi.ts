@@ -2,8 +2,8 @@ import { AxiosRequestHeaders } from "axios";
 import userApi from "./api";
 import { auth } from "./auth";
 
-const clientApi = userApi;
-clientApi.interceptors.request.use(
+const serverApi = userApi;
+serverApi.interceptors.request.use(
   async (config) => {
     const session = await auth();
 
@@ -20,4 +20,4 @@ clientApi.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default clientApi;
+export default serverApi;

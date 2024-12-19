@@ -15,7 +15,7 @@ type ResultType<T> = {
 
 import { UserType } from "@/types/user.types";
 import userApi from "@/libs/api";
-import serverApi from "../clientApi";
+import serverApi from "../serverApi";
 
 export async function getUserProfile(
   email: string

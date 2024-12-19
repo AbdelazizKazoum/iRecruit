@@ -1,5 +1,5 @@
-import { FileUploadService } from 'src/common/services/file-upload.service';
 /* eslint-disable prettier/prettier */
+import { FileUploadService } from 'src/common/services/file-upload.service';
 import {
   Controller,
   Get,
@@ -56,6 +56,21 @@ export class CandidatureController {
     const data = JSON.parse(diplomes);
 
     return await this.candidatureService.saveDiplomes(data, files, user);
+  }
+
+  // Save diplomes
+  @UseGuards(JwtAuthGuard)
+  @Post('niveaux-langues')
+  @UseInterceptors(FilesInterceptor('files')) // 'files' must match the form-data field name
+  async saveNiveauxLangues(
+    @UploadedFiles() files: any,
+    @Body('niveauxLangues') diplomes,
+    @Request() req, // Access the request object
+  ) {
+    const user = req.user; // Extract the user from the request
+    const data = JSON.parse(diplomes);
+
+    return await this.candidatureService.saveLanguages(data, files, user);
   }
 
   @Get()

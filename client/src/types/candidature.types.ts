@@ -34,11 +34,7 @@ export interface CandidatureType {
   // Professional Information
   professionalInformation: {
     parcoursEtDiplomes?: ParcoursEtDiplomesTypes[];
-    niveauxLangues?: {
-      langue: string;
-      niveau: "avance" | "basique" | "intermediare";
-      certificatLanguePdf?: string;
-    }[];
+    niveauxLangues?: NiveauxLanguesType[];
     experiencePedagogique?: {
       experiencePedagogiqueEnHeures: number;
     };
@@ -74,6 +70,14 @@ export interface ParcoursEtDiplomesTypes {
   mention: string;
   etablissement: string;
   files: {
-    diplomePdf: File;
+    diplomePdf: File | string;
+  };
+}
+
+export interface NiveauxLanguesType {
+  langue: string;
+  niveau: "avance" | "basique" | "intermediare";
+  files: {
+    certificatLanguePdf?: File | string;
   };
 }

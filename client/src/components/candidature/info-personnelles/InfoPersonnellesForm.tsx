@@ -8,13 +8,9 @@ import { useCandidatureStore } from "@/stores/candidature.store";
 
 const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, setPersonalInformation, submitPersonalInformation } =
-    useCandidatureStore();
+  const { candidatureData, submitPersonalInformation } = useCandidatureStore();
 
   async function onSubmit(data: any) {
-    console.log(data);
-    setPersonalInformation(data);
-
     // Create a new FormData instance
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'

@@ -76,40 +76,40 @@ export class CandidatureService {
   }
   // ----------------------------------------------------------------------------
 
-  //-------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
   // Save diplomes
   async saveDiplomes(data, files: any, user: any) {
-    // Check if a candidature already exists for the given user
-    const existingCandidature = await this.candidatureModel.findOne({
-      user: user._id,
-    });
-
-    if (!existingCandidature) {
-      throw new NotFoundException('Not found!');
-    }
-
-    // Define upload path dynamically
-    const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/diplomes`;
-    const allowedFormats = ['pdf']; // Define allowed formats
-
-    // Upload files and get their paths
-    const filePaths = await this.fileUploadService.uploadFiles(
-      files,
-      uploadPath,
-      allowedFormats,
-    );
-
-    // Update only the professionalInformation
-    existingCandidature.professionalInformation = {
-      ...existingCandidature.professionalInformation,
-      parcoursEtDiplomes: [
-        ...existingCandidature.professionalInformation.parcoursEtDiplomes,
-        { ...data, files: filePaths },
-      ],
-    };
-
-    // Save the updated candidature
     try {
+      // Check if a candidature already exists for the given user
+      const existingCandidature = await this.candidatureModel.findOne({
+        user: user._id,
+      });
+
+      if (!existingCandidature) {
+        throw new NotFoundException('Not found!');
+      }
+
+      // Define upload path dynamically
+      const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/diplomes`;
+      const allowedFormats = ['pdf']; // Define allowed formats
+
+      // Upload files and get their paths
+      const filePaths = await this.fileUploadService.uploadFiles(
+        files,
+        uploadPath,
+        allowedFormats,
+      );
+
+      // Update only the professionalInformation
+      existingCandidature.professionalInformation = {
+        ...existingCandidature.professionalInformation,
+        parcoursEtDiplomes: [
+          ...existingCandidature.professionalInformation.parcoursEtDiplomes,
+          { ...data, files: filePaths },
+        ],
+      };
+
+      // Save the updated candidature
       const savedCandidature = await existingCandidature.save(); // Make sure to await here
 
       return savedCandidature.professionalInformation.parcoursEtDiplomes;
@@ -118,6 +118,50 @@ export class CandidatureService {
       throw new InternalServerErrorException('Failed to save data');
     }
   }
+  //-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  // Save languages
+  async saveLanguages(data, files: any, user: any) {
+    try {
+      // Check if a candidature already exists for the given user
+      const existingCandidature = await this.candidatureModel.findOne({
+        user: user._id,
+      });
+
+      if (!existingCandidature) {
+        throw new NotFoundException('Not found!');
+      }
+
+      // Define upload path dynamically
+      const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/languages`;
+      const allowedFormats = ['pdf']; // Define allowed formats
+
+      // Upload files and get their paths
+      const filePaths = await this.fileUploadService.uploadFiles(
+        files,
+        uploadPath,
+        allowedFormats,
+      );
+
+      // Update only the professionalInformation
+      existingCandidature.professionalInformation = {
+        ...existingCandidature.professionalInformation,
+        niveauxLangues: [
+          ...existingCandidature.professionalInformation.niveauxLangues,
+          { ...data, files: filePaths },
+        ],
+      };
+
+      // Save the updated candidature
+      const savedCandidature = await existingCandidature.save(); // Make sure to await here
+
+      return savedCandidature.professionalInformation.niveauxLangues;
+    } catch (error) {
+      console.error('Error saving languages:', error);
+      throw new InternalServerErrorException('Failed to save data');
+    }
+  }
+  //-
 
   async findAll(): Promise<Candidature[]> {
     return this.candidatureModel.find().exec();

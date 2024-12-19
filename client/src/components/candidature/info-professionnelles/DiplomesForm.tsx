@@ -18,8 +18,6 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
     const { files, ...rest } = data; // Destructure to separate files from other data
     console.log("🚀 ~ onSubmit ~ rest:", rest);
 
-    // setDiplomes(data);
-
     formData.append("diplomes", JSON.stringify(rest));
 
     // Add files under the 'files' key

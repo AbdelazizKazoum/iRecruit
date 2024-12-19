@@ -1,3 +1,4 @@
+import { FileUploadService } from 'src/common/services/file-upload.service';
 /* eslint-disable prettier/prettier */
 import {
   Controller,
@@ -10,6 +11,7 @@ import {
   UploadedFiles,
   UseGuards,
   Request,
+  Response,
 } from '@nestjs/common';
 import { CandidatureService } from './candidature.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -17,7 +19,10 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 
 @Controller('candidature')
 export class CandidatureController {
-  constructor(private readonly candidatureService: CandidatureService) {}
+  constructor(
+    private readonly candidatureService: CandidatureService,
+    private readonly fileUploadService: FileUploadService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post('personal-informations')
@@ -63,6 +68,28 @@ export class CandidatureController {
   getCandidature(@Request() req) {
     const user = req.user;
     return this.candidatureService.findMyCandidature(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  /**
+   * Endpoint to download a file
+   * @param filePath - Path to the file on the server
+   * @param res - Express response object
+   */
+  @Post('files')
+  async sendFileToFrontend(
+    @Body() body: { filePath: string },
+    @Response() res,
+  ) {
+    const { filePath } = body;
+    try {
+      return res.sendFile(filePath, { root: '.' });
+    } catch (error) {
+      return res.status(500).json({
+        message: 'File not found or error occurred',
+        error: error.message,
+      });
+    }
   }
 
   // @Patch(':id')

@@ -20,6 +20,7 @@ import { cn } from "@/libs/utils";
 
 import { Download } from "lucide-react"; // Import the download icon
 import { toast } from "react-toastify";
+import { handleOpenFile } from "@/utils/handleOpenFile";
 
 const DynamicGridForm = ({
   category,
@@ -100,28 +101,6 @@ const DynamicGridForm = ({
       }
     });
   }, [config.fields, category, form.control, locale]);
-
-  // File open
-  const handleOpenFile = (value: any) => {
-    const fileData = Object.entries(value)[0][1];
-
-    if (fileData) {
-      if (fileData instanceof Blob) {
-        // If it's a Blob, create an object URL
-        const fileURL = URL.createObjectURL(fileData);
-        window.open(fileURL, "_blank");
-        // Optionally, revoke the object URL later to free memory
-        setTimeout(() => URL.revokeObjectURL(fileURL), 10000); // Adjust timeout as needed
-      } else if (typeof fileData === "string") {
-        // If it's already a URL
-        window.open(fileData, "_blank");
-      } else {
-        console.error("Unsupported file type");
-      }
-    } else {
-      console.error(`File not found for key: ${value}`);
-    }
-  };
 
   const addToList = (data: any) => {
     console.log("🚀 ~ addToList ~ data:", data);
@@ -212,7 +191,9 @@ const DynamicGridForm = ({
                                     <Button
                                       variant="outline"
                                       size="icon"
-                                      onClick={() => handleOpenFile(value)}
+                                      onClick={async () =>
+                                        await handleOpenFile(value)
+                                      }
                                     >
                                       <Download className="h-4 w-4 text-blue-500" />
                                     </Button>

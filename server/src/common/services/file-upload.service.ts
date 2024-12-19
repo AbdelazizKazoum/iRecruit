@@ -2,6 +2,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Readable } from 'stream';
 
 type UploadedFile = {
   originalname: string;
@@ -60,5 +61,22 @@ export class FileUploadService {
     }
 
     return uploadedFiles;
+  }
+
+  /**
+   * Retrieve a file from the server and prepare it for sending to the frontend.
+   * @param filePath - Path of the file on the server
+   * @returns A readable stream of the file
+   */
+  getFile(filePath: string): Readable {
+    const absolutePath = path.resolve(filePath);
+
+    // Validate file existence
+    if (!fs.existsSync(absolutePath)) {
+      throw new BadRequestException('File not found');
+    }
+
+    // Return readable file stream
+    return fs.createReadStream(absolutePath);
   }
 }

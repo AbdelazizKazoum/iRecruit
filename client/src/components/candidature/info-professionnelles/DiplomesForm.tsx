@@ -45,7 +45,9 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
         category="diplomes"
         schema={diplomesSchema}
         locale={locale}
-        data={[]}
+        data={
+          candidatureData?.professionalInformation?.parcoursEtDiplomes || []
+        }
         checkKey="diplomeType"
       />
     </div>

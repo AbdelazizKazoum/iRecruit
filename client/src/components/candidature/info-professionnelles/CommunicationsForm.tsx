@@ -16,6 +16,7 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
         schema={communicationsSchema}
         locale={locale}
         data={[]}
+        checkKey=""
       />
     </div>
   );

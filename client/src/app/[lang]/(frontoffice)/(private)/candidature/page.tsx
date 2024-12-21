@@ -31,7 +31,7 @@ const CandidateFormPage = async ({
           <aside className="">
             <CandidatureSidebar
               local={params.lang}
-              classname=""
+              className=""
               dictionary={dictionary}
             />
           </aside>

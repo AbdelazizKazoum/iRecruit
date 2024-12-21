@@ -73,6 +73,36 @@ export class CandidatureController {
     return await this.candidatureService.saveLanguages(data, files, user);
   }
 
+  // Save publications
+  @UseGuards(JwtAuthGuard)
+  @Post('publications')
+  @UseInterceptors(FilesInterceptor('files')) // 'files' must match the form-data field name
+  async savePublications(
+    @UploadedFiles() files: any,
+    @Body('publications') publications,
+    @Request() req, // Access the request object
+  ) {
+    const user = req.user; // Extract the user from the request
+    const data = JSON.parse(publications);
+
+    return await this.candidatureService.savePublications(data, files, user);
+  }
+
+  // Save communications
+  @UseGuards(JwtAuthGuard)
+  @Post('communications')
+  @UseInterceptors(FilesInterceptor('files')) // 'files' must match the form-data field name
+  async saveCommunication(
+    @UploadedFiles() files: any,
+    @Body('communication') communication,
+    @Request() req, // Access the request object
+  ) {
+    const user = req.user; // Extract the user from the request
+    const data = JSON.parse(communication);
+
+    return await this.candidatureService.saveCommunications(data, files, user);
+  }
+
   @Get()
   findAll() {
     return this.candidatureService.findAll();

@@ -161,7 +161,93 @@ export class CandidatureService {
       throw new InternalServerErrorException('Failed to save data');
     }
   }
-  //-
+  //----------------------------------------------------------------------------
+  // Save languages
+  async savePublications(data, files: any, user: any) {
+    try {
+      // Check if a candidature already exists for the given user
+      const existingCandidature = await this.candidatureModel.findOne({
+        user: user._id,
+      });
+
+      if (!existingCandidature) {
+        throw new NotFoundException('Not found!');
+      }
+
+      // Define upload path dynamically
+      const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/Publications`;
+      const allowedFormats = ['pdf']; // Define allowed formats
+
+      // Upload files and get their paths
+      const filePaths = await this.fileUploadService.uploadFiles(
+        files,
+        uploadPath,
+        allowedFormats,
+      );
+
+      // Update only the professionalInformation
+      existingCandidature.professionalInformation = {
+        ...existingCandidature.professionalInformation,
+        publications: [
+          ...existingCandidature.professionalInformation.publications,
+          { ...data, files: filePaths },
+        ],
+      };
+
+      // Save the updated candidature
+      const savedCandidature = await existingCandidature.save(); // Make sure to await here
+
+      return savedCandidature.professionalInformation.publications;
+    } catch (error) {
+      console.error('Error saving publications:', error);
+      throw new InternalServerErrorException('Failed to save data');
+    }
+  }
+  //----------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------
+  // Save languages
+  async saveCommunications(data, files: any, user: any) {
+    try {
+      // Check if a candidature already exists for the given user
+      const existingCandidature = await this.candidatureModel.findOne({
+        user: user._id,
+      });
+
+      if (!existingCandidature) {
+        throw new NotFoundException('Not found!');
+      }
+
+      // Define upload path dynamically
+      const uploadPath = `uploads/candidats/${existingCandidature.personalInformation.cin}/communications`;
+      const allowedFormats = ['pdf']; // Define allowed formats
+
+      // Upload files and get their paths
+      const filePaths = await this.fileUploadService.uploadFiles(
+        files,
+        uploadPath,
+        allowedFormats,
+      );
+
+      // Update only the communications
+      existingCandidature.professionalInformation = {
+        ...existingCandidature.professionalInformation,
+        communications: [
+          ...existingCandidature.professionalInformation.communications,
+          { ...data, files: filePaths },
+        ],
+      };
+
+      // Save the updated candidature
+      const savedCandidature = await existingCandidature.save(); // Make sure to await here
+
+      return savedCandidature.professionalInformation.communications;
+    } catch (error) {
+      console.error('Error saving communication:', error);
+      throw new InternalServerErrorException('Failed to save data');
+    }
+  }
+  //----------------------------------------------------------------------------
 
   async findAll(): Promise<Candidature[]> {
     return this.candidatureModel.find().exec();

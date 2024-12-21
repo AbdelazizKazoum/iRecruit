@@ -8,9 +8,7 @@ import React from "react";
 
 const DiplomesForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  // Hooks
   const { candidatureData, submitDiplome } = useCandidatureStore();
-  console.log("🚀 ~ DiplomesForm ~ candidatureData:", candidatureData);
 
   const onSubmit = async (data: ParcoursEtDiplomesTypes) => {
     const formData = new FormData();

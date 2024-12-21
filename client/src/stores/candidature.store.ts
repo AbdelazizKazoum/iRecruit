@@ -13,6 +13,7 @@ export interface CandidatureStoreState {
   ) => void;
   submitDiplome: (diplome: FormData) => Promise<void>;
   submitNiveauxLangues: (niveauxLangues: FormData) => Promise<void>;
+  submitPublications: (publications: FormData) => Promise<void>;
   submitPersonalInformation: (data: FormData) => Promise<void>;
   fetchCandidatureData: () => Promise<void>;
 }
@@ -162,6 +163,68 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
               professionalInformation: {
                 ...state.candidatureData.professionalInformation,
                 niveauxLangues: response.data,
+              },
+            }
+          : null,
+        loading: false,
+      }));
+      toast.success("Language levels submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting language levels:", error);
+      set({
+        loading: false,
+        error: "Failed to submit language levels. Please try again.",
+      });
+      toast.error("Failed to submit language levels. Please try again.");
+    }
+  },
+
+  // Submit Publications to database
+  submitPublications: async (publications: FormData) => {
+    set({ loading: true, error: "" });
+    try {
+      const response = await clientApi.post(
+        "candidature/publications",
+        publications
+      );
+      set((state) => ({
+        candidatureData: state.candidatureData
+          ? {
+              ...state.candidatureData,
+              professionalInformation: {
+                ...state.candidatureData.professionalInformation,
+                publications: response.data,
+              },
+            }
+          : null,
+        loading: false,
+      }));
+      toast.success("Language levels submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting language levels:", error);
+      set({
+        loading: false,
+        error: "Failed to submit language levels. Please try again.",
+      });
+      toast.error("Failed to submit language levels. Please try again.");
+    }
+  },
+
+  // Submit Publications to database
+  submitCommunication: async (communication: FormData) => {
+    set({ loading: true, error: "" });
+    try {
+      const response = await clientApi.post(
+        "candidature/communication",
+        communication
+      );
+      set((state) => ({
+        candidatureData: state.candidatureData
+          ? {
+              ...state.candidatureData,
+              professionalInformation: {
+                ...state.candidatureData.professionalInformation,
+                communications: response.data,
               },
             }
           : null,

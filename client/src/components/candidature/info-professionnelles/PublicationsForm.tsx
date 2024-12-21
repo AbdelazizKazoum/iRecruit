@@ -2,10 +2,34 @@
 import DynamicGridForm from "@/components/dynamic-form/DynamicGridForm";
 import { Locale } from "@/configs/i18n";
 import { publicationsSchema } from "@/schemas/publications.schema";
+import { useCandidatureStore } from "@/stores/candidature.store";
+import { PublicationsType } from "@/types/candidature.types";
 import React from "react";
 
 const PublicationsForm = ({ locale }: { locale: Locale }) => {
-  const onSubmit = (data: any) => {
+  // Hooks
+  const { candidatureData, submitPublications } = useCandidatureStore();
+
+  const onSubmit = async (data: PublicationsType) => {
+    const formData = new FormData();
+    // Add the rest of the data as a JSON string under the key 'data'
+    const { files, ...rest } = data; // Destructure to separate files from other data
+    console.log("🚀 ~ onSubmit ~ rest:", rest);
+
+    formData.append("publications", JSON.stringify(rest));
+
+    // Add files under the 'files' key
+    if (files) {
+      Object.entries(files).map((item) => {
+        const file = item[1] as File;
+        const key = item[0] + "-" + rest.titre + `.${file.name.split(".")[1]}`;
+
+        formData.append("files", file, key);
+      });
+    }
+
+    submitPublications(formData);
+
     console.log(data);
   };
   return (
@@ -15,8 +39,8 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
         category="publications"
         schema={publicationsSchema}
         locale={locale}
-        data={[]}
-        checkKey=""
+        data={candidatureData?.professionalInformation.publications}
+        checkKey="titre"
       />
     </div>
   );

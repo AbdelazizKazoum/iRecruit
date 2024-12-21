@@ -38,19 +38,8 @@ export interface CandidatureType {
     experiencePedagogique?: {
       experiencePedagogiqueEnHeures: number;
     };
-    publications?: {
-      titre: string;
-      anneePublication: number;
-      type: string;
-      url: string;
-      publicationPdf: string;
-    }[];
-    communications?: {
-      titre: string;
-      anneeCommunication: number;
-      url: string;
-      communicationPdf: string;
-    }[];
+    publications?: PublicationsType[];
+
     residanat?: {
       residanatPdf?: string;
     };
@@ -80,4 +69,21 @@ export interface NiveauxLanguesType {
   files: {
     certificatLanguePdf?: File | string;
   };
+}
+
+export interface PublicationsType {
+  titre: string;
+  anneePublication: number;
+  type: string;
+  url: string;
+  files: {
+    publicationPdf?: File | string;
+  };
+}
+
+export interface communications {
+  titre: string;
+  anneeCommunication: number;
+  url: string;
+  files: { communicationPdf: string };
 }

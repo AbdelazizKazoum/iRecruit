@@ -31,7 +31,7 @@ const steps = [
 ];
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  classname: string;
+  className: string;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   local: Locale;
 }

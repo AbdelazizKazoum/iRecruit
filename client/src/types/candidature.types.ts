@@ -39,6 +39,7 @@ export interface CandidatureType {
       experiencePedagogiqueEnHeures: number;
     };
     publications?: PublicationsType[];
+    communications?: communicationsType[];
 
     residanat?: {
       residanatPdf?: string;
@@ -81,9 +82,9 @@ export interface PublicationsType {
   };
 }
 
-export interface communications {
+export interface communicationsType {
   titre: string;
   anneeCommunication: number;
   url: string;
-  files: { communicationPdf: string };
+  files: { communicationPdf: File | string };
 }

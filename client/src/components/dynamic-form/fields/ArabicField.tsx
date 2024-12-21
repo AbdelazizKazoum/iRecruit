@@ -20,7 +20,11 @@ interface TextInputProps {
   locale: Locale;
 }
 
-const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
+const ArabicField: React.FC<TextInputProps> = ({
+  fieldConfig,
+  locale,
+  field,
+}) => {
   const { watch } = useFormContext();
 
   const dependsOn = watch(fieldConfig.dependsOn);
@@ -38,7 +42,11 @@ const ArabicField: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
               className={cn(error && "border-destructive ")}
               // defaultValue={value}
             /> */}
-            <ArabicKeyboard fieldConfig={fieldConfig} />
+            <ArabicKeyboard
+              fieldConfig={fieldConfig}
+              field={field}
+              locale={locale}
+            />
           </FormControl>
           {/* <FormDescription>{fieldConfig.description}</FormDescription> */}
           <FormMessage />

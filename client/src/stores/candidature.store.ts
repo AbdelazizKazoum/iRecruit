@@ -14,6 +14,7 @@ export interface CandidatureStoreState {
   submitDiplome: (diplome: FormData) => Promise<void>;
   submitNiveauxLangues: (niveauxLangues: FormData) => Promise<void>;
   submitPublications: (publications: FormData) => Promise<void>;
+  submitCommunication: (communication: FormData) => Promise<void>;
   submitPersonalInformation: (data: FormData) => Promise<void>;
   fetchCandidatureData: () => Promise<void>;
 }
@@ -215,7 +216,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
     set({ loading: true, error: "" });
     try {
       const response = await clientApi.post(
-        "candidature/communication",
+        "candidature/communications",
         communication
       );
       set((state) => ({

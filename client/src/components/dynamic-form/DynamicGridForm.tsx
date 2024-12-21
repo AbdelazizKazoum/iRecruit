@@ -178,13 +178,13 @@ const DynamicGridForm = ({
                         {Object.entries(entry).map(([key, value], i) => (
                           <>
                             {key === "files" && typeof value === "object" ? (
-                              Object.keys(value).map((fileKey) => (
+                              Object.entries(value).map((fileKey) => (
                                 <td
                                   key={i}
                                   className="border border-gray-300 px-4 py-2 text-center"
                                 >
                                   <div
-                                    key={fileKey}
+                                    key={fileKey[0]}
                                     className="flex items-center justify-center"
                                   >
                                     {/* <span className="mr-2">{fileKey}</span> */}
@@ -192,7 +192,7 @@ const DynamicGridForm = ({
                                       variant="outline"
                                       size="icon"
                                       onClick={async () =>
-                                        await handleOpenFile(value)
+                                        await handleOpenFile(fileKey[1])
                                       }
                                     >
                                       <Download className="h-4 w-4 text-blue-500" />

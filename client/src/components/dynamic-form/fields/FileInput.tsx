@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
+import { downloadFile } from "@/utils/downloadFile";
 import { CheckCircleIcon, UploadIcon } from "lucide-react";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
@@ -23,10 +24,16 @@ interface TextInputProps {
   locale: Locale;
 }
 
-const FileInput: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
+const FileInput: React.FC<TextInputProps> = ({
+  fieldConfig,
+  locale,
+  field,
+}) => {
   const [fileName, setFileName] = React.useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const { watch, setValue } = useFormContext();
+
   const { error } = useFormField();
 
   const dependsOn = watch(fieldConfig.dependsOn);
@@ -37,6 +44,22 @@ const FileInput: React.FC<TextInputProps> = ({ fieldConfig, locale }) => {
 
     setFileName(file ? file.name : null);
   };
+
+  useEffect(() => {
+    if (typeof field.value === "string") {
+      (async () => {
+        const file = await downloadFile(field.value);
+        console.log("🚀 use effet ~ file:", file);
+
+        setFileName(field.value.split("\\").pop());
+        setValue(field.name, file);
+      })();
+    }
+
+    setLoading(false);
+  }, [field.value, field.name, setValue]);
+
+  if (loading) return <> Loading ...</>;
 
   return (
     <>

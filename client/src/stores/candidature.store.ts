@@ -20,46 +20,7 @@ export interface CandidatureStoreState {
 }
 
 export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
-  candidatureData: {
-    personalInformation: {
-      prenom: "",
-      prenomAr: "",
-      nom: "",
-      nomAr: "",
-      adresse: "",
-      adresseAr: "",
-      lieuNaissance: "",
-      cin: "",
-      dateNaissance: new Date(),
-      sexe: "feminin",
-      situation: "celibataire",
-      telephone: "",
-      email: "",
-      experiences: {
-        fonctionnaire: false,
-        fonction: "",
-        ppr: "",
-        attestation: "",
-      },
-      situationDeHandicap: {
-        handicap: false,
-        typeHandicap: "",
-      },
-      files: null,
-    },
-    professionalInformation: {
-      parcoursEtDiplomes: [],
-      niveauxLangues: [],
-      experiencePedagogique: {
-        experiencePedagogiqueEnHeures: 0,
-      },
-      publications: [],
-      communications: [],
-      residanat: {
-        residanatPdf: "",
-      },
-    },
-  },
+  candidatureData: null,
   loading: false,
   error: "",
 

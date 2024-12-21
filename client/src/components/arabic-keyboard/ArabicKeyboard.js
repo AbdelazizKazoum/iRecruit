@@ -6,7 +6,6 @@ import "react-simple-keyboard/build/css/index.css";
 import { useFormContext } from "react-hook-form";
 
 function ArabicKeyboard({ fieldConfig, field, locale }) {
-  console.log("🚀 ~ ArabicKeyboard ~ field:", field);
   const [input, setInput] = useState(field.value ?? "");
   const [layout, setLayout] = useState("default");
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // Track keyboard visibility

@@ -11,6 +11,7 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
   const { candidatureData, submitPersonalInformation } = useCandidatureStore();
 
   async function onSubmit(data: any) {
+    console.log("🚀 ~ onSubmit ~ data:", data);
     // Create a new FormData instance
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'
@@ -21,9 +22,12 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
     if (files) {
       Object.entries(files).map((item) => {
         const file = item[1] as File;
-        const key = item[0] + `.${file.name.split(".")[1]}`;
+        if (item[1]) {
+          const key =
+            item[0] + `.${file.name ? file.name.split(".")[1] : "pdf"}` || "";
 
-        formData.append("files", file, key);
+          formData.append("files", file, key);
+        }
       });
     }
 

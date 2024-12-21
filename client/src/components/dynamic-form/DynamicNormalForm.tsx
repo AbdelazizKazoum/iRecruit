@@ -31,6 +31,8 @@ const DynamicNormalForm = ({
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
+  console.log("🚀 ~ form:", form.formState.errors);
+
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
       if (fieldConfig.type === "group") {

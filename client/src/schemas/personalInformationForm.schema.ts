@@ -63,7 +63,7 @@ export const personalInformationSchema: z.ZodSchema<CandidateForm> = z
 
     // Group experiences
     experiences: z.object({
-      fonctionnaire: z.boolean().optional(),
+      fonctionnaire: z.boolean(),
       fonction: z.string().optional(),
       ppr: z.string().optional(),
     }),
@@ -80,54 +80,42 @@ export const personalInformationSchema: z.ZodSchema<CandidateForm> = z
     // Group files
     files: z.object({
       attestation: z
-        .instanceof(File) // Ensure it's a File object
+        .union([z.instanceof(File), z.instanceof(Blob)]) // Accept either File or Blob
         .refine((file) => file.size <= 5 * 1024 * 1024, {
           message: "File must be less than 5MB",
         })
-        .refine(
-          (file) =>
-            [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
-              file.type
-            ),
-          { message: "Only PDF files are allowed" }
-        ),
+        .refine((file) => ["application/pdf"].includes(file.type), {
+          message: "Only PDF files are allowed",
+        })
+        .optional(),
 
       cinPdf: z
-        .instanceof(File) // Ensure it's a File object
+        .union([z.instanceof(File), z.instanceof(Blob)]) // Accept either File or Blob
         .refine((file) => file.size <= 5 * 1024 * 1024, {
           message: "File must be less than 5MB",
         })
-        .refine(
-          (file) =>
-            [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
-              file.type
-            ),
-          { message: "Only PDF files are allowed" }
-        ),
+        .refine((file) => ["application/pdf"].includes(file.type), {
+          message: "Only PDF files are allowed",
+        }),
+
       bacPdf: z
-        .instanceof(File) // Ensure it's a File object
+        .union([z.instanceof(File), z.instanceof(Blob)]) // Accept either File or Blob
         .refine((file) => file.size <= 5 * 1024 * 1024, {
           message: "File must be less than 5MB",
         })
-        .refine(
-          (file) =>
-            [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
-              file.type
-            ),
-          { message: "Only PDF files are allowed" }
-        ),
+        .refine((file) => ["application/pdf"].includes(file.type), {
+          message: "Only PDF files are allowed",
+        }),
+
       cvPdf: z
-        .instanceof(File) // Ensure it's a File object
+        .union([z.instanceof(File), z.instanceof(Blob)]) // Accept either File or Blob
         .refine((file) => file.size <= 5 * 1024 * 1024, {
           message: "File must be less than 5MB",
         })
-        .refine(
-          (file) =>
-            [/*"image/jpeg", "image/png", */ "application/pdf"].includes(
-              file.type
-            ),
-          { message: "Only PDF files are allowed" }
-        ),
+        .refine((file) => ["application/pdf"].includes(file.type), {
+          message: "Only PDF files are allowed",
+        }),
+
       typeHandicap: z.string().optional(),
     }),
   })

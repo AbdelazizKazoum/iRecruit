@@ -209,6 +209,7 @@ export const personalInformationsConfig = {
     {
       type: "group",
       name: "experiences",
+      open: true,
       title: {
         en: "Do you have work experience?",
         fr: "Avez-vous une expérience professionnelle ?",

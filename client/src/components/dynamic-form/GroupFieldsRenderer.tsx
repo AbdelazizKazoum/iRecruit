@@ -33,12 +33,18 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   control,
 }) => {
   const {
+    formState,
     formState: { errors },
   } = useFormContext();
 
   return (
     <>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={formState.defaultValues && fieldConfig.name}
+        className="w-full"
+      >
         <AccordionItem
           value={fieldConfig.name}
           className={errors[fieldConfig.name] && "border-destructive"}

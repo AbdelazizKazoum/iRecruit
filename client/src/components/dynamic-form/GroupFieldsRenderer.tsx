@@ -23,21 +23,28 @@ interface GroupFieldRendererProps {
   // ) => void;
   category: string;
   locale: Locale;
+  control: any;
 }
 
 const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
   fieldConfig,
   // error,
   locale,
+  control,
 }) => {
   const {
-    control,
+    formState,
     formState: { errors },
   } = useFormContext();
 
   return (
     <>
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue={formState.defaultValues && fieldConfig.name}
+        className="w-full"
+      >
         <AccordionItem
           value={fieldConfig.name}
           className={errors[fieldConfig.name] && "border-destructive"}
@@ -61,8 +68,6 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
                     fieldConfig={fieldGroup}
                     field={field}
                     locale={locale}
-                    // value={formData[category]?.[fieldGroup.name] || ""}
-                    // onChange={handleFieldChange}
                   />
                 )}
               />

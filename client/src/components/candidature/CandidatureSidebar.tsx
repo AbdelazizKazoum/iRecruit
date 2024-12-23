@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { BriefcaseBusiness, Users } from "lucide-react";
 import { Locale } from "@/configs/i18n";
 import { getDictionary } from "@/utils/getDictionary";
+import { useCandidatureStore } from "@/stores/candidature.store";
 
 const steps = [
   {
@@ -31,7 +32,7 @@ const steps = [
 ];
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  classname: string;
+  className: string;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   local: Locale;
 }
@@ -47,6 +48,8 @@ export function CandidatureSidebar({
   const fullPathWithQuery = `${pathname}?${
     searchParams.toString() || "section=info-personnelles"
   }`;
+
+  const { candidatureData } = useCandidatureStore();
 
   return (
     <nav
@@ -70,7 +73,13 @@ export function CandidatureSidebar({
             className={cn(
               "flex items-center justify-center min-w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
               fullPathWithQuery === `/${local}${item.href}` &&
-                "text-white-500 bg-primary  "
+                "text-white-500 bg-primary  ",
+              candidatureData?.personalInformation?.valid &&
+                item.href === "/candidature?section=info-personnelles" &&
+                "text-white-500 bg-green-500 ",
+              candidatureData?.professionalInformation?.valid &&
+                item.href === "/candidature?section=info-professionnelles" &&
+                "text-white-500 bg-green-500 "
             )}
           >
             {item.icon}
@@ -79,7 +88,14 @@ export function CandidatureSidebar({
             className={cn(
               "text-muted-foreground",
               fullPathWithQuery === `/${local}${item.href}` &&
-                "text-black-600/80"
+                "text-black-600/80",
+
+              candidatureData?.personalInformation?.valid &&
+                item.href === "/candidature?section=info-personnelles" &&
+                "text-green-500",
+              candidatureData?.professionalInformation?.valid &&
+                item.href === "/candidature?section=info-professionnelles" &&
+                "text-green-500"
             )}
           >
             {item.title[local]}

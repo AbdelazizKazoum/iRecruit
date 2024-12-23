@@ -31,11 +31,15 @@ const CandidateFormPage = async ({
           <aside className="">
             <CandidatureSidebar
               local={params.lang}
-              classname=""
+              className=""
               dictionary={dictionary}
             />
           </aside>
-          <CandidatureApplication section={section} local={params.lang} />
+          <CandidatureApplication
+            section={section}
+            locale={params.lang}
+            dictionary={dictionary}
+          />
         </div>
       </div>
     </div>

@@ -95,8 +95,14 @@ export const infoProfessionnellesValidationSchema = z
     // Communications Section
     communications: z
       .object({
-        titre: z.string().optional(),
-        anneeCommunication: z.string().optional(),
+        titre: z.string(),
+        anneeCommunication: z
+          .string()
+          .regex(/^\d{4}$/, "Veuillez fournir une année valide (ex : 2020).")
+          .refine(
+            (year) => parseInt(year) <= new Date().getFullYear(),
+            "L'année ne peut pas être dans le futur."
+          ),
         url: z
           .string()
           .optional()

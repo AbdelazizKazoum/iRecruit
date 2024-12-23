@@ -15,12 +15,13 @@ type ResultType<T> = {
 
 import { UserType } from "@/types/user.types";
 import userApi from "@/libs/api";
+import serverApi from "../serverApi";
 
 export async function getUserProfile(
   email: string
 ): Promise<ResultType<UserType>> {
   try {
-    const { data } = await userApi.get(`/users/email/${email}`);
+    const { data } = await serverApi.get(`/users/email/${email}`);
     return {
       data,
       success: true,

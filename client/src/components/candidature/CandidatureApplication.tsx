@@ -1,32 +1,37 @@
 "use client";
-import React from "react";
-import DynamicNormalForm from "../dynamic-form/DynamicNormalForm";
-import { candidateFormSchema } from "@/schemas/candidateFormSchema";
-import { infoProfessionnellesValidationSchema } from "@/schemas/infoProfessionnellesValidationSchema";
+import React, { useEffect, useState } from "react";
 import { Locale } from "@/configs/i18n";
+import InfoProfessionnelles from "./info-professionnelles/Index";
+import InfoPersonnelles from "./info-personnelles/InfoPersonnellesForm";
+import { useCandidatureStore } from "@/stores/candidature.store";
+import { getDictionary } from "@/utils/getDictionary";
 
 export const CandidatureApplication = ({
   section,
-  local,
+  locale,
+  dictionary,
 }: {
   section: string;
-  local: Locale;
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {
+  const { fetchCandidatureData } = useCandidatureStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      await fetchCandidatureData();
+      setLoading(false);
+    })();
+  }, [fetchCandidatureData]);
+
+  if (loading) return <>loading ...</>;
+
   return (
-    <main className="flex-1 ">
-      {section === "info-personnelles" && (
-        <DynamicNormalForm
-          category="candidate"
-          schema={candidateFormSchema}
-          local={local}
-        />
-      )}
+    <main className="flex-1">
+      {section === "info-personnelles" && <InfoPersonnelles locale={locale} />}
       {section === "info-professionnelles" && (
-        <DynamicNormalForm
-          category="info-professionnelles"
-          schema={infoProfessionnellesValidationSchema}
-          local={local}
-        />
+        <InfoProfessionnelles locale={locale} dictionary={dictionary} />
       )}
     </main>
   );

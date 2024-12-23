@@ -103,6 +103,13 @@ export class CandidatureController {
     return await this.candidatureService.saveCommunications(data, files, user);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('validate')
+  validateCandidature(@Request() req) {
+    const user = req.user;
+    return this.candidatureService.validateCandidature(user);
+  }
+
   @Get()
   findAll() {
     return this.candidatureService.findAll();

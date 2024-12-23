@@ -4,9 +4,10 @@
     "submit": "Soumettre",
     "cancel": "Annuler",
     "send": "Envoyer",
-    "apply": "Postuler",
+    "apply": "Appliquer",
     "details": "Détails",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "validate": "Valider"
   },
   "status": {
     "draft": "Brouillon",

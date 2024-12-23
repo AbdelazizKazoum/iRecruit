@@ -6,7 +6,8 @@
     "send": "Send",
     "apply": "Apply",
     "details": "Details",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "validate": "Validate"
   },
   "status": {
     "draft": "Draft",

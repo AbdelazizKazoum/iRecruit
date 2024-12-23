@@ -13,6 +13,7 @@ export class Candidature {
   // Personal Information
   @Prop({ type: Object, required: true })
   personalInformation: {
+    valid?: boolean;
     prenom: string;
     prenomAr: string;
     nom: string;
@@ -44,6 +45,8 @@ export class Candidature {
   // Professional Information
   @Prop({ type: Object })
   professionalInformation: {
+    valid?: boolean;
+
     parcoursEtDiplomes?: {
       origine: 'etranger' | 'marocainPrive' | 'marocainPublic';
       intituleDiplome: string;

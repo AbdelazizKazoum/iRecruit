@@ -17,6 +17,7 @@ export interface CandidatureStoreState {
   submitCommunication: (communication: FormData) => Promise<void>;
   submitPersonalInformation: (data: FormData) => Promise<void>;
   fetchCandidatureData: () => Promise<void>;
+  validateCandidature: () => Promise<void>; // New validation method
 }
 
 export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
@@ -200,6 +201,24 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit language levels. Please try again.",
       });
       toast.error("Failed to submit language levels. Please try again.");
+    }
+  },
+
+  // Validate the candidature
+  validateCandidature: async () => {
+    try {
+      const response = await clientApi.get("/candidature/validate");
+      const candidature = response.data as CandidatureType;
+      set({
+        candidatureData: candidature,
+      });
+      toast.success("La candidature a été validée avec succès.");
+    } catch (error) {
+      console.error("Error validating candidature:", error);
+      set({
+        error: "Failed to validate candidature. Please try again.",
+      });
+      toast.error("Failed to validate candidature. Please try again.");
     }
   },
 }));

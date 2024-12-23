@@ -3,6 +3,7 @@
 export interface CandidatureType {
   // Personal Information
   personalInformation: {
+    valid: boolean;
     prenom: string;
     prenomAr: string;
     nom: string;
@@ -33,6 +34,7 @@ export interface CandidatureType {
 
   // Professional Information
   professionalInformation: {
+    valid: boolean;
     parcoursEtDiplomes?: ParcoursEtDiplomesTypes[];
     niveauxLangues?: NiveauxLanguesType[];
     experiencePedagogique?: {

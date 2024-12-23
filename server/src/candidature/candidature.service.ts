@@ -46,6 +46,7 @@ export class CandidatureService {
     if (existingCandidature) {
       // Update only the personalInformation field and preserve professionalInformation
       existingCandidature.personalInformation = {
+        valid: true,
         ...personalInformationDto,
         files: filePaths,
       };
@@ -58,10 +59,12 @@ export class CandidatureService {
     const newCandidature = new this.candidatureModel({
       user: user._id, // Associate with the user
       personalInformation: {
+        valid: true,
         ...personalInformationDto,
         files: filePaths,
       },
       professionalInformation: {
+        valid: false,
         parcoursEtDiplomes: [],
         niveauxLangues: [],
         experiencePedagogique: [],
@@ -256,6 +259,24 @@ export class CandidatureService {
   async findMyCandidature(user): Promise<Candidature> {
     try {
       return await this.candidatureModel.findOne({ user: user._id }).exec();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  async validateCandidature(user): Promise<Candidature> {
+    try {
+      // Update the candidature's professionalInformation field
+      const updatedCandidature = await this.candidatureModel.findOneAndUpdate(
+        { user: user._id }, // Match by user._id instead of _id
+        { $set: { 'professionalInformation.valid': true } }, // Update professionalInformation.valid
+        { new: true, runValidators: true }, // Return the updated document
+      );
+
+      if (!updatedCandidature) {
+        throw new NotFoundException('Candidature or Language not found');
+      }
+      return updatedCandidature;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

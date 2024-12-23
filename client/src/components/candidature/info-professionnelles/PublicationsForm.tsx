@@ -39,7 +39,7 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
         category="publications"
         schema={publicationsSchema}
         locale={locale}
-        data={candidatureData?.professionalInformation.publications}
+        data={candidatureData?.professionalInformation?.publications || []}
         checkKey="titre"
       />
     </div>

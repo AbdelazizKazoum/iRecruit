@@ -40,7 +40,7 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
         category="communications"
         schema={communicationsSchema}
         locale={locale}
-        data={candidatureData?.professionalInformation.communications}
+        data={candidatureData?.professionalInformation?.communications || []}
         checkKey="titre"
       />
     </div>

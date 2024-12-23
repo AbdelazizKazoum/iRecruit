@@ -1,4 +1,25 @@
 {
+  "buttons": {
+    "save": "Enregistrer",
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "send": "Envoyer",
+    "apply": "Appliquer",
+    "details": "Détails",
+    "loading": "Chargement...",
+    "validate": "Valider"
+  },
+  "status": {
+    "draft": "Brouillon",
+    "submitted": "Soumis",
+    "accepted": "Accepté",
+    "rejected": "Rejeté"
+  },
+  "notifications": {
+    "success": "La candidature a été enregistrée avec succès.",
+    "error": "Une erreur s'est produite lors du traitement de la candidature."
+  },
+
   "menu": {
     "home": "Accueil",
     "concours": "Annonces de Concours",
@@ -58,21 +79,6 @@
       "experience": "Expériences",
       "skills": "Compétences",
       "applications": "Candidatures Soumises"
-    },
-    "actions": {
-      "save": "Enregistrer",
-      "submit": "Soumettre",
-      "cancel": "Annuler"
-    },
-    "status": {
-      "draft": "Brouillon",
-      "submitted": "Soumis",
-      "accepted": "Accepté",
-      "rejected": "Rejeté"
-    },
-    "notifications": {
-      "success": "La candidature a été enregistrée avec succès.",
-      "error": "Une erreur s'est produite lors du traitement de la candidature."
     }
   },
   "footer": {

@@ -1,4 +1,5 @@
+/* eslint-disable prettier/prettier */
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateCandidatureDto } from './create-candidature.dto';
+import { PersonalInformationDto } from './create-candidature.dto';
 
-export class UpdateCandidatureDto extends PartialType(CreateCandidatureDto) {}
+export class UpdateCandidatureDto extends PartialType(PersonalInformationDto) {}

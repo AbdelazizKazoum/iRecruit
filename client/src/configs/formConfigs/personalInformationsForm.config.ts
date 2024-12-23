@@ -1,4 +1,4 @@
-export const candidateFormConfig = {
+export const personalInformationsConfig = {
   category: "candidate",
   title: {
     en: "Application",
@@ -209,6 +209,7 @@ export const candidateFormConfig = {
     {
       type: "group",
       name: "experiences",
+      open: true,
       title: {
         en: "Do you have work experience?",
         fr: "Avez-vous une expérience professionnelle ?",
@@ -260,8 +261,8 @@ export const candidateFormConfig = {
           dependsOn: "experiences.fonctionnaire",
         },
         {
-          type: "text",
-          name: "experiences.attestation",
+          type: "file",
+          name: "files.attestation",
           label: {
             en: "Work certificate (PDF, max 10MB) *",
             fr: "Attestation de travail (Pdf, max 10 Mo) *",
@@ -337,7 +338,7 @@ export const candidateFormConfig = {
 
     {
       type: "file",
-      name: "cinPdf",
+      name: "files.cinPdf",
       label: {
         en: "CIN (PDF, Max 10MB) *",
         fr: "CIN (Pdf, Max 10Mo) *",
@@ -346,7 +347,7 @@ export const candidateFormConfig = {
     },
     {
       type: "file",
-      name: "bacPdf",
+      name: "files.bacPdf",
       label: {
         en: "High School Diploma (PDF, Max 10MB) *",
         fr: "Bac (Pdf, Max 10Mo) *",
@@ -355,7 +356,7 @@ export const candidateFormConfig = {
     },
     {
       type: "file",
-      name: "cvPdf",
+      name: "files.cvPdf",
       label: {
         en: "CV (PDF, Max 10MB) *",
         fr: "CV (Pdf, Max 10Mo) *",

@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import "react-simple-keyboard/build/css/index.css";
 import { useFormContext } from "react-hook-form";
 
-function ArabicKeyboard({ fieldConfig }) {
-  const [input, setInput] = useState("");
+function ArabicKeyboard({ fieldConfig, field, locale }) {
+  const [input, setInput] = useState(field.value ?? "");
   const [layout, setLayout] = useState("default");
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // Track keyboard visibility
   const keyboard = useRef();
@@ -142,7 +142,7 @@ function ArabicKeyboard({ fieldConfig }) {
         name={fieldConfig.name || null}
         ref={inputRef} // Attach the ref to the input
         value={input}
-        placeholder={"Type in Arabic or use the virtual keyboard"}
+        placeholder={fieldConfig.placeholder && fieldConfig.placeholder[locale]}
         onChange={onChangeInput}
         onKeyDown={onKeyDown} // Attach onKeyDown listener
         onFocus={handleFocus} // Show keyboard when input is focused

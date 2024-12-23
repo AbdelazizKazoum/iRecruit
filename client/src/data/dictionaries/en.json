@@ -1,4 +1,25 @@
 {
+  "buttons": {
+    "save": "Save",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "send": "Send",
+    "apply": "Apply",
+    "details": "Details",
+    "loading": "Loading...",
+    "validate": "Validate"
+  },
+  "status": {
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "accepted": "Accepted",
+    "rejected": "Rejected"
+  },
+  "notifications": {
+    "success": "The application has been successfully saved.",
+    "error": "An error occurred while processing the application."
+  },
+
   "menu": {
     "home": "Home",
     "concours": "Job Announcements",

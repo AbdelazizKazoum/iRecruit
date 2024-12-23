@@ -178,7 +178,7 @@ const DynamicGridForm = ({
                         {Object.entries(entry).map(([key, value], i) => (
                           <>
                             {key === "files" && typeof value === "object" ? (
-                              Object.entries(value).map((fileKey) => (
+                              Object.entries(value || {}).map((fileKey) => (
                                 <td
                                   key={i}
                                   className="border border-gray-300 px-4 py-2 text-center"

@@ -22,41 +22,7 @@ const JobOfferPosting = async ({
           description={dictionary["candidature"].description}
         />
         <Separator className="my-6" />
-
         <Index />
-
-        {
-          <>
-            <div className="container mx-auto p-6 ">
-              {/* Attachments Card */}
-
-              {/* Personal Information Card */}
-
-              {/* Professional Information Card */}
-              <div className="bg-white shadow-md rounded-lg">
-                <div className="bg-gray-200 p-4 rounded-t-lg">
-                  <h2 className="text-lg font-semibold">
-                    Informations Professionnelles
-                  </h2>
-                </div>
-                <div className="p-6 grid grid-cols-2 gap-4">
-                  <p>
-                    <strong>Poste Actuel:</strong> Développeur Web
-                  </p>
-                  <p>
-                    <strong>Expérience:</strong> 3 ans
-                  </p>
-                  <p>
-                    <strong>Dernier Employeur:</strong> XYZ Tech
-                  </p>
-                  <p>
-                    <strong>Niveau d'Études:</strong> Bac+5
-                  </p>
-                </div>
-              </div>
-            </div>
-          </>
-        }
       </div>
     </div>
   );

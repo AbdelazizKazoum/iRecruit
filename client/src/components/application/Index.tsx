@@ -1,14 +1,13 @@
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 "use client";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import { defineStepper } from "@stepperize/react";
-import { JobDescription } from "./JobDescription";
 import Attachment from "./Attachment";
 import VerifyInformation from "./VerifyInformation";
+import JobOfferPage from "./JobDescription";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -82,12 +81,12 @@ function Index() {
       </nav>
       <div className="container mx-auto p-6 ">
         {stepper.switch({
-          description: () => <JobDescription />,
+          description: () => <JobOfferPage />,
           attachment: () => <Attachment />,
           verification: () => <VerifyInformation />,
         })}
         {!stepper.isLast ? (
-          <div className="flex justify-end gap-4">
+          <div className="flex justify-end gap-4 mt-10 ">
             <Button
               variant="secondary"
               onClick={stepper.prev}

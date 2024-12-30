@@ -1,6 +1,5 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/form/DynamicForm.tsx
 
 import { formConfigFactory } from "../../utils/formConfigFactory";
 import FieldRenderer from "./FieldRenderer";
@@ -12,6 +11,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { memo, useMemo } from "react";
 import { Locale } from "@/configs/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
+import "./DynamicNormalForm.css"; // Import CSS file for styles
 
 const DynamicNormalForm = ({
   category,
@@ -19,19 +19,21 @@ const DynamicNormalForm = ({
   locale,
   onSubmit,
   defaultValues,
+  mode,
 }: {
   category: string;
   schema: any;
   locale: Locale;
   onSubmit: (data: any) => void;
   defaultValues: any;
+  mode: string;
 }) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
-  console.log("🚀 ~ form:", form.formState.errors);
+  console.log("\ud83d\ude80 ~ form:", form.formState.errors);
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -69,19 +71,30 @@ const DynamicNormalForm = ({
     <div className="space-y-6">
       <FormProvider {...form}>
         <Form {...form}>
-          <form className="space-y-2" onSubmit={form.handleSubmit(onSubmit)}>
+          {/* Apply readonly styles dynamically */}
+          <form
+            className={`space-y-2 ${mode === "readonly" ? "readonly" : ""}`}
+            onSubmit={
+              mode === "readonly"
+                ? (e) => e.preventDefault()
+                : form.handleSubmit(onSubmit)
+            }
+          >
             <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
-            <Button
-              size="lg"
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              style={{ marginTop: "15px" }}
-            >
-              {form.formState.isSubmitting ? (
-                <Loader className="animate-spin mr-2 h-4 w-4" />
-              ) : null}
-              Enregistrer
-            </Button>
+            {/* Hide button in readonly mode */}
+            {mode !== "readonly" && (
+              <Button
+                size="lg"
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                style={{ marginTop: "15px" }}
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader className="animate-spin mr-2 h-4 w-4" />
+                ) : null}
+                Enregistrer
+              </Button>
+            )}
           </form>
         </Form>
       </FormProvider>

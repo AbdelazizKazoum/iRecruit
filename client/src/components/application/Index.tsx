@@ -9,6 +9,7 @@ import VerifyInformation from "./VerifyInformation";
 import JobOfferPage from "./JobDescription";
 import AttachmentForm from "./AttachmentForm";
 import { Locale } from "@/configs/i18n";
+import { useCandidatureStore } from "@/stores/candidature.store";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -29,7 +30,20 @@ const { useStepper, steps } = defineStepper(
 );
 
 function Index({ locale }: { locale: Locale }) {
+  // Use state
+  const [loading, setLoading] = React.useState(true);
+  // Hooks
   const stepper = useStepper();
+  const { fetchCandidatureData } = useCandidatureStore();
+
+  React.useEffect(() => {
+    (async () => {
+      await fetchCandidatureData();
+      setLoading(false);
+    })();
+  }, [fetchCandidatureData]);
+
+  if (loading) return <>loading ...</>;
 
   return (
     <div className="space-y-6 p-6 border rounded-lg">
@@ -85,7 +99,7 @@ function Index({ locale }: { locale: Locale }) {
           {stepper.switch({
             description: () => <JobOfferPage />,
             attachment: () => <AttachmentForm locale={locale} />,
-            verification: () => <VerifyInformation />,
+            verification: () => <VerifyInformation locale={locale} />,
           })}
         </div>
 

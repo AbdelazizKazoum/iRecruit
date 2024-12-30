@@ -22,7 +22,7 @@ const JobOfferPosting = async ({
           description={dictionary["candidature"].description}
         />
         <Separator className="my-6" />
-        <Index />
+        <Index locale={params.lang} />
       </div>
     </div>
   );

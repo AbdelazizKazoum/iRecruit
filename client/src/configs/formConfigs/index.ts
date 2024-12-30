@@ -1,3 +1,4 @@
+import { jobApplicationFormConfig } from "./jobApplicationForm.config";
 import { communicationsFormConfig } from "./communicationsForm.config";
 import { publicationsFormConfig } from "./publicationsForm.config";
 import { languesFormConfig } from "./languesForm.config";
@@ -14,4 +15,5 @@ export {
   languesFormConfig,
   publicationsFormConfig,
   communicationsFormConfig,
+  jobApplicationFormConfig,
 };

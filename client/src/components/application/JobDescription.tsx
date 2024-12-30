@@ -1,37 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-const JobOfferCard = ({ job }) => {
+const JobOfferCard = ({ job }: { job: any }) => {
   return (
-    <div className="p-4 flex justify-center items-center w-full">
-      <Card className="w-full  border border-gray-200 shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold">{job.title}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex justify-between text-sm text-gray-600">
-            <span className="text-muted-foreground">
-              <strong className=" mr-3 text-black-600/70 ">Ville:</strong>{" "}
-              {job.city}
-            </span>
-            <span className="text-muted-foreground">
-              <strong className=" mr-3 text-black-600/70 ">Département:</strong>{" "}
-              {job.department}
-            </span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            <strong className=" mr-3 text-black-600/70">
-              Nombre de candidats demandés:
-            </strong>{" "}
-            {job.candidatesNumber}
-          </div>
-          <div className="text-sm text-muted-foreground">
-            <strong className=" mr-3 text-black-600/70">Description:</strong>
-            <p className="mt-1 text-gray-700">{job.description}</p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className=" ">
+      <div className="bg-gray-200 py-4 rounded-t-lg">
+        <h2 className="text-lg font-semibold text-primary">{job.title}</h2>
+      </div>
+      <div className="space-y-4">
+        <div className="flex justify-between text-sm text-gray-600">
+          <span className="text-muted-foreground">
+            <strong className=" mr-3 text-black-600/70 ">Ville:</strong>{" "}
+            {job.city}
+          </span>
+          <span className="text-muted-foreground">
+            <strong className=" mr-3 text-black-600/70 ">Département:</strong>{" "}
+            {job.department}
+          </span>
+        </div>
+        <div className="text-sm text-muted-foreground">
+          <strong className=" mr-3 text-black-600/70">
+            Nombre de candidats demandés:
+          </strong>{" "}
+          {job.candidatesNumber}
+        </div>
+        <div className="text-sm text-muted-foreground">
+          <strong className=" mr-3 text-black-600/70">Description:</strong>
+          <p className="mt-1 text-gray-700">{job.description}</p>
+        </div>
+      </div>
     </div>
   );
 };

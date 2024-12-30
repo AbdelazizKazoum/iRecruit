@@ -5,9 +5,10 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { defineStepper } from "@stepperize/react";
-import Attachment from "./Attachment";
 import VerifyInformation from "./VerifyInformation";
 import JobOfferPage from "./JobDescription";
+import AttachmentForm from "./AttachmentForm";
+import { Locale } from "@/configs/i18n";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -27,7 +28,7 @@ const { useStepper, steps } = defineStepper(
   }
 );
 
-function Index() {
+function Index({ locale }: { locale: Locale }) {
   const stepper = useStepper();
 
   return (
@@ -79,27 +80,35 @@ function Index() {
           ))}
         </ol>
       </nav>
-      <div className="container mx-auto p-6 ">
-        {stepper.switch({
-          description: () => <JobOfferPage />,
-          attachment: () => <Attachment />,
-          verification: () => <VerifyInformation />,
-        })}
+      <div className="container mx-auto">
+        <div className="w-full  border border-gray-200 p-4 ">
+          {stepper.switch({
+            description: () => <JobOfferPage />,
+            attachment: () => <AttachmentForm locale={locale} />,
+            verification: () => <VerifyInformation />,
+          })}
+        </div>
+
         {!stepper.isLast ? (
           <div className="flex justify-end gap-4 mt-10 ">
+            <Button size="lg" onClick={stepper.next}>
+              {stepper.isLast ? "Terminer" : "Continuer"}
+            </Button>
             <Button
               variant="secondary"
               onClick={stepper.prev}
               disabled={stepper.isFirst}
+              size="lg"
             >
-              Back
-            </Button>
-            <Button onClick={stepper.next}>
-              {stepper.isLast ? "Complete" : "Next"}
+              Retour
             </Button>
           </div>
         ) : (
-          <Button onClick={stepper.reset}>Reset</Button>
+          <div className="flex justify-end gap-4 mt-10 ">
+            <Button size="lg" onClick={stepper.reset}>
+              Réinitialiser
+            </Button>
+          </div>
         )}
       </div>
     </div>

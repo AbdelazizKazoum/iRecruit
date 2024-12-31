@@ -1,19 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import clientApi from "@/libs/clientApi";
-import { ApplicationType } from "@/types/application.types";
+import { ApplicationType, OfferType } from "@/types/application.types";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
 export interface ApplicationStoreState {
   applicationData: ApplicationType | null;
+  selectedOffer: OfferType | null;
   loading: boolean;
   error: string;
 
   setApplication: (data: ApplicationType) => void;
+  setOffer: (data: OfferType) => void;
   submitApplication: (data: FormData) => Promise<void>;
 }
 
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   applicationData: null,
+  selectedOffer: null,
   loading: false,
   error: "",
 
@@ -21,6 +25,13 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   setApplication: (data) => {
     set({
       applicationData: data,
+    });
+  },
+
+  // set application data to the store
+  setOffer: (data) => {
+    set({
+      selectedOffer: data,
     });
   },
 

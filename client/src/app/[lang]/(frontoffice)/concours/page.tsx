@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConcourItem } from "@/components/concours/ConcourItem";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { Locale } from "@/configs/i18n";
+import { OfferType } from "@/types/application.types";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
@@ -220,17 +222,13 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
             <div className="relative">
               <div>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 pb-4 ">
-                  {jobList.map((item) => (
+                  {jobList.map((item: OfferType) => (
                     <ConcourItem
+                      offer={item}
                       dictionary={dictionary}
                       key={item.title[locale]}
-                      title={item.title[locale]}
-                      description={item.description[locale]}
                       className=""
-                      imageUrl={item.imageUrl}
-                      depotAvant={item.depotAvant}
-                      datePublication={item.datePublication}
-                      tag=""
+                      locale={locale}
                     />
                   ))}
                 </div>

@@ -10,6 +10,7 @@ import JobOfferPage from "./JobDescription";
 import AttachmentForm from "./AttachmentForm";
 import { Locale } from "@/configs/i18n";
 import { useCandidatureStore } from "@/stores/candidature.store";
+import { useApplicationStore } from "@/stores/useApplication.store";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -35,6 +36,7 @@ function Stepper({ locale }: { locale: Locale }) {
   // Hooks
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
+  const { applicationData } = useApplicationStore();
 
   React.useEffect(() => {
     (async () => {
@@ -42,6 +44,10 @@ function Stepper({ locale }: { locale: Locale }) {
       setLoading(false);
     })();
   }, [fetchCandidatureData]);
+
+  const submitData = () => {
+    console.log(applicationData);
+  };
 
   if (loading) return <>loading ...</>;
 
@@ -128,8 +134,8 @@ function Stepper({ locale }: { locale: Locale }) {
           </div>
         ) : (
           <div className="flex justify-end gap-4 mt-10 ">
-            <Button size="lg" onClick={stepper.reset}>
-              Réinitialiser
+            <Button size="lg" onClick={submitData}>
+              Soumettre la candidature
             </Button>
           </div>
         )}

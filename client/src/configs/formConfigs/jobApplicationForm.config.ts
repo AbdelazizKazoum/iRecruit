@@ -19,7 +19,7 @@ export const jobApplicationFormConfig = {
         fr: "Application Diploma *",
         ar: "ديبلوم الترشيح *",
       },
-      name: "files.diploma",
+      name: "applicationDiploma",
       options: [
         {
           id: 1,
@@ -563,7 +563,7 @@ export const jobApplicationFormConfig = {
         fr: "Déclaration sur l'honneur (Pdf, Max 10Mo) *",
         ar: "تصريح بالشرف (PDF، بحد أقصى 10 ميجا بايت) *",
       },
-      name: "files.declarationPdf",
+      name: "attachment.declarationPdf",
       placeholder: {
         en: "",
         fr: "",
@@ -577,7 +577,7 @@ export const jobApplicationFormConfig = {
         fr: "Lettre de motivation (Pdf, Max 10Mo) *",
         ar: "طلب خطي (PDF، بحد أقصى 10 ميجا بايت) *",
       },
-      name: "files.motivationLetterPdf",
+      name: "attachment.motivationLetterPdf",
       placeholder: {
         en: "",
         fr: "",

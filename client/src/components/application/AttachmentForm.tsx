@@ -4,32 +4,41 @@ import React from "react";
 import DynamicNormalForm from "../dynamic-form/DynamicNormalForm";
 import { useApplicationStore } from "@/stores/useApplication.store";
 import { ApplicationType } from "@/types/application.types";
+import { applicationFormSchema } from "@/schemas/applicationForm.schema";
 
 const AttachmentForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { submitApplication } = useApplicationStore();
+  const { setApplication, selectedOffer } = useApplicationStore();
 
   const onSubmit = async (data: ApplicationType) => {
-    const formData = new FormData();
-    // Add the rest of the data as a JSON string under the key 'data'
-    const { attachment, ...rest } = data; // Destructure to separate files from other data
-    console.log("🚀 ~ onSubmit ~ rest:", rest);
+    const dataToSubmit = { ...data, offer: selectedOffer };
 
-    formData.append("data", JSON.stringify(rest));
+    setApplication(dataToSubmit);
 
-    // Add files under the 'files' key
-    if (attachment) {
-      Object.entries(attachment).map((item) => {
-        const file = item[1] as File;
-        const key = item[0] + "-" + `.${file.name.split(".")[1]}`;
+    // if (selectedOffer) {
+    //const formData = new FormData();
 
-        formData.append("files", file, key);
-      });
-    }
+    //   // Add the rest of the data as a JSON string under the key 'data'
+    //   const { attachment, ...rest } = data; // Destructure to separate files from other data
 
-    submitApplication(formData);
+    //   const dataToSubmit = { ...rest, offer: selectedOffer };
+    //   console.log("🚀 ~ onSubmit ~ rest:", dataToSubmit);
 
-    console.log(data);
+    //   formData.append("data", JSON.stringify(dataToSubmit));
+
+    //   // Add files under the 'files' key
+    //   if (attachment) {
+    //     Object.entries(attachment).map((item) => {
+    //       const file = item[1] as File;
+    //       const key = item[0] + "-" + `.${file.name.split(".")[1]}`;
+
+    //       formData.append("files", file, key);
+    //     });
+    //   }
+
+    //   submitApplication(formData);
+    // }
+    console.log("🚀 ~ onSubmit ~ dataToSubmit:", dataToSubmit);
   };
 
   return (
@@ -38,7 +47,7 @@ const AttachmentForm = ({ locale }: { locale: Locale }) => {
         mode="new"
         onSubmit={onSubmit}
         category="attachment"
-        schema={""}
+        schema={applicationFormSchema}
         locale={locale}
         defaultValues={""}
       />

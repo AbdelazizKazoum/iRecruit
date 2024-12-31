@@ -26,6 +26,17 @@ const jobList = [
     depotAvant: "15/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/3182788/pexels-photo-3182788.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "IT",
+      fr: "Informatique",
+      ar: "تكنولوجيا المعلومات",
+    },
+    candidatesNumber: 5,
   },
   {
     title: {
@@ -47,6 +58,17 @@ const jobList = [
     depotAvant: "20/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "IT",
+      fr: "Informatique",
+      ar: "تكنولوجيا المعلومات",
+    },
+    candidatesNumber: 10,
   },
   {
     title: {
@@ -68,6 +90,17 @@ const jobList = [
     depotAvant: "20/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/3183171/pexels-photo-3183171.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "Communication",
+      fr: "Communication",
+      ar: "الاتصال",
+    },
+    candidatesNumber: 8,
   },
   {
     title: {
@@ -89,6 +122,17 @@ const jobList = [
     depotAvant: "18/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/6863422/pexels-photo-6863422.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "Finance",
+      fr: "Finance",
+      ar: "المالية",
+    },
+    candidatesNumber: 6,
   },
   {
     title: {
@@ -110,6 +154,17 @@ const jobList = [
     depotAvant: "17/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/346807/pexels-photo-346807.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "HR",
+      fr: "RH",
+      ar: "الموارد البشرية",
+    },
+    candidatesNumber: 7,
   },
   {
     title: {
@@ -131,6 +186,17 @@ const jobList = [
     depotAvant: "25/11/2024",
     imageUrl:
       "https://images.pexels.com/photos/1181399/pexels-photo-1181399.jpeg",
+    city: {
+      en: "Casablanca",
+      fr: "Casablanca",
+      ar: "الدار البيضاء",
+    },
+    department: {
+      en: "Legal",
+      fr: "Juridique",
+      ar: "القانون",
+    },
+    candidatesNumber: 4,
   },
 ];
 

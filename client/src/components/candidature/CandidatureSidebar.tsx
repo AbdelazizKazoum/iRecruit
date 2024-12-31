@@ -5,31 +5,10 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { BriefcaseBusiness, Users } from "lucide-react";
 import { Locale } from "@/configs/i18n";
 import { getDictionary } from "@/utils/getDictionary";
 import { useCandidatureStore } from "@/stores/candidature.store";
-
-const steps = [
-  {
-    title: {
-      en: "Personal Information",
-      fr: "Informations Personnelles",
-      ar: "المعلومات الشخصية",
-    },
-    href: "/candidature?section=info-personnelles",
-    icon: <Users />,
-  },
-  {
-    title: {
-      en: "Qualifications/Experiences",
-      fr: "Qualifications/Expériences",
-      ar: "المؤهلات/الخبرات",
-    },
-    href: "/candidature?section=info-professionnelles",
-    icon: <BriefcaseBusiness />,
-  },
-];
+import { steps } from "@/data/candidature/steps";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   className: string;
@@ -59,49 +38,52 @@ export function CandidatureSidebar({
       )}
       {...props}
     >
-      {steps.map((item) => (
-        <Link
-          key={item.href}
-          href={`/${local}${item.href}`}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            fullPathWithQuery === `/${local}${item.href}` ? "" : "",
-            "flex items-center lg:justify-start hover:bg-transparent  "
-          )}
-        >
-          <div
+      {steps.map((item) => {
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={`/${local}${item.href}`}
             className={cn(
-              "flex items-center justify-center min-w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
-              fullPathWithQuery === `/${local}${item.href}` &&
-                "text-white-500 bg-primary  ",
-              candidatureData?.personalInformation?.valid &&
-                item.href === "/candidature?section=info-personnelles" &&
-                "text-white-500 bg-green-500 ",
-              candidatureData?.professionalInformation?.valid &&
-                item.href === "/candidature?section=info-professionnelles" &&
-                "text-white-500 bg-green-500 "
+              buttonVariants({ variant: "ghost" }),
+              fullPathWithQuery === `/${local}${item.href}` ? "" : "",
+              "flex items-center lg:justify-start hover:bg-transparent  "
             )}
           >
-            {item.icon}
-          </div>
-          <span
-            className={cn(
-              "text-muted-foreground",
-              fullPathWithQuery === `/${local}${item.href}` &&
-                "text-black-600/80",
+            <div
+              className={cn(
+                "flex items-center justify-center min-w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
+                fullPathWithQuery === `/${local}${item.href}` &&
+                  "text-white-500 bg-primary  ",
+                candidatureData?.personalInformation?.valid &&
+                  item.href === "/candidature?section=info-personnelles" &&
+                  "text-white-500 bg-green-500 ",
+                candidatureData?.professionalInformation?.valid &&
+                  item.href === "/candidature?section=info-professionnelles" &&
+                  "text-white-500 bg-green-500 "
+              )}
+            >
+              <Icon />
+            </div>
+            <span
+              className={cn(
+                "text-muted-foreground",
+                fullPathWithQuery === `/${local}${item.href}` &&
+                  "text-black-600/80",
 
-              candidatureData?.personalInformation?.valid &&
-                item.href === "/candidature?section=info-personnelles" &&
-                "text-green-500",
-              candidatureData?.professionalInformation?.valid &&
-                item.href === "/candidature?section=info-professionnelles" &&
-                "text-green-500"
-            )}
-          >
-            {item.title[local]}
-          </span>
-        </Link>
-      ))}
+                candidatureData?.personalInformation?.valid &&
+                  item.href === "/candidature?section=info-personnelles" &&
+                  "text-green-500",
+                candidatureData?.professionalInformation?.valid &&
+                  item.href === "/candidature?section=info-professionnelles" &&
+                  "text-green-500"
+              )}
+            >
+              {item.title[local]}
+            </span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }

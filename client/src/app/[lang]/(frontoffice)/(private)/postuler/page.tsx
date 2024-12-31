@@ -1,4 +1,4 @@
-import Index from "@/components/application/Index";
+import Stepper from "@/components/application/Stepper";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { Locale } from "@/configs/i18n";
@@ -6,7 +6,6 @@ import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
 const JobOfferPosting = async ({
-  searchParams,
   params,
 }: {
   searchParams: { section: string };
@@ -22,7 +21,7 @@ const JobOfferPosting = async ({
           description={dictionary["candidature"].description}
         />
         <Separator className="my-6" />
-        <Index locale={params.lang} />
+        <Stepper locale={params.lang} />
       </div>
     </div>
   );

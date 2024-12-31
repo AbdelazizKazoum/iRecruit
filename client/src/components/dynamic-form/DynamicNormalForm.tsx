@@ -26,7 +26,7 @@ const DynamicNormalForm = ({
   locale: Locale;
   onSubmit: (data: any) => void;
   defaultValues: any;
-  mode: string;
+  mode: "readonly" | "new" | "edit";
 }) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({

@@ -1,49 +1,43 @@
 import clientApi from "@/libs/clientApi";
-import { CandidatureType } from "@/types/candidature.types";
+import { ApplicationType } from "@/types/application.types";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-export interface CandidatureStoreState {
-  applicationData: CandidatureType | null;
+export interface ApplicationStoreState {
+  applicationData: ApplicationType | null;
   loading: boolean;
   error: string;
 
-  submitPublications: (publications: FormData) => Promise<void>;
+  setApplication: (data: ApplicationType) => void;
+  submitApplication: (data: FormData) => Promise<void>;
 }
 
-export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
+export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   applicationData: null,
   loading: false,
   error: "",
 
+  // set application data to the store
+  setApplication: (data) => {
+    set({
+      applicationData: data,
+    });
+  },
+
   // Submit Publications to database
-  submitPublications: async (publications: FormData) => {
+  submitApplication: async (data: FormData) => {
     set({ loading: true, error: "" });
     try {
-      const response = await clientApi.post(
-        "candidature/publications",
-        publications
-      );
-      set((state) => ({
-        candidatureData: state.candidatureData
-          ? {
-              ...state.candidatureData,
-              professionalInformation: {
-                ...state.candidatureData.professionalInformation,
-                publications: response.data,
-              },
-            }
-          : null,
-        loading: false,
-      }));
-      toast.success("Language levels submitted successfully!");
+      const response = await clientApi.post("application", data);
+      set({ applicationData: response.data });
+      toast.success("submitted successfully!");
     } catch (error) {
-      console.error("Error submitting language levels:", error);
+      console.error("Error submitting", error);
       set({
         loading: false,
-        error: "Failed to submit language levels. Please try again.",
+        error: "Failed to submit. Please try again.",
       });
-      toast.error("Failed to submit language levels. Please try again.");
+      toast.error("Failed to submit. Please try again.");
     }
   },
 }));

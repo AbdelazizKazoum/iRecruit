@@ -1,34 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Locale } from "@/configs/i18n";
-import { useCandidatureStore } from "@/stores/candidature.store";
-import { ParcoursEtDiplomesTypes } from "@/types/candidature.types";
 import React from "react";
 import DynamicNormalForm from "../dynamic-form/DynamicNormalForm";
+import { useApplicationStore } from "@/stores/useApplication.store";
+import { ApplicationType } from "@/types/application.types";
 
 const AttachmentForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { submitDiplome } = useCandidatureStore();
+  const { submitApplication } = useApplicationStore();
 
-  const onSubmit = async (data: ParcoursEtDiplomesTypes) => {
+  const onSubmit = async (data: ApplicationType) => {
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'
-    const { files, ...rest } = data; // Destructure to separate files from other data
+    const { attachment, ...rest } = data; // Destructure to separate files from other data
     console.log("🚀 ~ onSubmit ~ rest:", rest);
 
-    formData.append("diplomes", JSON.stringify(rest));
+    formData.append("data", JSON.stringify(rest));
 
     // Add files under the 'files' key
-    if (files) {
-      Object.entries(files).map((item) => {
+    if (attachment) {
+      Object.entries(attachment).map((item) => {
         const file = item[1] as File;
-        const key =
-          item[0] + "-" + rest.diplomeType + `.${file.name.split(".")[1]}`;
+        const key = item[0] + "-" + `.${file.name.split(".")[1]}`;
 
         formData.append("files", file, key);
       });
     }
 
-    submitDiplome(formData);
+    submitApplication(formData);
 
     console.log(data);
   };
@@ -36,6 +35,7 @@ const AttachmentForm = ({ locale }: { locale: Locale }) => {
   return (
     <div>
       <DynamicNormalForm
+        mode="new"
         onSubmit={onSubmit}
         category="attachment"
         schema={""}

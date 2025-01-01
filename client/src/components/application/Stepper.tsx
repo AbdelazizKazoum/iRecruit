@@ -37,6 +37,8 @@ function Stepper({ locale }: { locale: Locale }) {
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
   const { applicationData } = useApplicationStore();
+  const formRef = React.useRef<HTMLFormElement>(null);
+  console.log("🚀 ~ Stepper ~ formRef:", formRef);
 
   React.useEffect(() => {
     (async () => {
@@ -47,6 +49,14 @@ function Stepper({ locale }: { locale: Locale }) {
 
   const submitData = () => {
     console.log(applicationData);
+  };
+
+  const submitAttachmentForm = () => {
+    if (formRef.current) {
+      // Trigger form submission in the child component
+      console.log(formRef.current.children[0]);
+    }
+    console.log(applicationData); // Submit additional application data if needed
   };
 
   if (loading) return <>loading ...</>;
@@ -113,14 +123,23 @@ function Stepper({ locale }: { locale: Locale }) {
         <div className="w-full  border border-gray-200 p-5 ">
           {stepper.switch({
             description: () => <JobOfferPage />,
-            attachment: () => <AttachmentForm locale={locale} />,
+            attachment: () => <AttachmentForm ref={formRef} locale={locale} />,
             verification: () => <VerifyInformation locale={locale} />,
           })}
         </div>
 
         {!stepper.isLast ? (
           <div className="flex justify-end gap-4 mt-10 ">
-            <Button size="lg" onClick={stepper.next}>
+            <Button
+              size="lg"
+              onClick={() => {
+                console.log();
+                if (stepper.current.title == "Attachment") {
+                  console.log(formRef);
+                  submitAttachmentForm();
+                } else stepper.next();
+              }}
+            >
               {stepper.isLast ? "Terminer" : "Continuer"}
             </Button>
             <Button

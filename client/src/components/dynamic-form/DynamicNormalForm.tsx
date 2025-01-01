@@ -8,31 +8,28 @@ import { Form, FormField } from "@/components/ui/form";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider, useForm } from "react-hook-form";
-import { memo, useMemo } from "react";
+import { forwardRef, memo, useMemo } from "react";
 import { Locale } from "@/configs/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import "./DynamicNormalForm.css"; // Import CSS file for styles
 
-const DynamicNormalForm = ({
-  category,
-  schema,
-  locale,
-  onSubmit,
-  defaultValues,
-  mode,
-}: {
-  category: string;
-  schema: any;
-  locale: Locale;
-  onSubmit: (data: any) => void;
-  defaultValues: any;
-  mode: "readonly" | "new" | "edit";
-}) => {
+const DynamicNormalForm = forwardRef<
+  HTMLFormElement,
+  {
+    category: string;
+    schema: any;
+    locale: Locale;
+    onSubmit: (data: any) => void;
+    defaultValues: any;
+    mode: "readonly" | "new" | "edit";
+  }
+>(({ category, schema, locale, onSubmit, defaultValues, mode }, ref) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
+
   console.log("\ud83d\ude80 ~ form:", form.formState.errors);
 
   const renderedFields = useMemo(() => {
@@ -71,9 +68,9 @@ const DynamicNormalForm = ({
     <div className="space-y-6">
       <FormProvider {...form}>
         <Form {...form}>
-          {/* Apply readonly styles dynamically */}
           <form
             className={`space-y-2 ${mode === "readonly" ? "readonly" : ""}`}
+            ref={ref}
             onSubmit={
               mode === "readonly"
                 ? (e) => e.preventDefault()
@@ -81,7 +78,6 @@ const DynamicNormalForm = ({
             }
           >
             <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
-            {/* Hide button in readonly mode */}
             {mode !== "readonly" && (
               <Button
                 size="lg"
@@ -100,6 +96,7 @@ const DynamicNormalForm = ({
       </FormProvider>
     </div>
   );
-};
+});
 
+DynamicNormalForm.displayName = "DynamicNormalForm";
 export default memo(DynamicNormalForm);

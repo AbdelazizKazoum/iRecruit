@@ -36,7 +36,7 @@ function Stepper({ locale }: { locale: Locale }) {
   // Hooks
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
-  const { applicationData } = useApplicationStore();
+  const { applicationData, submitApplication } = useApplicationStore();
   const formRef = React.useRef<HTMLButtonElement>(null);
   console.log("🚀 ~ Stepper ~ formRef:", formRef);
 
@@ -47,7 +47,9 @@ function Stepper({ locale }: { locale: Locale }) {
     })();
   }, [fetchCandidatureData]);
 
-  const submitData = () => {
+  const submitData = async () => {
+    await submitApplication(applicationData);
+
     console.log(applicationData);
   };
 

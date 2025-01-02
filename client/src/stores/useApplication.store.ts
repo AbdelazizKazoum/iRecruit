@@ -12,7 +12,7 @@ export interface ApplicationStoreState {
 
   setApplication: (data: ApplicationType) => void;
   setOffer: (data: OfferType) => void;
-  submitApplication: (data: FormData) => Promise<void>;
+  submitApplication: (data: ApplicationType) => Promise<void>;
 }
 
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
@@ -36,10 +36,23 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   },
 
   // Submit Publications to database
-  submitApplication: async (data: FormData) => {
+  submitApplication: async (data: ApplicationType) => {
     set({ loading: true, error: "" });
+    const { attachment, ...rest } = data; // Destructure to separate files from other data
+
     try {
-      const response = await clientApi.post("application", data);
+      const formData = new FormData();
+
+      formData.append("data", JSON.stringify(rest));
+
+      Object.entries(attachment).map((item) => {
+        const file = item[1] as File;
+        const key = item[0] + "-" + `.${file.name.split(".")[1]}`;
+
+        formData.append("files", file, key);
+      });
+
+      const response = await clientApi.post("application", formData);
       set({ applicationData: response.data });
       toast.success("submitted successfully!");
     } catch (error) {

@@ -37,7 +37,7 @@ function Stepper({ locale }: { locale: Locale }) {
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
   const { applicationData } = useApplicationStore();
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const formRef = React.useRef<HTMLButtonElement>(null);
   console.log("🚀 ~ Stepper ~ formRef:", formRef);
 
   React.useEffect(() => {
@@ -54,9 +54,8 @@ function Stepper({ locale }: { locale: Locale }) {
   const submitAttachmentForm = () => {
     if (formRef.current) {
       // Trigger form submission in the child component
-      console.log(formRef.current.children[0]);
+      formRef.current.click();
     }
-    console.log(applicationData); // Submit additional application data if needed
   };
 
   if (loading) return <>loading ...</>;
@@ -123,7 +122,13 @@ function Stepper({ locale }: { locale: Locale }) {
         <div className="w-full  border border-gray-200 p-5 ">
           {stepper.switch({
             description: () => <JobOfferPage />,
-            attachment: () => <AttachmentForm ref={formRef} locale={locale} />,
+            attachment: () => (
+              <AttachmentForm
+                ref={formRef}
+                locale={locale}
+                next={stepper.next}
+              />
+            ),
             verification: () => <VerifyInformation locale={locale} />,
           })}
         </div>

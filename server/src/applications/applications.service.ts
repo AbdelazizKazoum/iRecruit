@@ -7,10 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateApplicationDto } from './dto/update-application.dto';
-import {
-  Application,
-  ApplicationDocument,
-} from 'src/schemas/Applications.schema';
+import { Application } from 'src/schemas/Applications.schema';
 import { Candidature } from 'src/schemas/candidature.schema';
 import { FileUploadService } from 'src/common/services/file-upload.service';
 
@@ -18,8 +15,11 @@ import { FileUploadService } from 'src/common/services/file-upload.service';
 export class ApplicationsService {
   constructor(
     @InjectModel(Application.name)
-    private applicationModel: Model<ApplicationDocument>,
+    private applicationModel: Model<Application>,
+
+    @InjectModel(Candidature.name)
     private candidatureModel: Model<Candidature>,
+
     private fileUploadService: FileUploadService,
   ) {}
 

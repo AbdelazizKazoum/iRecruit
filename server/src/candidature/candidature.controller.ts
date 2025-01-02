@@ -51,7 +51,6 @@ export class CandidatureController {
     @Body('diplomes') diplomes,
     @Request() req, // Access the request object
   ) {
-    console.log('🚀 ~ CandidatureController ~ files:', files);
     const user = req.user; // Extract the user from the request
     const data = JSON.parse(diplomes);
 

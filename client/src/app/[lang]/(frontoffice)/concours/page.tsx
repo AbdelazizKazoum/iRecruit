@@ -7,205 +7,13 @@ import { OfferType } from "@/types/application.types";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
-const jobList = [
-  {
-    title: {
-      en: "Administrative Agent",
-      fr: "Agent Administratif",
-      ar: "موظف إداري",
-    },
-    description: {
-      en: "Process and follow administrative files within our organization.",
-      fr: "Traitez et suivez les dossiers administratifs au sein de notre organisation.",
-      ar: "عالج وتابع الملفات الإدارية داخل مؤسستنا.",
-    },
-    tag: {
-      en: "Administration",
-      fr: "Administration",
-      ar: "الإدارة",
-    },
-    datePublication: "01/11/2024",
-    depotAvant: "15/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/3182788/pexels-photo-3182788.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "IT",
-      fr: "Informatique",
-      ar: "تكنولوجيا المعلومات",
-    },
-    candidatesNumber: 5,
-  },
-  {
-    title: {
-      en: "IT Manager",
-      fr: "Responsable Informatique",
-      ar: "مسؤول تقنية المعلومات",
-    },
-    description: {
-      en: "Manage IT infrastructure, data security, and technical support.",
-      fr: "Gérez l’infrastructure informatique, la sécurité des données, et le support technique.",
-      ar: "قم بإدارة البنية التحتية لتقنية المعلومات وأمان البيانات والدعم الفني.",
-    },
-    tag: {
-      en: "IT",
-      fr: "Informatique",
-      ar: "تقنية المعلومات",
-    },
-    datePublication: "01/11/2024",
-    depotAvant: "20/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "IT",
-      fr: "Informatique",
-      ar: "تكنولوجيا المعلومات",
-    },
-    candidatesNumber: 10,
-  },
-  {
-    title: {
-      en: "Communication Officer",
-      fr: "Chargé de Communication",
-      ar: "مسؤول الاتصال",
-    },
-    description: {
-      en: "Develop communication and promotion strategies for our organization.",
-      fr: "Développez des stratégies de communication et de promotion pour notre organisation.",
-      ar: "طور استراتيجيات الاتصال والترويج لمؤسستنا.",
-    },
-    tag: {
-      en: "Communication",
-      fr: "Communication",
-      ar: "الاتصال",
-    },
-    datePublication: "05/11/2024",
-    depotAvant: "20/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/3183171/pexels-photo-3183171.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "Communication",
-      fr: "Communication",
-      ar: "الاتصال",
-    },
-    candidatesNumber: 8,
-  },
-  {
-    title: {
-      en: "Accountant",
-      fr: "Comptable",
-      ar: "محاسب",
-    },
-    description: {
-      en: "Manage finances, financial reports, and budget analysis.",
-      fr: "Assurez la gestion des finances, des rapports financiers, et des analyses budgétaires.",
-      ar: "تولى إدارة المالية والتقارير المالية وتحليل الميزانية.",
-    },
-    tag: {
-      en: "Accounting",
-      fr: "Comptabilité",
-      ar: "المحاسبة",
-    },
-    datePublication: "02/11/2024",
-    depotAvant: "18/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/6863422/pexels-photo-6863422.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "Finance",
-      fr: "Finance",
-      ar: "المالية",
-    },
-    candidatesNumber: 6,
-  },
-  {
-    title: {
-      en: "HR Assistant",
-      fr: "Assistant(e) RH",
-      ar: "مساعد الموارد البشرية",
-    },
-    description: {
-      en: "Manage personnel files and support recruitment and training.",
-      fr: "Gérez les dossiers du personnel et soutenez le recrutement et la formation.",
-      ar: "قم بإدارة ملفات الموظفين ودعم التوظيف والتدريب.",
-    },
-    tag: {
-      en: "Human Resources",
-      fr: "Ressources Humaines",
-      ar: "الموارد البشرية",
-    },
-    datePublication: "03/11/2024",
-    depotAvant: "17/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/346807/pexels-photo-346807.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "HR",
-      fr: "RH",
-      ar: "الموارد البشرية",
-    },
-    candidatesNumber: 7,
-  },
-  {
-    title: {
-      en: "Legal Advisor",
-      fr: "Juriste",
-      ar: "مستشار قانوني",
-    },
-    description: {
-      en: "Ensure legal compliance and advise the organization on legal matters.",
-      fr: "Assurez la conformité légale et conseillez l'organisation sur les aspects juridiques.",
-      ar: "تأكد من الامتثال القانوني وقدم المشورة للمؤسسة بشأن الأمور القانونية.",
-    },
-    tag: {
-      en: "Legal",
-      fr: "Juridique",
-      ar: "القانون",
-    },
-    datePublication: "06/11/2024",
-    depotAvant: "25/11/2024",
-    imageUrl:
-      "https://images.pexels.com/photos/1181399/pexels-photo-1181399.jpeg",
-    city: {
-      en: "Casablanca",
-      fr: "Casablanca",
-      ar: "الدار البيضاء",
-    },
-    department: {
-      en: "Legal",
-      fr: "Juridique",
-      ar: "القانون",
-    },
-    candidatesNumber: 4,
-  },
-];
-
 const Concours = async ({ params }: { params: { lang: Locale } }) => {
-  // user = res.data;
-
+  // Get the dictionary for translations
   const dictionary = await getDictionary(params.lang);
+
+  // Fetch job offers from the API
+  const response = await fetch(`${process.env.BACKEND_API}/job-offers`); // Update with your actual API endpoint
+  const jobOffers: OfferType[] = await response.json(); // Parse the JSON response
 
   const { lang: locale } = params;
 
@@ -222,7 +30,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
             <div className="relative">
               <div>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 pb-4 ">
-                  {jobList.map((item: OfferType) => (
+                  {jobOffers.map((item: OfferType) => (
                     <ConcourItem
                       offer={item}
                       dictionary={dictionary}

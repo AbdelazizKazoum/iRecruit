@@ -23,6 +23,7 @@
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
+    "@stepperize/react": "^4.0.1",
     "@types/negotiator": "^0.6.3",
     "@types/react-scroll": "^1.8.10",
     "arabic-virtual-keyboard": "^0.2.8",

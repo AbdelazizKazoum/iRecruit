@@ -8,6 +8,8 @@ import { CandidatureModule } from './candidature/candidature.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { MailerModule } from './mailer/mailer.module';
+import { JobOffersModule } from './job-offers/job-offers.module';
+import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { MailerModule } from './mailer/mailer.module';
     AuthModule,
     UsersModule,
     MailerModule,
+    JobOffersModule,
+    ApplicationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { UserUtilsService } from 'src/common/services/user-utils.service';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 /* eslint-disable @typescript-eslint/no-unused-vars */

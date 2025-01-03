@@ -1,0 +1,37 @@
+/* DynamicNormalForm.css */
+
+/* Style for readonly mode */
+.readonly {
+  pointer-events: none; /* Disable all pointer events */
+  opacity: 0.6; /* Make the form look disabled */
+  background-color: #ffffff; /* Light gray background */
+  padding: 1rem; /* Add padding for better spacing */
+  border-radius: 8px; /* Rounded corners */
+}
+
+/* Style for readonly inputs */
+.readonly input,
+.readonly textarea,
+.readonly select {
+  color: #6b7280; /* Gray text */
+  border: 1px solid #d1d5db; /* Light border */
+}
+
+/* Placeholder styling in readonly mode */
+.readonly input::placeholder,
+.readonly textarea::placeholder {
+  color: #9ca3af; /* Lighter placeholder text */
+}
+
+/* Optional style for focus to make it clear it's readonly */
+.readonly input:focus,
+.readonly textarea:focus,
+.readonly select:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: none; /* Remove box shadow */
+}
+
+/* Disable button in readonly mode */
+.readonly button {
+  border: 1px solid #e0e0e0; /* Subtle border */
+}

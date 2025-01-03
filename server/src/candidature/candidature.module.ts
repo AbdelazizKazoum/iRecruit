@@ -17,5 +17,6 @@ import { PassportModule } from '@nestjs/passport';
   ],
   controllers: [CandidatureController],
   providers: [CandidatureService],
+  exports: [MongooseModule],
 })
 export class CandidatureModule {}

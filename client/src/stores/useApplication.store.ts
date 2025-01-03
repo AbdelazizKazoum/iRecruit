@@ -39,6 +39,8 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   submitApplication: async (data: ApplicationType) => {
     set({ loading: true, error: "" });
     const { attachment, ...rest } = data; // Destructure to separate files from other data
+    console.log("🚀 ~ submitApplication: ~ rest:", rest);
+    console.log("🚀 ~ submitApplication: ~ attachment:", attachment);
 
     try {
       const formData = new FormData();
@@ -49,7 +51,7 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
         const file = item[1] as File;
         const key = item[0] + "-" + `.${file.name.split(".")[1]}`;
 
-        formData.append("files", file, key);
+        formData.append("attachment", file, key);
       });
 
       const response = await clientApi.post("application", formData);

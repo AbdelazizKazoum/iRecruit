@@ -48,9 +48,7 @@ function Stepper({ locale }: { locale: Locale }) {
   }, [fetchCandidatureData]);
 
   const submitData = async () => {
-    await submitApplication(applicationData);
-
-    console.log(applicationData);
+    if (applicationData) await submitApplication(applicationData);
   };
 
   const submitAttachmentForm = () => {

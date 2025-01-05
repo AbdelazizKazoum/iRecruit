@@ -44,6 +44,7 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
       </div>
       <div>
         <DynamicNormalForm
+          mode="new"
           onSubmit={onSubmit}
           category="personal-informations"
           schema={personalInformationSchema}

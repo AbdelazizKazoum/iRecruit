@@ -16,13 +16,21 @@ import { AlertDestructive } from "../alerts/AlertDestructive";
 import { Mail } from "lucide-react"; // Lucide icons
 import Link from "next/link";
 import { emailSchema } from "@/schemas/authSchema";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 
 // Define form schema type
 interface ResetPasswordFormType {
   email: string;
 }
 
-export const ResetPasswordForm = () => {
+export const ResetPasswordForm = ({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const form = useForm<ResetPasswordFormType>({
     resolver: zodResolver(emailSchema),
   });
@@ -125,7 +133,7 @@ export const ResetPasswordForm = () => {
       <p className="mt-4 text-center text-sm text-black-600/60">
         Vous avez déjà un compte ?{" "}
         <Link
-          href="/login"
+          href={`/${locale}/login`}
           className="text-primary font-medium hover:underline"
         >
           Se connecter

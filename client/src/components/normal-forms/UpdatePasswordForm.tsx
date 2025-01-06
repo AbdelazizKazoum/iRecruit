@@ -17,6 +17,8 @@ import { Lock } from "lucide-react"; // Lucide icons
 // import Link from "next/link";
 import { passwordSchema } from "@/schemas/authSchema";
 import { useRouter } from "next/navigation";
+import { getDictionary } from "@/utils/getDictionary";
+import { Locale } from "@/configs/i18n";
 
 // Define form schema type
 type RegisterFormData = {
@@ -24,7 +26,15 @@ type RegisterFormData = {
   confirmPassword: string;
 };
 
-export const UpdatePasswordForm = ({ code }: { code: string }) => {
+export const UpdatePasswordForm = ({
+  code,
+  locale,
+  dictionary,
+}: {
+  code: string;
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(passwordSchema),
   });
@@ -82,7 +92,7 @@ export const UpdatePasswordForm = ({ code }: { code: string }) => {
           <span>{message}</span>
 
           <Button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push(`/${locale}/login`)}
             variant={"outline"}
             className=" mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500 "
           >

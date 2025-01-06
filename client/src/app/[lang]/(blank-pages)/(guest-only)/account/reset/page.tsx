@@ -1,8 +1,12 @@
 import { ResetPasswordForm } from "@/components/normal-forms/ResetForm";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 import Image from "next/image";
 import React from "react";
 
-const Page = () => {
+const Page = async ({ params }: { params: { lang: Locale } }) => {
+  const dictionary = await getDictionary(params.lang);
+
   return (
     <div className="flex flex-col items-center justify-center bg-primary-300/5 min-h-screen">
       <a
@@ -48,7 +52,7 @@ const Page = () => {
           Entrez votre email pour recevoir un lien de réinitialisation !
         </p>
         {/* Login form */}
-        <ResetPasswordForm />
+        <ResetPasswordForm locale={params.lang} dictionary={dictionary} />
       </div>
     </div>
   );

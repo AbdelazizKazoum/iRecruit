@@ -1,8 +1,12 @@
 import { LoginForm } from "@/components/normal-forms/LoginForm";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 import Image from "next/image";
 import React from "react";
 
-const Page = () => {
+const Page = async ({ params }: { params: { lang: Locale } }) => {
+  const dictionary = await getDictionary(params.lang);
+
   return (
     <div className="flex flex-col items-center justify-center bg-primary-300/5 min-h-screen">
       <a
@@ -49,7 +53,7 @@ const Page = () => {
           Entrez vos identifiants pour vous connecter !
         </p>
         {/* Login form */}
-        <LoginForm />
+        <LoginForm locale={params.lang} dictionary={dictionary} />
       </div>
     </div>
   );

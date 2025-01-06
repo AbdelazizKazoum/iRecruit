@@ -64,7 +64,7 @@ export class AuthService {
       username: verifyEmailDto.username,
     });
 
-    const verificationLink = `${process.env.FRONTEND}/verify-email?code=${verifecationCode}`;
+    const verificationLink = `${process.env.FRONTEND}/fr/verify-email?code=${verifecationCode}`;
 
     // Send the verification email
     // await this.mailerService.sendMail({
@@ -78,8 +78,6 @@ export class AuthService {
     return {
       link: verificationLink,
     };
-
-    return { message: 'Verification email sent ' };
   }
 
   async checkEmail(code: string) {
@@ -107,7 +105,7 @@ export class AuthService {
         id: findUser._id,
       });
 
-      const verificationLink = `${process.env.FRONTEND}/account/update-password?code=${verificationCode}`;
+      const verificationLink = `${process.env.FRONTEND}/fr/account/update-password?code=${verificationCode}`;
 
       return {
         link: verificationLink,

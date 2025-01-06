@@ -1,10 +1,13 @@
 import { PasswordForm } from "@/components/normal-forms/PasswordForm";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const page = async ({ params }: { params: { code: string } }) => {
+const page = async ({ params }: { params: { code: string; lang: Locale } }) => {
   let user = null as { username: string; email: string; code: string } | null;
+  const dictionary = await getDictionary(params.lang);
   try {
     const res = await fetch(
       `${process.env.BACKEND_API}/auth/verify-code/${params.code}`
@@ -14,13 +17,13 @@ const page = async ({ params }: { params: { code: string } }) => {
     console.log(user);
   } catch (error) {
     console.error(error);
-    redirect("/login");
+    redirect(`/${params.lang}/login`);
   }
   return (
     <div className="flex flex-col items-center justify-center bg-primary-300/5 min-h-screen">
       <a
         className=" absolute top-2 left-10 mt-10 w-fit text-black-600/80 dark:text-white"
-        href="/home"
+        href={`/${params.lang}/home`}
       >
         <div className="flex w-fit items-center lg:pl-0 lg:pt-0 xl:pt-0">
           <svg
@@ -63,7 +66,11 @@ const page = async ({ params }: { params: { code: string } }) => {
           Veuillez créer un mot de passe pour votre compte.
         </p>
         {/* Login form */}
-        <PasswordForm code={params.code} />
+        <PasswordForm
+          code={params.code}
+          locale={params.lang}
+          dictionary={dictionary}
+        />
       </div>
     </div>
   );

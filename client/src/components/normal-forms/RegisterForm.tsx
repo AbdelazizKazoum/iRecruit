@@ -16,6 +16,8 @@ import { AlertDestructive } from "../alerts/AlertDestructive";
 import { Mail, User } from "lucide-react"; // Lucide icons
 import Link from "next/link";
 import { registerSchema } from "@/schemas/authSchema";
+import { getDictionary } from "@/utils/getDictionary";
+import { Locale } from "@/configs/i18n";
 
 // Define form schema type
 type RegisterFormData = {
@@ -23,7 +25,13 @@ type RegisterFormData = {
   username: string;
 };
 
-export const RegisterForm = () => {
+export const RegisterForm = ({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
@@ -142,7 +150,7 @@ export const RegisterForm = () => {
       <p className="mt-4 text-center text-sm text-black-600/60">
         Vous avez déjà un compte ?{" "}
         <Link
-          href="/login"
+          href={`/${locale}/login`}
           className="text-primary font-medium hover:underline"
         >
           Se connecter

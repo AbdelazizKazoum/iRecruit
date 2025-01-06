@@ -71,7 +71,7 @@ const DynamicNormalForm = forwardRef<
     }, [config.fields, category, form.control, locale]);
 
     return (
-      <div className="space-y-6">
+      <div className="  ">
         <FormProvider {...form}>
           <Form {...form}>
             <form

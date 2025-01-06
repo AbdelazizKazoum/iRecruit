@@ -8,15 +8,44 @@ import { Locale } from "@/configs/i18n";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   locale: Locale;
-  items: {
-    href: string;
-    title: { en: string; ar: string; fr: string };
-  }[];
 }
+const items = [
+  {
+    title: {
+      en: "Account",
+      fr: "Compte",
+      ar: "الحساب",
+    },
+    href: "/profile?section=compte",
+  },
+  {
+    title: {
+      en: "My Applications",
+      fr: "Mes Candidatures",
+      ar: "طلباتي",
+    },
+    href: "/profile?section=candidatures",
+  },
+  {
+    title: {
+      en: "Personal Information",
+      fr: "Informations Personnelles",
+      ar: "المعلومات الشخصية",
+    },
+    href: "/profile?section=info-personnelles",
+  },
+  {
+    title: {
+      en: "Qualifications and Experiences",
+      fr: "Qualifications et Expériences",
+      ar: "المؤهلات والخبرات",
+    },
+    href: "/profile?section=info-professionnelles",
+  },
+];
 
 export function ProfileSidebar({
   className,
-  items,
   locale,
   ...props
 }: SidebarNavProps) {

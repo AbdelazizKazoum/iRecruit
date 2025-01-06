@@ -1,7 +1,4 @@
-import ProfileApplications from "@/components/profile/profile-page/ProfileApplications";
-import ProfileInfo from "@/components/profile/profile-page/ProfileInfo";
-import ProfileSettings from "@/components/profile/profile-page/ProfileSettings";
-import { ProfileSidebar } from "@/components/profile/profile-page/ProfileSidebar";
+import Index from "@/components/profile/Index";
 import { Separator } from "@/components/ui/separator";
 import { Locale } from "@/configs/i18n";
 import { getUserProfile } from "@/libs/actions/candidateActions";
@@ -9,43 +6,7 @@ import { auth } from "@/libs/auth";
 import { UserType } from "@/types/user.types";
 import { CustomError } from "@/utils/errors/CustomError";
 import { getDictionary } from "@/utils/getDictionary";
-import Image from "next/image";
 import React from "react";
-
-const sidebarNavItems = [
-  {
-    title: {
-      en: "Account",
-      fr: "Compte",
-      ar: "الحساب",
-    },
-    href: "/profile?section=compte",
-  },
-  {
-    title: {
-      en: "My Applications",
-      fr: "Mes Candidatures",
-      ar: "طلباتي",
-    },
-    href: "/profile?section=candidatures",
-  },
-  {
-    title: {
-      en: "Personal Information",
-      fr: "Informations Personnelles",
-      ar: "المعلومات الشخصية",
-    },
-    href: "/profile?section=info-personnelles",
-  },
-  {
-    title: {
-      en: "Qualifications and Experiences",
-      fr: "Qualifications et Expériences",
-      ar: "المؤهلات والخبرات",
-    },
-    href: "/profile?section=info-professionnelles",
-  },
-];
 
 const ProfilePage = async ({
   searchParams,
@@ -80,30 +41,12 @@ const ProfilePage = async ({
           </p>
         </header>
         <Separator className="my-6" />
-        <div className="flex flex-col gap-6 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="lg:w-1/5">
-            <div className="profile-image flex justify-center items-center mb-6">
-              <Image
-                src="https://github.com/shadcn.png" // Placeholder image URL
-                alt="User Profile Image"
-                width={120}
-                height={120}
-                className="rounded-full border border-gray-300"
-              />
-            </div>
-            <ProfileSidebar items={sidebarNavItems} locale={params.lang} />
-          </aside>
-          <main className="flex-1 lg:max-w-2xl">
-            {section === "compte" && (
-              <ProfileInfo user={user} dictionary={dictionary} />
-            )}
-            {section === "candidatures" && <ProfileApplications />}
-            {section === "info-personnelles" && (
-              <ProfileInfo user={user} dictionary={dictionary} />
-            )}
-            {section === "info-professionnelles" && <ProfileSettings />}
-          </main>
-        </div>
+        <Index
+          locale={params.lang}
+          section={section}
+          user={user}
+          dictionary={dictionary}
+        />
       </div>
     </div>
   );

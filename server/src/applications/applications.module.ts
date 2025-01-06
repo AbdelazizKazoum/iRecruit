@@ -25,5 +25,6 @@ import { CandidatureModule } from 'src/candidature/candidature.module';
   ],
   controllers: [ApplicationsController],
   providers: [ApplicationsService],
+  exports: [ApplicationsService],
 })
 export class ApplicationsModule {}

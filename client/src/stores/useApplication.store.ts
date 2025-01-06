@@ -12,7 +12,7 @@ export interface ApplicationStoreState {
 
   setApplication: (data: ApplicationType) => void;
   setOffer: (data: OfferType) => void;
-  submitApplication: (data: ApplicationType) => Promise<void>;
+  submitApplication: (data: ApplicationType) => Promise<string>;
 }
 
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
@@ -57,6 +57,7 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
       const response = await clientApi.post("application", formData);
       set({ applicationData: response.data });
       toast.success("submitted successfully!");
+      return "success";
     } catch (error) {
       console.error("Error submitting", error);
       set({
@@ -64,6 +65,7 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
         error: "Failed to submit. Please try again.",
       });
       toast.error("Failed to submit. Please try again.");
+      return "error";
     }
   },
 }));

@@ -1,10 +1,9 @@
 /* eslint-disable import/no-unresolved */
 import axios from "axios";
-import { BACKEND_API } from "@/utils/constants/envVariables";
-console.log("🚀 ~ BACKEND_API:", BACKEND_API);
+console.log("🚀 ~ BACKEND_API:", process.env.NEXT_PUBLIC_BACKEND_API);
 
 const userApi = axios.create({
-  baseURL: BACKEND_API,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_API,
 });
 
 // userApi.interceptors.request.use(

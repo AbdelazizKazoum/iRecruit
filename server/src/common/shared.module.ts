@@ -18,7 +18,7 @@ import { FileUploadService } from './services/file-upload.service';
     ]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '1h' }, // ** 1 hour
     }),
   ],
   providers: [UserUtilsService, FileUploadService],

@@ -1,17 +1,26 @@
 import { UpdatePasswordForm } from "@/components/normal-forms/UpdatePasswordForm";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 import axios from "axios";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const page = async ({ searchParams }: { searchParams: { code: string } }) => {
+const page = async ({
+  searchParams,
+  params,
+}: {
+  searchParams: { code: string };
+  params: { lang: Locale };
+}) => {
   const code = searchParams.code;
   let user = null;
 
+  const dictionary = await getDictionary(params.lang);
+
   if (!code) {
     // Redirect if no code is provided in the URL
-    redirect("/login");
-    return null;
+    redirect(`/${params.lang}/login`);
   }
 
   try {
@@ -22,13 +31,13 @@ const page = async ({ searchParams }: { searchParams: { code: string } }) => {
     user = res.data;
   } catch (error) {
     console.error("Failed to verify reset code:", error);
-    redirect("/login"); // Redirect if an error occurs
+    redirect(`/${params.lang}/login`);
   }
   return (
     <div className="flex flex-col items-center justify-center bg-primary-300/5 min-h-screen">
       <a
         className=" absolute top-2 left-10 mt-10 w-fit text-black-600/80 dark:text-white"
-        href="/home"
+        href={`/${params.lang}/home`}
       >
         <div className="flex w-fit items-center lg:pl-0 lg:pt-0 xl:pt-0">
           <svg
@@ -71,7 +80,11 @@ const page = async ({ searchParams }: { searchParams: { code: string } }) => {
           Veuillez réinitialiser votre mot de passe pour accéder à votre compte.{" "}
         </p>
         {/* Login form */}
-        <UpdatePasswordForm code={code} />
+        <UpdatePasswordForm
+          code={code}
+          locale={params.lang}
+          dictionary={dictionary}
+        />
       </div>
     </div>
   );

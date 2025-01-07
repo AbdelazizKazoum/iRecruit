@@ -5,11 +5,12 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 import { Application } from 'src/schemas/Applications.schema';
 import { Candidature } from 'src/schemas/candidature.schema';
 import { FileUploadService } from 'src/common/services/file-upload.service';
+import { UserDocument } from 'src/schemas/user.schema';
 
 @Injectable()
 export class ApplicationsService {
@@ -50,6 +51,7 @@ export class ApplicationsService {
       const createApplication = new this.applicationModel({
         ...data,
         user: user,
+        offer: new Types.ObjectId(data.offer._id as string), // Extract the _id and convert to ObjectId
         attachment: filePaths,
       });
 
@@ -89,6 +91,29 @@ export class ApplicationsService {
       }
       throw new InternalServerErrorException(
         `Failed to retrieve application with ID ${id}`,
+        error.message,
+      );
+    }
+  }
+
+  // Get user application
+  async findUserApplication(user: UserDocument): Promise<Application[]> {
+    try {
+      const application = await this.applicationModel
+        .find({ user: user._id })
+        .exec();
+      if (!application) {
+        throw new NotFoundException(
+          `Application with user ${user._id} not found`,
+        );
+      }
+      return application;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(
+        `Failed to retrieve application with user ${user._id}`,
         error.message,
       );
     }

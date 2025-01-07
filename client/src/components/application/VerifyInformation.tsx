@@ -9,13 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import List from "../dynamic-form/List";
-import {
-  communicationsFormConfig,
-  diplomesFormConfig,
-  languesFormConfig,
-  publicationsFormConfig,
-} from "@/configs/formConfigs";
+import QualificationsLists from "../profile/profile-page/QualificationsLists";
 
 const VerifyInformation = ({ locale }: { locale: Locale }) => {
   const { candidatureData } = useCandidatureStore();
@@ -42,37 +36,9 @@ const VerifyInformation = ({ locale }: { locale: Locale }) => {
             Qualifications/Expériences
           </AccordionTrigger>
           <AccordionContent>
-            <List
-              submittedData={
-                candidatureData?.professionalInformation.parcoursEtDiplomes
-              }
+            <QualificationsLists
               locale={locale}
-              fields={diplomesFormConfig?.fields}
-              title={diplomesFormConfig?.title[locale]}
-            />
-            <List
-              submittedData={
-                candidatureData?.professionalInformation?.niveauxLangues
-              }
-              locale={locale}
-              fields={languesFormConfig?.fields}
-              title={languesFormConfig?.title[locale]}
-            />
-            <List
-              submittedData={
-                candidatureData?.professionalInformation?.publications
-              }
-              locale={locale}
-              fields={publicationsFormConfig.fields}
-              title={publicationsFormConfig.title[locale]}
-            />
-            <List
-              submittedData={
-                candidatureData?.professionalInformation?.communications
-              }
-              locale={locale}
-              fields={communicationsFormConfig.fields}
-              title={communicationsFormConfig.title[locale]}
+              candidatureData={candidatureData}
             />
           </AccordionContent>
         </AccordionItem>

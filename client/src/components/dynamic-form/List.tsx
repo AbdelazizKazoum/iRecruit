@@ -50,18 +50,18 @@ const List = ({
       {/* Data Table */}
       {submittedData && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-4">
+          <h2 className="text-lg font-semibold mb-4 text-black-600/75 ">
             {title ?? gridTranslation.title[locale]}
           </h2>
           {submittedData.length === 0 ? (
             <p className="text-gray-500">{gridTranslation.empty[locale]}</p>
           ) : (
-            <table className="table-auto w-full border-collapse border border-gray-300">
+            <table className="table-auto w-full border-collapse border border-black-500/80">
               <thead>
                 <tr>
                   {headers.map((header: any, index: any) => (
                     <th
-                      className="border border-gray-300 px-4 py-2 bg-primary/10"
+                      className="border text-black-500/90  px-4 py-2 bg-primary/10"
                       key={index}
                     >
                       {header?.split(" ")[0]}
@@ -78,7 +78,7 @@ const List = ({
                           Object.entries(value || {}).map((fileKey) => (
                             <td
                               key={i}
-                              className="border border-gray-300 px-4 py-2 text-center"
+                              className="border text-black-500/80 px-4 py-2 text-center"
                             >
                               <div
                                 key={fileKey[0]}
@@ -100,7 +100,7 @@ const List = ({
                         ) : (
                           <td
                             key={i}
-                            className="border border-gray-300 px-4 py-2 text-center"
+                            className="border text-black-500/90 px-4 py-2 text-center"
                           >
                             {String(value)}
                           </td>

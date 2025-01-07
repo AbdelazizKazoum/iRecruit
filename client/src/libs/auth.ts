@@ -30,6 +30,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           return res.data;
         } catch (error: any) {
+          console.log("🚀 ~ authorize ~ error:", error);
+
           if (error.response.status === 401) {
             throw new CredentialsSignin(
               "Email ou mot de passe invalide. Veuillez réessayer."

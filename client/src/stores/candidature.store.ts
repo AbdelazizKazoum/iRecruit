@@ -22,7 +22,7 @@ export interface CandidatureStoreState {
 
 export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
   candidatureData: null,
-  loading: false,
+  loading: true,
   error: "",
 
   // fetch candidature from database

@@ -11,6 +11,8 @@ import AttachmentForm from "./AttachmentForm";
 import { Locale } from "@/configs/i18n";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { useApplicationStore } from "@/stores/useApplication.store";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -38,7 +40,7 @@ function Stepper({ locale }: { locale: Locale }) {
   const { fetchCandidatureData } = useCandidatureStore();
   const { applicationData, submitApplication } = useApplicationStore();
   const formRef = React.useRef<HTMLButtonElement>(null);
-  console.log("🚀 ~ Stepper ~ formRef:", formRef);
+  const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
@@ -48,7 +50,12 @@ function Stepper({ locale }: { locale: Locale }) {
   }, [fetchCandidatureData]);
 
   const submitData = async () => {
-    if (applicationData) await submitApplication(applicationData);
+    if (applicationData) {
+      const res = await submitApplication(applicationData);
+      if (res === "success") {
+        router.push(`/${locale}/profile?section=candidatures`);
+      }
+    } else toast.error("Data is not submitted yet");
   };
 
   const submitAttachmentForm = () => {

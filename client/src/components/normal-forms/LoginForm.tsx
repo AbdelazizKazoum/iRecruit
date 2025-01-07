@@ -15,13 +15,21 @@ import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
 import { Mail, Lock } from "lucide-react"; // Lucide icons
 import { loginSchema } from "@/schemas/authSchema";
+import { Locale } from "@/configs/i18n";
+import { getDictionary } from "@/utils/getDictionary";
 
 type LoginFormData = {
   email: string;
   password: string;
 };
 
-export const LoginForm = () => {
+export const LoginForm = ({
+  locale,
+}: // dictionary,
+{
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   });
@@ -106,14 +114,17 @@ export const LoginForm = () => {
       )}
 
       <p className="mt-6 text-center text-sm">
-        <a href="/account/reset" className="text-primary hover:underline">
+        <a
+          href={`/${locale}/account/reset`}
+          className="text-primary hover:underline"
+        >
           Mot de passe oublié ?
         </a>
       </p>
       <p className="mt-4 text-center text-sm text-black-600/60">
         Vous n&apos;avez pas de compte ?{" "}
         <a
-          href="/register"
+          href={`/${locale}/register`}
           className="text-primary font-medium hover:underline"
         >
           S&apos;inscrire

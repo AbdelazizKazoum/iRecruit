@@ -27,8 +27,8 @@ type RegisterFormData = {
 
 export const RegisterForm = ({
   locale,
-  dictionary,
-}: {
+}: // dictionary,
+{
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {

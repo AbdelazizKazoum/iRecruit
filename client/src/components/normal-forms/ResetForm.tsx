@@ -26,8 +26,8 @@ interface ResetPasswordFormType {
 
 export const ResetPasswordForm = ({
   locale,
-  dictionary,
-}: {
+}: // dictionary,
+{
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {

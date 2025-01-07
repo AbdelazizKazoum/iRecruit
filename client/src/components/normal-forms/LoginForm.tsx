@@ -25,8 +25,8 @@ type LoginFormData = {
 
 export const LoginForm = ({
   locale,
-  dictionary,
-}: {
+}: // dictionary,
+{
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {

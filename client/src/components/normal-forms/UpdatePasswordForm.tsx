@@ -29,8 +29,8 @@ type RegisterFormData = {
 export const UpdatePasswordForm = ({
   code,
   locale,
-  dictionary,
-}: {
+}: // dictionary,
+{
   code: string;
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;

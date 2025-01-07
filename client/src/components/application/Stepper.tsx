@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/role-supports-aria-props */
 "use client";
 import * as React from "react";
 
@@ -83,10 +82,7 @@ function Stepper({ locale }: { locale: Locale }) {
           aria-label="Checkout Steps"
           className="group my-4 w-[70%] max-w-[70%]"
         >
-          <ol
-            className="flex items-center justify-between gap-2 flex-wrap"
-            aria-orientation="horizontal"
-          >
+          <ol className="flex items-center justify-between gap-2 flex-wrap">
             {stepper.all.map((step, index, array) => (
               <React.Fragment key={step.id}>
                 <li className="flex items-center gap-2 sm:gap-4 flex-shrink-0">

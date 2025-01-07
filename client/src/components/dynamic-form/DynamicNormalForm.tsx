@@ -23,7 +23,7 @@ const DynamicNormalForm = forwardRef<
     onSubmit: (data: any) => void;
     defaultValues: any;
     mode: "readonly" | "new" | "edit";
-    showButton?: boolean;
+    showButton?: true;
   }
 >(
   (

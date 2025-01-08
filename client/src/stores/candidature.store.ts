@@ -6,7 +6,7 @@ import { create } from "zustand";
 export interface CandidatureStoreState {
   candidatureData: CandidatureType | null;
   loading: boolean;
-  error: string;
+  error: string | null;
 
   setPersonalInformation: (
     data: CandidatureType["personalInformation"]
@@ -16,7 +16,7 @@ export interface CandidatureStoreState {
   submitPublications: (publications: FormData) => Promise<void>;
   submitCommunication: (communication: FormData) => Promise<void>;
   submitPersonalInformation: (data: FormData) => Promise<void>;
-  fetchCandidatureData: () => Promise<void>;
+  fetchCandidatureData: () => Promise<string>;
   validateCandidature: () => Promise<void>; // New validation method
 }
 
@@ -31,19 +31,20 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
     try {
       const response = await clientApi.get("/candidature/mine");
       const data = response.data as CandidatureType;
-      console.log("🚀 ~ fetchCandidatureData: ~ data:", data);
 
       set({
         candidatureData: data,
         loading: false,
       });
+      return "success";
     } catch (error) {
-      console.error("Error fetching candidature data:", error);
       set({
         loading: false,
-        error: "Failed to fetch candidature data. Please try again.",
+        error: error
+          ? "Failed to fetch candidature data. Please try again."
+          : null,
       });
-      toast.error("Failed to fetch candidature data. Please try again.");
+      return "error";
     }
   },
 

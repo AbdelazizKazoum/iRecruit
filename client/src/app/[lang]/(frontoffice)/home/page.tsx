@@ -10,7 +10,6 @@ const Page = async ({ params }: { params: { lang: Locale } }) => {
   return (
     <>
       <Hero dictionary={dictionary} locale={params.lang} />
-      {process.env.NEXT_PUBLIC_BACKEND_API}
       <Etapes locale={params.lang} dictionary={dictionary} />
     </>
   );

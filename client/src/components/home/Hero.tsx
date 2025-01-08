@@ -61,6 +61,7 @@ const Hero = ({
     "test NEXT_PUBLIC_BACKEND_API",
     process.env.NEXT_PUBLIC_BACKEND_API
   );
+  console.log("test NEXT_PUBLIC_TEST", process.env.NEXT_PUBLIC_TEST);
 
   return (
     <div className="max-w-screen-2xl mt-24 px-8 xl:px-16 mx-auto" id="accueil">

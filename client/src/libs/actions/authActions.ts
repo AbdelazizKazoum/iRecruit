@@ -63,11 +63,6 @@ export async function sendVerificationLink(formData: any) {
       success: true,
     };
   } catch (error: any) {
-    console.log(
-      "🚀 ~ sendVerificationLink ~ NEXT_PUBLIC_API_URL:",
-      process.env.BACKEND_API
-    );
-
     console.log("🚀 ~ sendVerificationLink ~ error:", error);
 
     switch (error.status) {

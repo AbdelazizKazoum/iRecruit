@@ -9,6 +9,7 @@ import { Locale } from "@/configs/i18n";
 import { getDictionary } from "@/utils/getDictionary";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { steps } from "@/data/candidature/steps";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   className: string;
@@ -28,7 +29,21 @@ export function CandidatureSidebar({
     searchParams.toString() || "section=info-personnelles"
   }`;
 
-  const { candidatureData } = useCandidatureStore();
+  const { candidatureData, loading } = useCandidatureStore();
+
+  if (loading)
+    return (
+      <nav
+        className={cn(
+          "grid gap-6 sm:grid-cols-2 lg:grid-cols-1 max-w-2xl m-auto ",
+          className
+        )}
+        {...props}
+      >
+        <Skeleton className="h-5 min-w-40 w-full " />
+        <Skeleton className="h-5 min-w-40 w-full " />
+      </nav>
+    );
 
   return (
     <nav

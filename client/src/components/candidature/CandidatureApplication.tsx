@@ -5,6 +5,8 @@ import InfoProfessionnelles from "./info-professionnelles/Index";
 import InfoPersonnelles from "./info-personnelles/InfoPersonnellesForm";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { getDictionary } from "@/utils/getDictionary";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/libs/utils";
 
 export const CandidatureApplication = ({
   section,
@@ -25,7 +27,23 @@ export const CandidatureApplication = ({
     })();
   }, [fetchCandidatureData]);
 
-  if (loading) return <>loading ...</>;
+  if (loading)
+    return (
+      <nav className={cn("grid grid-cols-2 gap-6  m-auto w-full")}>
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+        </div>
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+        </div>
+      </nav>
+    );
 
   return (
     <main className="flex-1">

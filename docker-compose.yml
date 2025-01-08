@@ -52,6 +52,7 @@ services:
       - NEXTAUTH_URL=http://localhost:4400/api/auth # Keep this as localhost if accessing from outside the container network
       - NEXTAUTH_SECRET=Kf/ptCrcSOQv8mjKbe7qh83x5NhgA9gOuyl038ClBVk=
       - NEXT_PUBLIC_APP_URL=http://localhost:4400
+      - NEXT_PUBLIC_BACKEND_API=http://irecruit_api:4000/api
 
     command: npm run start
     depends_on:

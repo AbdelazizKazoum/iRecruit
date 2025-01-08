@@ -57,10 +57,14 @@ const Hero = ({
     setIsVideoOpen(true);
   };
 
+  console.log(
+    "test NEXT_PUBLIC_BACKEND_API",
+    process.env.NEXT_PUBLIC_BACKEND_API
+  );
+
   return (
     <div className="max-w-screen-2xl mt-24 px-8 xl:px-16 mx-auto" id="accueil">
-      {process.env.NEXT_PUBLIC_BACKEND_API}
-
+      <div> test : {process.env.NEXT_PUBLIC_BACKEND_API}</div>
       <ScrollAnimationWrapper className={""}>
         <motion.div
           className="grid grid-flow-row sm:grid-flow-col md:grid-rows-1 sm:grid-cols-2 gap-8 py-6 :py-16"

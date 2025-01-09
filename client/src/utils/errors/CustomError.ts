@@ -10,8 +10,6 @@ export class CustomError extends Error {
     this.name = "CustomError"; // Optional: Set a custom error name
     this.type = type || ""; // Optional: Set a custom error name
 
-    console.log(code);
-
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 }

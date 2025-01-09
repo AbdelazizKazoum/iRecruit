@@ -73,8 +73,6 @@ export class AuthService {
     //   text: `Click here to verify your email: ${verificationLink}`,
     // });
 
-    console.log(verificationLink);
-
     return {
       link: verificationLink,
     };

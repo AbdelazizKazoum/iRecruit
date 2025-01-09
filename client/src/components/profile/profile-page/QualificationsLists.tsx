@@ -21,7 +21,7 @@ const QualificationsLists = ({
       {" "}
       <List
         submittedData={
-          candidatureData?.professionalInformation.parcoursEtDiplomes
+          candidatureData?.professionalInformation?.parcoursEtDiplomes
         }
         locale={locale}
         fields={diplomesFormConfig?.fields}

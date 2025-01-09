@@ -9,13 +9,11 @@ import React from "react";
 const CommunicationsForm = ({ locale }: { locale: Locale }) => {
   // Hooks
   const { candidatureData, submitCommunication } = useCandidatureStore();
-  console.log("🚀 ~ CommunicationsForm ~ candidatureData:", candidatureData);
 
   const onSubmit = async (data: communicationsType) => {
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'
     const { files, ...rest } = data; // Destructure to separate files from other data
-    console.log("🚀 ~ onSubmit ~ rest:", rest);
 
     formData.append("communication", JSON.stringify(rest));
 
@@ -30,8 +28,6 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
     }
 
     submitCommunication(formData);
-
-    console.log(data);
   };
   return (
     <div>

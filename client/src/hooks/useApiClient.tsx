@@ -11,8 +11,6 @@ const useApiClient = () => {
       async (config) => {
         const token = session?.user.accessToken || "";
 
-        console.log("🚀 ~ token:", token);
-
         config.headers = {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",

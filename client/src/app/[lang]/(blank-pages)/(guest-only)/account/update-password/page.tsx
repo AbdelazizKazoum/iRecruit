@@ -27,7 +27,6 @@ const page = async ({
     const res = await axios.get(
       `${process.env.BACKEND_API}/auth/verify-resetCode/${code}`
     );
-    console.log("🚀 ~ Page ~ res:", res.data);
     user = res.data;
   } catch (error) {
     console.error("Failed to verify reset code:", error);

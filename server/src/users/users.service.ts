@@ -74,10 +74,6 @@ export class UsersService {
   }
 
   async updatePassword(updatePasswordDto: UpdatePasswordDto) {
-    console.log(
-      '🚀 ~ UsersService ~ updatePassword ~ updatePasswordDto:',
-      updatePasswordDto,
-    );
     // Find the user by email
     const user = await this.findOneByEmail(updatePasswordDto.email);
     if (!user) throw new NotFoundException("L'utilisateur n'existe pas");
@@ -131,7 +127,6 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    console.log('🚀 ~ UsersService ~ update ~ id:', id);
     try {
       const updatedUser = await this.userModal
         .findByIdAndUpdate(id, updateUserDto, {
@@ -159,7 +154,6 @@ export class UsersService {
       return payload;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.log('🚀 ~ UsersService ~ verifyVerificationCode ~ error:', error);
       throw new UnauthorizedException('Verification code is invalid!');
     }
   }

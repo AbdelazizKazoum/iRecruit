@@ -10,7 +10,6 @@ export async function downloadFile(filePath: string): Promise<Blob | null> {
         responseType: "blob", // Ensures the response is a Blob
       }
     );
-    console.log("🚀 ~ downloadFile ~ response:", response);
 
     return response.data; // Return the Blob (the file data)
   } catch (error) {

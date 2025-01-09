@@ -13,10 +13,7 @@ export default function Error({
   error: Error & { type?: string; digest?: string };
   reset: () => void;
 }) {
-  console.log("🚀 ~ error: message", error.type);
-  useEffect(() => {
-    console.error("Error in profile route:", error.type);
-  }, [error]);
+  useEffect(() => {}, [error]);
 
   // Render the appropriate error component based on error type
   switch (error.message) {

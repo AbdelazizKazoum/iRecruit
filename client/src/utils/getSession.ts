@@ -5,6 +5,5 @@ export const fetchSession = async () => {
 
     return session;
   } else {
-    console.log("No session or error occurred");
   }
 };

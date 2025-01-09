@@ -26,7 +26,6 @@ export class ApplicationsService {
 
   // Create a new application
   async create(data, files: any, user: any): Promise<Application> {
-    console.log('🚀 ~ ApplicationsService ~ create ~ data:', data);
     try {
       // Check if a candidature already exists for the given user
       const existingCandidature = await this.candidatureModel.findOne({

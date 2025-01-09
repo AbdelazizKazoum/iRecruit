@@ -12,6 +12,7 @@ const config: Config = {
     colors: {
       transparent: "transparent",
       black: {
+        DEFAULT: "#000000", // Pure black
         "300": "rgb(79 86 101 / 58%)",
         "500": "#4F5665",
         "600": "#0B132A",

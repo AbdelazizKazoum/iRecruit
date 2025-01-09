@@ -36,8 +36,6 @@ const DynamicNormalForm = forwardRef<
       defaultValues: defaultValues,
     });
 
-    console.log("\ud83d\ude80 ~ form:", form.formState.errors);
-
     const renderedFields = useMemo(() => {
       return config.fields.map((fieldConfig: any, index: number) => {
         if (fieldConfig.type === "group") {

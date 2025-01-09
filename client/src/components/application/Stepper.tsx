@@ -12,6 +12,9 @@ import { useCandidatureStore } from "@/stores/candidature.store";
 import { useApplicationStore } from "@/stores/useApplication.store";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Loading from "../Loading";
+import { Loader } from "lucide-react";
+import ValidationModal from "../modals/ValidationModal";
 
 const { useStepper, steps } = defineStepper(
   {
@@ -34,6 +37,9 @@ const { useStepper, steps } = defineStepper(
 function Stepper({ locale }: { locale: Locale }) {
   // Use state
   const [loading, setLoading] = React.useState(true);
+  const [sending, setSending] = React.useState(false);
+  const [showModal, setShowModal] = React.useState(false); // State to control modal visibility
+
   // Hooks
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
@@ -43,18 +49,33 @@ function Stepper({ locale }: { locale: Locale }) {
 
   React.useEffect(() => {
     (async () => {
-      await fetchCandidatureData();
+      const candidature = await fetchCandidatureData();
       setLoading(false);
+      console.log("🚀 ~ candidats:", candidature);
+
+      if (candidature) {
+        if (
+          !candidature?.personalInformation?.valid &&
+          !candidature?.professionalInformation?.valid
+        ) {
+          setShowModal(true); // Show the modal if not valid
+          // router.push(`/${locale}/candidature`);
+        }
+      } else {
+        setShowModal(true); // Show the modal if not valid
+      }
     })();
-  }, [fetchCandidatureData]);
+  }, [fetchCandidatureData, locale, router]);
 
   const submitData = async () => {
     if (applicationData) {
+      setSending(true);
       const res = await submitApplication(applicationData);
       if (res === "success") {
         router.push(`/${locale}/profile?section=candidatures`);
       }
     } else toast.error("Data is not submitted yet");
+    setSending(false);
   };
 
   const submitAttachmentForm = () => {
@@ -64,10 +85,21 @@ function Stepper({ locale }: { locale: Locale }) {
     }
   };
 
-  if (loading) return <>loading ...</>;
+  if (loading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
 
   return (
     <div className="space-y-6 p-6 border rounded-lg">
+      {/* Modal for showing validation alert */}
+      <ValidationModal
+        open={showModal}
+        onClose={() => router.push(`/${locale}/candidature`)}
+      />
+
       <div className="flex justify-between">
         {/* <h2 className="text-lg font-medium">Checkout</h2>
         <div className="flex items-center gap-2">
@@ -121,52 +153,55 @@ function Stepper({ locale }: { locale: Locale }) {
         </nav>
       </div>
 
-      <div className="container mx-auto">
-        <div className="w-full  border border-gray-200 p-5 ">
-          {stepper.switch({
-            description: () => <JobOfferPage />,
-            attachment: () => (
-              <AttachmentForm
-                ref={formRef}
-                locale={locale}
-                next={stepper.next}
-              />
-            ),
-            verification: () => <VerifyInformation locale={locale} />,
-          })}
-        </div>
+      {!showModal && (
+        <div className="container mx-auto">
+          <div className="w-full  border border-gray-200 p-5 ">
+            {stepper.switch({
+              description: () => <JobOfferPage />,
+              attachment: () => (
+                <AttachmentForm
+                  ref={formRef}
+                  locale={locale}
+                  next={stepper.next}
+                />
+              ),
+              verification: () => <VerifyInformation locale={locale} />,
+            })}
+          </div>
 
-        {!stepper.isLast ? (
-          <div className="flex justify-end gap-4 mt-10 ">
-            <Button
-              size="lg"
-              onClick={() => {
-                console.log();
-                if (stepper.current.title == "Attachment") {
-                  console.log(formRef);
-                  submitAttachmentForm();
-                } else stepper.next();
-              }}
-            >
-              {stepper.isLast ? "Terminer" : "Continuer"}
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={stepper.prev}
-              disabled={stepper.isFirst}
-              size="lg"
-            >
-              Retour
-            </Button>
-          </div>
-        ) : (
-          <div className="flex justify-end gap-4 mt-10 ">
-            <Button size="lg" onClick={submitData}>
-              Soumettre la candidature
-            </Button>
-          </div>
-        )}
-      </div>
+          {!stepper.isLast ? (
+            <div className="flex justify-end gap-4 mt-10 ">
+              <Button
+                size="lg"
+                onClick={() => {
+                  if (stepper.current.title == "Attachment") {
+                    submitAttachmentForm();
+                  } else stepper.next();
+                }}
+              >
+                {stepper.isLast ? "Terminer" : "Continuer"}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={stepper.prev}
+                disabled={stepper.isFirst}
+                size="lg"
+              >
+                Retour
+              </Button>
+            </div>
+          ) : (
+            <div className="flex justify-end gap-4 mt-10 ">
+              <Button size="lg" disabled={sending} onClick={submitData}>
+                {sending ? (
+                  <Loader className="animate-spin mr-2 h-4 w-4" />
+                ) : null}
+                Soumettre la candidature
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

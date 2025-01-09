@@ -28,8 +28,6 @@ export async function getUserProfile(
       message: "Data loaded successfully",
     };
   } catch (error: unknown) {
-    console.log("🚀 ~ getUserProfile ~ error:", error);
-
     let errorMessage = "An unknown error occurred";
     let errorType = "UnknownError";
     let statusCode: number | undefined = undefined;
@@ -71,8 +69,6 @@ export async function updateProfile(
       message: "Utilisateur mis à jour avec succès",
     };
   } catch (error: unknown) {
-    console.log("🚀 ~ error:", error);
-
     const errorMessage = "An unknown error occurred";
     // if (error instanceof Error) {
     //   errorMessage = error.message;

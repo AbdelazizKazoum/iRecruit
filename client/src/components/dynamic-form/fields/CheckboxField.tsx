@@ -13,7 +13,6 @@ import {
 import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
 import React, { memo } from "react";
-import { useFormContext } from "react-hook-form";
 
 interface TextInputProps {
   fieldConfig: any;
@@ -28,7 +27,6 @@ const CheckboxField: React.FC<TextInputProps> = ({
   field,
   locale,
 }) => {
-  const {} = useFormContext();
   const { error } = useFormField();
 
   return (

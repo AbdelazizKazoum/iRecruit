@@ -11,8 +11,6 @@ const useDynamicForm = (schema: any, category: string) => {
   const setFormData = useFormStore((state: any) => state.setFormData);
 
   const onSubmit = (data: any) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
-
     const formData = new FormData();
 
     // Append each field in 'data' dynamically to formData

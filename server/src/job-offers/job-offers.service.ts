@@ -37,12 +37,9 @@ export class JobOffersService {
             : new Types.ObjectId(application.offer as string).toString(), // Handle edge case if offer is not an ObjectId
       );
 
-      console.log('User application offer IDs:', userOfferIds);
-
       // Filter out offers already applied for
       return offers.filter((offer: JobOfferDocument) => {
         const offerId = offer._id.toString(); // Ensure this is also a string
-        console.log('Offer ID:', offerId);
 
         // Return only offers that are not in userOfferIds
         return !userOfferIds.includes(offerId);

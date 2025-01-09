@@ -9,6 +9,7 @@ import {
   FormMessage,
   useFormField,
 } from "@/components/ui/form";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Locale } from "@/configs/i18n";
 import { cn } from "@/libs/utils";
 import { downloadFile } from "@/utils/downloadFile";
@@ -32,7 +33,7 @@ const FileInput: React.FC<TextInputProps> = ({
   const [fileName, setFileName] = React.useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { watch, setValue } = useFormContext();
+  const { watch, setValue, trigger } = useFormContext();
 
   const { error } = useFormField();
 
@@ -41,6 +42,7 @@ const FileInput: React.FC<TextInputProps> = ({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setValue(fieldConfig.name, file);
+    trigger(fieldConfig.name);
 
     setFileName(file ? file.name : null);
   };
@@ -49,7 +51,6 @@ const FileInput: React.FC<TextInputProps> = ({
     if (typeof field.value === "string") {
       (async () => {
         const file = await downloadFile(field.value);
-        console.log("🚀 use effet ~ file:", file);
 
         setFileName(field.value.split("\\").pop());
         setValue(field.name, file);
@@ -59,7 +60,13 @@ const FileInput: React.FC<TextInputProps> = ({
     setLoading(false);
   }, [field.value, field.name, setValue]);
 
-  if (loading) return <> Loading ...</>;
+  if (loading)
+    return (
+      <>
+        {" "}
+        <Skeleton className="h-8 w-full" />
+      </>
+    );
 
   return (
     <>

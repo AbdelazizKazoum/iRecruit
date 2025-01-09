@@ -101,8 +101,6 @@ const DynamicGridForm = ({
   }, [config.fields, category, form.control, locale]);
 
   const addToList = (data: any) => {
-    console.log("🚀 ~ addToList ~ data:", data);
-
     // Check if the key specified in `checkKey` already exists in `submittedData`
     const exists = submittedData.some(
       (item) => item[checkKey] === data[checkKey]

@@ -14,7 +14,6 @@ const page = async ({ params }: { params: { code: string; lang: Locale } }) => {
     );
 
     user = await res.json();
-    console.log(user);
   } catch (error) {
     console.error(error);
     redirect(`/${params.lang}/login`);

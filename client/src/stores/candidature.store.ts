@@ -16,7 +16,7 @@ export interface CandidatureStoreState {
   submitPublications: (publications: FormData) => Promise<void>;
   submitCommunication: (communication: FormData) => Promise<void>;
   submitPersonalInformation: (data: FormData) => Promise<void>;
-  fetchCandidatureData: () => Promise<string>;
+  fetchCandidatureData: () => Promise<CandidatureType | null>;
   validateCandidature: () => Promise<void>; // New validation method
 }
 
@@ -36,7 +36,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         candidatureData: data,
         loading: false,
       });
-      return "success";
+      return data;
     } catch (error) {
       set({
         loading: false,
@@ -44,7 +44,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
           ? "Failed to fetch candidature data. Please try again."
           : null,
       });
-      return "error";
+      return null;
     }
   },
 

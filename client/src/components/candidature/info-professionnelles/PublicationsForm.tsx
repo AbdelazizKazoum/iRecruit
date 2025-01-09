@@ -14,7 +14,6 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'
     const { files, ...rest } = data; // Destructure to separate files from other data
-    console.log("🚀 ~ onSubmit ~ rest:", rest);
 
     formData.append("publications", JSON.stringify(rest));
 
@@ -29,8 +28,6 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
     }
 
     submitPublications(formData);
-
-    console.log(data);
   };
   return (
     <div>

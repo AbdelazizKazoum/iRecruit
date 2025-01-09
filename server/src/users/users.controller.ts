@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   Controller,
@@ -41,7 +42,6 @@ export class UsersController {
   updatePassword(@Body() updatePasswordDto: UpdatePasswordDto) {
     try {
       const payload = this.jwtService.verify(updatePasswordDto.code);
-      console.log('🚀 ~ UsersController ~ updatePassword ~ payload:', payload);
       return this.usersService.updatePassword({
         ...payload,
         newPassword: updatePasswordDto.newPassword,

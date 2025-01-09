@@ -26,7 +26,6 @@ export async function authenticate(formData: any) {
             error: "Email ou mot de passe invalide. Veuillez réessayer.",
           };
         default:
-          console.log(error.message);
           return {
             success: false,
             error: "Email ou mot de passe invalide. Veuillez réessayer.",
@@ -63,8 +62,6 @@ export async function sendVerificationLink(formData: any) {
       success: true,
     };
   } catch (error: any) {
-    console.log("🚀 ~ sendVerificationLink ~ error:", error);
-
     switch (error.status) {
       case 404:
         return {
@@ -143,8 +140,6 @@ export async function sendResetLink(email: string) {
       success: true,
     };
   } catch (error: any) {
-    console.log("🚀 ~ sendResetLink ~ res:", error);
-
     return {
       success: false,
       error: error.message,

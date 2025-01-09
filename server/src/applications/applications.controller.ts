@@ -29,8 +29,6 @@ export class ApplicationsController {
     @Body('data') application: string,
     @Request() req, // Access the request object
   ) {
-    console.log('🚀 ~ ApplicationsController ~ application:', application);
-    console.log('🚀 ~ ApplicationsController ~ files:', files);
     const user = req.user; // Extract the user from the request
     const data = JSON.parse(application);
 

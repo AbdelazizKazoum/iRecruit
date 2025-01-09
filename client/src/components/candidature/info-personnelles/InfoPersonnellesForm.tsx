@@ -11,7 +11,6 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
   const { candidatureData, submitPersonalInformation } = useCandidatureStore();
 
   async function onSubmit(data: any) {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     // Create a new FormData instance
     const formData = new FormData();
     // Add the rest of the data as a JSON string under the key 'data'

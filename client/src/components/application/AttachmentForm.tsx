@@ -26,7 +26,6 @@ const AttachmentForm = forwardRef<
     //   const { attachment, ...rest } = data; // Destructure to separate files from other data
 
     //   const dataToSubmit = { ...rest, offer: selectedOffer };
-    //   console.log("🚀 ~ onSubmit ~ rest:", dataToSubmit);
 
     //   formData.append("data", JSON.stringify(dataToSubmit));
 
@@ -42,7 +41,6 @@ const AttachmentForm = forwardRef<
 
     //   submitApplication(formData);
     // }
-    console.log("🚀 ~ onSubmit ~ dataToSubmit:", dataToSubmit);
   };
 
   return (

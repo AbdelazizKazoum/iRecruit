@@ -14,7 +14,6 @@ const FileUpload = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
-      console.log("🚀 ~ handleFileChange ~ file:", file);
       setValue("cinPdf", file);
       setValue("nam", file);
 

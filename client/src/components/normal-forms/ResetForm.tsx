@@ -45,8 +45,6 @@ export const ResetPasswordForm = ({
 
   // Handle form submission
   const onSubmit = async (data: ResetPasswordFormType) => {
-    console.log(data);
-
     const response = await sendResetLink(data.email);
 
     if (response.success) {

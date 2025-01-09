@@ -11,6 +11,9 @@ import { useCandidatureStore } from "@/stores/candidature.store";
 import { steps } from "@/data/candidature/steps";
 import { Skeleton } from "@/components/ui/skeleton";
 
+// Import Lucid icons here
+import { Check } from "lucide-react";
+
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   className: string;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
@@ -19,7 +22,6 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
 
 export function CandidatureSidebar({
   className,
-  // dictionary,
   local,
   ...props
 }: SidebarNavProps) {
@@ -55,6 +57,13 @@ export function CandidatureSidebar({
     >
       {steps.map((item) => {
         const Icon = item.icon;
+        // Determine the icon to display based on validation
+        const isValid =
+          (item.href === "/candidature?section=info-personnelles" &&
+            candidatureData?.personalInformation?.valid) ||
+          (item.href === "/candidature?section=info-professionnelles" &&
+            candidatureData?.professionalInformation?.valid);
+
         return (
           <Link
             key={item.href}
@@ -70,28 +79,19 @@ export function CandidatureSidebar({
                 "flex items-center justify-center min-w-10 h-10 mr-2 bg-primary/15 rounded text-primary",
                 fullPathWithQuery === `/${local}${item.href}` &&
                   "text-white-500 bg-primary  ",
-                candidatureData?.personalInformation?.valid &&
-                  item.href === "/candidature?section=info-personnelles" &&
-                  "text-white-500 bg-green-500 ",
-                candidatureData?.professionalInformation?.valid &&
-                  item.href === "/candidature?section=info-professionnelles" &&
-                  "text-white-500 bg-green-500 "
+                isValid && "text-white-500 bg-green-500 "
               )}
             >
-              <Icon />
+              {/* Use valid icon when validation is true */}
+              {isValid ? <Check /> : <Icon />}
             </div>
             <span
               className={cn(
                 "text-muted-foreground",
                 fullPathWithQuery === `/${local}${item.href}` &&
-                  "text-black-600/80",
+                  "text-black-600/80"
 
-                candidatureData?.personalInformation?.valid &&
-                  item.href === "/candidature?section=info-personnelles" &&
-                  "text-green-500",
-                candidatureData?.professionalInformation?.valid &&
-                  item.href === "/candidature?section=info-professionnelles" &&
-                  "text-green-500"
+                // isValid && "text-green-500"
               )}
             >
               {item.title[local]}

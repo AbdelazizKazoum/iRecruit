@@ -1,7 +1,7 @@
 // /app/concours/loading.tsx
 export default function Loading() {
   return (
-    <div className="mt-4 sm:mt-8 min-h-[392px] flex justify-center items-center flex-col gap-10">
+    <div className="mt-4 sm:mt-8 min-h-screen flex justify-center items-center flex-col gap-10">
       <div role="status">
         <svg
           aria-hidden="true"

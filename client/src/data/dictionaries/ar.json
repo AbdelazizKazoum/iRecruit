@@ -19,6 +19,13 @@
     "success": "تم حفظ الطلب بنجاح.",
     "error": "حدث خطأ أثناء معالجة الطلب."
   },
+  "stepper": {
+    "next": "التالي",
+    "previous": "السابق",
+    "continue": "استمرار",
+    "back": "رجوع",
+    "submit": "إرسال البيانات"
+  },
 
   "menu": {
     "home": "الرئيسية",
@@ -190,5 +197,14 @@
   "steps": {
     "title": "الخطوات للتقديم على وظيفة",
     "subtitle": "اتبع هذه الخطوات البسيطة لتقديم طلبك وتتبع تقدمه عبر الإنترنت."
+  },
+  "application": {
+    "noOfferSelected": " لم يتم تحديد أي عرض أو إعلان.",
+    "city": " المدينة : ",
+    "department": "القسم:",
+    "candidatesNumber": " عدد المرشحين المطلوب :",
+    "description": "الوصف :",
+    "personalInformation": "المعلومات الشخصية",
+    "qualificationsExperiences": "المؤهلات/الخبرات"
   }
 }

@@ -21,7 +21,7 @@ const JobOfferPosting = async ({
           description={dictionary["candidature"].description}
         />
         <Separator className="my-6" />
-        <Stepper locale={params.lang} />
+        <Stepper locale={params.lang} dictionary={dictionary} />
       </div>
     </div>
   );

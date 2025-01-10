@@ -15,26 +15,57 @@ import { useRouter } from "next/navigation";
 import Loading from "../Loading";
 import { Loader } from "lucide-react";
 import ValidationModal from "../modals/ValidationModal";
+import { getDictionary } from "@/utils/getDictionary";
 
 const { useStepper, steps } = defineStepper(
   {
     id: "description",
-    title: "Offer Decription",
-    description: "Enter your shipping details",
+    title: {
+      en: "Offer Description",
+      ar: "وصف العرض",
+      fr: "Description de l'offre",
+    },
+    description: {
+      en: "Enter your shipping details",
+      ar: "أدخل تفاصيل الشحن الخاصة بك",
+      fr: "Entrez vos détails d'expédition",
+    },
   },
   {
     id: "attachment",
-    title: "Attachment",
-    description: "Enter your payment details",
+    title: {
+      en: "Attachment",
+      ar: "مرفق",
+      fr: "Pièce jointe",
+    },
+    description: {
+      en: "Enter your payment details",
+      ar: "أدخل تفاصيل الدفع الخاصة بك",
+      fr: "Entrez vos détails de paiement",
+    },
   },
   {
     id: "verification",
-    title: "Verification",
-    description: "Checkout complete",
+    title: {
+      en: "Verification",
+      ar: "التحقق",
+      fr: "Vérification",
+    },
+    description: {
+      en: "Checkout complete",
+      ar: "تم إكمال الدفع",
+      fr: "Paiement terminé",
+    },
   }
 );
 
-function Stepper({ locale }: { locale: Locale }) {
+function Stepper({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) {
   // Use state
   const [loading, setLoading] = React.useState(true);
   const [sending, setSending] = React.useState(false);
@@ -43,7 +74,8 @@ function Stepper({ locale }: { locale: Locale }) {
   // Hooks
   const stepper = useStepper();
   const { fetchCandidatureData } = useCandidatureStore();
-  const { applicationData, submitApplication } = useApplicationStore();
+  const { applicationData, submitApplication, selectedOffer } =
+    useApplicationStore();
   const formRef = React.useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
@@ -137,7 +169,7 @@ function Stepper({ locale }: { locale: Locale }) {
                     {index + 1}
                   </Button>
                   <span className="text-xs sm:text-sm font-medium text-black-600/80">
-                    {step.title}
+                    {step.title[locale]}
                   </span>
                 </li>
                 {index < array.length - 1 && (
@@ -157,7 +189,13 @@ function Stepper({ locale }: { locale: Locale }) {
         <div className="container mx-auto">
           <div className="w-full  border border-gray-200 p-5 ">
             {stepper.switch({
-              description: () => <JobOfferPage />,
+              description: () => (
+                <JobOfferPage
+                  offer={selectedOffer}
+                  locale={locale}
+                  dictionary={dictionary}
+                />
+              ),
               attachment: () => (
                 <AttachmentForm
                   ref={formRef}
@@ -165,7 +203,9 @@ function Stepper({ locale }: { locale: Locale }) {
                   next={stepper.next}
                 />
               ),
-              verification: () => <VerifyInformation locale={locale} />,
+              verification: () => (
+                <VerifyInformation locale={locale} dictionary={dictionary} />
+              ),
             })}
           </div>
 
@@ -174,12 +214,15 @@ function Stepper({ locale }: { locale: Locale }) {
               <Button
                 size="lg"
                 onClick={() => {
-                  if (stepper.current.title == "Attachment") {
+                  if (
+                    stepper.current.title[locale] ==
+                    stepper.get("attachment").title[locale]
+                  ) {
                     submitAttachmentForm();
                   } else stepper.next();
                 }}
               >
-                {stepper.isLast ? "Terminer" : "Continuer"}
+                {stepper.isLast ? "Terminer" : dictionary.stepper.continue}
               </Button>
               <Button
                 variant="secondary"
@@ -187,7 +230,7 @@ function Stepper({ locale }: { locale: Locale }) {
                 disabled={stepper.isFirst}
                 size="lg"
               >
-                Retour
+                {dictionary.stepper.back}
               </Button>
             </div>
           ) : (
@@ -196,7 +239,7 @@ function Stepper({ locale }: { locale: Locale }) {
                 {sending ? (
                   <Loader className="animate-spin mr-2 h-4 w-4" />
                 ) : null}
-                Soumettre la candidature
+                {dictionary.stepper.submit}
               </Button>
             </div>
           )}

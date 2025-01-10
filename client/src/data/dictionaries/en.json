@@ -19,6 +19,13 @@
     "success": "The application has been successfully saved.",
     "error": "An error occurred while processing the application."
   },
+  "stepper": {
+    "next": "Next",
+    "previous": "Previous",
+    "continue": "Continue",
+    "back": "Back",
+    "submit": "Submit Data"
+  },
 
   "menu": {
     "home": "Home",
@@ -190,5 +197,14 @@
   "steps": {
     "title": "Steps to Apply for a Job",
     "subtitle": "Follow these simple steps to submit your application and track its progress online."
+  },
+  "application": {
+    "noOfferSelected": "No offer or announcement selected.",
+    "city": "City:",
+    "department": "Department:",
+    "candidatesNumber": "Number of candidates required:",
+    "description": "Description:",
+    "personalInformation": "Personal Information",
+    "qualificationsExperiences": "Qualifications/Experiences"
   }
 }

@@ -19,6 +19,13 @@
     "success": "La candidature a été enregistrée avec succès.",
     "error": "Une erreur s'est produite lors du traitement de la candidature."
   },
+  "stepper": {
+    "next": "Suivant",
+    "previous": "Précédent",
+    "continue": "Continuer",
+    "back": "Retour",
+    "submit": "Soumettre les données"
+  },
 
   "menu": {
     "home": "Accueil",
@@ -179,5 +186,14 @@
   "steps": {
     "title": "Les étapes pour postuler à une offre",
     "subtitle": "Suivez ces étapes simples pour soumettre votre candidature et suivre son avancement en ligne."
+  },
+  "application": {
+    "noOfferSelected": "Aucun offre ou annonce sélectionnée.",
+    "city": "Ville :",
+    "department": "Département :",
+    "candidatesNumber": "Nombre de candidats demandés :",
+    "description": "Description :",
+    "personalInformation": "Informations Personnelles",
+    "qualificationsExperiences": "Qualifications/Expériences"
   }
 }

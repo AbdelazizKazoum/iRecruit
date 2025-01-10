@@ -10,15 +10,22 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import QualificationsLists from "../profile/profile-page/QualificationsLists";
+import { getDictionary } from "@/utils/getDictionary";
 
-const VerifyInformation = ({ locale }: { locale: Locale }) => {
+const VerifyInformation = ({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const { candidatureData } = useCandidatureStore();
   return (
     <div className="">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger className=" text-primary my-3 ">
-            Informations Personnelles
+            {dictionary.application.personalInformation}
           </AccordionTrigger>
           <AccordionContent>
             <DynamicNormalForm
@@ -33,7 +40,7 @@ const VerifyInformation = ({ locale }: { locale: Locale }) => {
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger className=" text-primary my-3 ">
-            Qualifications/Expériences
+            {dictionary.application.qualificationsExperiences}
           </AccordionTrigger>
           <AccordionContent>
             <QualificationsLists

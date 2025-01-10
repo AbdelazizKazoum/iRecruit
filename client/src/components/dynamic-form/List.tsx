@@ -70,65 +70,39 @@ const List = ({
                 </tr>
               </thead>
               <tbody>
-                {submittedData.map((entry: any, index: any) => (
-                  <tr key={index} className="text-center">
-                    {Object.entries(entry).map(([key, value], i) => (
-                      <>
-                        {key === "files" && typeof value === "object" ? (
-                          Object.entries(value || {}).map((fileKey) => (
+                {submittedData.map((entry: any, rowIndex: any) => (
+                  <tr key={`row-${rowIndex}`} className="text-center">
+                    {Object.entries(entry).map(([key, value], colIndex) =>
+                      key === "files" && typeof value === "object" ? (
+                        Object.entries(value || {}).map(
+                          ([fileValue], fileIndex) => (
                             <td
-                              key={i}
+                              key={`file-${rowIndex}-${colIndex}-${fileIndex}`}
                               className="border text-black-500/80 px-4 py-2 text-center"
                             >
-                              <div
-                                key={fileKey[0]}
-                                className="flex items-center justify-center"
-                              >
-                                {/* <span className="mr-2">{fileKey}</span> */}
+                              <div className="flex items-center justify-center">
                                 <Button
                                   variant="outline"
                                   size="icon"
                                   onClick={async () =>
-                                    await handleOpenFile(fileKey[1])
+                                    await handleOpenFile(fileValue)
                                   }
                                 >
                                   <Download className="h-4 w-4 text-blue-500" />
                                 </Button>
                               </div>
                             </td>
-                          ))
-                        ) : (
-                          <td
-                            key={i}
-                            className="border text-black-500/90 px-4 py-2 text-center"
-                          >
-                            {String(value)}
-                          </td>
-                        )}
-                      </>
-                      // <td
-                      //   key={i}
-                      //   className="border border-gray-300 px-4 py-2 text-center"
-                      // >
-                      //   {key === "files" && typeof value === "object"
-                      //     ? Object.keys(value).map((fileKey) => (
-                      //         <div
-                      //           key={fileKey}
-                      //           className="flex items-center justify-center"
-                      //         >
-                      //           {/* <span className="mr-2">{fileKey}</span> */}
-                      //           <Button
-                      //             variant="outline"
-                      //             size="icon"
-                      //             onClick={() => handleOpenFile(value)}
-                      //           >
-                      //             <Download className="h-4 w-4 text-blue-500" />
-                      //           </Button>
-                      //         </div>
-                      //       ))
-                      //     : String(value)}
-                      // </td>
-                    ))}
+                          )
+                        )
+                      ) : (
+                        <td
+                          key={`cell-${rowIndex}-${colIndex}`}
+                          className="border text-black-500/90 px-4 py-2 text-center"
+                        >
+                          {String(value)}
+                        </td>
+                      )
+                    )}
                   </tr>
                 ))}
               </tbody>

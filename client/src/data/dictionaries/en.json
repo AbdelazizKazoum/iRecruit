@@ -205,6 +205,11 @@
     "candidatesNumber": "Number of candidates required:",
     "description": "Description:",
     "personalInformation": "Personal Information",
-    "qualificationsExperiences": "Qualifications/Experiences"
+    "qualificationsExperiences": "Qualifications/Experiences",
+    "modal": {
+      "title": "Please complete your application",
+      "description": "Before applying for a job, please fill in all your information and validate them.",
+      "continue": "Continue"
+    }
   }
 }

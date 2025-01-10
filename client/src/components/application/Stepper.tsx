@@ -130,6 +130,7 @@ function Stepper({
       <ValidationModal
         open={showModal}
         onClose={() => router.push(`/${locale}/candidature`)}
+        dictionary={dictionary}
       />
 
       <div className="flex justify-between">

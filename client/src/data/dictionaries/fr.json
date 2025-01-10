@@ -194,6 +194,11 @@
     "candidatesNumber": "Nombre de candidats demandés :",
     "description": "Description :",
     "personalInformation": "Informations Personnelles",
-    "qualificationsExperiences": "Qualifications/Expériences"
+    "qualificationsExperiences": "Qualifications/Expériences",
+    "modal": {
+      "title": "Veuillez compléter votre candidature",
+      "description": "Avant de postuler à une offre, veuillez remplir toutes vos informations et les valider.",
+      "continue": "Continuer"
+    }
   }
 }

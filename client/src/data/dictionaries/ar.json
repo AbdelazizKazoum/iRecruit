@@ -205,6 +205,11 @@
     "candidatesNumber": " عدد المرشحين المطلوب :",
     "description": "الوصف :",
     "personalInformation": "المعلومات الشخصية",
-    "qualificationsExperiences": "المؤهلات/الخبرات"
+    "qualificationsExperiences": "المؤهلات/الخبرات",
+    "modal": {
+      "title": "يرجى إكمال طلبك",
+      "description": "قبل التقدم لوظيفة، يرجى ملء جميع معلوماتك والتحقق منها.",
+      "continue": "متابعة"
+    }
   }
 }

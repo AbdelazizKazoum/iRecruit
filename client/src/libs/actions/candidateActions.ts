@@ -69,6 +69,8 @@ export async function updateProfile(
       message: "Utilisateur mis à jour avec succès",
     };
   } catch (error: unknown) {
+    console.log("🚀 ~ error:", error);
+
     const errorMessage = "An unknown error occurred";
     // if (error instanceof Error) {
     //   errorMessage = error.message;

@@ -120,7 +120,7 @@ function Stepper({
   if (loading)
     return (
       <>
-        <Loading />
+        <Loading className="h-[500px]" />
       </>
     );
 

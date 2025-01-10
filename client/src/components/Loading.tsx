@@ -1,7 +1,14 @@
+import { cn } from "@/libs/utils";
+
 // /app/concours/loading.tsx
-export default function Loading() {
+export default function Loading({ className }: { className?: string }) {
   return (
-    <div className="mt-4 sm:mt-8 min-h-screen flex justify-center items-center flex-col gap-10">
+    <div
+      className={cn(
+        `mt-4 sm:mt-8 min-h-screen flex justify-center items-center flex-col gap-10`,
+        className
+      )}
+    >
       <div role="status">
         <svg
           aria-hidden="true"

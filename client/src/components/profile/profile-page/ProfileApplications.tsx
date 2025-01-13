@@ -1,6 +1,13 @@
+import PageHeader from "@/components/PageHeader";
+import { Separator } from "@/components/ui/separator";
+import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
-const ProfileApplications = () => {
+const ProfileApplications = ({
+  dictionary,
+}: {
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   const applications = [
     {
       id: 1,
@@ -38,38 +45,69 @@ const ProfileApplications = () => {
   ];
 
   return (
-    <div className=" bg-gray-50">
+    <div className=" bg-gray-50 space-y-6">
+      <PageHeader
+        title={dictionary.profilePage.sections.candidatures.title}
+        description={dictionary.profilePage.sections.candidatures.description}
+        size="sm"
+      />
+      <Separator />
+
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse border border-black-500/80 text-xs">
           <thead>
             <tr>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                ID
+                {dictionary.profilePage.sections.candidatures.tableHeaders.id}
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Grade
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .grade
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Établissement
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .etablissment
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Spécialité
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .specialite
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Reçu de Candidature
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .recuCandidature
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Date limite de dépôt
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .dateLimiteDepot
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Date de concours
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .dateConcours
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Lieu de concours
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .lieuConcours
+                }
               </th>
               <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
-                Statut
+                {
+                  dictionary.profilePage.sections.candidatures.tableHeaders
+                    .statut
+                }
               </th>
             </tr>
           </thead>
@@ -111,18 +149,22 @@ const ProfileApplications = () => {
 
       {/* Additional Info */}
       <div className="mt-6 bg-white ">
-        <h3 className=" font-bold text-primary">Informations importantes</h3>
+        <h3 className=" font-bold text-black-600/80">
+          {dictionary.profilePage.sections.candidatures.importantInfo.title}
+        </h3>
         <ul className="mt-2 text-sm text-gray-600 list-disc pl-6">
           <li className="my-3">
             <strong className=" text-black-600/80 ">
-              En cours de vérification:
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .verification.title
+              }
             </strong>{" "}
             <p className="text-muted-foreground ">
-              Votre dossier de candidature est en cours de vérification
-              administrative pour confirmer la conformité des documents
-              (diplôme, équivalence des diplômes étrangers, âge, dérogation pour
-              les candidats de plus de 45 ans, autorisation pour les
-              fonctionnaires de passer le concours, etc.).
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .verification.description
+              }
             </p>
           </li>
           <li className="my-3">
@@ -132,7 +174,7 @@ const ProfileApplications = () => {
               passe à la première étape.
             </p>
             <ul className="list-disc pl-6">
-              <li className="my-3">
+              <li className="my-1">
                 <p className="text-muted-foreground">
                   {" "}
                   Pour les postes d&apos;enseignant-chercheur : Votre dossier
@@ -141,7 +183,7 @@ const ProfileApplications = () => {
                   académique par le jury de la commission du concours.
                 </p>
               </li>
-              <li className="my-3">
+              <li className="my-1">
                 <p className="text-muted-foreground">
                   {" "}
                   Pour les postes administratifs et techniques : Votre dossier
@@ -163,10 +205,11 @@ const ProfileApplications = () => {
           </li>
           <li>
             <p className="text-muted-foreground">
-              <strong>Non recevable:</strong> Votre dossier de candidature est
-              rejeté administrativement et ne passe pas à l&apos;étape suivante.
-              Soit votre dossier est incomplet, soit votre profil ne correspond
-              pas aux critères demandés.
+              <strong className="text-black-600/80">Non recevable:</strong>{" "}
+              Votre dossier de candidature est rejeté administrativement et ne
+              passe pas à l&apos;étape suivante. Soit votre dossier est
+              incomplet, soit votre profil ne correspond pas aux critères
+              demandés.
             </p>
           </li>
         </ul>

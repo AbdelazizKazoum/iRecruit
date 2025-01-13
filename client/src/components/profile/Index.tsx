@@ -68,7 +68,9 @@ const Index = ({
               {section === "compte" && (
                 <ProfileInfo user={user} dictionary={dictionary} />
               )}
-              {section === "candidatures" && <ProfileApplications />}
+              {section === "candidatures" && (
+                <ProfileApplications dictionary={dictionary} />
+              )}
               {section === "info-personnelles" && (
                 <PersonalInformation
                   candidatureData={candidatureData}

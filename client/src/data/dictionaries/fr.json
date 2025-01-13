@@ -173,7 +173,43 @@
         }
       },
       "candidatures": {
-        "title": "Mes Candidatures"
+        "title": "Mes candidatures",
+        "description": "Liste des candidatures que vous avez soumises pour des offres d'emploi.",
+        "tableHeaders": {
+          "id": "ID",
+          "grade": "Grade",
+          "etablissment": "Établissement",
+          "specialite": "Spécialité",
+          "recuCandidature": "Candidature reçue",
+          "dateLimiteDepot": "Date limite de dépôt",
+          "dateConcours": "Date du concours",
+          "lieuConcours": "Lieu du concours",
+          "statut": "Statut"
+        },
+        "statuses": {
+          "verification": "En cours de vérification",
+          "recevable": "Recevable",
+          "nonRecevable": "Non recevable"
+        },
+        "importantInfo": {
+          "title": "Informations importantes",
+          "verification": {
+            "title": "En cours de vérification:",
+            "description": "Votre dossier est en cours de vérification administrative pour garantir la conformité (diplôme, équivalence des diplômes étrangers, âge, etc.)."
+          },
+          "recevable": {
+            "title": "Recevable:",
+            "description": "Votre dossier a été accepté administrativement pour passer à l'étape suivante.",
+            "details": {
+              "teaching": "Pour les postes d'enseignant-chercheur : Votre dossier passe à l'évaluation académique par le jury du concours.",
+              "technical": "Pour les postes administratifs et techniques : Votre dossier passe aux examens écrits. Consultez les détails sur le portail public."
+            }
+          },
+          "nonRecevable": {
+            "title": "Non recevable:",
+            "description": "Votre dossier a été rejeté administrativement. Il peut être incomplet ou non conforme aux critères requis."
+          }
+        }
       },
       "info-personnelles": {
         "title": "Informations Personnelles"

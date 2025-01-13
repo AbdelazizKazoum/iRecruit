@@ -184,7 +184,43 @@
         }
       },
       "candidatures": {
-        "title": "My Applications"
+        "title": "My Applications",
+        "description": "A list of job applications you have submitted.",
+        "tableHeaders": {
+          "id": "ID",
+          "grade": "Grade",
+          "etablissment": "Institution",
+          "specialite": "Specialization",
+          "recuCandidature": "Application Received",
+          "dateLimiteDepot": "Submission Deadline",
+          "dateConcours": "Competition Date",
+          "lieuConcours": "Competition Venue",
+          "statut": "Status"
+        },
+        "statuses": {
+          "verification": "Under Review",
+          "recevable": "Accepted",
+          "nonRecevable": "Rejected"
+        },
+        "importantInfo": {
+          "title": "Important Information",
+          "verification": {
+            "title": "Under Review:",
+            "description": "Your application is under administrative review to ensure compliance with requirements (degree, foreign degree equivalence, age, etc.)."
+          },
+          "recevable": {
+            "title": "Accepted:",
+            "description": "Your application has been administratively accepted to proceed to the first stage.",
+            "details": {
+              "teaching": "For teaching positions: Your application proceeds to academic evaluation by the competition jury.",
+              "technical": "For administrative and technical positions: Your application proceeds to written exams. Check details on the public employment portal."
+            }
+          },
+          "nonRecevable": {
+            "title": "Rejected:",
+            "description": "Your application was administratively rejected due to incompleteness or not meeting the required criteria."
+          }
+        }
       },
       "info-personnelles": {
         "title": "Personal Information"

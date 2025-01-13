@@ -275,3 +275,6 @@ body[data-scroll-locked] {
     height: 15px;
   }
 }
+.rdp-vhidden {
+  @apply hidden;
+}

@@ -82,7 +82,7 @@ export const personalInformationsConfig = {
       },
     },
     {
-      type: "text",
+      type: "arabic",
       name: "adresseAr",
       label: {
         en: "Personal Address (in Arabic) *",

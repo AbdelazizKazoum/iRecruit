@@ -18,9 +18,12 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
 
     // Add files under the 'files' key
     if (files) {
+      console.log("🚀 ~ onSubmit ~ files:", files);
+
       Object.entries(files).map((item) => {
         const file = item[1] as File;
-        const key = item[0] + "-" + rest.langue + `.${file.name.split(".")[1]}`;
+        const key =
+          item[0] + "-" + rest.langue + `.${file?.name?.split(".")[1]}`;
 
         formData.append("files", file, key);
       });

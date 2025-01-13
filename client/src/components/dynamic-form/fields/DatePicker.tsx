@@ -70,6 +70,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
+                captionLayout="dropdown-buttons"
+                fromYear={1960}
+                toYear={2030}
                 selected={field.value}
                 onSelect={field.onChange}
                 disabled={(date) =>

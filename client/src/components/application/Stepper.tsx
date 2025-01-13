@@ -87,7 +87,7 @@ function Stepper({
 
       if (candidature) {
         if (
-          !candidature?.personalInformation?.valid &&
+          !candidature?.personalInformation?.valid ||
           !candidature?.professionalInformation?.valid
         ) {
           setShowModal(true); // Show the modal if not valid

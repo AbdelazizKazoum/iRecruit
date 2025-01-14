@@ -212,10 +212,12 @@
         }
       },
       "info-personnelles": {
-        "title": "Informations Personnelles"
+        "title": "Informations Personnelles",
+        "description": "Consultez les informations personnelles que vous avez fournies."
       },
       "info-professionnelles": {
-        "title": "Qualifications et Expériences"
+        "title": "Qualifications et Expériences",
+        "description": "Consultez les qualifications académiques, expériences professionnelles et compétences que vous avez déjà soumises."
       }
     }
   },

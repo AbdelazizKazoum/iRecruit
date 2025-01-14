@@ -223,10 +223,12 @@
         }
       },
       "info-personnelles": {
-        "title": "Personal Information"
+        "title": "Personal Information",
+        "description": "View the personal details you have provided."
       },
       "info-professionnelles": {
-        "title": "Qualifications and Experiences"
+        "title": "Qualifications and Experiences",
+        "description": "Review the academic qualifications, professional experiences, and skills you have previously submitted."
       }
     }
   },

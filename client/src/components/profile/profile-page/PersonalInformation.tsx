@@ -1,5 +1,6 @@
 "use client";
 import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
+import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { Locale } from "@/configs/i18n";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
@@ -18,15 +19,13 @@ export const PersonalInformation = ({
 }) => {
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium text-black-600/85">
-          {" "}
-          {dictionary.profilePage.sections.compte.title}{" "}
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          {dictionary.profilePage.sections.compte.subtitle}{" "}
-        </p>
-      </div>
+      <PageHeader
+        size="sm"
+        title={dictionary.profilePage.sections["info-personnelles"].title}
+        description={
+          dictionary.profilePage.sections["info-personnelles"].description
+        }
+      />
       <Separator />
       <DynamicNormalForm
         onSubmit={() => {}}

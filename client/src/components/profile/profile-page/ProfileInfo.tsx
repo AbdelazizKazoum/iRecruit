@@ -30,6 +30,7 @@ import { UserType } from "@/types/user.types";
 import { updateProfile } from "@/libs/actions/candidateActions";
 import { toast } from "react-toastify";
 import { getDictionary } from "@/utils/getDictionary";
+import PageHeader from "@/components/PageHeader";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
@@ -62,15 +63,11 @@ function ProfileForm({
     <>
       <main className="flex-1 lg:max-w-2xl">
         <div className="space-y-6">
-          <div>
-            <h3 className="text-lg font-medium text-black-600/85">
-              {" "}
-              {dictionary.profilePage.sections.compte.title}{" "}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {dictionary.profilePage.sections.compte.subtitle}{" "}
-            </p>
-          </div>
+          <PageHeader
+            size="sm"
+            title={dictionary.profilePage.sections.compte.title}
+            description={dictionary.profilePage.sections.compte.subtitle}
+          />
           <Separator />
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

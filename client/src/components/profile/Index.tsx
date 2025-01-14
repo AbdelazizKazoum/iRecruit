@@ -82,6 +82,7 @@ const Index = ({
                 <QualificationsLists
                   locale={locale}
                   candidatureData={candidatureData}
+                  dictionary={dictionary}
                 />
               )}
             </>

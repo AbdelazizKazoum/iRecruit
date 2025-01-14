@@ -168,34 +168,43 @@ const ProfileApplications = ({
             </p>
           </li>
           <li className="my-3">
-            <strong className="text-black-600/80">Recevable:</strong>{" "}
+            <strong className="text-black-600/80">
+              {" "}
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .recevable.title
+              }
+            </strong>{" "}
             <p className="text-muted-foreground">
-              Votre dossier de candidature est administrativement conforme et
-              passe à la première étape.
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .recevable.description
+              }
             </p>
             <ul className="list-disc pl-6">
               <li className="my-1">
                 <p className="text-muted-foreground">
                   {" "}
-                  Pour les postes d&apos;enseignant-chercheur : Votre dossier
-                  est administrativement conforme et passe à l&apos;étape
-                  suivante qui consiste en l&apos;étude et l&apos;évaluation
-                  académique par le jury de la commission du concours.
+                  {
+                    dictionary.profilePage.sections.candidatures.importantInfo
+                      .recevable.details.teaching
+                  }
                 </p>
               </li>
               <li className="my-1">
                 <p className="text-muted-foreground">
                   {" "}
-                  Pour les postes administratifs et techniques : Votre dossier
-                  est administrativement conforme et passe à l&apos;étape
-                  suivante qui est les examens écrits. Le lieu et l&apos;heure
-                  sont disponibles sur les listes des candidats convoqués sur
+                  {
+                    dictionary.profilePage.sections.candidatures.importantInfo
+                      .recevable.details.technical
+                  }
                   <a
                     href="https://www.emploi-public.ma"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 underline"
                   >
+                    {" "}
                     www.emploi-public.ma
                   </a>
                   .
@@ -205,11 +214,17 @@ const ProfileApplications = ({
           </li>
           <li>
             <p className="text-muted-foreground">
-              <strong className="text-black-600/80">Non recevable:</strong>{" "}
-              Votre dossier de candidature est rejeté administrativement et ne
-              passe pas à l&apos;étape suivante. Soit votre dossier est
-              incomplet, soit votre profil ne correspond pas aux critères
-              demandés.
+              <strong className="text-black-600/80">
+                {" "}
+                {
+                  dictionary.profilePage.sections.candidatures.importantInfo
+                    .nonRecevable.title
+                }
+              </strong>{" "}
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .nonRecevable.description
+              }
             </p>
           </li>
         </ul>

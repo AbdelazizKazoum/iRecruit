@@ -1,4 +1,5 @@
 import List from "@/components/dynamic-form/List";
+import PageHeader from "@/components/PageHeader";
 import {
   communicationsFormConfig,
   diplomesFormConfig,
@@ -7,18 +8,29 @@ import {
 } from "@/configs/formConfigs";
 import { Locale } from "@/configs/i18n";
 import { CandidatureType } from "@/types/candidature.types";
+import { getDictionary } from "@/utils/getDictionary";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 import React from "react";
 
 const QualificationsLists = ({
   locale,
   candidatureData,
+  dictionary,
 }: {
   locale: Locale;
   candidatureData: CandidatureType | null;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {
   return (
     <div>
-      {" "}
+      <PageHeader
+        size="sm"
+        title={dictionary.profilePage.sections["info-professionnelles"].title}
+        description={
+          dictionary.profilePage.sections["info-professionnelles"].description
+        }
+      />
+      <Separator />
       <List
         submittedData={
           candidatureData?.professionalInformation?.parcoursEtDiplomes

@@ -133,15 +133,6 @@ function Stepper({
         dictionary={dictionary}
       />
 
-      <div className="flex justify-between">
-        {/* <h2 className="text-lg font-medium">Checkout</h2>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
-            Step {stepper.current.index + 1} of {steps.length}
-          </span>
-          <div />
-        </div> */}
-      </div>
       <div className="flex justify-center">
         <nav
           aria-label="Checkout Steps"

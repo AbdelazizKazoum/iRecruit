@@ -50,13 +50,15 @@ const List = ({
       {/* Data Table */}
       {submittedData && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-4 text-black-600/75 ">
+          <h4 className="text-base font-medium text-black-600/85 mb-2 ">
             {title ?? gridTranslation.title[locale]}
-          </h2>
+          </h4>
           {submittedData.length === 0 ? (
-            <p className="text-gray-500">{gridTranslation.empty[locale]}</p>
+            <p className=" text-sm text-muted-foreground">
+              {gridTranslation.empty[locale]}
+            </p>
           ) : (
-            <table className="table-auto w-full border-collapse border border-black-500/80">
+            <table className=" text-sm table-auto w-full border-collapse border border-black-500/80">
               <thead>
                 <tr>
                   {headers.map((header: any, index: any) => (

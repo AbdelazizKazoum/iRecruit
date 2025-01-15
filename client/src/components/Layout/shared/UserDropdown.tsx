@@ -38,8 +38,8 @@ export function UserDropdown({
         <div className="flex gap-2 justify-center items-center py-3 px-6 ">
           <UserAvatar />
           <div className="flex flex-col">
-            <p className="font-medium text-black-500">{user?.username}</p>
-            <span className=" text-sm text-gray-400  ">{user?.email} </span>
+            <p className="font-medium text-black-600/80">{user?.username}</p>
+            <span className=" text-sm text-black-600/80  ">{user?.email} </span>
           </div>
         </div>
         <DropdownMenuSeparator />

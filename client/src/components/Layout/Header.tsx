@@ -124,7 +124,7 @@ const Header = ({
               <LanguageDropdown />
 
               {user ? (
-                <UserDropdown />
+                <UserDropdown dictionary={dictionary} user={user} />
               ) : (
                 <Link href={`/${locale}/login`}>
                   <ButtonOutline>Connexion</ButtonOutline>

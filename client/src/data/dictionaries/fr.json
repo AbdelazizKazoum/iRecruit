@@ -27,6 +27,12 @@
     "submit": "Soumettre les données"
   },
 
+  "userDropdown": {
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "signOut": "Se déconnecter"
+  },
+
   "menu": {
     "home": "Accueil",
     "concours": "Annonces de Concours",

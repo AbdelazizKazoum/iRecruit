@@ -26,6 +26,11 @@
     "back": "Back",
     "submit": "Submit Data"
   },
+  "userDropdown": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
 
   "menu": {
     "home": "Home",

@@ -12,8 +12,17 @@ import { UserAvatar } from "./Avatar";
 import { signOut } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation"; // Correct import for App Directory (useParams, useRouter)
 import { LogOutIcon, Settings, UserIcon } from "lucide-react";
+import { getDictionary } from "@/utils/getDictionary";
+import { Session } from "next-auth";
 
-export function UserDropdown() {
+export function UserDropdown({
+  dictionary,
+  user,
+}: {
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  user: Session["user"] | undefined;
+}) {
+  console.log("🚀 ~ user:", user);
   const router = useRouter(); // Only use the one from next/navigation
   const params = useParams();
 
@@ -29,10 +38,8 @@ export function UserDropdown() {
         <div className="flex gap-2 justify-center items-center py-3 px-6 ">
           <UserAvatar />
           <div className="flex flex-col">
-            <p className="font-medium text-black-500">Kazoum Abdelaziz</p>
-            <span className=" text-sm text-gray-400  ">
-              abdukazoum@gmail.com
-            </span>
+            <p className="font-medium text-black-500">{user?.username}</p>
+            <span className=" text-sm text-gray-400  ">{user?.email} </span>
           </div>
         </div>
         <DropdownMenuSeparator />
@@ -42,7 +49,7 @@ export function UserDropdown() {
             onClick={() => router.push(`/${params.lang}/profile`)} // Navigates to the profile page
           >
             <UserIcon />
-            Profile
+            {dictionary.userDropdown.profile}{" "}
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -50,7 +57,7 @@ export function UserDropdown() {
             onClick={() => router.push("/settings")} // Navigates to the settings page
           >
             <Settings />
-            Settings
+            {dictionary.userDropdown.settings}{" "}
           </DropdownMenuItem>
 
           <div className="mx-2 my-2 ">
@@ -61,7 +68,8 @@ export function UserDropdown() {
                 signOut({ callbackUrl: `/${params.lang}/login` }); // Sign out the user
               }}
             >
-              <p>Sign out</p> <LogOutIcon className="h-2" />
+              <p> {dictionary.userDropdown.signOut} </p>{" "}
+              <LogOutIcon className="h-2" />
             </Button>
           </div>
         </DropdownMenuGroup>

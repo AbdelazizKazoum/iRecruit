@@ -44,6 +44,7 @@ const VerifyInformation = ({
           </AccordionTrigger>
           <AccordionContent>
             <QualificationsLists
+              dictionary={dictionary}
               locale={locale}
               candidatureData={candidatureData}
             />

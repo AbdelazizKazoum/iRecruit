@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ProfileSidebar } from "./profile-page/ProfileSidebar";
 import { PersonalInformation } from "./profile-page/PersonalInformation";
 import ProfileApplications from "./profile-page/ProfileApplications";
@@ -12,6 +12,7 @@ import { useCandidatureStore } from "@/stores/candidature.store";
 import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton
 import { Separator } from "../ui/separator";
 import QualificationsLists from "./profile-page/QualificationsLists";
+import { useApplicationStore } from "@/stores/useApplication.store";
 
 const Index = ({
   locale,
@@ -24,15 +25,20 @@ const Index = ({
   user: UserType | null;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {
+  const [loading, setLoading] = useState(true);
+
   // Hooks
-  const { candidatureData, fetchCandidatureData, loading } =
-    useCandidatureStore();
+  const { candidatureData, fetchCandidatureData } = useCandidatureStore();
+  const { fetchApplications, applications } = useApplicationStore();
 
   useEffect(() => {
     (async () => {
       await fetchCandidatureData();
+      await fetchApplications();
     })();
-  }, [fetchCandidatureData]);
+
+    setLoading(false);
+  }, [fetchCandidatureData, fetchApplications]);
 
   return (
     <div>
@@ -69,7 +75,11 @@ const Index = ({
                 <ProfileInfo user={user} dictionary={dictionary} />
               )}
               {section === "candidatures" && (
-                <ProfileApplications dictionary={dictionary} />
+                <ProfileApplications
+                  dictionary={dictionary}
+                  applications={applications}
+                  locale={locale}
+                />
               )}
               {section === "info-personnelles" && (
                 <PersonalInformation

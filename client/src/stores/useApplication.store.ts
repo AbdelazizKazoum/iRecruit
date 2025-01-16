@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clientApi from "@/libs/clientApi";
 import { ApplicationType, OfferType } from "@/types/application.types";
@@ -14,6 +15,7 @@ export interface ApplicationStoreState {
   setApplication: (data: ApplicationType) => void;
   setOffer: (data: OfferType) => void;
   submitApplication: (data: ApplicationType) => Promise<string>;
+  fetchApplications: () => Promise<string>;
 }
 
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
@@ -66,6 +68,24 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
       });
       toast.error("Failed to submit. Please try again.");
       return "error";
+    }
+  },
+
+  // Submit Publications to database
+  fetchApplications: async () => {
+    set({ loading: true, error: "" });
+    try {
+      const response = await clientApi.get("application/mine");
+
+      set({ applications: response.data });
+      return "success";
+    } catch (error) {
+      set({
+        error: "Failed to submit. Please try again.",
+      });
+      return "error";
+    } finally {
+      set({ loading: false });
     }
   },
 }));

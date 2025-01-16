@@ -1,14 +1,17 @@
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
+import { ApplicationType } from "@/types/application.types";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
 const ProfileApplications = ({
   dictionary,
+  applications,
 }: {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  applications: ApplicationType[] | null;
 }) => {
-  const applications = [
+  const applicationss = [
     {
       id: 1,
       grade: "Assistant Professor",

@@ -22,7 +22,6 @@ export function UserDropdown({
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   user: Session["user"] | undefined;
 }) {
-  console.log("🚀 ~ user:", user);
   const router = useRouter(); // Only use the one from next/navigation
   const params = useParams();
 

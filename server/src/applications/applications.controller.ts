@@ -35,9 +35,17 @@ export class ApplicationsController {
     return this.applicationsService.create(data, files, user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.applicationsService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('mine')
+  fetchCandidateApplications(@Request() req) {
+    const user = req.user;
+    return this.applicationsService.findUserApplication(user);
   }
 
   @Get(':id')

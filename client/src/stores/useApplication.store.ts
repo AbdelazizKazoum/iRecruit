@@ -7,6 +7,7 @@ import { create } from "zustand";
 export interface ApplicationStoreState {
   applicationData: ApplicationType | null;
   selectedOffer: OfferType | null;
+  applications: ApplicationType[] | null;
   loading: boolean;
   error: string;
 
@@ -18,6 +19,7 @@ export interface ApplicationStoreState {
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   applicationData: null,
   selectedOffer: null,
+  applications: null,
   loading: false,
   error: "",
 

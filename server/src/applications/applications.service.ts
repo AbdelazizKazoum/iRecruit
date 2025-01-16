@@ -100,6 +100,7 @@ export class ApplicationsService {
     try {
       const application = await this.applicationModel
         .find({ user: user._id })
+        .populate('offer')
         .exec();
       if (!application) {
         throw new NotFoundException(

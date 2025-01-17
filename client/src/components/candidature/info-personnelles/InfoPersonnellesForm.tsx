@@ -5,8 +5,15 @@ import { Locale } from "@/configs/i18n";
 import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
 import { useCandidatureStore } from "@/stores/candidature.store";
+import { getDictionary } from "@/utils/getDictionary";
 
-const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
+const InfoPersonnelles = ({
+  locale,
+  dictionary,
+}: {
+  locale: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
+}) => {
   // Hooks
   const { candidatureData, submitPersonalInformation } = useCandidatureStore();
 
@@ -36,9 +43,11 @@ const InfoPersonnelles = ({ locale }: { locale: Locale }) => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-black-600/85">Application </h3>
+        <h3 className="text-lg font-medium text-black-600/85">
+          {dictionary.candidature.title}{" "}
+        </h3>
         <p className="text-sm text-muted-foreground">
-          Cest ainsi que les autres vous verront sur le site.{" "}
+          {dictionary.candidature.description}
         </p>
       </div>
       <div>

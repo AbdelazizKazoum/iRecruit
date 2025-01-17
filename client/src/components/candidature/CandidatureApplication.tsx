@@ -47,7 +47,9 @@ export const CandidatureApplication = ({
 
   return (
     <main className="flex-1">
-      {section === "info-personnelles" && <InfoPersonnelles locale={locale} />}
+      {section === "info-personnelles" && (
+        <InfoPersonnelles locale={locale} dictionary={dictionary} />
+      )}
       {section === "info-professionnelles" && (
         <InfoProfessionnelles locale={locale} dictionary={dictionary} />
       )}

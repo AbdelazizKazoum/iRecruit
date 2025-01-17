@@ -38,7 +38,7 @@ const page = async ({
         className=" absolute top-2 left-10 mt-10 w-fit text-black-600/80 dark:text-white"
         href={`/${params.lang}/home`}
       >
-        <div className="flex w-fit items-center lg:pl-0 lg:pt-0 xl:pt-0">
+        <div className="flex gap-2 w-fit items-center lg:pl-0 lg:pt-0 xl:pt-0">
           <svg
             stroke="currentColor"
             fill="currentColor"

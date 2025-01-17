@@ -25,6 +25,7 @@ type LoginFormData = {
 
 export const LoginForm = ({
   locale,
+  dictionary,
 }: // dictionary,
 {
   locale: Locale;
@@ -69,7 +70,11 @@ export const LoginForm = ({
                 <FormControl>
                   <div className="relative">
                     <Mail className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                    <Input placeholder="Email" className="pl-10" {...field} />
+                    <Input
+                      placeholder={dictionary.login.emailPlaceholder}
+                      className="pl-10"
+                      {...field}
+                    />
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -87,7 +92,7 @@ export const LoginForm = ({
                   <div className="relative">
                     <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                     <Input
-                      placeholder="Password"
+                      placeholder={dictionary.login.passwordPlaceholder}
                       type="password"
                       className="pl-10"
                       {...field}
@@ -101,7 +106,9 @@ export const LoginForm = ({
 
           {/* Submit Button */}
           <Button disabled={isSubmitting} className="w-full transition">
-            {isSubmitting ? "Connexion..." : "Se connecter"}
+            {isSubmitting
+              ? dictionary.login.submitButton.submitting
+              : dictionary.login.submitButton.default}
           </Button>
         </form>
       </Form>
@@ -118,16 +125,16 @@ export const LoginForm = ({
           href={`/${locale}/account/reset`}
           className="text-primary hover:underline"
         >
-          Mot de passe oublié ?
+          {dictionary.login.forgotPassword}
         </a>
       </p>
       <p className="mt-4 text-center text-sm text-black-600/60">
-        Vous n&apos;avez pas de compte ?{" "}
+        {dictionary.login.noAccountText}{" "}
         <a
           href={`/${locale}/register`}
           className="text-primary font-medium hover:underline"
         >
-          S&apos;inscrire
+          {dictionary.login.registerLink}
         </a>
       </p>
     </div>

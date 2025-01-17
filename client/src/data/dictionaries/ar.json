@@ -1,4 +1,19 @@
 {
+  "login": {
+    "title": "تسجيل الدخول ",
+    "description": "أدخل بيانات الاعتماد الخاصة بك للوصول إلى حسابك بأمان.",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "passwordPlaceholder": "كلمة المرور",
+    "submitButton": {
+      "default": "تسجيل الدخول",
+      "submitting": "جارٍ الاتصال..."
+    },
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "noAccountText": "ليس لديك حساب؟",
+    "registerLink": "اشترك"
+  },
+  "backToHome": "الرجوع إلى الموقع",
+
   "buttons": {
     "save": "حفظ",
     "submit": "إرسال",

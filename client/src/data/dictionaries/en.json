@@ -1,4 +1,18 @@
 {
+  "login": {
+    "title": "Login",
+    "description": "Enter your credentials to access your account securely.",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "submitButton": {
+      "default": "Login",
+      "submitting": "Connecting..."
+    },
+    "forgotPassword": "Forgot your password?",
+    "noAccountText": "Don’t have an account?",
+    "registerLink": "Sign up"
+  },
+  "backToHome": "Back to website",
   "buttons": {
     "save": "Save",
     "submit": "Submit",

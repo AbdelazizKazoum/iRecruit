@@ -1,4 +1,19 @@
 {
+  "login": {
+    "title": "Connectez-vous",
+    "description": "Entrez vos identifiants pour accéder à votre compte en toute sécurité.",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Mot de passe",
+    "submitButton": {
+      "default": "Se connecter",
+      "submitting": "Connexion..."
+    },
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccountText": "Vous n'avez pas de compte ?",
+    "registerLink": "S'inscrire"
+  },
+  "backToHome": "Retour au site web",
+
   "buttons": {
     "save": "Enregistrer",
     "submit": "Soumettre",

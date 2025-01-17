@@ -215,7 +215,8 @@
             "title": "Non recevable:",
             "description": "Votre dossier a été rejeté administrativement. Il peut être incomplet ou non conforme aux critères requis."
           }
-        }
+        },
+        "noApplications": "Aucune candidature disponible pour le moment"
       },
       "info-personnelles": {
         "title": "Informations Personnelles",

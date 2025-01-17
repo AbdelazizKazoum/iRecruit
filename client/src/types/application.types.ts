@@ -5,6 +5,14 @@ export interface ApplicationType {
   applicationDiploma: string;
   offer: OfferType | null;
 
+  recuCandidature?: Date;
+
+  statut: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
+
   attachment: {
     declarationPdf: string | File;
     motivationLetterPdf: string | File;
@@ -17,11 +25,13 @@ export interface OfferType {
     en: string;
     ar: string;
   };
+
   description: {
     fr: string;
     en: string;
     ar: string;
   };
+
   tag: {
     fr: string;
     en: string;
@@ -41,4 +51,28 @@ export interface OfferType {
     ar: string;
   };
   candidatesNumber: number;
+
+  grade: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
+
+  organisme: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
+
+  specialite: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
+
+  etablissement: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
 }

@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
+import { Locale } from "@/configs/i18n";
 import { ApplicationType } from "@/types/application.types";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
@@ -7,48 +8,16 @@ import React from "react";
 const ProfileApplications = ({
   dictionary,
   applications,
+  locale,
 }: {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   applications: ApplicationType[] | null;
+  locale: Locale;
 }) => {
-  const applicationss = [
-    {
-      id: 1,
-      grade: "Assistant Professor",
-      etablissment: "Université Hassan II",
-      specialite: "Informatique",
-      recuCandidature: "10/01/2025",
-      dateLimiteDepot: "15/01/2025",
-      dateConcours: "20/01/2025",
-      lieuConcours: "Casablanca",
-      statut: "En cours de vérification",
-    },
-    {
-      id: 2,
-      grade: "Technician",
-      etablissment: "Université Mohamed V",
-      specialite: "Réseaux",
-      recuCandidature: "08/01/2025",
-      dateLimiteDepot: "12/01/2025",
-      dateConcours: "18/01/2025",
-      lieuConcours: "Rabat",
-      statut: "Recevable",
-    },
-    {
-      id: 3,
-      grade: "Administrator",
-      etablissment: "Université Cadi Ayyad",
-      specialite: "Gestion",
-      recuCandidature: "05/01/2025",
-      dateLimiteDepot: "10/01/2025",
-      dateConcours: "15/01/2025",
-      lieuConcours: "Marrakech",
-      statut: "Non recevable",
-    },
-  ];
+  console.log("🚀 ~ applications:", applications);
 
   return (
-    <div className=" bg-gray-50 space-y-6">
+    <div className="bg-gray-50 space-y-6">
       <PageHeader
         title={dictionary.profilePage.sections.candidatures.title}
         description={dictionary.profilePage.sections.candidatures.description}
@@ -61,52 +30,52 @@ const ProfileApplications = ({
         <table className="table-auto w-full border-collapse border border-black-500/80 text-xs">
           <thead>
             <tr>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {dictionary.profilePage.sections.candidatures.tableHeaders.id}
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .grade
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .etablissment
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .specialite
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .recuCandidature
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .dateLimiteDepot
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .dateConcours
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .lieuConcours
                 }
               </th>
-              <th className="border text-black-500/90  px-4 py-2 bg-primary/10">
+              <th className="border text-black-500/90 px-4 py-2 bg-primary/10">
                 {
                   dictionary.profilePage.sections.candidatures.tableHeaders
                     .statut
@@ -115,55 +84,68 @@ const ProfileApplications = ({
             </tr>
           </thead>
           <tbody>
-            {applications.map((app) => (
-              <tr key={app.id} className="hover:bg-gray-100">
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.id}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.grade}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.etablissment}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.specialite}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.recuCandidature}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.dateLimiteDepot}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.dateConcours}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.lieuConcours}
-                </td>
-                <td className="border text-black-500/80 px-4 py-2 text-center">
-                  {app.statut}
+            {applications && applications.length > 0 ? (
+              applications.map((app, id) => (
+                <tr key={id} className="hover:bg-gray-100">
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {id + 1}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.grade[locale] || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.etablissement[locale] || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.specialite[locale] || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.recuCandidature
+                      ? new Date(app.recuCandidature).toLocaleDateString(locale)
+                      : ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.depotAvant || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.datePublication || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.offer?.city[locale] || ""}
+                  </td>
+                  <td className="border text-black-500/80 px-4 py-2 text-center">
+                    {app.statut[locale] || ""}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={9}
+                  className="border text-black-500/80 px-4 py-2 text-center"
+                >
+                  {dictionary.profilePage.sections.candidatures.noApplications}
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Additional Info */}
-      <div className="mt-6 bg-white ">
-        <h3 className=" font-bold text-black-600/80">
+      <div className="mt-6 bg-white">
+        <h3 className="font-bold text-black-600/80">
           {dictionary.profilePage.sections.candidatures.importantInfo.title}
         </h3>
         <ul className="mt-2 text-sm text-gray-600 list-disc pl-6">
           <li className="my-3">
-            <strong className=" text-black-600/80 ">
+            <strong className="text-black-600/80">
               {
                 dictionary.profilePage.sections.candidatures.importantInfo
                   .verification.title
               }
-            </strong>{" "}
-            <p className="text-muted-foreground ">
+            </strong>
+            <p className="text-muted-foreground">
               {
                 dictionary.profilePage.sections.candidatures.importantInfo
                   .verification.description
@@ -172,12 +154,11 @@ const ProfileApplications = ({
           </li>
           <li className="my-3">
             <strong className="text-black-600/80">
-              {" "}
               {
                 dictionary.profilePage.sections.candidatures.importantInfo
                   .recevable.title
               }
-            </strong>{" "}
+            </strong>
             <p className="text-muted-foreground">
               {
                 dictionary.profilePage.sections.candidatures.importantInfo
@@ -187,7 +168,6 @@ const ProfileApplications = ({
             <ul className="list-disc pl-6">
               <li className="my-1">
                 <p className="text-muted-foreground">
-                  {" "}
                   {
                     dictionary.profilePage.sections.candidatures.importantInfo
                       .recevable.details.teaching
@@ -196,7 +176,6 @@ const ProfileApplications = ({
               </li>
               <li className="my-1">
                 <p className="text-muted-foreground">
-                  {" "}
                   {
                     dictionary.profilePage.sections.candidatures.importantInfo
                       .recevable.details.technical
@@ -207,7 +186,6 @@ const ProfileApplications = ({
                     rel="noopener noreferrer"
                     className="text-blue-600 underline"
                   >
-                    {" "}
                     www.emploi-public.ma
                   </a>
                   .
@@ -216,14 +194,13 @@ const ProfileApplications = ({
             </ul>
           </li>
           <li>
+            <strong className="text-black-600/80">
+              {
+                dictionary.profilePage.sections.candidatures.importantInfo
+                  .nonRecevable.title
+              }
+            </strong>
             <p className="text-muted-foreground">
-              <strong className="text-black-600/80">
-                {" "}
-                {
-                  dictionary.profilePage.sections.candidatures.importantInfo
-                    .nonRecevable.title
-                }
-              </strong>{" "}
               {
                 dictionary.profilePage.sections.candidatures.importantInfo
                   .nonRecevable.description

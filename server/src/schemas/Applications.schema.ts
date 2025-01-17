@@ -17,6 +17,19 @@ export class Application {
   @Prop({ type: Types.ObjectId, ref: 'JobOffer', required: true })
   offer: JobOffer;
 
+  @Prop({
+    type: Object,
+    default: {
+      ar: 'قيد التحقق',
+      fr: 'En cours de vérification',
+      en: 'Under Review',
+    },
+  })
+  statut: Locale;
+
+  @Prop({ type: Date, required: true, default: Date.now })
+  recuCandidature?: Date;
+
   @Prop({ type: Object })
   attachment: {
     declarationPdf: string | File;

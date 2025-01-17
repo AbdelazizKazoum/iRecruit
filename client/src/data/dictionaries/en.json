@@ -225,7 +225,8 @@
             "title": "Rejected:",
             "description": "Your application was administratively rejected due to incompleteness or not meeting the required criteria."
           }
-        }
+        },
+        "noApplications": "No applications available now"
       },
       "info-personnelles": {
         "title": "Personal Information",

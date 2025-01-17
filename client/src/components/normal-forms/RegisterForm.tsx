@@ -151,7 +151,7 @@ export const RegisterForm = ({
       )}
 
       <p className="mt-4 text-center text-sm text-black-600/60">
-        {dictionary.register.loginLink} ?{" "}
+        {dictionary.register.loginLink}{" "}
         <Link
           href={`/${locale}/login`}
           className="text-primary font-medium hover:underline"

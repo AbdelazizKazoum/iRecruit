@@ -20,7 +20,7 @@
     "submitButton": "Send verification code",
     "error": "Error message",
     "success": "Message displayed upon success",
-    "loginLink": "Already have an account? Login"
+    "loginLink": "Already have an account ?"
   },
   "backToHome": "Back to website",
   "buttons": {
@@ -33,6 +33,35 @@
     "loading": "Loading...",
     "validate": "Validate"
   },
+  "resetPasswordPage": {
+    "title": "Reset Password",
+    "paragraph": "Enter your email to receive a reset link!",
+    "error": "Error message",
+    "success": "Message displayed upon success",
+    "emailPlaceholder": "Enter your email",
+    "submitButton": {
+      "default": "Send reset link",
+      "loading": "Sending..."
+    },
+    "successMessage": "A reset link has been sent to your email.",
+    "errorMessage": "Error sending reset link. Please try again.",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Log in"
+  },
+  "updatePasswordForm": {
+    "pageTitle": "Reset Your Password",
+    "greetingMessage1": "Hello",
+    "greetingMessage2": ", Please reset your password to access your account.",
+    "passwordPlaceholder": "Enter new password",
+    "confirmPasswordPlaceholder": "Confirm your new password",
+    "submitButton": {
+      "default": "Update Password",
+      "loading": "Updating..."
+    },
+    "successMessage": "Your password has been successfully updated.",
+    "errorMessage": "Error updating password. Please try again."
+  },
+
   "status": {
     "draft": "Draft",
     "submitted": "Submitted",

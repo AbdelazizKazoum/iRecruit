@@ -26,6 +26,7 @@ interface ResetPasswordFormType {
 
 export const ResetPasswordForm = ({
   locale,
+  dictionary,
 }: // dictionary,
 {
   locale: Locale;
@@ -48,12 +49,10 @@ export const ResetPasswordForm = ({
     const response = await sendResetLink(data.email);
 
     if (response.success) {
-      setMessage("Un lien de réinitialisation a été envoyé à votre email.");
+      setMessage(dictionary.resetPasswordPage.successMessage);
       setError("");
     } else {
-      setError(
-        "Erreur lors de l'envoi du lien de réinitialisation. Veuillez réessayer."
-      );
+      setError(dictionary.resetPasswordPage.errorMessage);
       setMessage("");
     }
 
@@ -107,7 +106,9 @@ export const ResetPasswordForm = ({
                     <div className="relative">
                       <Mail className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Entrer cotre email"
+                        placeholder={
+                          dictionary.resetPasswordPage.emailPlaceholder
+                        }
                         className="pl-10"
                         {...field}
                       />
@@ -121,20 +122,20 @@ export const ResetPasswordForm = ({
             {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
               {isSubmitting
-                ? "Envoi en cours.."
-                : "Envoyer le lien de réinitialisation"}
+                ? dictionary.resetPasswordPage.submitButton.loading
+                : dictionary.resetPasswordPage.submitButton.default}
             </Button>
           </form>
         </Form>
       )}
 
       <p className="mt-4 text-center text-sm text-black-600/60">
-        Vous avez déjà un compte ?{" "}
+        {dictionary.resetPasswordPage.alreadyHaveAccount}{" "}
         <Link
           href={`/${locale}/login`}
           className="text-primary font-medium hover:underline"
         >
-          Se connecter
+          {dictionary.resetPasswordPage.loginLink}{" "}
         </Link>
       </p>
     </div>

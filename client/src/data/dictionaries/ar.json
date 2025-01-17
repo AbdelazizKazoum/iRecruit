@@ -21,7 +21,36 @@
     "submitButton": "إرسال رمز التحقق",
     "error": "رسالة خطأ",
     "success": "الرسالة المعروضة عند النجاح",
-    "loginLink": "هل لديك حساب؟ تسجيل الدخول"
+    "loginLink": "هل لديك حساب ؟"
+  },
+  "resetPasswordPage": {
+    "title": "إعادة تعيين كلمة المرور",
+    "paragraph": "أدخل بريدك الإلكتروني لتلقي رابط إعادة التعيين!",
+    "error": "رسالة خطأ",
+    "success": "الرسالة المعروضة عند النجاح",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "submitButton": {
+      "default": "إرسال رابط إعادة التعيين",
+      "loading": "جاري الإرسال..."
+    },
+    "successMessage": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.",
+    "errorMessage": "خطأ في إرسال رابط إعادة التعيين. يرجى المحاولة مرة أخرى.",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "loginLink": "تسجيل الدخول"
+  },
+  "updatePasswordForm": {
+    "pageTitle": "إعادة تعيين كلمة المرور",
+    "greetingMessage1": "مرحباً",
+    "greetingMessage2": "، يرجى إعادة تعيين كلمة المرور الخاصة بك للوصول إلى حسابك.",
+
+    "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPasswordPlaceholder": "أكد كلمة المرور الجديدة",
+    "submitButton": {
+      "default": "تحديث كلمة المرور",
+      "loading": "جاري التحديث..."
+    },
+    "successMessage": "تم تحديث كلمة المرور بنجاح.",
+    "errorMessage": "خطأ في تحديث كلمة المرور. يرجى المحاولة مرة أخرى."
   },
 
   "backToHome": "الرجوع إلى الموقع",

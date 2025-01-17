@@ -20,8 +20,38 @@
     "submitButton": "Envoyer le code de vérification",
     "error": "Message d'erreur",
     "success": "Message affiché après succès",
-    "loginLink": "Vous avez déjà un compte ? Se connecter"
+    "loginLink": "Vous avez déjà un compte ?"
   },
+  "resetPasswordPage": {
+    "title": "Réinitialiser le mot de passe",
+    "paragraph": "Entrez votre email pour recevoir un lien de réinitialisation !",
+    "error": "Message d'erreur",
+    "success": "Message affiché après succès",
+    "emailPlaceholder": "Entrez votre email",
+    "submitButton": {
+      "default": "Envoyer le lien de réinitialisation",
+      "loading": "Envoi en cours.."
+    },
+    "successMessage": "Un lien de réinitialisation a été envoyé à votre email.",
+    "errorMessage": "Erreur lors de l'envoi du lien de réinitialisation. Veuillez réessayer.",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "loginLink": "Se connecter"
+  },
+
+  "updatePasswordForm": {
+    "pageTitle": "Réinitialiser votre mot de passe",
+    "greetingMessage1": "Bonjour",
+    "greetingMessage2": ", Veuillez réinitialiser votre mot de passe pour accéder à votre compte.",
+    "passwordPlaceholder": "Entrez votre nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+    "submitButton": {
+      "default": "Mettre à jour le mot de passe",
+      "loading": "Mise à jour en cours..."
+    },
+    "successMessage": "Votre mot de passe a été mis à jour avec succès.",
+    "errorMessage": "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer."
+  },
+
   "backToHome": "Retour au site web",
 
   "buttons": {

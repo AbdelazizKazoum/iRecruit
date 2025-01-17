@@ -27,6 +27,7 @@ type RegisterFormData = {
 
 export const RegisterForm = ({
   locale,
+  dictionary,
 }: // dictionary,
 {
   locale: Locale;
@@ -106,7 +107,7 @@ export const RegisterForm = ({
                     <div className="relative">
                       <User className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Username"
+                        placeholder={dictionary.register.username}
                         className="pl-10"
                         {...field}
                       />
@@ -127,7 +128,7 @@ export const RegisterForm = ({
                     <div className="relative">
                       <Mail className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Email"
+                        placeholder={dictionary.register.email}
                         type="email"
                         className="pl-10"
                         {...field}
@@ -141,19 +142,21 @@ export const RegisterForm = ({
 
             {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
-              {isSubmitting ? "Envoi..." : "Envoyer le code de vérification"}
+              {isSubmitting
+                ? dictionary.buttons.loading
+                : dictionary.register.submitButton}
             </Button>
           </form>
         </Form>
       )}
 
       <p className="mt-4 text-center text-sm text-black-600/60">
-        Vous avez déjà un compte ?{" "}
+        {dictionary.register.loginLink} ?{" "}
         <Link
           href={`/${locale}/login`}
           className="text-primary font-medium hover:underline"
         >
-          Se connecter
+          {dictionary.login.submitButton.default}
         </Link>
       </p>
     </div>

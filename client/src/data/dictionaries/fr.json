@@ -12,6 +12,16 @@
     "noAccountText": "Vous n'avez pas de compte ?",
     "registerLink": "S'inscrire"
   },
+  "register": {
+    "title": "Inscription",
+    "description": "Entrez votre email pour recevoir un code de vérification !",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "submitButton": "Envoyer le code de vérification",
+    "error": "Message d'erreur",
+    "success": "Message affiché après succès",
+    "loginLink": "Vous avez déjà un compte ? Se connecter"
+  },
   "backToHome": "Retour au site web",
 
   "buttons": {

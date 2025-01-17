@@ -12,6 +12,16 @@
     "noAccountText": "Don’t have an account?",
     "registerLink": "Sign up"
   },
+  "register": {
+    "title": "Registration",
+    "description": "Enter your email to receive a verification code.",
+    "username": "Username",
+    "email": "Email",
+    "submitButton": "Send verification code",
+    "error": "Error message",
+    "success": "Message displayed upon success",
+    "loginLink": "Already have an account? Login"
+  },
   "backToHome": "Back to website",
   "buttons": {
     "save": "Save",

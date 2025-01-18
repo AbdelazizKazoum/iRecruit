@@ -29,7 +29,7 @@ export const CandidatureApplication = ({
 
   if (loading)
     return (
-      <nav className={cn("grid grid-cols-2 gap-6  m-auto w-full")}>
+      <main className={cn("flex-1 grid grid-cols-2 gap-6  m-auto w-full")}>
         <div className="space-y-4">
           <Skeleton className="h-8 w-full" />
           <Skeleton className="h-8 w-full" />
@@ -42,7 +42,7 @@ export const CandidatureApplication = ({
           <Skeleton className="h-8 w-full" />
           <Skeleton className="h-8 w-full" />
         </div>
-      </nav>
+      </main>
     );
 
   return (

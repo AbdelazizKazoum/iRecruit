@@ -96,7 +96,7 @@ const Header = ({
                 <UserDropdown dictionary={dictionary} user={user} />
               ) : (
                 <Link href={`/${locale}/login`}>
-                  <ButtonOutline>Connexion</ButtonOutline>
+                  <ButtonOutline> {dictionary.header.Connexion} </ButtonOutline>
                 </Link>
               )}
             </div>

@@ -25,9 +25,12 @@ const InfoProfessionnelles = ({
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-black-600/85">Application </h3>
+        <h3 className="text-lg font-medium text-black-600/85">
+          {" "}
+          {dictionary.candidature.sections.InfoProfessionnelles.title}{" "}
+        </h3>
         <p className="text-sm text-muted-foreground">
-          Cest ainsi que les autres vous verront sur le site.
+          {dictionary.candidature.sections.InfoProfessionnelles.description}{" "}
         </p>
       </div>
       <Separator />

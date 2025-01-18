@@ -103,12 +103,8 @@
     "signOut": "Se déconnecter"
   },
 
-  "menu": {
-    "home": "Accueil",
-    "concours": "Annonces de Concours",
-    "faq": "FAQ",
-    "contact": "Contact",
-    "steps": "Les étapes à suivre"
+  "header": {
+    "Connexion": "Connexion"
   },
   "concours": {
     "title": "Annonces de Concours",
@@ -157,7 +153,14 @@
     "title": "Portail de Candidature",
     "description": "Créez votre profil et postulez aux offres d'emploi correspondant à vos compétences et expériences.",
     "sections": {
-      "personalInfo": "Informations Personnelles",
+      "personalInfo": {
+        "title": "Informations Personnelles",
+        "description": "Fournissez vos informations personnelles pour compléter votre profil."
+      },
+      "InfoProfessionnelles": {
+        "title": "Informations Professionnelles",
+        "description": "Détaillez vos expériences professionnelles, compétences, et qualifications."
+      },
       "education": "Éducation",
       "experience": "Expériences",
       "skills": "Compétences",

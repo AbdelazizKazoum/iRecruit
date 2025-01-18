@@ -44,10 +44,10 @@ const InfoPersonnelles = ({
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium text-black-600/85">
-          {dictionary.candidature.title}{" "}
+          {dictionary.candidature.sections.personalInfo.title}{" "}
         </h3>
         <p className="text-sm text-muted-foreground">
-          {dictionary.candidature.description}
+          {dictionary.candidature.sections.personalInfo.description}
         </p>
       </div>
       <div>

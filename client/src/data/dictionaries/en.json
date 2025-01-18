@@ -100,12 +100,8 @@
     "signOut": "Sign out"
   },
 
-  "menu": {
-    "home": "Home",
-    "concours": "Job Announcements",
-    "faq": "FAQ",
-    "contact": "Contact",
-    "steps": "Steps to Follow"
+  "header": {
+    "Connexion": "Login"
   },
   "concours": {
     "title": "Job Announcements",
@@ -154,7 +150,14 @@
     "title": "Application Portal",
     "description": "Create your profile and apply for job offers that match your skills and experiences.",
     "sections": {
-      "personalInfo": "Personal Information",
+      "personalInfo": {
+        "title": "Personal Information",
+        "description": "Provide your personal information to complete your profile."
+      },
+      "InfoProfessionnelles": {
+        "title": "Professional Information",
+        "description": "Detail your work experience, skills, and qualifications."
+      },
       "education": "Education",
       "experience": "Work Experience",
       "skills": "Skills",

@@ -51,6 +51,21 @@
     "successMessage": "Votre mot de passe a été mis à jour avec succès.",
     "errorMessage": "Erreur lors de la mise à jour du mot de passe. Veuillez réessayer."
   },
+  "createPasswordForm": {
+    "pageTitle": "Créer un mot de passe",
+    "greetingMessage1": "Bonjour {username}",
+    "greetingMessage2": ", veuillez créer un mot de passe pour votre compte.",
+    "passwordPlaceholder": "Entrez un nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez le nouveau mot de passe",
+    "submitButton": {
+      "default": "Créer un mot de passe",
+      "loading": "Création en cours..."
+    },
+    "successMessage": "Mot de passe créé avec succès.",
+    "errorMessage": "Erreur lors de la création du mot de passe. Veuillez réessayer.",
+    "alreadyHaveAccountMessage": "Vous avez déjà un compte ?",
+    "loginLinkText": "Se connecter"
+  },
 
   "backToHome": "Retour au site web",
 

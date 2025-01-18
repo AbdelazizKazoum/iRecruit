@@ -56,30 +56,64 @@ export async function sendVerificationLink(formData: any) {
         username: formData.username,
       }
     );
+
     return {
-      message: "Un link de vérification a été envoyé à votre e-mail",
+      message: {
+        fr: "Un lien de vérification a été envoyé à votre e-mail.",
+        en: "A verification link has been sent to your email.",
+        ar: "تم إرسال رابط التحقق إلى بريدك الإلكتروني.",
+      },
       data: res.data,
       success: true,
+      error: {
+        fr: "",
+        ar: "",
+        en: "",
+      },
     };
   } catch (error: any) {
     switch (error.status) {
       case 404:
         return {
-          error: "Not found Error !",
-          message: "",
+          error: {
+            fr: "Erreur : introuvable !",
+            en: "Not found Error!",
+            ar: "خطأ: لم يتم العثور عليه!",
+          },
+          message: {
+            fr: "",
+            en: "",
+            ar: "",
+          },
           success: false,
         };
       case 409:
         return {
-          error: "L'utilisateur existe déjà",
-          message: "",
+          error: {
+            fr: "L'utilisateur existe déjà.",
+            en: "User already exists.",
+            ar: "المستخدم موجود بالفعل.",
+          },
+          message: {
+            fr: "",
+            en: "",
+            ar: "",
+          },
           success: false,
         };
 
       default:
         return {
-          error: "Somthing wrong !",
-          message: "",
+          error: {
+            fr: "Quelque chose s'est mal passé !",
+            en: "Something went wrong!",
+            ar: "حدث خطأ ما!",
+          },
+          message: {
+            fr: "",
+            en: "",
+            ar: "",
+          },
           success: false,
         };
     }

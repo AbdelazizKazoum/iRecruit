@@ -29,6 +29,7 @@ type RegisterFormData = {
 export const UpdatePasswordForm = ({
   code,
   locale,
+  dictionary,
 }: // dictionary,
 {
   code: string;
@@ -60,12 +61,10 @@ export const UpdatePasswordForm = ({
 
     if (response.error) {
       // Handle error (display a message, etc.)
-      setError(
-        "La mise à jour de votre mot de passe a échoué. Veuillez réessayer plus tard."
-      );
+      setError(dictionary.updatePasswordForm.errorMessage);
       setMessage("");
     } else {
-      setMessage("Votre mot de passe a été mis à jour avec succès !");
+      setMessage(dictionary.updatePasswordForm.successMessage);
     }
     reset(); // Clear the form fields after submission
   };
@@ -96,7 +95,7 @@ export const UpdatePasswordForm = ({
             variant={"outline"}
             className=" mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500 "
           >
-            Connexion
+            {dictionary.login.submitButton.default}
           </Button>
         </div>
       )}
@@ -125,7 +124,10 @@ export const UpdatePasswordForm = ({
                     <div className="relative">
                       <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Mot de passe"
+                        type="password"
+                        placeholder={
+                          dictionary.updatePasswordForm.passwordPlaceholder
+                        }
                         className="pl-10"
                         {...field}
                       />
@@ -146,7 +148,10 @@ export const UpdatePasswordForm = ({
                     <div className="relative">
                       <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        placeholder="Confirmer le mot de passe"
+                        placeholder={
+                          dictionary.updatePasswordForm
+                            .confirmPasswordPlaceholder
+                        }
                         type="password"
                         className="pl-10"
                         {...field}
@@ -160,7 +165,9 @@ export const UpdatePasswordForm = ({
 
             {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
-              {isSubmitting ? "Creation..." : "Mettre à jour le mot de passe"}
+              {isSubmitting
+                ? dictionary.updatePasswordForm.submitButton.loading
+                : dictionary.updatePasswordForm.submitButton.default}
             </Button>
           </form>
         </Form>

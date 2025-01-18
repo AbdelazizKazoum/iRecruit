@@ -55,6 +55,22 @@
 
   "backToHome": "الرجوع إلى الموقع",
 
+  "createPasswordForm": {
+    "pageTitle": "إنشاء كلمة مرور",
+    "greetingMessage1": "مرحباً ",
+    "greetingMessage2": "، يرجى إنشاء كلمة مرور لحسابك.",
+    "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPasswordPlaceholder": "أكد كلمة المرور الجديدة",
+    "submitButton": {
+      "default": "إنشاء كلمة المرور",
+      "loading": "جاري الإنشاء..."
+    },
+    "successMessage": "تم إنشاء كلمة المرور بنجاح.",
+    "errorMessage": "حدث خطأ أثناء إنشاء كلمة المرور. يرجى المحاولة مرة أخرى.",
+    "alreadyHaveAccountMessage": "هل لديك حساب بالفعل؟",
+    "loginLinkText": "تسجيل الدخول"
+  },
+
   "buttons": {
     "save": "حفظ",
     "submit": "إرسال",

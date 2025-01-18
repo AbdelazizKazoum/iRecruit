@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { sendVerificationLink } from "@/libs/actions/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,8 +43,8 @@ export const RegisterForm = ({
   } = form;
 
   // State for displaying messages
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState<any>();
+  const [error, setError] = useState<any>();
 
   // Form submission handler
   const onSubmit = async (data: RegisterFormData) => {
@@ -79,14 +80,14 @@ export const RegisterForm = ({
           >
             <path d="M20 6 9 17l-5-5" />
           </svg>
-          <span>{message}</span>
+          <span>{message[locale]}</span>
         </div>
       )}
 
       {/* Error Display */}
       {error && (
         <div className="mt-4">
-          <AlertDestructive message={error} />
+          <AlertDestructive message={error[locale]} />
         </div>
       )}
 

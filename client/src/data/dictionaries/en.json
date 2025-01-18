@@ -61,6 +61,21 @@
     "successMessage": "Your password has been successfully updated.",
     "errorMessage": "Error updating password. Please try again."
   },
+  "createPasswordForm": {
+    "pageTitle": "Create a Password",
+    "greetingMessage1": "Hello",
+    "greetingMessage2": ", please create a password for your account.",
+    "passwordPlaceholder": "Enter new password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "submitButton": {
+      "default": "Create Password",
+      "loading": "Creating..."
+    },
+    "successMessage": "Password created successfully.",
+    "errorMessage": "Error creating the password. Please try again.",
+    "alreadyHaveAccountMessage": "Already have an account?",
+    "loginLinkText": "Log in"
+  },
 
   "status": {
     "draft": "Draft",

@@ -57,7 +57,7 @@ const GroupFieldsRenderer: React.FC<GroupFieldRendererProps> = ({
           >
             {fieldConfig.title[locale]}
           </AccordionTrigger>
-          <AccordionContent className="grid grid-cols-1 md:grid-cols-1 gap-4 ">
+          <AccordionContent className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
             {fieldConfig.group.map((fieldGroup: any) => (
               <FormField
                 key={fieldGroup.name}

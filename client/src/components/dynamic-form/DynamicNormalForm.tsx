@@ -51,18 +51,20 @@ const DynamicNormalForm = forwardRef<
           );
         } else {
           return (
-            <FormField
-              key={index}
-              control={form.control}
-              name={fieldConfig.name}
-              render={({ field }) => (
-                <FieldRenderer
-                  fieldConfig={fieldConfig}
-                  field={field}
-                  locale={locale}
-                />
-              )}
-            />
+            <div key={index} className="col-span-2 md:col-span-1 ">
+              <FormField
+                key={index}
+                control={form.control}
+                name={fieldConfig.name}
+                render={({ field }) => (
+                  <FieldRenderer
+                    fieldConfig={fieldConfig}
+                    field={field}
+                    locale={locale}
+                  />
+                )}
+              />
+            </div>
           );
         }
       });
@@ -80,7 +82,7 @@ const DynamicNormalForm = forwardRef<
                   : form.handleSubmit(onSubmit)
               }
             >
-              <div className={cn("grid grid-cols-2 gap-4")}>
+              <div className={cn("grid grid-cols-1 md:grid-cols-2  gap-4")}>
                 {renderedFields}
               </div>
               {mode !== "readonly" && (

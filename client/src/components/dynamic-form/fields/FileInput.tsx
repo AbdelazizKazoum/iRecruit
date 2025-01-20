@@ -52,7 +52,7 @@ const FileInput: React.FC<TextInputProps> = ({
       (async () => {
         const file = await downloadFile(field.value);
 
-        setFileName(field.value.split("\\").pop());
+        setFileName(field.value.split("\\").pop().split("/").pop());
         setValue(field.name, file);
       })();
     }
@@ -80,7 +80,7 @@ const FileInput: React.FC<TextInputProps> = ({
                 error && "border-destructive"
               )}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 overflow-hidden ">
                 {fileName ? (
                   <>
                     <CheckCircleIcon className="h-4 w-4 text-green-500" />

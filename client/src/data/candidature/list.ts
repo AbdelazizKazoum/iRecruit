@@ -10,6 +10,11 @@ export const gridTranslation = {
     ar: "لم يتم إرسال أي بيانات حتى الآن.",
   },
   buttons: {
+    skip: {
+      en: "Skip",
+      fr: "Passer",
+      ar: "تخطي",
+    },
     save: {
       en: "Save",
       fr: "Enregistrer",

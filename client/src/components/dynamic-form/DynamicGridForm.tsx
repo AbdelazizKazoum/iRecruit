@@ -158,8 +158,7 @@ const DynamicGridForm = ({
                           setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
                         }}
                       >
-                        {/* {gridTranslation.buttons?.skip[locale] || "Skip"} */}
-                        Skip
+                        {gridTranslation.buttons?.skip[locale] || "Skip"}
                       </Button>
                     )}
                   </div>

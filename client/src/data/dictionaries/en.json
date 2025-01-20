@@ -156,7 +156,11 @@
       },
       "InfoProfessionnelles": {
         "title": "Professional Information",
-        "description": "Detail your work experience, skills, and qualifications."
+        "description": "Detail your work experience, skills, and qualifications.",
+        "important_information_title": "Important Information",
+        "important_information_message": "Provide all your qualifications, including languages, diplomas, and skills, to maximize your chances. Click Validate once done to confirm your information.",
+        "confirm_title": "Confirm Validation",
+        "confirm_message": "Are you sure you want to validate your professional information? This action cannot be undone."
       },
       "education": "Education",
       "experience": "Work Experience",

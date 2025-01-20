@@ -96,7 +96,6 @@ const FileInput: React.FC<TextInputProps> = ({
                   </>
                 )}
               </div>
-
               <input
                 type="file"
                 name={fieldConfig.name}

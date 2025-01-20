@@ -40,7 +40,7 @@ const DynamicNormalForm = forwardRef<
       return config.fields.map((fieldConfig: any, index: number) => {
         if (fieldConfig.type === "group") {
           return (
-            <div key={index} className="col-span-2">
+            <div key={index} className="col-span-2  ">
               <GroupFieldsRenderer
                 fieldConfig={fieldConfig}
                 category={category}

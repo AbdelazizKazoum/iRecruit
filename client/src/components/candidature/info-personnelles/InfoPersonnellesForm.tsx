@@ -6,6 +6,7 @@ import DynamicNormalForm from "@/components/dynamic-form/DynamicNormalForm";
 import { personalInformationSchema } from "@/schemas/personalInformationForm.schema";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { getDictionary } from "@/utils/getDictionary";
+import { useRouter } from "next/navigation";
 
 const InfoPersonnelles = ({
   locale,
@@ -16,6 +17,7 @@ const InfoPersonnelles = ({
 }) => {
   // Hooks
   const { candidatureData, submitPersonalInformation } = useCandidatureStore();
+  const router = useRouter();
 
   async function onSubmit(data: any) {
     // Create a new FormData instance
@@ -38,6 +40,7 @@ const InfoPersonnelles = ({
     }
 
     await submitPersonalInformation(formData);
+    router.push(`/${locale}/candidature?section=info-professionnelles`);
   }
 
   return (

@@ -24,7 +24,7 @@ function ValidationModal({
         <DialogHeader>
           <DialogTitle>{dictionary.application.modal.title}</DialogTitle>
         </DialogHeader>
-        <p className="mb-4 text-muted-foreground">
+        <p className="mb-4 text-muted-foreground ">
           {dictionary.application.modal.description}
         </p>
         <DialogFooter>

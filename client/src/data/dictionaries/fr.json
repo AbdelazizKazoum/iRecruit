@@ -53,7 +53,7 @@
   },
   "createPasswordForm": {
     "pageTitle": "Créer un mot de passe",
-    "greetingMessage1": "Bonjour {username}",
+    "greetingMessage1": "Bonjour",
     "greetingMessage2": ", veuillez créer un mot de passe pour votre compte.",
     "passwordPlaceholder": "Entrez un nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmez le nouveau mot de passe",
@@ -159,7 +159,11 @@
       },
       "InfoProfessionnelles": {
         "title": "Informations Professionnelles",
-        "description": "Détaillez vos expériences professionnelles, compétences, et qualifications."
+        "description": "Détaillez vos expériences professionnelles, compétences, et qualifications.",
+        "important_information_title": "Informations Importantes",
+        "important_information_message": "Saisissez toutes vos qualifications, y compris les langues, diplômes et compétences, pour maximiser vos chances. Cliquez sur Valider une fois terminé pour confirmer vos informations.",
+        "confirm_title": "Confirmer la Validation",
+        "confirm_message": "Êtes-vous sûr de vouloir valider vos informations professionnelles ? Cette action est irréversible."
       },
       "education": "Éducation",
       "experience": "Expériences",

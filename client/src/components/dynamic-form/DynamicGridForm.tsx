@@ -20,6 +20,7 @@ import { cn } from "@/libs/utils";
 
 import { toast } from "react-toastify";
 import List from "./List";
+import { gridTranslation } from "@/data/candidature/list";
 
 const DynamicGridForm = ({
   category,
@@ -40,33 +41,12 @@ const DynamicGridForm = ({
   const form = useForm<any>({
     resolver: zodResolver(schema),
   });
+
+  // State
   const { fields } = config;
   const [submittedData, setSubmittedData] = useState<any[]>(data);
-
-  const gridTranslation = {
-    title: {
-      en: "Submitted Data",
-      fr: "Données Soumises",
-      ar: "البيانات المرسلة",
-    },
-    empty: {
-      en: "No data submitted yet.",
-      fr: "Aucune donnée soumise pour le moment.",
-      ar: "لم يتم إرسال أي بيانات حتى الآن.",
-    },
-    buttons: {
-      save: {
-        en: "Save",
-        fr: "Enregistrer",
-        ar: "حفظ",
-      },
-      loading: {
-        en: "Loading...",
-        fr: "Chargement...",
-        ar: "جاري التحميل...",
-      },
-    },
-  };
+  const [accordionKey, setAccordionKey] = useState(0); // State to track re-render
+  const [openAccordion, setOpenAccordion] = useState(null); // State for open accordion
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -111,14 +91,23 @@ const DynamicGridForm = ({
       return; // Do not add duplicate data
     }
 
-    onSubmit(data);
+    // onSubmit(data);
 
     setSubmittedData((prev) => [...prev, data]);
     form.reset({});
+    setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
+    setOpenAccordion(config.title[locale]);
   };
 
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      value={openAccordion} // Set open state
+      key={accordionKey}
+      onValueChange={(value) => setOpenAccordion(value)} // Update state on toggle
+    >
       <AccordionItem value={config.title[locale]}>
         <AccordionTrigger className={cn(" text-primary text-base font-normal")}>
           {config.title[locale]}

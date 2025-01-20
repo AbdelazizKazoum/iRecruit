@@ -7,7 +7,7 @@ import { Form, FormField } from "@/components/ui/form";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider, useForm } from "react-hook-form";
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Locale } from "@/configs/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -27,15 +27,19 @@ const DynamicGridForm = ({
   schema,
   locale,
   onSubmit,
+  handleNext,
   data,
   checkKey, // New prop for specifying the key to check
+  openedAccordion,
 }: {
   category: string;
   schema: any;
   locale: Locale;
   onSubmit: (data: any) => void;
+  handleNext?: (value?: string) => void;
   data: any;
   checkKey: string; // Key to check for duplicates
+  openedAccordion?: string;
 }) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({
@@ -46,7 +50,7 @@ const DynamicGridForm = ({
   const { fields } = config;
   const [submittedData, setSubmittedData] = useState<any[]>(data);
   const [accordionKey, setAccordionKey] = useState(0); // State to track re-render
-  const [openAccordion, setOpenAccordion] = useState(null); // State for open accordion
+  const [openAccordion, setOpenAccordion] = useState(""); // State for open accordion
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -91,13 +95,19 @@ const DynamicGridForm = ({
       return; // Do not add duplicate data
     }
 
-    // onSubmit(data);
+    // Submit data to the api using the method provided to this component
+    onSubmit(data);
 
+    // Set submitted data to the global state
     setSubmittedData((prev) => [...prev, data]);
     form.reset({});
     setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
     setOpenAccordion(config.title[locale]);
   };
+
+  useEffect(() => {
+    setOpenAccordion(openedAccordion || "");
+  }, [openedAccordion]);
 
   return (
     <Accordion
@@ -106,7 +116,10 @@ const DynamicGridForm = ({
       className="w-full"
       value={openAccordion} // Set open state
       key={accordionKey}
-      onValueChange={(value) => setOpenAccordion(value)} // Update state on toggle
+      onValueChange={(value) => {
+        setOpenAccordion(value);
+        if (handleNext) handleNext(value);
+      }} // Update state on toggle
     >
       <AccordionItem value={config.title[locale]}>
         <AccordionTrigger className={cn(" text-primary text-base font-normal")}>
@@ -121,17 +134,35 @@ const DynamicGridForm = ({
                   onSubmit={form.handleSubmit(addToList)}
                 >
                   <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
-                  <Button
-                    size="lg"
-                    type="submit"
-                    disabled={form.formState.isSubmitting}
-                    style={{ marginTop: "15px" }}
-                  >
-                    {form.formState.isSubmitting ? (
-                      <Loader className="animate-spin mr-2 h-4 w-4" />
-                    ) : null}
-                    {gridTranslation.buttons.save[locale]}
-                  </Button>
+                  <div className=" space-x-3 ">
+                    <Button
+                      size="lg"
+                      type="submit"
+                      disabled={form.formState.isSubmitting}
+                      style={{ marginTop: "15px" }}
+                    >
+                      {form.formState.isSubmitting ? (
+                        <Loader className="animate-spin mr-2 h-4 w-4" />
+                      ) : null}
+                      {gridTranslation.buttons.save[locale]}
+                    </Button>
+                    {handleNext && (
+                      <Button
+                        size="lg"
+                        type="button"
+                        variant="outline" // Optional styling for the "Skip" button
+                        onClick={() => {
+                          setOpenAccordion("");
+
+                          handleNext();
+                          setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
+                        }}
+                      >
+                        {/* {gridTranslation.buttons?.skip[locale] || "Skip"} */}
+                        Skip
+                      </Button>
+                    )}
+                  </div>
                 </form>
               </Form>
             </FormProvider>

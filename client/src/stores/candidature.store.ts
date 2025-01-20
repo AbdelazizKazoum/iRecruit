@@ -7,6 +7,7 @@ export interface CandidatureStoreState {
   candidatureData: CandidatureType | null;
   loading: boolean;
   error: string | null;
+  nextGroup: string;
 
   setPersonalInformation: (
     data: CandidatureType["personalInformation"]
@@ -18,12 +19,19 @@ export interface CandidatureStoreState {
   submitPersonalInformation: (data: FormData) => Promise<void>;
   fetchCandidatureData: () => Promise<CandidatureType | null>;
   validateCandidature: () => Promise<string>; // New validation method
+  setNextGroup: (value: string) => void; // New validation method
 }
 
 export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
   candidatureData: null,
   loading: true,
   error: "",
+  nextGroup: "",
+
+  // Set next form in the dynamic group forms
+  setNextGroup: (value) => {
+    set({ nextGroup: value });
+  },
 
   // fetch candidature from database
   fetchCandidatureData: async () => {

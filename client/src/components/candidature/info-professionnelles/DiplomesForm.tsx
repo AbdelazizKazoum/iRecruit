@@ -8,7 +8,8 @@ import React from "react";
 
 const DiplomesForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, submitDiplome } = useCandidatureStore();
+  const { candidatureData, submitDiplome, nextGroup, setNextGroup } =
+    useCandidatureStore();
 
   const onSubmit = async (data: ParcoursEtDiplomesTypes) => {
     const formData = new FormData();
@@ -31,6 +32,10 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
     submitDiplome(formData);
   };
 
+  const handleNext = (value?: string) => {
+    setNextGroup(value ?? "Niveaux Langues");
+  };
+
   return (
     <div>
       <DynamicGridForm
@@ -42,6 +47,8 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
           candidatureData?.professionalInformation?.parcoursEtDiplomes || []
         }
         checkKey="diplomeType"
+        openedAccordion={nextGroup}
+        handleNext={handleNext}
       />
     </div>
   );

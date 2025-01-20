@@ -7,7 +7,8 @@ import { NiveauxLanguesType } from "@/types/candidature.types";
 import React from "react";
 
 const LanquesForm = ({ locale }: { locale: Locale }) => {
-  const { candidatureData, submitNiveauxLangues } = useCandidatureStore();
+  const { candidatureData, submitNiveauxLangues, nextGroup, setNextGroup } =
+    useCandidatureStore();
 
   const onSubmit = async (data: NiveauxLanguesType) => {
     const formData = new FormData();
@@ -32,6 +33,10 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
     submitNiveauxLangues(formData);
   };
 
+  const handleNext = (value?: string) => {
+    setNextGroup(value ?? "Publications");
+  };
+
   return (
     <div>
       <DynamicGridForm
@@ -41,6 +46,8 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
         locale={locale}
         data={candidatureData?.professionalInformation?.niveauxLangues || []}
         checkKey="langue"
+        openedAccordion={nextGroup}
+        handleNext={handleNext}
       />
     </div>
   );

@@ -8,7 +8,8 @@ import React from "react";
 
 const CommunicationsForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, submitCommunication } = useCandidatureStore();
+  const { candidatureData, submitCommunication, nextGroup, setNextGroup } =
+    useCandidatureStore();
 
   const onSubmit = async (data: communicationsType) => {
     const formData = new FormData();
@@ -29,6 +30,11 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
 
     submitCommunication(formData);
   };
+
+  const handleNext = (value?: string) => {
+    setNextGroup(value ?? "");
+  };
+
   return (
     <div>
       <DynamicGridForm
@@ -38,6 +44,8 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
         locale={locale}
         data={candidatureData?.professionalInformation?.communications || []}
         checkKey="titre"
+        openedAccordion={nextGroup}
+        handleNext={handleNext}
       />
     </div>
   );

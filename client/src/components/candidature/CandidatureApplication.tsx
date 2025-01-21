@@ -17,15 +17,18 @@ export const CandidatureApplication = ({
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }) => {
-  const { fetchCandidatureData } = useCandidatureStore();
+  const { fetchCandidatureData, candidatureData } = useCandidatureStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      await fetchCandidatureData();
-      setLoading(false);
-    })();
-  }, [fetchCandidatureData]);
+    if (candidatureData) {
+      (async () => {
+        await fetchCandidatureData();
+      })();
+    }
+
+    setLoading(false);
+  }, [fetchCandidatureData, candidatureData]);
 
   if (loading)
     return (

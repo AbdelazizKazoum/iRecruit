@@ -73,7 +73,7 @@ function Stepper({
 
   // Hooks
   const stepper = useStepper();
-  const { fetchCandidatureData } = useCandidatureStore();
+  const { fetchCandidatureData, candidatureData } = useCandidatureStore();
   const { applicationData, submitApplication, selectedOffer } =
     useApplicationStore();
   const formRef = React.useRef<HTMLButtonElement>(null);
@@ -81,7 +81,9 @@ function Stepper({
 
   React.useEffect(() => {
     (async () => {
-      const candidature = await fetchCandidatureData();
+      const candidature = candidatureData
+        ? candidatureData
+        : await fetchCandidatureData();
       setLoading(false);
       console.log("🚀 ~ candidats:", candidature);
 
@@ -97,7 +99,7 @@ function Stepper({
         setShowModal(true); // Show the modal if not valid
       }
     })();
-  }, [fetchCandidatureData, locale, router]);
+  }, [fetchCandidatureData, locale, router, candidatureData]);
 
   const submitData = async () => {
     if (applicationData) {
@@ -156,7 +158,7 @@ function Stepper({
                     aria-setsize={steps.length}
                     aria-selected={stepper.current.id === step.id}
                     className="flex size-8 sm:size-10 items-center justify-center rounded-full"
-                    onClick={() => stepper.goTo(step.id)}
+                    // onClick={() => stepper.goTo(step.id)}
                   >
                     {index + 1}
                   </Button>
@@ -232,6 +234,14 @@ function Stepper({
                   <Loader className="animate-spin mr-2 h-4 w-4" />
                 ) : null}
                 {dictionary.stepper.submit}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={stepper.prev}
+                disabled={stepper.isFirst}
+                size="lg"
+              >
+                {dictionary.stepper.back}
               </Button>
             </div>
           )}

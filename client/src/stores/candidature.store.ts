@@ -24,7 +24,7 @@ export interface CandidatureStoreState {
 
 export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
   candidatureData: null,
-  loading: true,
+  loading: false,
   error: "",
   nextGroup: "",
 

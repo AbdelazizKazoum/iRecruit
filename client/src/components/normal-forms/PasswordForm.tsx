@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
-import { Lock } from "lucide-react"; // Lucide icons
+import { Lock, Eye, EyeOff } from "lucide-react"; // Lucide icons
 import Link from "next/link";
 import { passwordSchema } from "@/schemas/authSchema";
 import { useRouter } from "next/navigation";
@@ -30,8 +30,7 @@ export const PasswordForm = ({
   code,
   locale,
   dictionary,
-}: // dictionary,
-{
+}: {
   code: string;
   locale: Locale;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
@@ -48,6 +47,7 @@ export const PasswordForm = ({
   // State for displaying messages
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Hooks
   const router = useRouter();
@@ -71,9 +71,9 @@ export const PasswordForm = ({
 
   return (
     <div>
-      {/* Message Display */}
       {message && (
         <div className="flex flex-col items-center justify-center mt-4 p-4 bg-green-500/10 border border-green-500 text-green-500 rounded-md">
+          {/* Success Message */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100"
@@ -84,7 +84,7 @@ export const PasswordForm = ({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-check text-green-500 "
+            className="lucide lucide-check text-green-500"
           >
             <path d="M20 6 9 17l-5-5" />
           </svg>
@@ -93,28 +93,26 @@ export const PasswordForm = ({
           <Button
             onClick={() => router.push(`/${locale}/login`)}
             variant={"outline"}
-            className=" mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500 "
+            className="mt-3 bg-green-500/10 border-green-500 hover:bg-green-500/20 hover:text-green-500"
           >
             {dictionary.createPasswordForm.loginLinkText}
           </Button>
         </div>
       )}
 
-      {/* Error Display */}
       {error && (
         <div className="mt-4">
           <AlertDestructive message={error} />
         </div>
       )}
 
-      {/* Form */}
       {!message && (
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="mt-8 space-y-4"
           >
-            {/* Username Field */}
+            {/* Password Field */}
             <FormField
               control={form.control}
               name="password"
@@ -124,13 +122,23 @@ export const PasswordForm = ({
                     <div className="relative">
                       <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder={
                           dictionary.createPasswordForm.passwordPlaceholder
                         }
-                        className="pl-10"
+                        className="pl-10 pr-10"
                         {...field}
                       />
+                      <div
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className=" text-black-500 " size={18} />
+                        ) : (
+                          <Eye className=" text-black-500 " size={18} />
+                        )}
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -138,7 +146,7 @@ export const PasswordForm = ({
               )}
             />
 
-            {/* Password Field */}
+            {/* Confirm Password Field */}
             <FormField
               control={form.control}
               name="confirmPassword"
@@ -148,12 +156,12 @@ export const PasswordForm = ({
                     <div className="relative">
                       <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
+                        type={"password"}
                         placeholder={
                           dictionary.createPasswordForm
                             .confirmPasswordPlaceholder
                         }
-                        type="password"
-                        className="pl-10"
+                        className="pl-10 pr-10"
                         {...field}
                       />
                     </div>
@@ -163,7 +171,6 @@ export const PasswordForm = ({
               )}
             />
 
-            {/* Submit Button */}
             <Button disabled={isSubmitting} className="w-full transition">
               {isSubmitting
                 ? dictionary.createPasswordForm.submitButton.loading

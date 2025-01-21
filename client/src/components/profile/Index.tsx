@@ -33,12 +33,12 @@ const Index = ({
 
   useEffect(() => {
     (async () => {
-      if (candidatureData) await fetchCandidatureData();
-      if (applications) await fetchApplications();
+      await fetchCandidatureData();
+      await fetchApplications();
     })();
 
     setLoading(false);
-  }, [fetchCandidatureData, fetchApplications, applications, candidatureData]);
+  }, [fetchCandidatureData, fetchApplications]);
 
   return (
     <div>

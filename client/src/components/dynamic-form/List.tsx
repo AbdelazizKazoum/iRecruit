@@ -77,7 +77,7 @@ const List = ({
                     {Object.entries(entry).map(([key, value], colIndex) =>
                       key === "files" && typeof value === "object" ? (
                         Object.entries(value || {}).map(
-                          ([fileValue], fileIndex) => (
+                          (fileValue, fileIndex) => (
                             <td
                               key={`file-${rowIndex}-${colIndex}-${fileIndex}`}
                               className="border text-black-500/80 px-4 py-2 text-center"
@@ -87,7 +87,7 @@ const List = ({
                                   variant="outline"
                                   size="icon"
                                   onClick={async () =>
-                                    await handleOpenFile(fileValue)
+                                    await handleOpenFile(fileValue[1])
                                   }
                                 >
                                   <Download className="h-4 w-4 text-blue-500" />

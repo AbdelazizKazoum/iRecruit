@@ -5,6 +5,8 @@ import { downloadFile } from "./downloadFile";
 
 // File open
 export const handleOpenFile = async (value: any) => {
+  console.log("🚀 ~ handleOpenFile ~ value:", value);
+
   if (typeof value == "string") {
     try {
       // Download the file if value is a URL or path

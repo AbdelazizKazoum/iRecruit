@@ -11,14 +11,14 @@ export const gridTranslation = {
   },
   buttons: {
     skip: {
-      en: "Skip",
-      fr: "Passer",
-      ar: "تخطي",
+      en: "Next",
+      fr: "Suivant",
+      ar: "التالي",
     },
     save: {
-      en: "Save",
-      fr: "Enregistrer",
-      ar: "حفظ",
+      en: "Add",
+      fr: "Ajouter",
+      ar: "إضافة",
     },
     loading: {
       en: "Loading...",

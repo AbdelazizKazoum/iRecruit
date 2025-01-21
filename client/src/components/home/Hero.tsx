@@ -9,36 +9,8 @@ import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
 import { useRouter } from "next/navigation";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
-
-const listUser = [
-  {
-    name: {
-      fr: "Offres d'emploi",
-      en: "Job Offers",
-      ar: "عروض العمل",
-    },
-    number: "10",
-    icon: "/assets/Icon/heroicons_sm-jobs.svg",
-  },
-  {
-    name: {
-      fr: "Candidats",
-      en: "Candidates",
-      ar: "المرشحون",
-    },
-    number: "450",
-    icon: "/assets/Icon/gridicons_candidats.svg",
-  },
-  {
-    name: {
-      fr: "Entretiens planifiés",
-      en: "Scheduled Interviews",
-      ar: "المقابلات المخطط لها",
-    },
-    number: "80",
-    icon: "/assets/Icon/bx_bxs-planning.svg",
-  },
-];
+import { useCandidatureStore } from "@/stores/candidature.store";
+import { listUser } from "@/data/navigation/hero";
 
 const Hero = ({
   dictionary,
@@ -47,14 +19,35 @@ const Hero = ({
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   locale: Locale;
 }) => {
-  const scrollAnimation = useMemo(() => getScrollAnimation(), []);
+  // State
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading
+
+  // Memos
+  const scrollAnimation = useMemo(() => getScrollAnimation(), []);
 
   // Hooks
   const router = useRouter();
+  const { fetchCandidatureData } = useCandidatureStore();
 
   const handleVideoClick = () => {
     setIsVideoOpen(true);
+  };
+
+  const handleStartClick = async () => {
+    setLoading(true); // Start loading
+    const res = await fetchCandidatureData();
+
+    if (
+      res?.personalInformation?.valid ||
+      res?.professionalInformation?.valid
+    ) {
+      router.push(`/${locale}/concours`);
+    } else {
+      router.push(`/${locale}/candidature`);
+    }
+
+    setLoading(false); // End loading
   };
 
   return (
@@ -74,10 +67,38 @@ const Hero = ({
             <div className="flex gap-3">
               <ButtonPrimary
                 addClass={""}
-                onClick={() => router.push(`/${locale}/candidature`)}
+                onClick={() => handleStartClick()}
+                disabled={loading}
               >
-                {dictionary["hero"].button}
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    {/* Spinner */}
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                  </div>
+                ) : (
+                  dictionary["hero"].button
+                )}
               </ButtonPrimary>
+
               <div className="">
                 {/* Play button with text next to it */}
                 <button

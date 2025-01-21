@@ -133,8 +133,10 @@ const DynamicGridForm = ({
                   className="space-y-2"
                   onSubmit={form.handleSubmit(addToList)}
                 >
-                  <div className="grid grid-cols-2 gap-4">{renderedFields}</div>
-                  <div className=" space-x-3 ">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {renderedFields}
+                  </div>
+                  <div className=" space-x-3  ">
                     <Button
                       size="lg"
                       type="submit"
@@ -147,19 +149,21 @@ const DynamicGridForm = ({
                       {gridTranslation.buttons.save[locale]}
                     </Button>
                     {handleNext && (
-                      <Button
-                        size="lg"
-                        type="button"
-                        variant="outline" // Optional styling for the "Skip" button
-                        onClick={() => {
-                          setOpenAccordion("");
+                      <div className=" inline px-2  ">
+                        <Button
+                          size="lg"
+                          type="button"
+                          variant="outline" // Optional styling for the "Skip" button
+                          onClick={() => {
+                            setOpenAccordion("");
 
-                          handleNext();
-                          setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
-                        }}
-                      >
-                        {gridTranslation.buttons?.skip[locale] || "Skip"}
-                      </Button>
+                            handleNext();
+                            setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
+                          }}
+                        >
+                          {gridTranslation.buttons?.skip[locale] || "Skip"}
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </form>

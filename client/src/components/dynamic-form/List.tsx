@@ -99,7 +99,7 @@ const List = ({
                       ) : (
                         <td
                           key={`cell-${rowIndex}-${colIndex}`}
-                          className="border text-black-500/90 px-4 py-2 text-center"
+                          className="border text-black-500/80 px-4 py-2 text-center"
                         >
                           {String(value)}
                         </td>

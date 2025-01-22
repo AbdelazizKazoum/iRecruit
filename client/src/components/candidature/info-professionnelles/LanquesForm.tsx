@@ -22,11 +22,15 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
       console.log("🚀 ~ onSubmit ~ files:", files);
 
       Object.entries(files).map((item) => {
-        const file = item[1] as File;
-        const key =
-          item[0] + "-" + rest.langue + `.${file?.name?.split(".")[1]}`;
+        console.log("🚀 ~ Object.entries ~ item:", item);
 
-        formData.append("files", file, key);
+        if (item[1]) {
+          const file = item[1] as File;
+          const key =
+            item[0] + "-" + rest.langue + `.${file?.name?.split(".")[1]}`;
+
+          formData.append("files", file, key);
+        }
       });
     }
 

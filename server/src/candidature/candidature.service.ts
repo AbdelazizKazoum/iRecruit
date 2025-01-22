@@ -140,11 +140,16 @@ export class CandidatureService {
       const allowedFormats = ['pdf']; // Define allowed formats
 
       // Upload files and get their paths
-      const filePaths = await this.fileUploadService.uploadFiles(
-        files,
-        uploadPath,
-        allowedFormats,
-      );
+      let filePaths = {};
+      if (files.length > 0) {
+        console.log('🚀 ~ CandidatureService ~ saveLanguages ~ files:', files);
+
+        filePaths = await this.fileUploadService.uploadFiles(
+          files,
+          uploadPath,
+          allowedFormats,
+        );
+      }
 
       // Update only the professionalInformation
       existingCandidature.professionalInformation = {

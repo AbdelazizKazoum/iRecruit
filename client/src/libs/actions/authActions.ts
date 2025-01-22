@@ -23,12 +23,13 @@ export async function authenticate(formData: any) {
         case "CredentialsSignin":
           return {
             success: false,
-            error: "Email ou mot de passe invalide. Veuillez réessayer.",
+            error: "401",
           };
         default:
+          console.log(error);
           return {
             success: false,
-            error: "Email ou mot de passe invalide. Veuillez réessayer.",
+            error: "Il y a un problème. Veuillez réessayer.",
           };
       }
     }

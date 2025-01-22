@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { authenticate } from "@/libs/actions/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -13,7 +14,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
-import { Mail, Lock } from "lucide-react"; // Lucide icons
+import { Mail, Lock, EyeOff, Eye } from "lucide-react"; // Lucide icons
 import { loginSchema } from "@/schemas/authSchema";
 import { Locale } from "@/configs/i18n";
 import { getDictionary } from "@/utils/getDictionary";
@@ -39,22 +40,33 @@ export const LoginForm = ({
     formState: { isSubmitting },
   } = form;
 
-  const [error, setError] = useState("");
+  // State
+  const [error, setError] = useState<any>();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = useCallback(async (data: LoginFormData) => {
     const response = await authenticate(data);
 
     if (!response) {
-      console.log("🚀 ~ onSubmit ~ response:", response);
       return null;
     }
-
     if (response.error) {
-      setError(response.error || "");
+      if (response.error === "401")
+        setError({
+          en: "Invalid email or password. Please try again.",
+          fr: "Email ou mot de passe invalide. Veuillez réessayer.",
+          ar: "البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+        });
+      else
+        setError({
+          en: "There is a problem, please try again.",
+          fr: "Il y a un problème, Veuillez réessayer.",
+          ar: "هناك مشكلة، يرجى المحاولة مرة أخرى.",
+        });
     }
 
     console.log(response);
-  };
+  }, []);
 
   return (
     <div>
@@ -92,11 +104,21 @@ export const LoginForm = ({
                   <div className="relative">
                     <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                     <Input
+                      type={showPassword ? "text" : "password"}
                       placeholder={dictionary.login.passwordPlaceholder}
-                      type="password"
-                      className="pl-10"
+                      className="pl-10 pr-10"
                       {...field}
                     />
+                    <div
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className=" text-black-500 " size={18} />
+                      ) : (
+                        <Eye className=" text-black-500 " size={18} />
+                      )}
+                    </div>
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -116,7 +138,7 @@ export const LoginForm = ({
       {/* Error Display */}
       {error && (
         <div className="mt-4">
-          <AlertDestructive message={error} />
+          <AlertDestructive message={error[locale]} />
         </div>
       )}
 

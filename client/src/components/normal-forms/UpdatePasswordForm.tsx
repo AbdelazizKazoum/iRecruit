@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { AlertDestructive } from "../alerts/AlertDestructive";
-import { Lock } from "lucide-react"; // Lucide icons
+import { Eye, EyeOff, Lock } from "lucide-react"; // Lucide icons
 // import Link from "next/link";
 import { passwordSchema } from "@/schemas/authSchema";
 import { useRouter } from "next/navigation";
@@ -48,6 +48,7 @@ export const UpdatePasswordForm = ({
   // State for displaying messages
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Hooks
   const router = useRouter();
@@ -124,13 +125,23 @@ export const UpdatePasswordForm = ({
                     <div className="relative">
                       <Lock className="absolute h-4 w-4 left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder={
                           dictionary.updatePasswordForm.passwordPlaceholder
                         }
-                        className="pl-10"
+                        className="pl-10 pr-10"
                         {...field}
                       />
+                      <div
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className=" text-black-500 " size={18} />
+                        ) : (
+                          <Eye className=" text-black-500 " size={18} />
+                        )}
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />

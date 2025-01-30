@@ -1,0 +1,67 @@
+{
+  "fields": [
+    {
+      "name": "fullName",
+      "label": "Full Name",
+      "type": "text",
+      "validation": {
+        "required": true,
+        "minLength": 3,
+        "maxLength": 50
+      }
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "type": "email",
+      "validation": {
+        "required": true,
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      }
+    },
+    {
+      "name": "password",
+      "label": "Password",
+      "type": "password",
+      "validation": {
+        "required": true,
+        "minLength": 6
+      }
+    },
+    {
+      "name": "confirmPassword",
+      "label": "Confirm Password",
+      "type": "password",
+      "validation": {
+        "required": true,
+        "matches": "password"
+      }
+    },
+    {
+      "name": "resume",
+      "label": "Resume (PDF, max 5MB)",
+      "type": "file",
+      "validation": {
+        "required": true,
+        "fileType": ["application/pdf"],
+        "maxSize": 5242880
+      }
+    },
+    {
+      "name": "hasExperience",
+      "label": "Do you have work experience?",
+      "type": "checkbox"
+    },
+    {
+      "name": "experienceYears",
+      "label": "Years of Experience",
+      "type": "number",
+      "validation": {
+        "required": true,
+        "min": 1,
+        "max": 50
+      },
+      "dependsOn": "hasExperience"
+    }
+  ]
+}

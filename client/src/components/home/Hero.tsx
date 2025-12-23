@@ -5,7 +5,7 @@ import ButtonPrimary from "@/components/misc/ButtonPrimary";
 import { motion } from "framer-motion";
 import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
-import { PlayCircle, X } from "lucide-react"; // Import Play icon from Lucide React
+import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
 import { useRouter } from "next/navigation";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";

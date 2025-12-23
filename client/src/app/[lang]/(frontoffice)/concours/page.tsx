@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConcourItem } from "@/components/concours/ConcourItem";
 import PageHeader from "@/components/PageHeader";
 import { Separator } from "@/components/ui/separator";
 import { Locale } from "@/configs/i18n";
-import serverApi from "@/libs/serverApi";
+import { getJobOffers } from "@/libs/actions/offers";
 import { OfferType } from "@/types/application.types";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
@@ -13,8 +12,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
   const dictionary = await getDictionary(params.lang);
 
   // Fetch job offers from the API
-  const { data } = await serverApi.get(`${process.env.BACKEND_API}/job-offers`); // Update with your actual API endpoint
-  const jobOffers: OfferType[] = data; // Parse the JSON response
+  const jobOffers = await getJobOffers();
 
   const { lang: locale } = params;
 
@@ -30,7 +28,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
           <div className="border-none p-0 outline-none">
             <div className="relative">
               <div>
-                {data ? (
+                {jobOffers.length > 0 ? (
                   <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 pb-4 ">
                     {jobOffers.map((item: OfferType) => (
                       <ConcourItem
@@ -43,7 +41,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
                     ))}
                   </div>
                 ) : (
-                  ""
+                  <p>{dictionary["concours"].noOffers}</p>
                 )}
               </div>
             </div>

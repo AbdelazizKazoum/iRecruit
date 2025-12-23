@@ -31,7 +31,8 @@
     "apply": "Apply",
     "details": "Details",
     "loading": "Loading...",
-    "validate": "Validate"
+    "validate": "Validate",
+    "showMore": "Show More"
   },
   "resetPasswordPage": {
     "title": "Reset Password",
@@ -109,7 +110,8 @@
     "publishedOn": "Published on",
     "deadline": "Apply before",
     "details": "Details",
-    "apply": "Apply"
+    "apply": "Apply",
+    "noOffers": "No offers available at the moment"
   },
   "hero": {
     "title": "Welcome to the Recruitment Platform.",

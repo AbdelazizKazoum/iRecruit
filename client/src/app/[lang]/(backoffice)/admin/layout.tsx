@@ -3,19 +3,24 @@ import Providers from "@/components/Providers";
 import { Locale } from "@/configs/i18n";
 import AuthGuard from "@/hocs/AuthGuard";
 import { ChildrenType } from "@/types/types";
+import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
 
 const Layout = async ({
   children,
   params,
 }: ChildrenType & { params: { lang: Locale } }) => {
+  const dictionary = await getDictionary(params.lang);
   return (
     <Providers>
       <AuthGuard locale={params.lang}>
-        <AdminLayout lang={params.lang}>{children}</AdminLayout>
+        <AdminLayout lang={params.lang} dictionary={dictionary}>
+          {children}
+        </AdminLayout>
       </AuthGuard>
     </Providers>
   );
 };
+
 
 export default Layout;

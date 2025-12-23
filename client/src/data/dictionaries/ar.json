@@ -336,5 +336,45 @@
       "description": "قبل التقدم لوظيفة، يرجى ملء جميع معلوماتك والتحقق منها.",
       "continue": "متابعة"
     }
+  },
+  "adminDashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "نظرة عامة على أنشطة التوظيف الخاصة بك.",
+    "last30Days": "آخر 30 يومًا",
+    "postJob": "نشر وظيفة",
+    "stats": {
+      "totalCandidates": "إجمالي المرشحين",
+      "activeJobOffers": "عروض العمل النشطة",
+      "pendingApplications": "الطلبات المعلقة",
+      "interviews": "المقابلات",
+      "vsLastMonth": "مقارنة بالشهر الماضي",
+      "newPositions": "وظائف جديدة",
+      "vsLastWeek": "مقارنة بالأسبوع الماضي",
+      "scheduledToday": "مجدولة اليوم"
+    },
+    "recentApplications": {
+      "title": "أحدث الطلبات",
+      "description": "أحدث المرشحين المتقدمين للوظائف.",
+      "viewAll": "عرض الكل"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "postJob": "نشر وظيفة",
+      "inviteUser": "دعوة مستخدم",
+      "search": "بحث",
+      "reports": "التقارير"
+    },
+    "upcomingInterviews": {
+      "title": "المقابلات القادمة",
+      "next24Hours": "خلال 24 ساعة القادمة"
+    }
+  },
+  "adminHeader": {
+    "searchPlaceholder": "بحث...",
+    "notifications": "إشعارات",
+    "toggleMenu": "تبديل القائمة",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
   }
 }

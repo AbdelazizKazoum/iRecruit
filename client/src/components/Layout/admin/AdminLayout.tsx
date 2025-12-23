@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminHeader } from "./AdminHeader";
 import { Locale } from "@/configs/i18n";
+import { motion } from "framer-motion";
+import { cn } from "@/libs/utils";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -12,30 +14,60 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children, lang }: AdminLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isRtl = lang === "ar";
 
   return (
-    <div className="min-h-screen bg-gray-100/40 dark:bg-gray-900">
+    <div
+      className="min-h-screen bg-muted/40 dark:bg-muted/10"
+      dir={isRtl ? "rtl" : "ltr"}
+    >
       {/* Desktop Sidebar */}
-      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col z-20">
-        <AdminSidebar lang={lang} className="h-full" />
+      <div
+        className={cn(
+          "hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col z-20 bg-black-600 border-white/10",
+          isRtl ? "right-0 border-l" : "left-0 border-r"
+        )}
+      >
+        <AdminSidebar lang={lang} className="h-full border-none" />
       </div>
 
       {/* Mobile Sidebar Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex md:hidden">
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-all"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-all"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="relative flex w-64 flex-col bg-background h-full shadow-xl animate-in slide-in-from-left duration-300">
-            <AdminSidebar lang={lang} className="h-full border-r-0" />
+          <div
+            className={cn(
+              "relative flex w-64 flex-col bg-black-600 h-full shadow-xl duration-300 border-white/10",
+              isRtl
+                ? "animate-in slide-in-from-right border-l"
+                : "animate-in slide-in-from-left border-r"
+            )}
+          >
+            <AdminSidebar lang={lang} className="h-full border-none" />
           </div>
         </div>
       )}
 
-      <div className="md:pl-64 flex flex-col min-h-screen transition-all duration-300">
+      <div
+        className={cn(
+          "flex flex-col min-h-screen transition-all duration-300",
+          isRtl ? "md:pr-64" : "md:pl-64"
+        )}
+      >
         <AdminHeader onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 p-4 md:p-6 overflow-y-auto">{children}</main>
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="mx-auto max-w-7xl"
+          >
+            {children}
+          </motion.div>
+        </main>
       </div>
     </div>
   );

@@ -324,5 +324,45 @@
       "description": "Avant de postuler à une offre, veuillez remplir toutes vos informations et les valider.",
       "continue": "Continuer"
     }
+  },
+  "adminDashboard": {
+    "title": "Tableau de bord",
+    "subtitle": "Aperçu de vos activités de recrutement.",
+    "last30Days": "30 derniers jours",
+    "postJob": "Publier une offre",
+    "stats": {
+      "totalCandidates": "Total Candidats",
+      "activeJobOffers": "Offres actives",
+      "pendingApplications": "Candidatures en attente",
+      "interviews": "Entretiens",
+      "vsLastMonth": "vs mois dernier",
+      "newPositions": "nouveaux postes",
+      "vsLastWeek": "vs semaine dernière",
+      "scheduledToday": "prévus aujourd'hui"
+    },
+    "recentApplications": {
+      "title": "Candidatures récentes",
+      "description": "Derniers candidats ayant postulé.",
+      "viewAll": "Voir tout"
+    },
+    "quickActions": {
+      "title": "Actions rapides",
+      "postJob": "Publier une offre",
+      "inviteUser": "Inviter un utilisateur",
+      "search": "Rechercher",
+      "reports": "Rapports"
+    },
+    "upcomingInterviews": {
+      "title": "Entretiens à venir",
+      "next24Hours": "Prochaines 24 heures"
+    }
+  },
+  "adminHeader": {
+    "searchPlaceholder": "Rechercher...",
+    "notifications": "Notifications",
+    "toggleMenu": "Basculer le menu",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter"
   }
 }

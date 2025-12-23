@@ -332,5 +332,45 @@
       "description": "Before applying for a job, please fill in all your information and validate them.",
       "continue": "Continue"
     }
+  },
+  "adminDashboard": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your recruitment pipeline and activities.",
+    "last30Days": "Last 30 Days",
+    "postJob": "Post Job",
+    "stats": {
+      "totalCandidates": "Total Candidates",
+      "activeJobOffers": "Active Job Offers",
+      "pendingApplications": "Pending Applications",
+      "interviews": "Interviews",
+      "vsLastMonth": "vs. last month",
+      "newPositions": "new positions",
+      "vsLastWeek": "vs. last week",
+      "scheduledToday": "scheduled today"
+    },
+    "recentApplications": {
+      "title": "Recent Applications",
+      "description": "Latest candidates applying for positions.",
+      "viewAll": "View All"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "postJob": "Post Job",
+      "inviteUser": "Invite User",
+      "search": "Search",
+      "reports": "Reports"
+    },
+    "upcomingInterviews": {
+      "title": "Upcoming Interviews",
+      "next24Hours": "Next 24 hours"
+    }
+  },
+  "adminHeader": {
+    "searchPlaceholder": "Search...",
+    "notifications": "Notifications",
+    "toggleMenu": "Toggle menu",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Log out"
   }
 }

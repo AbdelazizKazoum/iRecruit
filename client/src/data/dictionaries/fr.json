@@ -364,5 +364,17 @@
     "profile": "Profil",
     "settings": "Paramètres",
     "logout": "Se déconnecter"
+  },
+  "adminSidebar": {
+    "overview": "Vue d'ensemble",
+    "dashboard": "Tableau de bord",
+    "management": "Gestion",
+    "users": "Utilisateurs",
+    "jobOffers": "Offres d'emploi",
+    "applications": "Candidatures",
+    "system": "Système",
+    "settings": "Paramètres",
+    "rolesPermissions": "Rôles et permissions",
+    "helpSupport": "Aide et support"
   }
 }

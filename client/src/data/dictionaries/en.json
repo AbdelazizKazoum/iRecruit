@@ -372,5 +372,17 @@
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Log out"
+  },
+  "adminSidebar": {
+    "overview": "Overview",
+    "dashboard": "Dashboard",
+    "management": "Management",
+    "users": "Users",
+    "jobOffers": "Job Offers",
+    "applications": "Applications",
+    "system": "System",
+    "settings": "Settings",
+    "rolesPermissions": "Roles & Permissions",
+    "helpSupport": "Help & Support"
   }
 }

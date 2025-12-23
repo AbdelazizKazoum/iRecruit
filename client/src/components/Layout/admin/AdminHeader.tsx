@@ -17,13 +17,16 @@ import {
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/libs/utils";
+import type { getDictionary } from "@/utils/getDictionary";
 
 interface AdminHeaderProps {
   onMenuClick?: () => void;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }
 
-export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
+export function AdminHeader({ onMenuClick, dictionary }: AdminHeaderProps) {
   const pathname = usePathname();
+  const { adminHeader } = dictionary;
 
   // Generate breadcrumbs
   const generateBreadcrumbs = () => {
@@ -73,7 +76,7 @@ export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
         onClick={onMenuClick}
       >
         <Menu className="h-5 w-5" />
-        <span className="sr-only">Toggle menu</span>
+        <span className="sr-only">{adminHeader.toggleMenu}</span>
       </Button>
 
       <div className="flex flex-1 items-center gap-4">
@@ -86,7 +89,7 @@ export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search..."
+              placeholder={adminHeader.searchPlaceholder}
               className="w-full bg-muted/50 pl-8 md:w-[200px] lg:w-[300px] focus:bg-background transition-colors"
             />
           </div>
@@ -101,7 +104,7 @@ export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
         >
           <Bell className="h-5 w-5" />
           <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-background" />
-          <span className="sr-only">Notifications</span>
+          <span className="sr-only">{adminHeader.notifications}</span>
         </Button>
 
         <div className="h-8 w-[1px] bg-border mx-1 hidden sm:block" />
@@ -133,14 +136,14 @@ export function AdminHeader({ onMenuClick }: AdminHeaderProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="cursor-pointer">
-              Profile
+              {adminHeader.profile}
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              Settings
+              {adminHeader.settings}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-red-600 cursor-pointer focus:text-red-600 focus:bg-red-50 dark:focus:bg-red-950/50">
-              Log out
+              {adminHeader.logout}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

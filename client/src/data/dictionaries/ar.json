@@ -376,5 +376,17 @@
     "profile": "الملف الشخصي",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج"
+  },
+  "adminSidebar": {
+    "overview": "نظرة عامة",
+    "dashboard": "لوحة التحكم",
+    "management": "الإدارة",
+    "users": "المستخدمين",
+    "jobOffers": "عروض العمل",
+    "applications": "الطلبات",
+    "system": "النظام",
+    "settings": "الإعدادات",
+    "rolesPermissions": "الأدوار والصلاحيات",
+    "helpSupport": "المساعدة والدعم"
   }
 }

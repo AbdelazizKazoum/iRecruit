@@ -17,55 +17,58 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { getDictionary } from "@/utils/getDictionary";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   lang: string;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }
 
-export function AdminSidebar({ className, lang }: SidebarProps) {
+export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
   const pathname = usePathname();
+  const { adminSidebar } = dictionary;
 
   const sidebarGroups = [
     {
-      label: "Overview",
+      label: adminSidebar.overview,
       items: [
         {
-          title: "Dashboard",
+          title: adminSidebar.dashboard,
           href: `/${lang}/admin`,
           icon: LayoutDashboard,
         },
       ],
     },
     {
-      label: "Management",
+      label: adminSidebar.management,
       items: [
         {
-          title: "Users",
+          title: adminSidebar.users,
           href: `/${lang}/admin/users`,
           icon: Users,
         },
         {
-          title: "Job Offers",
+          title: adminSidebar.jobOffers,
           href: `/${lang}/admin/job-offers`,
           icon: Briefcase,
         },
         {
-          title: "Applications",
+          title: adminSidebar.applications,
           href: `/${lang}/admin/applications`,
           icon: FileText,
         },
       ],
     },
     {
-      label: "System",
+      label: adminSidebar.system,
       items: [
         {
-          title: "Settings",
+          title: adminSidebar.settings,
           href: `/${lang}/admin/settings`,
           icon: Settings,
         },
         {
-          title: "Roles & Permissions",
+          title: adminSidebar.rolesPermissions,
           href: `/${lang}/admin/roles`,
           icon: Shield,
         },
@@ -140,7 +143,7 @@ export function AdminSidebar({ className, lang }: SidebarProps) {
         >
           <Link href="#">
             <HelpCircle className="h-4 w-4" />
-            Help & Support
+            {adminSidebar.helpSupport}
           </Link>
         </Button>
 

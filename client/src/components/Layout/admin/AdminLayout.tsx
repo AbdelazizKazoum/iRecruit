@@ -6,13 +6,19 @@ import { AdminHeader } from "./AdminHeader";
 import { Locale } from "@/configs/i18n";
 import { motion } from "framer-motion";
 import { cn } from "@/libs/utils";
+import type { getDictionary } from "@/utils/getDictionary";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
   lang: Locale;
+  dictionary: Awaited<ReturnType<typeof getDictionary>>;
 }
 
-export default function AdminLayout({ children, lang }: AdminLayoutProps) {
+export default function AdminLayout({
+  children,
+  lang,
+  dictionary,
+}: AdminLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isRtl = lang === "ar";
 
@@ -28,7 +34,11 @@ export default function AdminLayout({ children, lang }: AdminLayoutProps) {
           isRtl ? "right-0 border-l" : "left-0 border-r"
         )}
       >
-        <AdminSidebar lang={lang} className="h-full border-none" />
+        <AdminSidebar
+          lang={lang}
+          dictionary={dictionary}
+          className="h-full border-none"
+        />
       </div>
 
       {/* Mobile Sidebar Overlay */}
@@ -46,7 +56,11 @@ export default function AdminLayout({ children, lang }: AdminLayoutProps) {
                 : "animate-in slide-in-from-left border-r"
             )}
           >
-            <AdminSidebar lang={lang} className="h-full border-none" />
+            <AdminSidebar
+              lang={lang}
+              dictionary={dictionary}
+              className="h-full border-none"
+            />
           </div>
         </div>
       )}
@@ -57,7 +71,10 @@ export default function AdminLayout({ children, lang }: AdminLayoutProps) {
           isRtl ? "md:pr-64" : "md:pl-64"
         )}
       >
-        <AdminHeader onMenuClick={() => setIsMobileMenuOpen(true)} />
+        <AdminHeader
+          onMenuClick={() => setIsMobileMenuOpen(true)}
+          dictionary={dictionary}
+        />
         <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, y: 10 }}

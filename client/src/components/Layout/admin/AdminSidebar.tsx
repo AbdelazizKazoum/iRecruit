@@ -27,6 +27,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
   const pathname = usePathname();
   const { adminSidebar } = dictionary;
+  const isRtl = lang === "ar";
 
   const sidebarGroups = [
     {
@@ -78,8 +79,10 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
 
   return (
     <div
+      dir={isRtl ? "rtl" : "ltr"}
       className={cn(
-        "flex flex-col h-full border-r border-white/10 bg-black-600 text-white",
+        "flex flex-col h-full border-white/10 bg-black-600 text-white",
+        isRtl ? "border-l" : "border-r",
         className
       )}
     >
@@ -97,7 +100,7 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
       <ScrollArea className="flex-1 py-4">
         <div className="px-4 space-y-6">
           {sidebarGroups.map((group, i) => (
-            <div key={i} className="space-y-2">
+            <div dir={isRtl ? "rtl" : "ltr"} key={i} className="space-y-2">
               <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 {group.label}
               </h3>

@@ -22,5 +22,4 @@ const Layout = async ({
   );
 };
 
-
 export default Layout;

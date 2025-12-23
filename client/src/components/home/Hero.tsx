@@ -5,12 +5,13 @@ import ButtonPrimary from "@/components/misc/ButtonPrimary";
 import { motion } from "framer-motion";
 import getScrollAnimation from "@/utils/getScrollAnimation";
 import ScrollAnimationWrapper from "@/components/Layout/ScrollAnimationWrapper";
-import { PlayCircle } from "lucide-react"; // Import Play icon from Lucide React
+import { PlayCircle, X } from "lucide-react"; // Import Play icon from Lucide React
 import { useRouter } from "next/navigation";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { listUser } from "@/data/navigation/hero";
+import VideoModal from "@/components/modals/VideoModal";
 
 const Hero = ({
   dictionary,
@@ -132,30 +133,22 @@ const Hero = ({
       </ScrollAnimationWrapper>
 
       {/* YouTube Video Modal */}
-      {isVideoOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="relative w-full max-w-4xl bg-white rounded-lg shadow-lg">
-            <div className="absolute top-0 right-0 p-4">
-              <button
-                className="text-black-600 font-bold text-xl"
-                onClick={() => setIsVideoOpen(false)}
-              >
-                X
-              </button>
-            </div>
-            <div className="relative pt-[56.25%]">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID" // Replace with your YouTube video ID
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
+      <VideoModal
+        isOpen={isVideoOpen}
+        onClose={() => setIsVideoOpen(false)}
+        title={dictionary["hero"].videoText}
+      >
+        <div className="relative pt-[56.25%]">
+          <iframe
+            className="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID" // Replace with your YouTube video ID
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
-      )}
+      </VideoModal>
 
       <div className="relative w-full flex">
         <ScrollAnimationWrapper className="rounded-lg w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-500 bg-white-500 z-10">

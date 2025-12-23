@@ -7,7 +7,6 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
@@ -41,20 +40,20 @@ export function ConcourItem({
   return (
     <Card
       className={cn(
-        "flex flex-col relative overflow-hidden transition-all duration-300 ease-in-out",
+        "flex flex-col relative overflow-hidden transition-all duration-300 ease-in-out group",
         "border border-border hover:border-primary hover:shadow-lg",
         className
       )}
     >
-      <CardHeader>
+      <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
         <Image
           src={offer.imageUrl}
-          alt="Job Image"
-          className="w-full h-32 object-cover rounded-t-md"
-          width={350}
-          height={350}
+          alt={offer.title[locale]}
+          fill
+          className="object-cover rounded-t-md transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </CardHeader>
+      </div>
       <CardContent className="grid gap-2 p-4">
         <BellRing className="text-gray-400" />
         <CardTitle>{offer.title[locale]}</CardTitle>

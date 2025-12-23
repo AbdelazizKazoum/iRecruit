@@ -174,7 +174,7 @@
     }
   },
   "footer": {
-    "description": "est une plateforme de recrutement dédiée à simplifier le processus de candidature pour les candidats et les entreprises.",
+    "description": "Est une plateforme de recrutement dédiée à simplifier le processus de candidature pour les candidats et les entreprises.",
     "copyright": "©{new Date().getFullYear()} -",
     "poweredBy": "Propulsé par",
 

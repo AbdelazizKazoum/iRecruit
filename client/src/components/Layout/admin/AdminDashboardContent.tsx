@@ -78,29 +78,29 @@ const recentApplications = [
   },
 ];
 
-const upcomingInterviews = [
-  {
-    id: 1,
-    candidate: "Alice Johnson",
-    role: "Product Manager",
-    time: "10:00 AM",
-    date: "Today",
-  },
-  {
-    id: 2,
-    candidate: "Bob Williams",
-    role: "DevOps Engineer",
-    time: "02:30 PM",
-    date: "Today",
-  },
-  {
-    id: 3,
-    candidate: "Charlie Brown",
-    role: "QA Tester",
-    time: "11:00 AM",
-    date: "Tomorrow",
-  },
-];
+// const upcomingInterviews = [
+//   {
+//     id: 1,
+//     candidate: "Alice Johnson",
+//     role: "Product Manager",
+//     time: "10:00 AM",
+//     date: "Today",
+//   },
+//   {
+//     id: 2,
+//     candidate: "Bob Williams",
+//     role: "DevOps Engineer",
+//     time: "02:30 PM",
+//     date: "Today",
+//   },
+//   {
+//     id: 3,
+//     candidate: "Charlie Brown",
+//     role: "QA Tester",
+//     time: "11:00 AM",
+//     date: "Tomorrow",
+//   },
+// ];
 
 const container = {
   hidden: { opacity: 0 },

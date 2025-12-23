@@ -40,12 +40,12 @@ export function ConcourItem({
   return (
     <Card
       className={cn(
-        "flex flex-col relative overflow-hidden transition-all duration-300 ease-in-out group",
+        "flex flex-col relative overflow-hidden transition-all duration-300 ease-in-out group h-full",
         "border border-border hover:border-primary hover:shadow-lg",
         className
       )}
     >
-      <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+      <div className="relative w-full h-32 sm:h-48 bg-gray-100 dark:bg-gray-800 overflow-hidden shrink-0">
         <Image
           src={offer.imageUrl}
           alt={offer.title[locale]}
@@ -54,39 +54,56 @@ export function ConcourItem({
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
-      <CardContent className="grid gap-2 p-4">
-        <BellRing className="text-gray-400" />
-        <CardTitle>{offer.title[locale]}</CardTitle>
-        <CardDescription>{offer.description[locale]}</CardDescription>
-        <div className="mt-2 text-blue-600 text-sm font-semibold">
-          {offer.tag[locale]}
+      <CardContent className="grid gap-2 p-3 sm:p-4 flex-1">
+        <div className="flex items-start justify-between gap-2">
+          <CardTitle className="text-base sm:text-lg font-bold line-clamp-2 leading-tight">
+            {offer.title[locale]}
+          </CardTitle>
+          <BellRing className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 shrink-0 mt-1" />
         </div>
-        <div className="flex justify-between items-center text-gray-600 text-sm">
-          <div className="flex flex-col text-black-600/80">
-            <span className="font-semibold">
-              {" "}
-              {dictionary["concours"].publishedOn}{" "}
-            </span>
-            <span className=" text-muted-foreground ">
-              {" "}
-              {offer.datePublication}
-            </span>
+
+        <CardDescription className="text-xs sm:text-sm line-clamp-3 sm:line-clamp-4 mt-1">
+          {offer.description[locale]}
+        </CardDescription>
+
+        <div className="mt-auto pt-2 space-y-3">
+          <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
+            {offer.tag[locale]}
           </div>
-          <div className="flex flex-col text-black-600/80">
-            <span className="font-semibold">
-              {dictionary["concours"].deadline}{" "}
-            </span>
-            <span className=" text-orange-500 ">{offer.depotAvant}</span>
+
+          <div className="flex justify-between items-center text-xs sm:text-sm text-muted-foreground border-t pt-3">
+            <div className="flex flex-col gap-0.5">
+              <span className="font-medium text-foreground">
+                {dictionary["concours"].publishedOn}
+              </span>
+              <span>{offer.datePublication}</span>
+            </div>
+            <div className="flex flex-col gap-0.5 text-right">
+              <span className="font-medium text-foreground">
+                {dictionary["concours"].deadline}
+              </span>
+              <span className="text-orange-600 dark:text-orange-400 font-medium">
+                {offer.depotAvant}
+              </span>
+            </div>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex flex-wrap gap-4">
-        <Button variant="outline" className="flex-1 items-center">
-          <FileText className="mr-2" /> {dictionary["concours"].details}
+      <CardFooter className="flex flex-col sm:flex-row gap-2 p-3 sm:p-4 pt-0 mt-auto">
+        <Button
+          variant="outline"
+          size="sm"
+          className="w-full sm:flex-1 h-9 text-xs sm:text-sm"
+        >
+          <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+          {dictionary["concours"].details}
         </Button>
-        <Button className="flex-1 items-center" onClick={() => apply(offer)}>
-          {" "}
-          {dictionary["concours"].apply}{" "}
+        <Button
+          size="sm"
+          className="w-full sm:flex-1 h-9 text-xs sm:text-sm"
+          onClick={() => apply(offer)}
+        >
+          {dictionary["concours"].apply}
         </Button>
       </CardFooter>
     </Card>

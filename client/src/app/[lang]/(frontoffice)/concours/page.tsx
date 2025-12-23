@@ -13,6 +13,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
 
   // Fetch job offers from the API
   const jobOffers = await getJobOffers();
+  console.log("🚀 ~ Concours ~ jobOffers:", jobOffers);
 
   const { lang: locale } = params;
 

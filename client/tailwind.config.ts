@@ -59,6 +59,9 @@ const config: Config = {
       none: "none",
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-main)", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -30,7 +30,7 @@ export function UserDropdown({
       <DropdownMenuTrigger asChild>
         {/* Wrap the UserAvatar in a button but style it to appear as the avatar itself */}
         <Button variant="ghost" className="p-0 rounded-full">
-          <UserAvatar />
+          <UserAvatar className="h-[38px] w-[38px] lg:h-[42px] lg:w-[42px]" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

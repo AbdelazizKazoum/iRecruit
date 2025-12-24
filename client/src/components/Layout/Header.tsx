@@ -56,7 +56,7 @@ const Header = ({
       >
         <nav className="max-w-screen-2xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
           <div className="col-start-1 col-end-2 flex items-center">
-            <div className="h-10 w-48 relative">
+            <div className="h-8 w-32 lg:h-10 lg:w-48 relative">
               <Link href={`/${locale}/home`}>
                 <Image
                   src="/assets/logo-ministere.png"
@@ -96,7 +96,10 @@ const Header = ({
                 <UserDropdown dictionary={dictionary} user={user} />
               ) : (
                 <Link href={`/${locale}/login`}>
-                  <ButtonOutline> {dictionary.header.Connexion} </ButtonOutline>
+                  <ButtonOutline className="text-sm lg:text-base">
+                    {" "}
+                    {dictionary.header.Connexion}{" "}
+                  </ButtonOutline>
                 </Link>
               )}
             </div>

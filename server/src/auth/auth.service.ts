@@ -73,7 +73,7 @@ export class AuthService {
     );
 
     return {
-      link: verificationLink,
+      link: 'Check your email to verify your account.',
     };
   }
 
@@ -122,7 +122,7 @@ export class AuthService {
       );
 
       return {
-        link: verificationLink,
+        link: 'Check your email to reset your password.',
       };
     } catch (error) {
       throw new InternalServerErrorException(error);

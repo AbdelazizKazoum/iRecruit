@@ -6,7 +6,7 @@ const ButtonPrimary = ({ children, addClass, onClick, disabled }) => {
       disabled={disabled}
       onClick={onClick}
       className={
-        "py-3 lg:py-4 px-12 lg:px-16 text-white-500 font-semibold rounded-lg bg-primary-500 hover:shadow-black-500-md transition-all outline-none " +
+        "py-2 px-6 lg:py-4 lg:px-16 text-white-500 font-semibold rounded-lg bg-primary-500 hover:shadow-black-500-md transition-all outline-none " +
         addClass
       }
     >

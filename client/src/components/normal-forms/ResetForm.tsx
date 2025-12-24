@@ -56,7 +56,7 @@ export const ResetPasswordForm = ({
       setMessage("");
     }
 
-    console.log(response);
+    // console.log(response);
   };
 
   return (

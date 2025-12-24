@@ -50,9 +50,12 @@ export function LanguageDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {/* Wrap the UserAvatar in a button but style it to appear as the avatar itself */}
-        <div className="w-10 h-10 flex">
-          <Button variant="ghost" className="p-0 rounded-full h-full w-full">
-            <Languages style={{ width: "1.5rem", height: "1.5rem" }} />
+        <div className="w-[38px] h-[38px] lg:w-[42px] lg:h-[42px] flex">
+          <Button
+            variant="ghost"
+            className="p-0 rounded-full h-full w-full border border-primary-500 text-primary-500 bg-white-500 hover:bg-primary-500 hover:text-white-500 transition-all hover:shadow-primary-500"
+          >
+            <Languages className="w-5 h-5 lg:w-6 lg:h-6" />
           </Button>
         </div>
       </DropdownMenuTrigger>

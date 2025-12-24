@@ -106,9 +106,9 @@ const Hero = ({
                   className="  hover:bg-primary-600 transition-all flex items-center justify-center gap-2 "
                   onClick={handleVideoClick}
                 >
-                  <PlayCircle size={60} className="text-primary " />{" "}
+                  <PlayCircle className="text-primary w-10 h-10 lg:w-[60px] lg:h-[60px]" />{" "}
                   {/* Play Icon */}
-                  <p className=" text-primary font-semibold">
+                  <p className=" text-primary font-semibold text-sm lg:text-base">
                     {dictionary["hero"].videoText}
                   </p>{" "}
                 </button>
@@ -151,16 +151,16 @@ const Hero = ({
       </VideoModal>
 
       <div className="relative w-full flex">
-        <ScrollAnimationWrapper className="rounded-lg w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-500 bg-white-500 z-10">
+        <ScrollAnimationWrapper className="rounded-lg w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-6 sm:py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-500 bg-white-500 z-10">
           {listUser.map((listUsers, index) => (
             <motion.div
-              className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0"
+              className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-full sm:w-auto px-8 sm:px-0"
               key={index}
               custom={{ duration: 2 + index }}
               variants={scrollAnimation}
             >
-              <div className="flex mx-auto w-40 sm:w-auto gap-2">
-                <div className="flex items-center justify-center bg-primary-300/10 w-12 h-12 mr-6 rounded-full">
+              <div className="flex items-center justify-start sm:justify-center w-full sm:w-auto gap-4 sm:gap-6">
+                <div className="flex items-center justify-center bg-primary-300/10 w-12 h-12 rounded-full flex-shrink-0">
                   <Image
                     alt="icon"
                     src={listUsers.icon}
@@ -182,7 +182,7 @@ const Hero = ({
           ))}
         </ScrollAnimationWrapper>
         <div
-          className="absolute bg-black-600 opacity-5 w-11/12 roudned-lg h-64 sm:h-48 top-0 mt-8 mx-auto left-0 right-0"
+          className="absolute bg-black-600 opacity-5 w-11/12 rounded-lg h-64 sm:h-48 top-0 mt-8 mx-auto left-0 right-0"
           style={{ filter: "blur(114px)" }}
         ></div>
       </div>

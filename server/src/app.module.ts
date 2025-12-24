@@ -13,7 +13,9 @@ import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRoot(
       `${
         process.env.MONGO_LOCAL_CONNECT

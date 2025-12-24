@@ -67,11 +67,10 @@ export class AuthService {
     const verificationLink = `${process.env.FRONTEND}/fr/verify-email?code=${verifecationCode}`;
 
     // Send the verification email
-    // await this.mailerService.sendMail({
-    //   to: user.email,
-    //   subject: 'Email Verification',
-    //   text: `Click here to verify your email: ${verificationLink}`,
-    // });
+    await this.mailerService.sendVerificationEmail(
+      verifyEmailDto.email,
+      verificationLink,
+    );
 
     return {
       link: verificationLink,
@@ -104,6 +103,23 @@ export class AuthService {
       });
 
       const verificationLink = `${process.env.FRONTEND}/fr/account/update-password?code=${verificationCode}`;
+
+      await this.mailerService.sendEmail(
+        email,
+        'Reset Password - iRecruit',
+        `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Reset Your Password</h2>
+          <p>You requested to reset your password. Click the button below to proceed.</p>
+          <div style="margin: 20px 0;">
+            <a href="${verificationLink}" style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+          </div>
+          <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser:</p>
+          <p style="color: #666; font-size: 14px;">${verificationLink}</p>
+          <p style="color: #999; font-size: 12px;">If you did not request a password reset, please ignore this email.</p>
+        </div>
+        `,
+      );
 
       return {
         link: verificationLink,

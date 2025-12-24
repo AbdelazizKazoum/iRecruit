@@ -8,6 +8,11 @@ type menuType = {
     en: string;
     ar: string;
   };
+  mobileName?: {
+    fr: string;
+    en: string;
+    ar: string;
+  };
   path: string;
   icon: any;
 };
@@ -29,6 +34,11 @@ export const menuLinks: menuType[] = [
       ar: "إعلانات المسابقات",
       en: "Job Announcements",
     },
+    mobileName: {
+      fr: "Annonces",
+      ar: "إعلانات",
+      en: "Jobs",
+    },
     path: "/concours",
     icon: BookCopy,
   },
@@ -37,6 +47,11 @@ export const menuLinks: menuType[] = [
       fr: "Fiche Candidature",
       ar: "بيانات الترشيح",
       en: "Application Form",
+    },
+    mobileName: {
+      fr: "Candidature",
+      ar: "الترشيح",
+      en: "Application",
     },
     path: "/candidature", // You can adjust the path as needed
     icon: FileText, // Use an appropriate icon, like "FileText"

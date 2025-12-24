@@ -119,18 +119,22 @@ const Header = ({
                   href={link.path}
                   onClick={() => setActiveLink(link.path)}
                   className={
-                    "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
+                    "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-[10px] border-t-2 transition-all " +
                     (activeLink === link.path
                       ? " border-primary-500 text-primary-500"
                       : " border-transparent")
                   }
                 >
                   <div className="flex flex-col gap-1 items-center">
-                    <span className="w-6 h-6">
+                    <span className="w-5 h-5">
                       {" "}
                       <Icon />{" "}
                     </span>
-                    <span>{link.name[locale]}</span>
+                    <span>
+                      {link.mobileName
+                        ? link.mobileName[locale]
+                        : link.name[locale]}
+                    </span>
                   </div>
                 </Link>
               );

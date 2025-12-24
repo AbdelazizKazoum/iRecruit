@@ -376,5 +376,30 @@
     "settings": "Paramètres",
     "rolesPermissions": "Rôles et permissions",
     "helpSupport": "Aide et support"
+  },
+  "usersPage": {
+    "title": "Gestion des utilisateurs",
+    "subtitle": "Gérez les utilisateurs, les rôles et les permissions de votre plateforme.",
+    "table": {
+      "headers": {
+        "user": "Utilisateur",
+        "role": "Rôle",
+        "status": "Statut",
+        "joined": "Rejoint le",
+        "actions": "Actions"
+      },
+      "actions": {
+        "makeAdmin": "Nommer Admin",
+        "removeAdmin": "Retirer Admin",
+        "viewProfile": "Voir le profil",
+        "deleteUser": "Supprimer l'utilisateur"
+      },
+      "filters": {
+        "searchPlaceholder": "Rechercher des utilisateurs...",
+        "role": "Rôle",
+        "status": "Statut",
+        "all": "Tous"
+      }
+    }
   }
 }

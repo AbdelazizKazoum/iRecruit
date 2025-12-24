@@ -384,5 +384,30 @@
     "settings": "Settings",
     "rolesPermissions": "Roles & Permissions",
     "helpSupport": "Help & Support"
+  },
+  "usersPage": {
+    "title": "Users Management",
+    "subtitle": "Manage your platform users, roles, and permissions.",
+    "table": {
+      "headers": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "joined": "Joined",
+        "actions": "Actions"
+      },
+      "actions": {
+        "makeAdmin": "Make Admin",
+        "removeAdmin": "Remove Admin",
+        "viewProfile": "View Profile",
+        "deleteUser": "Delete User"
+      },
+      "filters": {
+        "searchPlaceholder": "Search users...",
+        "role": "Role",
+        "status": "Status",
+        "all": "All"
+      }
+    }
   }
 }

@@ -388,5 +388,30 @@
     "settings": "الإعدادات",
     "rolesPermissions": "الأدوار والصلاحيات",
     "helpSupport": "المساعدة والدعم"
+  },
+  "usersPage": {
+    "title": "إدارة المستخدمين",
+    "subtitle": "إدارة مستخدمي المنصة والأدوار والصلاحيات.",
+    "table": {
+      "headers": {
+        "user": "المستخدم",
+        "role": "الدور",
+        "status": "الحالة",
+        "joined": "تاريخ الانضمام",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "makeAdmin": "تعيين كمسؤول",
+        "removeAdmin": "إزالة كمسؤول",
+        "viewProfile": "عرض الملف الشخصي",
+        "deleteUser": "حذف المستخدم"
+      },
+      "filters": {
+        "searchPlaceholder": "البحث عن المستخدمين...",
+        "role": "الدور",
+        "status": "الحالة",
+        "all": "الكل"
+      }
+    }
   }
 }

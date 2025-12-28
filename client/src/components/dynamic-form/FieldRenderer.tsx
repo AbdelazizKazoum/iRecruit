@@ -8,6 +8,7 @@ import CheckboxField from "./fields/CheckboxField";
 import DatePicker from "./fields/DatePicker";
 import FileInput from "./fields/FileInput";
 import ArabicField from "./fields/ArabicField";
+import { Textarea } from "@/components/ui/textarea";
 import { Locale } from "@/configs/i18n";
 // import CheckboxField from "./fields/CheckboxField";
 
@@ -54,6 +55,22 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
     case "select":
       return (
         <SelectField fieldConfig={fieldConfig} field={field} locale={locale} />
+      );
+    case "textarea":
+      return (
+        <div className="space-y-1">
+          <label className="text-sm font-medium text-gray-700">
+            {fieldConfig.label[locale] || fieldConfig.label.en}
+          </label>
+          <Textarea
+            placeholder={
+              fieldConfig.placeholder?.[locale] ||
+              fieldConfig.placeholder?.en ||
+              ""
+            }
+            {...field}
+          />
+        </div>
       );
     case "checkbox":
       return (

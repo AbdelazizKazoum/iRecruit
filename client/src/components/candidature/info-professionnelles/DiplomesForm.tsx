@@ -8,7 +8,7 @@ import React from "react";
 
 const DiplomesForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, submitDiplome, nextGroup, setNextGroup } =
+  const { candidatureData, submitDiplome, setNextGroup } =
     useCandidatureStore();
 
   const onSubmit = async (data: ParcoursEtDiplomesTypes) => {
@@ -47,7 +47,6 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
           candidatureData?.professionalInformation?.parcoursEtDiplomes || []
         }
         checkKey="diplomeType"
-        openedAccordion={nextGroup}
         handleNext={handleNext}
       />
     </div>

@@ -13,6 +13,7 @@ export interface CandidatureStoreState {
     data: CandidatureType["personalInformation"]
   ) => void;
   submitDiplome: (diplome: FormData) => Promise<void>;
+  submitExperience: (experience: unknown) => Promise<void>;
   submitNiveauxLangues: (niveauxLangues: FormData) => Promise<void>;
   submitPublications: (publications: FormData) => Promise<void>;
   submitCommunication: (communication: FormData) => Promise<void>;
@@ -148,6 +149,38 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit language levels. Please try again.",
       });
       toast.error("Failed to submit language levels. Please try again.");
+    }
+  },
+
+  // Submit work experience to database
+  submitExperience: async (experience: unknown) => {
+    set({ loading: true, error: "" });
+    try {
+      const payload =
+        typeof experience === "object" ? experience : { experience };
+      const response = await clientApi.post("candidature/experiences", {
+        experience: JSON.stringify(payload),
+      });
+      set((state) => ({
+        candidatureData: state.candidatureData
+          ? {
+              ...state.candidatureData,
+              professionalInformation: {
+                ...state.candidatureData.professionalInformation,
+                experiences: response.data,
+              },
+            }
+          : null,
+        loading: false,
+      }));
+      toast.success("Experience submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting experience:", error);
+      set({
+        loading: false,
+        error: "Failed to submit experience. Please try again.",
+      });
+      toast.error("Failed to submit experience. Please try again.");
     }
   },
 

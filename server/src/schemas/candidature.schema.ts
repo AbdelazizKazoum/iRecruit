@@ -78,6 +78,14 @@ export class Candidature {
       url: string;
       communicationPdf: string;
     }[];
+    experiences?: {
+      position: string;
+      company: string;
+      startDate: string;
+      endDate?: string;
+      currentlyWorking?: boolean;
+      description?: string;
+    }[];
     residanat?: {
       residanatPdf?: string;
     }[];

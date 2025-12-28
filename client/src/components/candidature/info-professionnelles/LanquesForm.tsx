@@ -7,7 +7,7 @@ import { NiveauxLanguesType } from "@/types/candidature.types";
 import React from "react";
 
 const LanquesForm = ({ locale }: { locale: Locale }) => {
-  const { candidatureData, submitNiveauxLangues, nextGroup, setNextGroup } =
+  const { candidatureData, submitNiveauxLangues, setNextGroup } =
     useCandidatureStore();
 
   const onSubmit = async (data: NiveauxLanguesType) => {
@@ -50,7 +50,6 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
         locale={locale}
         data={candidatureData?.professionalInformation?.niveauxLangues || []}
         checkKey="langue"
-        openedAccordion={nextGroup}
         handleNext={handleNext}
       />
     </div>

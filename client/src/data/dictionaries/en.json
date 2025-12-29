@@ -409,5 +409,29 @@
         "all": "All"
       }
     }
+  },
+  "offersPage": {
+    "title": "Job Offers Management",
+    "subtitle": "Manage job offers, applications, and recruitment processes.",
+    "table": {
+      "headers": {
+        "title": "Title",
+        "department": "Department",
+        "city": "City",
+        "date": "Publication Date",
+        "actions": "Actions"
+      },
+      "actions": {
+        "viewDetails": "View Details",
+        "editOffer": "Edit Offer",
+        "deleteOffer": "Delete Offer"
+      },
+      "filters": {
+        "searchPlaceholder": "Search offers...",
+        "department": "Department",
+        "city": "City",
+        "all": "All"
+      }
+    }
   }
 }

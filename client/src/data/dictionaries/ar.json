@@ -413,5 +413,29 @@
         "all": "الكل"
       }
     }
+  },
+  "offersPage": {
+    "title": "إدارة عروض العمل",
+    "subtitle": "إدارة عروض العمل والطلبات وعمليات التوظيف.",
+    "table": {
+      "headers": {
+        "title": "العنوان",
+        "department": "القسم",
+        "city": "المدينة",
+        "date": "تاريخ النشر",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "viewDetails": "عرض التفاصيل",
+        "editOffer": "تعديل العرض",
+        "deleteOffer": "حذف العرض"
+      },
+      "filters": {
+        "searchPlaceholder": "البحث عن العروض...",
+        "department": "القسم",
+        "city": "المدينة",
+        "all": "الكل"
+      }
+    }
   }
 }

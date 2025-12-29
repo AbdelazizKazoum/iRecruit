@@ -401,5 +401,29 @@
         "all": "Tous"
       }
     }
+  },
+  "offersPage": {
+    "title": "Gestion des offres d'emploi",
+    "subtitle": "Gérez les offres d'emploi, les candidatures et les processus de recrutement.",
+    "table": {
+      "headers": {
+        "title": "Titre",
+        "department": "Département",
+        "city": "Ville",
+        "date": "Date de publication",
+        "actions": "Actions"
+      },
+      "actions": {
+        "viewDetails": "Voir les détails",
+        "editOffer": "Modifier l'offre",
+        "deleteOffer": "Supprimer l'offre"
+      },
+      "filters": {
+        "searchPlaceholder": "Rechercher des offres...",
+        "department": "Département",
+        "city": "Ville",
+        "all": "Tous"
+      }
+    }
   }
 }

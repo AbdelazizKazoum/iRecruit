@@ -13,4 +13,15 @@ export const userService = {
 
     return data;
   },
+
+  getAllUsers: async function (params?: {
+    page?: number;
+    limit?: number;
+    role?: string;
+    username?: string;
+  }) {
+    const { data } = await userApi.get("/users", { params });
+
+    return data;
+  },
 };

@@ -72,6 +72,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         token.accessToken = user.access_token;
         token.refreshToken = user.refresh_token;
+
+        console.log("🚀 ~ accessToken:", token.accessToken);
       }
 
       return token;

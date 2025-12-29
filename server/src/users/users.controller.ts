@@ -11,12 +11,14 @@ import {
   UnauthorizedException,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { FindUsersQueryDto } from './dto/find-users-query.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 import { Request } from 'express';
@@ -53,8 +55,8 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query() query: FindUsersQueryDto) {
+    return this.usersService.findAll(query);
   }
 
   @UseGuards(JwtAuthGuard)

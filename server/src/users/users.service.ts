@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth-guard';
 import { JwtService } from '@nestjs/jwt';
 import { UserUtilsService } from 'src/common/services/user-utils.service';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { FindUsersQueryDto } from './dto/find-users-query.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -106,8 +107,29 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return this.userModal.find().select('-password').exec();
+  async findAll(query: FindUsersQueryDto) {
+    const { page = 1, limit = 10, role, username } = query;
+    const skip = (page - 1) * limit;
+
+    const filter: any = {};
+    if (role) filter.role = role;
+    if (username) filter.username = { $regex: username, $options: 'i' };
+
+    const total = await this.userModal.countDocuments(filter).exec();
+    const users = await this.userModal
+      .find(filter)
+      .select('-password')
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    return {
+      data: users,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOneByEmail(email: string): Promise<User> {

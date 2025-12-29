@@ -1,9 +1,9 @@
-/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
 import { UpdateJobOfferDto } from './dto/update-job-offer.dto';
+import { FindJobOffersQueryDto } from './dto/find-job-offers-query.dto';
 import { JobOffer, JobOfferDocument } from 'src/schemas/JobOffer.schema';
 import { UserDocument } from 'src/schemas/user.schema';
 import { ApplicationsService } from 'src/applications/applications.service';
@@ -50,8 +50,83 @@ export class JobOffersService {
     }
   }
 
-  async findOne(id: string): Promise<JobOffer> {
-    return this.jobOfferModel.findById(id).exec();
+  async findAllWithFilters(query: FindJobOffersQueryDto) {
+    const { page = 1, limit = 10, title, date, city, department } = query;
+    const skip = (page - 1) * limit;
+
+    const filter: any = {};
+
+    if (title) {
+      filter.$or = [
+        { 'title.fr': { $regex: title, $options: 'i' } },
+        { 'title.en': { $regex: title, $options: 'i' } },
+        { 'title.ar': { $regex: title, $options: 'i' } },
+      ];
+    }
+
+    if (date) {
+      filter.datePublication = date;
+    }
+
+    if (city) {
+      if (filter.$or) {
+        filter.$and = [
+          { $or: filter.$or },
+          {
+            $or: [
+              { 'city.fr': { $regex: city, $options: 'i' } },
+              { 'city.en': { $regex: city, $options: 'i' } },
+              { 'city.ar': { $regex: city, $options: 'i' } },
+            ],
+          },
+        ];
+        delete filter.$or;
+      } else {
+        filter.$or = [
+          { 'city.fr': { $regex: city, $options: 'i' } },
+          { 'city.en': { $regex: city, $options: 'i' } },
+          { 'city.ar': { $regex: city, $options: 'i' } },
+        ];
+      }
+    }
+
+    if (department) {
+      if (filter.$or) {
+        filter.$and = [
+          { $or: filter.$or },
+          {
+            $or: [
+              { 'department.fr': { $regex: department, $options: 'i' } },
+              { 'department.en': { $regex: department, $options: 'i' } },
+              { 'department.ar': { $regex: department, $options: 'i' } },
+            ],
+          },
+        ];
+        delete filter.$or;
+      } else {
+        filter.$or = [
+          { 'department.fr': { $regex: department, $options: 'i' } },
+          { 'department.en': { $regex: department, $options: 'i' } },
+          { 'department.ar': { $regex: department, $options: 'i' } },
+        ];
+      }
+    }
+
+    const total = await this.jobOfferModel.countDocuments(filter).exec();
+    const data = await this.jobOfferModel
+      .find(filter)
+      .skip(skip)
+      .limit(limit)
+      .exec();
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages,
+    };
   }
 
   async update(

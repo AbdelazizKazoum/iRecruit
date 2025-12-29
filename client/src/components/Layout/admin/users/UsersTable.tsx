@@ -42,6 +42,7 @@ import {
 import { getDictionary } from "@/utils/getDictionary";
 import { useUserStore } from "@/stores/useUserStore";
 import { UserType } from "@/types/user.types";
+import { UserTableRowSkeleton } from "./UserTableRowSkeleton";
 
 // User Type (matches API response)
 interface User extends UserType {
@@ -131,9 +132,9 @@ export function UsersTable({ dictionary }: UsersTableProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{usersPage.table.filters.all}</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="candidate">Candidate</SelectItem>
-              <SelectItem value="recruiter">Recruiter</SelectItem>
+              <SelectItem value="Admin">Admin</SelectItem>
+              <SelectItem value="Candidat">Candidate</SelectItem>
+              <SelectItem value="Recruiter">Recruiter</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -153,13 +154,12 @@ export function UsersTable({ dictionary }: UsersTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={4} className="text-center py-8">
-                  Loading users...
-                </TableCell>
-              </TableRow>
-            ) : users.length === 0 ? (
+            {isLoading
+              ? Array.from({ length: limit }).map((_, index) => (
+                  <UserTableRowSkeleton key={index} />
+                ))
+              : users.length === 0
+              ? (
               <TableRow>
                 <TableCell
                   colSpan={4}
@@ -299,9 +299,9 @@ export function UsersTable({ dictionary }: UsersTableProps) {
                         onClick={() => handlePageChange(pageNum)}
                         disabled={isLoading}
                         className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-8 px-3 text-xs ${
-                          pageNum === pagination.page
-                            ? "bg-primary text-primary-foreground shadow hover:bg-primary/90"
-                            : "border border-primary text-primary bg-background shadow-sm hover:bg-primary hover:text-white-100"
+                          pageNum === currentPage
+                            ? "bg-primary-500 text-white-300 shadow hover:bg-primary/90"
+                            : "border border-primary-500 text-primary-500 bg-background shadow-sm hover:bg-primary hover:text-white-100"
                         }`}
                       >
                         {pageNum}
@@ -337,7 +337,7 @@ export function UsersTable({ dictionary }: UsersTableProps) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => handlePageChange(pagination.page + 1)}
+              onClick={() => handlePageChange(Number(pagination.page) + 1)}
               disabled={pagination.page >= pagination.totalPages || isLoading}
             >
               Next

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -9,10 +8,12 @@ import {
   Delete,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { JobOffersService } from './job-offers.service';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
 import { UpdateJobOfferDto } from './dto/update-job-offer.dto';
+import { FindJobOffersQueryDto } from './dto/find-job-offers-query.dto';
 import { OptionalAuthGuard } from 'src/common/guards/optional-auth-guard';
 
 @Controller('job-offers')
@@ -31,6 +32,11 @@ export class JobOffersController {
   ) {
     const user = req.user;
     return this.jobOffersService.findAll(user);
+  }
+
+  @Get('admin')
+  findAllWithFilters(@Query() query: FindJobOffersQueryDto) {
+    return this.jobOffersService.findAllWithFilters(query);
   }
 
   // @Get(':id')

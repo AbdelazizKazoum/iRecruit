@@ -6,6 +6,12 @@ import { userService } from "@/services/userService";
 interface userState {
   user: UserType | null;
   users: UserType[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  } | null;
   isLoading: boolean;
   error: string;
 
@@ -17,12 +23,19 @@ interface userState {
     limit?: number;
     role?: string;
     username?: string;
-  }) => void;
+  }) => Promise<{
+    data: UserType[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  } | null>;
 }
 
 export const useUserStore = create<userState>((set) => ({
   user: null,
   users: [],
+  pagination: null,
   isLoading: false,
   error: "",
 
@@ -58,9 +71,19 @@ export const useUserStore = create<userState>((set) => ({
     try {
       set({ isLoading: true });
       const result = await userService.getAllUsers(params);
-      set({ users: result.data });
+      set({
+        users: result.data,
+        pagination: {
+          total: result.total,
+          page: result.page,
+          limit: result.limit,
+          totalPages: result.totalPages,
+        },
+      });
+      return result;
     } catch (error) {
       toast(error instanceof Error ? error.message : "An error occurred");
+      return null;
     } finally {
       set({ isLoading: false });
     }

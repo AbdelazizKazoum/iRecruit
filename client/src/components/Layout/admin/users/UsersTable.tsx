@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -36,119 +36,79 @@ import {
   ShieldCheck,
   Trash2,
   Eye,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { getDictionary } from "@/utils/getDictionary";
-import { format, type Locale as DateFnsLocale } from "date-fns";
-import { enUS, fr, ar } from "date-fns/locale";
-import { Locale } from "@/configs/i18n";
+import { useUserStore } from "@/stores/useUserStore";
+import { UserType } from "@/types/user.types";
 
-const localeMap: Record<Locale, DateFnsLocale> = {
-  en: enUS,
-  fr: fr,
-  ar: ar,
-};
-
-// Mock Data Type
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: "admin" | "candidate" | "recruiter";
-  status: "active" | "inactive" | "banned";
-  joinedAt: Date;
-  avatar?: string;
+// User Type (matches API response)
+interface User extends UserType {
+  role?: string;
 }
-
-// Mock Data
-const MOCK_USERS: User[] = [
-  {
-    id: "1",
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    role: "admin",
-    status: "active",
-    joinedAt: new Date("2023-01-15"),
-    avatar: "/avatars/01.png",
-  },
-  {
-    id: "2",
-    name: "Bob Smith",
-    email: "bob@example.com",
-    role: "candidate",
-    status: "active",
-    joinedAt: new Date("2023-02-20"),
-    avatar: "/avatars/02.png",
-  },
-  {
-    id: "3",
-    name: "Charlie Brown",
-    email: "charlie@example.com",
-    role: "recruiter",
-    status: "inactive",
-    joinedAt: new Date("2023-03-10"),
-    avatar: "/avatars/03.png",
-  },
-  {
-    id: "4",
-    name: "Diana Prince",
-    email: "diana@example.com",
-    role: "candidate",
-    status: "active",
-    joinedAt: new Date("2023-04-05"),
-    avatar: "/avatars/04.png",
-  },
-  {
-    id: "5",
-    name: "Evan Wright",
-    email: "evan@example.com",
-    role: "candidate",
-    status: "banned",
-    joinedAt: new Date("2023-05-12"),
-    avatar: "/avatars/05.png",
-  },
-];
 
 interface UsersTableProps {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
-  lang: Locale;
 }
 
-export function UsersTable({ dictionary, lang }: UsersTableProps) {
+export function UsersTable({ dictionary }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [users, setUsers] = useState<User[]>(MOCK_USERS);
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log("🚀 ~ UsersTable ~ currentPage:", currentPage);
+  const limit = 5;
 
+  const { users, pagination, fetchUsers, isLoading } = useUserStore();
   const { usersPage } = dictionary;
 
-  // Filter Logic
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = roleFilter === "all" || user.role === roleFilter;
+  // Fetch users when filters or page change
+  useEffect(() => {
+    const params: {
+      page?: number;
+      limit?: number;
+      role?: string;
+      username?: string;
+    } = { page: currentPage, limit };
+    if (roleFilter !== "all") params.role = roleFilter;
+    if (searchTerm.trim()) params.username = searchTerm.trim();
 
-    return matchesSearch && matchesRole;
-  });
+    fetchUsers(params);
+  }, [currentPage, roleFilter, searchTerm, fetchUsers, limit]);
 
-  // Actions
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentPage(1); // Reset to first page when searching
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Handle role filter change
+  const handleRoleFilterChange = (value: string) => {
+    setRoleFilter(value);
+    setCurrentPage(1); // Reset to first page when filtering
+  };
+
+  // Actions (placeholder - need API endpoints)
   const handleMakeAdmin = (userId: string) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId ? { ...user, role: "admin" } : user
-      )
-    );
+    // TODO: Implement API call to update user role
+    console.log("Make admin:", userId);
   };
 
   const handleRemoveAdmin = (userId: string) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId ? { ...user, role: "candidate" } : user
-      )
-    );
+    // TODO: Implement API call to update user role
+    console.log("Remove admin:", userId);
   };
 
   const handleDeleteUser = (userId: string) => {
-    setUsers((prev) => prev.filter((user) => user.id !== userId));
+    // TODO: Implement API call to delete user
+    console.log("Delete user:", userId);
   };
 
   return (
@@ -165,7 +125,7 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
           />
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Select value={roleFilter} onValueChange={setRoleFilter}>
+          <Select value={roleFilter} onValueChange={handleRoleFilterChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={usersPage.table.filters.role} />
             </SelectTrigger>
@@ -186,121 +146,206 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
             <TableRow>
               <TableHead>{usersPage.table.headers.user}</TableHead>
               <TableHead>{usersPage.table.headers.role}</TableHead>
-              <TableHead>{usersPage.table.headers.status}</TableHead>
-              <TableHead>{usersPage.table.headers.joined}</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead className="text-right">
                 {usersPage.table.headers.actions}
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-9 w-9 border">
-                      <AvatarImage src={user.avatar} alt={user.name} />
-                      <AvatarFallback>
-                        {user.name.slice(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col">
-                      <span className="font-medium text-foreground">
-                        {user.name}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        {user.email}
-                      </span>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    {user.role === "admin" && (
-                      <ShieldCheck className="h-4 w-4 text-primary" />
-                    )}
-                    <span className="capitalize">{user.role}</span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      user.status === "active"
-                        ? "default"
-                        : user.status === "inactive"
-                        ? "secondary"
-                        : "destructive"
-                    }
-                    className={
-                      user.status === "active"
-                        ? "bg-green-100 text-green-700 hover:bg-green-100/80 dark:bg-green-900/30 dark:text-green-400"
-                        : ""
-                    }
-                  >
-                    {user.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {format(user.joinedAt, "MMM dd, yyyy", {
-                    locale: localeMap[lang],
-                  })}
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem
-                        onClick={() => navigator.clipboard.writeText(user.id)}
-                      >
-                        Copy ID
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Eye className="mr-2 h-4 w-4" />
-                        {usersPage.table.actions.viewProfile}
-                      </DropdownMenuItem>
-                      {user.role !== "admin" ? (
-                        <DropdownMenuItem
-                          onClick={() => handleMakeAdmin(user.id)}
-                        >
-                          <Shield className="mr-2 h-4 w-4" />
-                          {usersPage.table.actions.makeAdmin}
-                        </DropdownMenuItem>
-                      ) : (
-                        <DropdownMenuItem
-                          onClick={() => handleRemoveAdmin(user.id)}
-                        >
-                          <ShieldAlert className="mr-2 h-4 w-4" />
-                          {usersPage.table.actions.removeAdmin}
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="text-red-600 focus:text-red-600 focus:bg-red-50"
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
-                        {usersPage.table.actions.deleteUser}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-8">
+                  Loading users...
                 </TableCell>
               </TableRow>
-            ))}
+            ) : users.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={4}
+                  className="text-center py-8 text-muted-foreground"
+                >
+                  No users found matching your filters.
+                </TableCell>
+              </TableRow>
+            ) : (
+              users.map((user) => (
+                <TableRow key={user.id || user._id}>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <Avatar className="h-9 w-9 border">
+                        <AvatarImage src="" alt={user.username} />
+                        <AvatarFallback>
+                          {user.username.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col">
+                        <span className="font-medium text-foreground">
+                          {user.username}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {user.email}
+                        </span>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      {(user as User).role === "admin" && (
+                        <ShieldCheck className="h-4 w-4 text-primary" />
+                      )}
+                      <span className="capitalize">
+                        {(user as User).role || "candidate"}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant="default"
+                      className="bg-green-100 text-green-700 hover:bg-green-100/80 dark:bg-green-900/30 dark:text-green-400"
+                    >
+                      Active
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              user.id || user._id || ""
+                            )
+                          }
+                        >
+                          Copy ID
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <Eye className="mr-2 h-4 w-4" />
+                          {usersPage.table.actions.viewProfile}
+                        </DropdownMenuItem>
+                        {(user as User).role !== "admin" ? (
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleMakeAdmin(user.id || user._id || "")
+                            }
+                          >
+                            <Shield className="mr-2 h-4 w-4" />
+                            {usersPage.table.actions.makeAdmin}
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleRemoveAdmin(user.id || user._id || "")
+                            }
+                          >
+                            <ShieldAlert className="mr-2 h-4 w-4" />
+                            {usersPage.table.actions.removeAdmin}
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                          onClick={() =>
+                            handleDeleteUser(user.id || user._id || "")
+                          }
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          {usersPage.table.actions.deleteUser}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
-        {filteredUsers.length === 0 && (
-          <div className="p-8 text-center text-muted-foreground">
-            No users found matching your filters.
-          </div>
-        )}
       </div>
+
+      {/* Pagination */}
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-between px-2 py-4">
+          <div className="flex-1 text-sm text-muted-foreground">
+            Showing {(pagination.page - 1) * pagination.limit + 1} to{" "}
+            {Math.min(pagination.page * pagination.limit, pagination.total)} of{" "}
+            {pagination.total} users
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(pagination.page - 1)}
+              disabled={pagination.page <= 1 || isLoading}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
+            <div className="flex items-center space-x-1">
+              {pagination.totalPages <= 5
+                ? // Show all pages if 5 or fewer
+                  Array.from({ length: pagination.totalPages }, (_, i) => {
+                    const pageNum = i + 1;
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        disabled={isLoading}
+                        className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-8 px-3 text-xs ${
+                          pageNum === pagination.page
+                            ? "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+                            : "border border-primary text-primary bg-background shadow-sm hover:bg-primary hover:text-white-100"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })
+                : // Show paginated view with current page centered
+                  Array.from({ length: 5 }, (_, i) => {
+                    const startPage = Math.max(
+                      1,
+                      Math.min(pagination.totalPages - 4, pagination.page - 2)
+                    );
+                    const pageNum = startPage + i;
+
+                    if (pageNum > pagination.totalPages) return null;
+
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        disabled={isLoading}
+                        className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-8 px-3 text-xs ${
+                          pageNum === pagination.page
+                            ? "bg-primary text-primary-foreground shadow hover:bg-primary/90"
+                            : "border border-primary text-primary bg-background shadow-sm hover:bg-primary hover:text-white-100"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(pagination.page + 1)}
+              disabled={pagination.page >= pagination.totalPages || isLoading}
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

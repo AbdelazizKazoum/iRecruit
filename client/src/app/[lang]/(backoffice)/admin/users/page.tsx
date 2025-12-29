@@ -31,7 +31,7 @@ export default async function UsersPage({ params: { lang } }: UsersPageProps) {
       </div>
 
       {/* Users Table Component */}
-      <UsersTable dictionary={dictionary} lang={lang} />
+      <UsersTable dictionary={dictionary} />
     </div>
   );
 }

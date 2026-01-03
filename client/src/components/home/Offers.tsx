@@ -14,7 +14,7 @@ const Offers = async ({
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   locale: Locale;
 }) => {
-  const jobOffers = await getJobOffers();
+  const { data: jobOffers } = await getJobOffers({ limit: 4, page: 1 });
   const limitedOffers = jobOffers.slice(0, 4);
 
   return (

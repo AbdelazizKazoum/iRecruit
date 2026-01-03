@@ -111,7 +111,18 @@
     "deadline": "Apply before",
     "details": "Details",
     "apply": "Apply",
-    "noOffers": "No offers available at the moment"
+    "noOffers": "No offers available at the moment",
+    "search": {
+      "keywordPlaceholder": "Search by domain or keyword",
+      "regionPlaceholder": "All regions",
+      "dateLabel": "Published",
+      "dateOptions": {
+        "any": "Any time",
+        "last7": "Last 7 days",
+        "last30": "Last 30 days"
+      },
+      "cta": "Apply filters"
+    }
   },
   "hero": {
     "title": "Welcome to the Recruitment Platform.",

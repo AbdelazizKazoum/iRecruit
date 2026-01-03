@@ -9,6 +9,7 @@ import {
   Delete,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { JobOffersService } from './job-offers.service';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
@@ -28,9 +29,20 @@ export class JobOffersController {
   @UseGuards(OptionalAuthGuard)
   findAll(
     @Request() req, // Access the request object
+    @Query('search') search?: string,
+    @Query('region') region?: string,
+    @Query('published') published?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
   ) {
     const user = req.user;
-    return this.jobOffersService.findAll(user);
+    return this.jobOffersService.findAll(user, {
+      search,
+      region,
+      published,
+      page,
+      limit,
+    });
   }
 
   // @Get(':id')

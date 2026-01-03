@@ -423,6 +423,11 @@
         "role": "الدور",
         "status": "الحالة",
         "all": "الكل"
+      },
+      "pagination": {
+        "rowsPerPage": "عدد الصفوف في الصفحة",
+        "summary": "عرض {start} إلى {end} من {total}",
+        "pageSummary": "الصفحة {current} من {total}"
       }
     }
   }

@@ -5,6 +5,11 @@ export interface UserType {
   username: string;
   email: string;
   bio: string;
+  role?: string;
+  status?: string;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+  avatar?: string;
 
   candiadature?: CandidatureType;
 }

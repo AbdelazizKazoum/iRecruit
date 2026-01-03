@@ -1,15 +1,21 @@
-import userApi from "@/libs/api";
+import clientApi from "@/libs/clientApi";
 import { UserType } from "@/types/user.types";
 
 export const userService = {
+  getUsers: async function () {
+    const { data } = await clientApi.get("/users");
+
+    return data;
+  },
+
   getUserProfile: async function (id: string) {
-    const { data } = await userApi.get(`/users/${id}`);
+    const { data } = await clientApi.get(`/users/${id}`);
 
     return data;
   },
 
   updateProfile: async function (id: string, newUser: UserType) {
-    const { data } = await userApi.patch(`/users/${id}`, newUser);
+    const { data } = await clientApi.patch(`/users/${id}`, newUser);
 
     return data;
   },

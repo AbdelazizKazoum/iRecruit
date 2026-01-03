@@ -132,9 +132,9 @@
     "title": "اتصل بنا",
     "description": "هل لديك أسئلة أو تحتاج إلى مساعدة؟ فريقنا هنا لمساعدتك. لا تتردد في الاتصال بنا عبر النموذج أدناه أو من خلال وسائل الاتصال الموضحة.",
     "detailsTitle": "معلومات الاتصال الخاصة بنا",
-    "address": "123 شارع المؤسسة، باريس، فرنسا",
-    "phone": "+33 1 23 45 67 89",
-    "email": "contact@yourwebsite.com",
+    "address": "مركز دعم iRecruit، الرباط، المغرب",
+    "phone": "+212 537 00 00 00",
+    "email": "support@irecruit.com",
     "ctaTitle": "ابق على اتصال",
     "ctaDescription": "اشترك في النشرة الإخبارية الخاصة بنا لتلقي التحديثات والعروض الخاصة مباشرة في بريدك الوارد.",
     "ctaButton": "اشترك في النشرة الإخبارية",
@@ -190,33 +190,22 @@
     }
   },
   "footer": {
-    "description": "هي منصة توظيف مكرسة لتبسيط عملية التقديم للمرشحين والشركات.",
-    "copyright": "©{new Date().getFullYear()} -",
-    "poweredBy": "مدعومة من عبد العزيز كزوم",
-    "navigationLinks": {
-      "product": {
-        "title": "المنتج",
-        "download": "تحميل",
-        "pricing": "التسعير",
-        "locations": "المواقع",
-        "servers": "الخوادم",
-        "countries": "الدول",
-        "blog": "مدونة"
-      },
-      "engagement": {
-        "title": "الالتزام",
-        "why": "لماذا تعتبر هذه منصة توظيف؟",
-        "faq": "الأسئلة الشائعة",
-        "tutorials": "الدروس التعليمية",
-        "aboutUs": "معلومات عنا",
-        "privacyPolicy": "سياسة الخصوصية",
-        "termsOfUse": "شروط الاستخدام"
-      },
-      "opportunities": {
-        "title": "الفرص",
-        "affiliation": "الانضمام",
-        "becomePartner": "كن شريكًا"
-      }
+    "description": "تجمع iRecruit إعلانات الوظائف العمومية وتساعد المترشحين على إدارة كل خطوة من طلباتهم في مساحة واحدة آمنة.",
+    "poweredBy": "تم تطويرها وصيانتها من طرف فريق iRecruit.",
+    "contactTitle": "تواصل معنا",
+    "navigation": {
+      "title": "استكشف",
+      "home": "الرئيسية",
+      "announcements": "إعلانات المسابقات",
+      "faq": "الأسئلة الشائعة",
+      "contact": "اتصل بنا"
+    },
+    "candidateArea": {
+      "title": "فضاء المترشح",
+      "start": "ابدأ طلب ترشح",
+      "completeFile": "إتمام ملفي",
+      "applications": "طلباتي",
+      "profile": "الملف الشخصي والإعدادات"
     }
   },
   "profilePage": {

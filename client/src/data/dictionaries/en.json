@@ -128,9 +128,9 @@
     "title": "Contact Us",
     "description": "Have questions or need assistance? Our team is here to help. Feel free to reach out using the form below or via the contact information provided.",
     "detailsTitle": "Our Contact Information",
-    "address": "123 Enterprise Street, Paris, France",
-    "phone": "+33 1 23 45 67 89",
-    "email": "contact@yourwebsite.com",
+    "address": "iRecruit Support Center, Rabat, Morocco",
+    "phone": "+212 537 00 00 00",
+    "email": "support@irecruit.com",
     "ctaTitle": "Stay Connected",
     "ctaDescription": "Subscribe to our newsletter to receive updates and special offers directly in your inbox.",
     "ctaButton": "Subscribe to Newsletter",
@@ -186,33 +186,22 @@
     }
   },
   "footer": {
-    "description": "is a recruitment platform dedicated to simplifying the application process for candidates and companies.",
-    "copyright": "©{new Date().getFullYear()} -",
-    "poweredBy": "Powered by Abdelaziz Kazoum",
-    "navigationLinks": {
-      "product": {
-        "title": "Product",
-        "download": "Download",
-        "pricing": "Pricing",
-        "locations": "Locations",
-        "servers": "Servers",
-        "countries": "Countries",
-        "blog": "Blog"
-      },
-      "engagement": {
-        "title": "Engagement",
-        "why": "Why is this a recruitment platform?",
-        "faq": "FAQ",
-        "tutorials": "Tutorials",
-        "aboutUs": "About Us",
-        "privacyPolicy": "Privacy Policy",
-        "termsOfUse": "Terms of Use"
-      },
-      "opportunities": {
-        "title": "Opportunities",
-        "affiliation": "Affiliation",
-        "becomePartner": "Become a Partner"
-      }
+    "description": "iRecruit brings together public job announcements and helps candidates manage every application step from one secure workspace.",
+    "poweredBy": "Built and maintained by the iRecruit team.",
+    "contactTitle": "Contact",
+    "navigation": {
+      "title": "Explore",
+      "home": "Home",
+      "announcements": "Job announcements",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "candidateArea": {
+      "title": "Candidate space",
+      "start": "Start an application",
+      "completeFile": "Complete my file",
+      "applications": "My applications",
+      "profile": "Profile & settings"
     }
   },
   "profilePage": {

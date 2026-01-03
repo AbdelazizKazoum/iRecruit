@@ -35,7 +35,7 @@ const Concours = async ({ params }: { params: { lang: Locale } }) => {
                       <ConcourItem
                         offer={item}
                         dictionary={dictionary}
-                        key={item.title[locale]}
+                        key={item._id ?? item.title[locale]}
                         className=""
                         locale={locale}
                       />

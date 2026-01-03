@@ -20,6 +20,7 @@ export interface ApplicationType {
 }
 
 export interface OfferType {
+  _id?: string;
   title: {
     fr: string;
     en: string;

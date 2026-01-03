@@ -33,10 +33,10 @@ export class JobOffersController {
     return this.jobOffersService.findAll(user);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.jobOffersService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.jobOffersService.findOne(id);
+  }
 
   @Patch(':id')
   update(

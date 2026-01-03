@@ -12,6 +12,7 @@ import {
   UseGuards,
   Request,
   Response,
+  Logger,
 } from '@nestjs/common';
 import { CandidatureService } from './candidature.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -103,6 +104,17 @@ export class CandidatureController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('experiences')
+  async saveExperiences(
+    @Body('experience') experience: string,
+    @Request() req,
+  ) {
+    const user = req.user;
+    const data = JSON.parse(experience);
+    return this.candidatureService.saveExperiences(data, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('validate')
   validateCandidature(@Request() req) {
     const user = req.user;
@@ -119,6 +131,43 @@ export class CandidatureController {
   getCandidature(@Request() req) {
     const user = req.user;
     return this.candidatureService.findMyCandidature(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('resume-template')
+  getResumeTemplate(@Request() req) {
+    const user = req.user;
+    return this.candidatureService.buildResumeTemplate(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('resume-pdf')
+  async getResumePdf(@Request() req, @Response() res) {
+    const user = req.user;
+    Logger.debug(
+      `resume-pdf requested by user ${user?._id || 'unknown'}`,
+      'CandidatureController',
+    );
+
+    try {
+      const pdfBuffer = await this.candidatureService.buildResumePdf(user);
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename="cv-ats.pdf"',
+      );
+      res.setHeader('Content-Length', pdfBuffer.length);
+
+      return res.end(pdfBuffer);
+    } catch (error) {
+      Logger.error(
+        `resume-pdf failed: ${error?.message}`,
+        error?.stack,
+        'CandidatureController',
+      );
+      throw error;
+    }
   }
 
   @UseGuards(JwtAuthGuard)

@@ -7,7 +7,7 @@ import { Form, FormField } from "@/components/ui/form";
 import { Loader } from "lucide-react";
 import GroupFieldsRenderer from "./GroupFieldsRenderer";
 import { FormProvider, useForm } from "react-hook-form";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { Locale } from "@/configs/i18n";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -30,7 +30,6 @@ const DynamicGridForm = ({
   handleNext,
   data,
   checkKey, // New prop for specifying the key to check
-  openedAccordion,
 }: {
   category: string;
   schema: any;
@@ -39,7 +38,6 @@ const DynamicGridForm = ({
   handleNext?: (value?: string) => void;
   data: any;
   checkKey: string; // Key to check for duplicates
-  openedAccordion?: string;
 }) => {
   const config = formConfigFactory(category);
   const form = useForm<any>({
@@ -50,7 +48,9 @@ const DynamicGridForm = ({
   const { fields } = config;
   const [submittedData, setSubmittedData] = useState<any[]>(data);
   const [accordionKey, setAccordionKey] = useState(0); // State to track re-render
-  const [openAccordion, setOpenAccordion] = useState(""); // State for open accordion
+  const [openAccordion, setOpenAccordion] = useState<string[]>([
+    config.title[locale],
+  ]); // Default open
 
   const renderedFields = useMemo(() => {
     return config.fields.map((fieldConfig: any, index: number) => {
@@ -102,24 +102,20 @@ const DynamicGridForm = ({
     setSubmittedData((prev) => [...prev, data]);
     form.reset({});
     setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render
-    setOpenAccordion(config.title[locale]);
+    setOpenAccordion([config.title[locale]]);
   };
-
-  useEffect(() => {
-    setOpenAccordion(openedAccordion || "");
-  }, [openedAccordion]);
 
   return (
     <Accordion
-      type="single"
-      collapsible
+      type="multiple"
       className="w-full"
-      value={openAccordion} // Set open state
+      value={openAccordion}
       key={accordionKey}
       onValueChange={(value) => {
-        setOpenAccordion(value);
-        if (handleNext) handleNext(value);
-      }} // Update state on toggle
+        const vals = Array.isArray(value) ? value : [];
+        setOpenAccordion(vals);
+        if (handleNext) handleNext(vals[0]);
+      }}
     >
       <AccordionItem value={config.title[locale]}>
         <AccordionTrigger className={cn(" text-primary text-base font-normal")}>
@@ -155,7 +151,7 @@ const DynamicGridForm = ({
                           type="button"
                           variant="outline" // Optional styling for the "Skip" button
                           onClick={() => {
-                            setOpenAccordion("");
+                            setOpenAccordion([]);
 
                             handleNext();
                             setAccordionKey((prevKey) => prevKey + 1); // Change the key to force re-render

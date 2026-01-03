@@ -8,7 +8,7 @@ import React from "react";
 
 const CommunicationsForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, submitCommunication, nextGroup, setNextGroup } =
+  const { candidatureData, submitCommunication, setNextGroup } =
     useCandidatureStore();
 
   const onSubmit = async (data: communicationsType) => {
@@ -44,7 +44,6 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
         locale={locale}
         data={candidatureData?.professionalInformation?.communications || []}
         checkKey="titre"
-        openedAccordion={nextGroup}
         handleNext={handleNext}
       />
     </div>

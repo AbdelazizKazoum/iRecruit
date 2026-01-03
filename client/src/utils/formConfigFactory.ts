@@ -10,6 +10,8 @@ export const formConfigFactory = (category: string) => {
     // Add more categories as needed
     case "diplomes":
       return formConfigs.diplomesFormConfig;
+    case "experiences":
+      return formConfigs.experiencesFormConfig;
     case "langues":
       return formConfigs.languesFormConfig;
     case "publications":

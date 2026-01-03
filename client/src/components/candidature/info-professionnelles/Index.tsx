@@ -5,6 +5,7 @@ import { Locale } from "@/configs/i18n";
 import LanquesForm from "./LanquesForm";
 import PublicationsForm from "./PublicationsForm";
 import CommunicationsForm from "./CommunicationsForm";
+import ExperiencesForm from "./ExperiencesForm";
 import { Button } from "@/components/ui/button";
 import { getDictionary } from "@/utils/getDictionary";
 import { useCandidatureStore } from "@/stores/candidature.store";
@@ -64,6 +65,7 @@ const InfoProfessionnelles = ({
         }
       />
       <Separator />
+      <ExperiencesForm locale={locale} />
       <DiplomesForm locale={locale} />
       <LanquesForm locale={locale} />
       <PublicationsForm locale={locale} />

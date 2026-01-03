@@ -10,9 +10,12 @@ import { getDictionary } from "@/utils/getDictionary";
 import { useCandidatureStore } from "@/stores/candidature.store";
 import { steps } from "@/data/candidature/steps";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 // Import Lucid icons here
 import { Check } from "lucide-react";
+import { Download } from "lucide-react";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   className: string;
@@ -32,6 +35,8 @@ export function CandidatureSidebar({
   }`;
 
   const { candidatureData, loading } = useCandidatureStore();
+  const { data: session } = useSession();
+  const [downloading, setDownloading] = useState(false);
 
   if (loading)
     return (
@@ -99,6 +104,58 @@ export function CandidatureSidebar({
           </Link>
         );
       })}
+      <button
+        type="button"
+        onClick={async () => {
+          if (!session?.user?.accessToken) {
+            alert("Vous devez être connecté pour générer le CV.");
+            return;
+          }
+          setDownloading(true);
+          try {
+            const res = await fetch(
+              `${process.env.NEXT_PUBLIC_BACKEND_API}/candidature/resume-pdf`,
+              {
+                headers: {
+                  Authorization: `Bearer ${session.user.accessToken}`,
+                },
+              }
+            );
+
+            if (!res.ok) {
+              const text = await res.text();
+              throw new Error(text || res.statusText);
+            }
+
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "cv-ats.pdf";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+          } catch (err) {
+            console.error("Download resume template failed", err);
+            alert("Impossible de générer le CV. Réessayez plus tard.");
+          } finally {
+            setDownloading(false);
+          }
+        }}
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "flex items-center justify-center gap-2 border-dashed"
+        )}
+        disabled={downloading}
+      >
+        <Download size={18} />
+        <span>
+          {downloading
+            ? "Génération du CV..."
+            : "Télécharger le CV ATS généré"}
+        </span>
+      </button>
     </nav>
   );
 }

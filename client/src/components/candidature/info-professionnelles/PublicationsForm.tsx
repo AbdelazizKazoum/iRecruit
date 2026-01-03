@@ -8,7 +8,7 @@ import React from "react";
 
 const PublicationsForm = ({ locale }: { locale: Locale }) => {
   // Hooks
-  const { candidatureData, submitPublications, nextGroup, setNextGroup } =
+  const { candidatureData, submitPublications, setNextGroup } =
     useCandidatureStore();
 
   const onSubmit = async (data: PublicationsType) => {
@@ -44,7 +44,6 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
         locale={locale}
         data={candidatureData?.professionalInformation?.publications || []}
         checkKey="titre"
-        openedAccordion={nextGroup}
         handleNext={handleNext}
       />
     </div>

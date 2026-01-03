@@ -37,6 +37,7 @@ export interface CandidatureType {
     valid: boolean;
     parcoursEtDiplomes?: ParcoursEtDiplomesTypes[];
     niveauxLangues?: NiveauxLanguesType[];
+    experiences?: ExperienceType[];
     experiencePedagogique?: {
       experiencePedagogiqueEnHeures: number;
     };
@@ -89,4 +90,14 @@ export interface communicationsType {
   anneeCommunication: number;
   url: string;
   files: { communicationPdf: File | string };
+}
+
+export interface ExperienceType {
+  position: string;
+  company: string;
+  startDate: string;
+  endDate?: string;
+  currentlyWorking?: boolean;
+  description?: string;
+  highlights?: string[] | string;
 }

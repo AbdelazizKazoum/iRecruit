@@ -142,9 +142,9 @@
     "title": "Contactez-nous",
     "description": "Vous avez des questions ou besoin d'aide ? Notre équipe est là pour vous répondre. N'hésitez pas à nous contacter via le formulaire ci-dessous ou par les moyens indiqués.",
     "detailsTitle": "Nos coordonnées",
-    "address": "123 Rue de l'Entreprise, Paris, France",
-    "phone": "+33 1 23 45 67 89",
-    "email": "contact@votresite.com",
+    "address": "Centre de support iRecruit, Rabat, Maroc",
+    "phone": "+212 537 00 00 00",
+    "email": "support@irecruit.com",
     "ctaTitle": "Restez connecté",
     "ctaDescription": "Abonnez-vous à notre newsletter pour recevoir des mises à jour et des offres spéciales directement dans votre boîte de réception.",
     "ctaButton": "S'abonner à la newsletter",
@@ -185,34 +185,22 @@
     }
   },
   "footer": {
-    "description": "Est une plateforme de recrutement dédiée à simplifier le processus de candidature pour les candidats et les entreprises.",
-    "copyright": "©{new Date().getFullYear()} -",
-    "poweredBy": "Propulsé par",
-
-    "navigationLinks": {
-      "product": {
-        "title": "Produit",
-        "download": "Télécharger",
-        "pricing": "Tarification",
-        "locations": "Emplacements",
-        "servers": "Serveurs",
-        "countries": "Pays",
-        "blog": "Blog"
-      },
-      "engagement": {
-        "title": "Engagement",
-        "why": "Pourquoi est-ce une plateforme de recrutement ?",
-        "faq": "FAQ",
-        "tutorials": "Tutoriels",
-        "aboutUs": "À propos de nous",
-        "privacyPolicy": "Politique de confidentialité",
-        "termsOfUse": "Conditions d’utilisation"
-      },
-      "opportunities": {
-        "title": "Opportunités",
-        "affiliation": "Affiliation",
-        "becomePartner": "Devenir partenaire"
-      }
+    "description": "iRecruit centralise les annonces d'emploi publiques et aide les candidats à gérer chaque étape de leur candidature depuis un espace sécurisé unique.",
+    "poweredBy": "Conçu et maintenu par l'équipe iRecruit.",
+    "contactTitle": "Contact",
+    "navigation": {
+      "title": "Explorer",
+      "home": "Accueil",
+      "announcements": "Annonces de concours",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "candidateArea": {
+      "title": "Espace candidat",
+      "start": "Commencer une candidature",
+      "completeFile": "Compléter mon dossier",
+      "applications": "Mes candidatures",
+      "profile": "Profil et paramètres"
     }
   },
   "profilePage": {

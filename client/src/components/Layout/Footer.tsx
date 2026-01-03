@@ -1,22 +1,57 @@
 import themeConfig from "@/configs/themeConfig";
 import { getDictionary } from "@/utils/getDictionary";
 import React from "react";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Briefcase, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
+import { Locale } from "@/configs/i18n";
 
 const Footer = ({
   dictionary,
+  locale,
 }: {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
+  locale: Locale;
 }) => {
+  const phoneLink = dictionary.contact.phone.replace(/\s+/g, "");
+
+  const platformLinks = [
+    {
+      label: dictionary.footer.navigation.home,
+      href: `/${locale}/home`,
+    },
+    {
+      label: dictionary.footer.navigation.announcements,
+      href: `/${locale}/concours`,
+    },
+    {
+      label: dictionary.footer.navigation.faq,
+      href: `/${locale}/FAQ`,
+    },
+    {
+      label: dictionary.footer.navigation.contact,
+      href: `/${locale}/contact`,
+    },
+  ];
+
+  const candidateLinks = [
+    {
+      label: dictionary.footer.candidateArea.start,
+      href: `/${locale}/postuler`,
+    },
+    {
+      label: dictionary.footer.candidateArea.completeFile,
+      href: `/${locale}/candidature`,
+    },
+    {
+      label: dictionary.footer.candidateArea.applications,
+      href: `/${locale}/profile?section=candidatures`,
+    },
+    {
+      label: dictionary.footer.candidateArea.profile,
+      href: `/${locale}/profile?section=compte`,
+    },
+  ];
+
   return (
     <footer className="bg-gray-100 text-gray-600 pt-16 pb-8 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -34,109 +69,102 @@ const Footer = ({
             </p>
             <div className="flex items-center gap-4">
               <Link
-                href="#"
+                href={`/${locale}/contact`}
                 className="p-2 rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white transition-all duration-300"
               >
-                <Facebook className="h-4 w-4" />
+                <MapPin className="h-4 w-4" />
               </Link>
               <Link
-                href="#"
+                href={`tel:${phoneLink}`}
                 className="p-2 rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white transition-all duration-300"
               >
-                <Twitter className="h-4 w-4" />
+                <Phone className="h-4 w-4" />
               </Link>
               <Link
-                href="#"
+                href={`mailto:${dictionary.contact.email}`}
                 className="p-2 rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white transition-all duration-300"
               >
-                <Instagram className="h-4 w-4" />
+                <Mail className="h-4 w-4" />
               </Link>
               <Link
-                href="#"
+                href={`/${locale}/concours`}
                 className="p-2 rounded-full bg-gray-200 text-gray-600 hover:bg-primary hover:text-white transition-all duration-300"
               >
-                <Linkedin className="h-4 w-4" />
+                <Briefcase className="h-4 w-4" />
               </Link>
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Platform Links */}
           <div>
             <h3 className="text-gray-900 font-semibold text-lg mb-6 relative inline-block">
-              {dictionary.footer.navigationLinks.product.title}
+              {dictionary.footer.navigation.title}
               <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary rounded-full"></span>
             </h3>
             <ul className="space-y-3">
-              {[
-                dictionary.footer.navigationLinks.product.download,
-                dictionary.footer.navigationLinks.product.pricing,
-                dictionary.footer.navigationLinks.product.locations,
-                dictionary.footer.navigationLinks.product.servers,
-                dictionary.footer.navigationLinks.product.countries,
-                dictionary.footer.navigationLinks.product.blog,
-              ].map((item, index) => (
+              {platformLinks.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href="#"
+                    href={item.href}
                     className="text-sm hover:text-primary hover:translate-x-1 transition-all duration-200 inline-block"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Engagement Links */}
+          {/* Candidate Links */}
           <div>
             <h3 className="text-gray-900 font-semibold text-lg mb-6 relative inline-block">
-              {dictionary.footer.navigationLinks.engagement.title}
+              {dictionary.footer.candidateArea.title}
               <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary rounded-full"></span>
             </h3>
             <ul className="space-y-3">
-              {[
-                dictionary.footer.navigationLinks.engagement.faq,
-                dictionary.footer.navigationLinks.engagement.tutorials,
-                dictionary.footer.navigationLinks.engagement.aboutUs,
-                dictionary.footer.navigationLinks.engagement.privacyPolicy,
-                dictionary.footer.navigationLinks.engagement.termsOfUse,
-              ].map((item, index) => (
+              {candidateLinks.map((item, index) => (
                 <li key={index}>
                   <Link
-                    href="#"
+                    href={item.href}
                     className="text-sm hover:text-primary hover:translate-x-1 transition-all duration-200 inline-block"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info (New Section) */}
+          {/* Contact Info */}
           <div>
             <h3 className="text-gray-900 font-semibold text-lg mb-6 relative inline-block">
-              Contact
+              {dictionary.footer.contactTitle}
               <span className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary rounded-full"></span>
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-600">
-                  123 Business Avenue, Tech District,
-                  <br />
-                  Innovation City, 10001
+                  {dictionary.contact.address}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm text-gray-600">+1 (555) 123-4567</span>
+                <Link
+                  href={`tel:${phoneLink}`}
+                  className="text-sm text-gray-600 hover:text-primary"
+                >
+                  {dictionary.contact.phone}
+                </Link>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm text-gray-600">
-                  contact@irecruit.com
-                </span>
+                <Link
+                  href={`mailto:${dictionary.contact.email}`}
+                  className="text-sm text-gray-600 hover:text-primary"
+                >
+                  {dictionary.contact.email}
+                </Link>
               </li>
             </ul>
           </div>
@@ -149,8 +177,7 @@ const Footer = ({
             reserved.
           </p>
           <p className="text-sm text-black-500 flex items-center gap-1">
-            {dictionary.footer.poweredBy}{" "}
-            <span className="text-primary font-medium">Abdelaziz Kazoum</span>
+            {dictionary.footer.poweredBy}
           </p>
         </div>
       </div>

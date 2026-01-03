@@ -46,7 +46,7 @@ const Layout = async ({
         </div>
         {children}
       </main>
-      <Footer dictionary={dictionary} />
+      <Footer dictionary={dictionary} locale={params.lang} />
     </Providers>
   );
 };

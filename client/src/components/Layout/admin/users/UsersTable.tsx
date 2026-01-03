@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -41,6 +41,8 @@ import { getDictionary } from "@/utils/getDictionary";
 import { format, type Locale as DateFnsLocale } from "date-fns";
 import { enUS, fr, ar } from "date-fns/locale";
 import { Locale } from "@/configs/i18n";
+import { userService } from "@/services/userService";
+import { UserType } from "@/types/user.types";
 
 const localeMap: Record<Locale, DateFnsLocale> = {
   en: enUS,
@@ -48,93 +50,93 @@ const localeMap: Record<Locale, DateFnsLocale> = {
   ar: ar,
 };
 
-// Mock Data Type
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: "admin" | "candidate" | "recruiter";
-  status: "active" | "inactive" | "banned";
-  joinedAt: Date;
+type UserRow = UserType & {
+  role?: string;
+  status?: string;
+  createdAt?: string | Date;
   avatar?: string;
-}
-
-// Mock Data
-const MOCK_USERS: User[] = [
-  {
-    id: "1",
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    role: "admin",
-    status: "active",
-    joinedAt: new Date("2023-01-15"),
-    avatar: "/avatars/01.png",
-  },
-  {
-    id: "2",
-    name: "Bob Smith",
-    email: "bob@example.com",
-    role: "candidate",
-    status: "active",
-    joinedAt: new Date("2023-02-20"),
-    avatar: "/avatars/02.png",
-  },
-  {
-    id: "3",
-    name: "Charlie Brown",
-    email: "charlie@example.com",
-    role: "recruiter",
-    status: "inactive",
-    joinedAt: new Date("2023-03-10"),
-    avatar: "/avatars/03.png",
-  },
-  {
-    id: "4",
-    name: "Diana Prince",
-    email: "diana@example.com",
-    role: "candidate",
-    status: "active",
-    joinedAt: new Date("2023-04-05"),
-    avatar: "/avatars/04.png",
-  },
-  {
-    id: "5",
-    name: "Evan Wright",
-    email: "evan@example.com",
-    role: "candidate",
-    status: "banned",
-    joinedAt: new Date("2023-05-12"),
-    avatar: "/avatars/05.png",
-  },
-];
+};
 
 interface UsersTableProps {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   lang: Locale;
+  initialUsers?: UserRow[];
+  initialError?: string | null;
+  initialLoaded?: boolean;
 }
 
-export function UsersTable({ dictionary, lang }: UsersTableProps) {
+export function UsersTable({
+  dictionary,
+  lang,
+  initialUsers = [],
+  initialError = null,
+  initialLoaded = false,
+}: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState<string>("all");
-  const [users, setUsers] = useState<User[]>(MOCK_USERS);
+  const [users, setUsers] = useState<UserRow[]>(initialUsers);
+  const [isLoading, setIsLoading] = useState(!initialLoaded);
+  const [error, setError] = useState<string | null>(initialError);
 
   const { usersPage } = dictionary;
 
-  // Filter Logic
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = roleFilter === "all" || user.role === roleFilter;
+  const normalizeRole = (role?: string) => {
+    const normalized = role?.toLowerCase().trim() || "";
+    if (normalized === "candidat") return "candidate";
+    if (normalized === "recruteur") return "recruiter";
+    if (normalized === "administrateur") return "admin";
+    return normalized;
+  };
 
-    return matchesSearch && matchesRole;
-  });
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadUsers = async () => {
+      if (initialLoaded) {
+        setIsLoading(false);
+        return;
+      }
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await userService.getUsers();
+        if (!isMounted) return;
+        setUsers(Array.isArray(data) ? data : []);
+      } catch (err) {
+        if (!isMounted) return;
+        setError("Failed to load users.");
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    loadUsers();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      const name = user.username || "";
+      const email = user.email || "";
+      const matchesSearch =
+        name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        email.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesRole =
+        roleFilter === "all" ||
+        normalizeRole(user.role) === roleFilter.toLowerCase();
+
+      return matchesSearch && matchesRole;
+    });
+  }, [users, roleFilter, searchTerm]);
 
   // Actions
   const handleMakeAdmin = (userId: string) => {
     setUsers((prev) =>
       prev.map((user) =>
-        user.id === userId ? { ...user, role: "admin" } : user
+        user._id === userId ? { ...user, role: "admin" } : user
       )
     );
   };
@@ -142,13 +144,13 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
   const handleRemoveAdmin = (userId: string) => {
     setUsers((prev) =>
       prev.map((user) =>
-        user.id === userId ? { ...user, role: "candidate" } : user
+        user._id === userId ? { ...user, role: "candidate" } : user
       )
     );
   };
 
   const handleDeleteUser = (userId: string) => {
-    setUsers((prev) => prev.filter((user) => user.id !== userId));
+    setUsers((prev) => prev.filter((user) => user._id !== userId));
   };
 
   return (
@@ -194,56 +196,89 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={5} className="py-8 text-center">
+                  {dictionary.buttons.loading}
+                </TableCell>
+              </TableRow>
+            )}
+            {!isLoading && error && (
+              <TableRow>
+                <TableCell colSpan={5} className="py-8 text-center">
+                  {error}
+                </TableCell>
+              </TableRow>
+            )}
+            {!isLoading &&
+              !error &&
+              filteredUsers.map((user) => {
+                const displayName =
+                  user.username || user.email || "Unknown";
+                const displayEmail = user.email || "—";
+                const roleLabel = user.role || "—";
+                const statusLabel = user.status || "—";
+                const statusValue = user.status?.toLowerCase() || "";
+                const joinedDate = user.createdAt
+                  ? new Date(user.createdAt)
+                  : null;
+                const hasJoinedDate =
+                  joinedDate && !Number.isNaN(joinedDate.getTime());
+                const statusVariant =
+                  statusValue === "active"
+                    ? "default"
+                    : statusValue === "inactive"
+                    ? "secondary"
+                    : statusValue === "banned"
+                    ? "destructive"
+                    : "secondary";
+
+                return (
+              <TableRow key={user._id || user.email || user.username}>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-9 w-9 border">
-                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarImage src={user.avatar} alt={displayName} />
                       <AvatarFallback>
-                        {user.name.slice(0, 2).toUpperCase()}
+                        {displayName.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="font-medium text-foreground">
-                        {user.name}
+                        {displayName}
                       </span>
                       <span className="text-xs text-muted-foreground">
-                        {user.email}
+                        {displayEmail}
                       </span>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    {user.role === "admin" && (
+                    {normalizeRole(user.role) === "admin" && (
                       <ShieldCheck className="h-4 w-4 text-primary" />
                     )}
-                    <span className="capitalize">{user.role}</span>
+                    <span className="capitalize">{roleLabel}</span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <Badge
-                    variant={
-                      user.status === "active"
-                        ? "default"
-                        : user.status === "inactive"
-                        ? "secondary"
-                        : "destructive"
-                    }
+                    variant={statusVariant}
                     className={
-                      user.status === "active"
+                      statusValue === "active"
                         ? "bg-green-100 text-green-700 hover:bg-green-100/80 dark:bg-green-900/30 dark:text-green-400"
                         : ""
                     }
                   >
-                    {user.status}
+                    {statusLabel}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-muted-foreground">
-                  {format(user.joinedAt, "MMM dd, yyyy", {
-                    locale: localeMap[lang],
-                  })}
+                  {hasJoinedDate
+                    ? format(joinedDate, "MMM dd, yyyy", {
+                        locale: localeMap[lang],
+                      })
+                    : "—"}
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
@@ -256,7 +291,9 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuItem
-                        onClick={() => navigator.clipboard.writeText(user.id)}
+                        onClick={() =>
+                          navigator.clipboard.writeText(user._id || "")
+                        }
                       >
                         Copy ID
                       </DropdownMenuItem>
@@ -265,16 +302,16 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
                         <Eye className="mr-2 h-4 w-4" />
                         {usersPage.table.actions.viewProfile}
                       </DropdownMenuItem>
-                      {user.role !== "admin" ? (
+                      {normalizeRole(user.role) !== "admin" ? (
                         <DropdownMenuItem
-                          onClick={() => handleMakeAdmin(user.id)}
+                          onClick={() => handleMakeAdmin(user._id || "")}
                         >
                           <Shield className="mr-2 h-4 w-4" />
                           {usersPage.table.actions.makeAdmin}
                         </DropdownMenuItem>
                       ) : (
                         <DropdownMenuItem
-                          onClick={() => handleRemoveAdmin(user.id)}
+                          onClick={() => handleRemoveAdmin(user._id || "")}
                         >
                           <ShieldAlert className="mr-2 h-4 w-4" />
                           {usersPage.table.actions.removeAdmin}
@@ -283,7 +320,7 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         className="text-red-600 focus:text-red-600 focus:bg-red-50"
-                        onClick={() => handleDeleteUser(user.id)}
+                        onClick={() => handleDeleteUser(user._id || "")}
                       >
                         <Trash2 className="mr-2 h-4 w-4" />
                         {usersPage.table.actions.deleteUser}
@@ -292,10 +329,11 @@ export function UsersTable({ dictionary, lang }: UsersTableProps) {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))}
+                );
+              })}
           </TableBody>
         </Table>
-        {filteredUsers.length === 0 && (
+        {!isLoading && !error && filteredUsers.length === 0 && (
           <div className="p-8 text-center text-muted-foreground">
             No users found matching your filters.
           </div>

@@ -3,6 +3,8 @@ import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Users } from "lucide-react";
 import { UsersTable } from "@/components/Layout/admin/users/UsersTable";
+import serverApi from "@/libs/serverApi";
+import { UserType } from "@/types/user.types";
 
 interface UsersPageProps {
   params: {
@@ -12,6 +14,19 @@ interface UsersPageProps {
 
 export default async function UsersPage({ params: { lang } }: UsersPageProps) {
   const dictionary = await getDictionary(lang);
+  let users: UserType[] = [];
+  let usersError: string | null = null;
+
+  try {
+    const { data } = await serverApi.get("/users");
+    users = Array.isArray(data) ? data : [];
+  } catch (error: any) {
+    const status = error?.response?.status;
+    usersError =
+      status === 401
+        ? "Unauthorized. Please sign in again."
+        : "Failed to load users.";
+  }
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl space-y-8">
@@ -31,7 +46,13 @@ export default async function UsersPage({ params: { lang } }: UsersPageProps) {
       </div>
 
       {/* Users Table Component */}
-      <UsersTable dictionary={dictionary} lang={lang} />
+      <UsersTable
+        dictionary={dictionary}
+        lang={lang}
+        initialUsers={users}
+        initialError={usersError}
+        initialLoaded
+      />
     </div>
   );
 }

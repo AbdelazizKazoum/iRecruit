@@ -128,6 +128,18 @@
       "cta": "تطبيق الفلاتر"
     }
   },
+  "concoursDetails": {
+    "backToList": "العودة إلى العروض",
+    "summaryTitle": "ملخص العرض",
+    "location": "الموقع",
+    "department": "القسم",
+    "positions": "عدد المناصب",
+    "organization": "المؤسسة",
+    "grade": "الدرجة",
+    "speciality": "التخصص",
+    "institution": "المؤسسة التعليمية",
+    "applyNow": "قدّم الآن"
+  },
   "hero": {
     "title": "مرحبًا بكم في منصة التوظيف.",
     "description": "منصة توظيف مخصصة لقطاع التعليم العالي والبحث العلمي والابتكار.",

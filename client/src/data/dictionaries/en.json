@@ -124,6 +124,18 @@
       "cta": "Apply filters"
     }
   },
+  "concoursDetails": {
+    "backToList": "Back to offers",
+    "summaryTitle": "Overview",
+    "location": "Location",
+    "department": "Department",
+    "positions": "Open positions",
+    "organization": "Organization",
+    "grade": "Grade",
+    "speciality": "Speciality",
+    "institution": "Institution",
+    "applyNow": "Apply now"
+  },
   "hero": {
     "title": "Welcome to the Recruitment Platform.",
     "description": "A recruitment platform dedicated to Higher Education, Scientific Research, and Innovation.",

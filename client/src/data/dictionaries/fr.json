@@ -127,6 +127,18 @@
       "cta": "Appliquer les filtres"
     }
   },
+  "concoursDetails": {
+    "backToList": "Retour aux offres",
+    "summaryTitle": "Récapitulatif",
+    "location": "Localisation",
+    "department": "Département",
+    "positions": "Postes ouverts",
+    "organization": "Organisme",
+    "grade": "Grade",
+    "speciality": "Spécialité",
+    "institution": "Établissement",
+    "applyNow": "Postuler maintenant"
+  },
   "hero": {
     "title": "Bienvenue Sur La Plateforme de recrutement.",
     "description": "Plateforme de recrutement dédiée au secteur de l'Enseignement Supérieur, de la Recherche Scientifique et de l'Innovation.",

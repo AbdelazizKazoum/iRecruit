@@ -13,8 +13,8 @@ import Image from "next/image";
 import { getDictionary } from "@/utils/getDictionary";
 import { OfferType } from "@/types/application.types";
 import { Locale } from "@/configs/i18n";
-import { useApplicationStore } from "@/stores/useApplication.store";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import ApplyButton from "./ApplyButton";
 
 export function ConcourItem({
   className,
@@ -27,15 +27,7 @@ export function ConcourItem({
   offer: OfferType;
   locale: Locale;
 }) {
-  // Hooks
-  const { setOffer } = useApplicationStore();
-  const router = useRouter();
-
-  const apply = (data: OfferType) => {
-    setOffer(data);
-
-    router.push(`/${locale}/postuler`);
-  };
+  const detailsHref = offer._id ? `/${locale}/concours/${offer._id}` : "";
 
   return (
     <Card
@@ -90,21 +82,34 @@ export function ConcourItem({
         </div>
       </CardContent>
       <CardFooter className="flex flex-col sm:flex-row gap-2 p-3 sm:p-4 pt-0 mt-auto">
-        <Button
-          variant="outline"
-          size="sm"
+        {detailsHref ? (
+          <Link className="w-full sm:flex-1" href={detailsHref}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full h-9 text-xs sm:text-sm"
+            >
+              <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+              {dictionary["concours"].details}
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full sm:flex-1 h-9 text-xs sm:text-sm"
+            disabled
+          >
+            <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+            {dictionary["concours"].details}
+          </Button>
+        )}
+        <ApplyButton
+          offer={offer}
+          locale={locale}
+          label={dictionary["concours"].apply}
           className="w-full sm:flex-1 h-9 text-xs sm:text-sm"
-        >
-          <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-          {dictionary["concours"].details}
-        </Button>
-        <Button
-          size="sm"
-          className="w-full sm:flex-1 h-9 text-xs sm:text-sm"
-          onClick={() => apply(offer)}
-        >
-          {dictionary["concours"].apply}
-        </Button>
+        />
       </CardFooter>
     </Card>
   );

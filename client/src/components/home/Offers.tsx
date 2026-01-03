@@ -34,7 +34,7 @@ const Offers = async ({
               <ConcourItem
                 offer={item}
                 dictionary={dictionary}
-                key={item.title[locale]}
+                key={item._id ?? item.title[locale]}
                 className="transform hover:scale-105 transition-transform duration-300"
                 locale={locale}
               />

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -29,6 +29,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
+  ChevronLeft,
+  ChevronRight,
   MoreHorizontal,
   Search,
   Shield,
@@ -49,6 +51,8 @@ const localeMap: Record<Locale, DateFnsLocale> = {
   fr: fr,
   ar: ar,
 };
+
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
 
 type UserRow = UserType & {
   role?: string;
@@ -77,6 +81,11 @@ export function UsersTable({
   const [users, setUsers] = useState<UserRow[]>(initialUsers);
   const [isLoading, setIsLoading] = useState(!initialLoaded);
   const [error, setError] = useState<string | null>(initialError);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[0]);
+
+  // Defer expensive filtering while the user is typing.
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
   const { usersPage } = dictionary;
 
@@ -118,19 +127,63 @@ export function UsersTable({
   }, []);
 
   const filteredUsers = useMemo(() => {
+    const normalizedSearch = deferredSearchTerm.trim().toLowerCase();
+    const normalizedRole = roleFilter.toLowerCase();
+
     return users.filter((user) => {
       const name = user.username || "";
       const email = user.email || "";
       const matchesSearch =
-        name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        email.toLowerCase().includes(searchTerm.toLowerCase());
+        normalizedSearch.length === 0 ||
+        name.toLowerCase().includes(normalizedSearch) ||
+        email.toLowerCase().includes(normalizedSearch);
       const matchesRole =
         roleFilter === "all" ||
-        normalizeRole(user.role) === roleFilter.toLowerCase();
+        normalizeRole(user.role) === normalizedRole;
 
       return matchesSearch && matchesRole;
     });
-  }, [users, roleFilter, searchTerm]);
+  }, [users, roleFilter, deferredSearchTerm]);
+
+  // Reset to the first page when filters or page size change.
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [roleFilter, searchTerm, pageSize]);
+
+  const totalUsers = filteredUsers.length;
+  const totalPages = Math.max(1, Math.ceil(totalUsers / pageSize));
+  const safePage = Math.min(currentPage, totalPages);
+
+  useEffect(() => {
+    if (currentPage !== safePage) {
+      setCurrentPage(safePage);
+    }
+  }, [currentPage, safePage]);
+
+  // Slice after filtering so pagination stays client-side.
+  const paginatedUsers = useMemo(() => {
+    const startIndex = (safePage - 1) * pageSize;
+    return filteredUsers.slice(startIndex, startIndex + pageSize);
+  }, [filteredUsers, pageSize, safePage]);
+
+  const startIndex =
+    totalUsers === 0 ? 0 : (safePage - 1) * pageSize + 1;
+  const endIndex =
+    totalUsers === 0
+      ? 0
+      : Math.min(startIndex + pageSize - 1, totalUsers);
+  const paginationSummary = usersPage.table.pagination.summary
+    .replace("{start}", startIndex.toString())
+    .replace("{end}", endIndex.toString())
+    .replace("{total}", totalUsers.toString());
+  const pageSummary = usersPage.table.pagination.pageSummary
+    .replace("{current}", safePage.toString())
+    .replace("{total}", totalPages.toString());
+
+  // Keep page changes within bounds.
+  const goToPage = (nextPage: number) => {
+    setCurrentPage(Math.min(Math.max(nextPage, 1), totalPages));
+  };
 
   // Actions
   const handleMakeAdmin = (userId: string) => {
@@ -212,7 +265,7 @@ export function UsersTable({
             )}
             {!isLoading &&
               !error &&
-              filteredUsers.map((user) => {
+              paginatedUsers.map((user) => {
                 const displayName =
                   user.username || user.email || "Unknown";
                 const displayEmail = user.email || "—";
@@ -333,6 +386,60 @@ export function UsersTable({
               })}
           </TableBody>
         </Table>
+        {!isLoading && !error && filteredUsers.length > 0 && (
+          <div className="flex flex-col gap-3 border-t bg-card px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm text-muted-foreground">
+              {paginationSummary}
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">
+                  {usersPage.table.pagination.rowsPerPage}
+                </span>
+                <Select
+                  value={String(pageSize)}
+                  onValueChange={(value) => setPageSize(Number(value))}
+                >
+                  <SelectTrigger className="h-8 w-[90px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PAGE_SIZE_OPTIONS.map((size) => (
+                      <SelectItem key={size} value={String(size)}>
+                        {size}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">
+                  {pageSummary}
+                </span>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => goToPage(safePage - 1)}
+                    disabled={safePage <= 1}
+                  >
+                    <ChevronLeft className="mr-1 h-4 w-4" />
+                    {dictionary.stepper.previous}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => goToPage(safePage + 1)}
+                    disabled={safePage >= totalPages}
+                  >
+                    {dictionary.stepper.next}
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {!isLoading && !error && filteredUsers.length === 0 && (
           <div className="p-8 text-center text-muted-foreground">
             No users found matching your filters.

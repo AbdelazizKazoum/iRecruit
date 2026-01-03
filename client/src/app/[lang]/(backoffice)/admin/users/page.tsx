@@ -1,10 +1,48 @@
 import React from "react";
+import { unstable_cache } from "next/cache";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Users } from "lucide-react";
 import { UsersTable } from "@/components/Layout/admin/users/UsersTable";
-import serverApi from "@/libs/serverApi";
+import { auth } from "@/libs/auth";
 import { UserType } from "@/types/user.types";
+
+const USERS_CACHE_SECONDS = 60;
+
+const fetchUsers = async (token: string): Promise<UserType[]> => {
+  const apiBase =
+    process.env.BACKEND_API ?? process.env.NEXT_PUBLIC_BACKEND_API;
+  if (!apiBase) {
+    const error = new Error("Backend API base URL is not configured.");
+    (error as { status?: number }).status = 500;
+    throw error;
+  }
+
+  const response = await fetch(`${apiBase}/users`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+    cache: "force-cache",
+    next: { revalidate: USERS_CACHE_SECONDS },
+  });
+
+  if (!response.ok) {
+    const error = new Error("Failed to fetch users.");
+    (error as { status?: number }).status = response.status;
+    throw error;
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data : [];
+};
+
+// Cache the full users list per access token to reduce round-trips.
+const getCachedUsers = unstable_cache(
+  async (token: string) => fetchUsers(token),
+  ["admin-users"],
+  { revalidate: USERS_CACHE_SECONDS }
+);
 
 interface UsersPageProps {
   params: {
@@ -16,16 +54,21 @@ export default async function UsersPage({ params: { lang } }: UsersPageProps) {
   const dictionary = await getDictionary(lang);
   let users: UserType[] = [];
   let usersError: string | null = null;
+  const session = await auth();
+  const accessToken = session?.user?.accessToken;
 
-  try {
-    const { data } = await serverApi.get("/users");
-    users = Array.isArray(data) ? data : [];
-  } catch (error: any) {
-    const status = error?.response?.status;
-    usersError =
-      status === 401
-        ? "Unauthorized. Please sign in again."
-        : "Failed to load users.";
+  if (!accessToken) {
+    usersError = "Unauthorized. Please sign in again.";
+  } else {
+    try {
+      users = await getCachedUsers(accessToken);
+    } catch (error: any) {
+      const status = error?.status;
+      usersError =
+        status === 401
+          ? "Unauthorized. Please sign in again."
+          : "Failed to load users.";
+    }
   }
 
   return (

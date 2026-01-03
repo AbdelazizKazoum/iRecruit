@@ -407,6 +407,11 @@
         "role": "Role",
         "status": "Status",
         "all": "All"
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page",
+        "summary": "Showing {start}-{end} of {total}",
+        "pageSummary": "Page {current} of {total}"
       }
     }
   }

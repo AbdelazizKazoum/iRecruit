@@ -111,7 +111,7 @@ export function UsersTable({
         const data = await userService.getUsers();
         if (!isMounted) return;
         setUsers(Array.isArray(data) ? data : []);
-      } catch (err) {
+      } catch {
         if (!isMounted) return;
         setError("Failed to load users.");
       } finally {
@@ -124,7 +124,7 @@ export function UsersTable({
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialLoaded]);
 
   const filteredUsers = useMemo(() => {
     const normalizedSearch = deferredSearchTerm.trim().toLowerCase();

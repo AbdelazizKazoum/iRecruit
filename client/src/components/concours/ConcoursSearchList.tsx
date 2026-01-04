@@ -155,7 +155,7 @@ export function ConcoursSearchList({
           disabled={page <= 1}
           onClick={() => applyFilters(Math.max(page - 1, 1))}
         >
-          {dictionary.buttons?.previous || "Previous"}
+          {dictionary.stepper.previous}
         </Button>
         <span className="text-sm text-muted-foreground">
           {page} / {totalPages}
@@ -167,7 +167,7 @@ export function ConcoursSearchList({
           disabled={page >= totalPages}
           onClick={() => applyFilters(Math.min(page + 1, totalPages))}
         >
-          {dictionary.buttons?.next || "Next"}
+          {dictionary.stepper.next}
         </Button>
       </div>
     </div>

@@ -62,8 +62,14 @@ export default async function UsersPage({ params: { lang } }: UsersPageProps) {
   } else {
     try {
       users = await getCachedUsers(accessToken);
-    } catch (error: any) {
-      const status = error?.status;
+    } catch (error: unknown) {
+      const status =
+        typeof error === "object" &&
+        error !== null &&
+        "status" in error &&
+        typeof (error as { status?: number }).status === "number"
+          ? (error as { status?: number }).status
+          : undefined;
       usersError =
         status === 401
           ? "Unauthorized. Please sign in again."

@@ -57,7 +57,7 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
       });
 
       const response = await clientApi.post("application", formData);
-      set({ applicationData: response.data });
+      set({ applicationData: response.data, loading: false });
       toast.success("submitted successfully!");
       return "success";
     } catch (error) {

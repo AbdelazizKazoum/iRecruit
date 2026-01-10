@@ -9,11 +9,13 @@ serverApi.interceptors.request.use(
 
     const token = session?.user.accessToken || "";
 
-    config.headers = {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
-    } as AxiosRequestHeaders;
+    const headers = (config.headers || {}) as AxiosRequestHeaders;
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    headers.Accept = "application/json";
+
+    config.headers = headers;
 
     return config;
   },

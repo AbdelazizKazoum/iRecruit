@@ -34,7 +34,7 @@ const LanquesForm = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    submitNiveauxLangues(formData);
+    return await submitNiveauxLangues(formData);
   };
 
   const handleNext = (value?: string) => {

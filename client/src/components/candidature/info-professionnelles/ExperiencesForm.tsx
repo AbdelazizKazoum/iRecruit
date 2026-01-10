@@ -20,7 +20,7 @@ const ExperiencesForm = ({ locale }: { locale: Locale }) => {
             .filter(Boolean)
         : data.highlights;
 
-    await submitExperience({ ...data, highlights });
+    return await submitExperience({ ...data, highlights });
   };
 
   const handleNext = (value?: string) => {

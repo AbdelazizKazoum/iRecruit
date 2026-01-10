@@ -12,12 +12,12 @@ export interface CandidatureStoreState {
   setPersonalInformation: (
     data: CandidatureType["personalInformation"]
   ) => void;
-  submitDiplome: (diplome: FormData) => Promise<void>;
-  submitExperience: (experience: unknown) => Promise<void>;
-  submitNiveauxLangues: (niveauxLangues: FormData) => Promise<void>;
-  submitPublications: (publications: FormData) => Promise<void>;
-  submitCommunication: (communication: FormData) => Promise<void>;
-  submitPersonalInformation: (data: FormData) => Promise<void>;
+  submitDiplome: (diplome: FormData) => Promise<boolean>;
+  submitExperience: (experience: unknown) => Promise<boolean>;
+  submitNiveauxLangues: (niveauxLangues: FormData) => Promise<boolean>;
+  submitPublications: (publications: FormData) => Promise<boolean>;
+  submitCommunication: (communication: FormData) => Promise<boolean>;
+  submitPersonalInformation: (data: FormData) => Promise<boolean>;
   fetchCandidatureData: () => Promise<CandidatureType | null>;
   validateCandidature: () => Promise<string>; // New validation method
   setNextGroup: (value: string) => void; // New validation method
@@ -71,6 +71,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         loading: false,
       });
       toast.success("Personal information submitted successfully!");
+      return true;
     } catch (error) {
       console.error("Error submitting personal information:", error);
       set({
@@ -78,6 +79,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit personal information. Please try again.",
       });
       toast.error("Failed to submit personal information. Please try again.");
+      return false;
     }
   },
 
@@ -111,6 +113,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         loading: false,
       }));
       toast.success("Diploma submitted successfully!");
+      return true;
     } catch (error) {
       console.error("Error submitting diploma:", error);
       set({
@@ -118,6 +121,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit diploma. Please try again.",
       });
       toast.error("Failed to submit diploma. Please try again.");
+      return false;
     }
   },
 
@@ -142,13 +146,15 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         loading: false,
       }));
       toast.success("Language levels submitted successfully!");
+      return true;
     } catch (error) {
-      console.error("Error submitting language levels:", error);
+      console.error("Error submitting publications:", error);
       set({
         loading: false,
-        error: "Failed to submit language levels. Please try again.",
+        error: "Failed to submit publications. Please try again.",
       });
-      toast.error("Failed to submit language levels. Please try again.");
+      toast.error("Failed to submit publications. Please try again.");
+      return false;
     }
   },
 
@@ -157,9 +163,11 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
     set({ loading: true, error: "" });
     try {
       const payload =
-        typeof experience === "object" ? experience : { experience };
+        typeof experience === "string"
+          ? experience
+          : JSON.stringify(experience ?? {});
       const response = await clientApi.post("candidature/experiences", {
-        experience: JSON.stringify(payload),
+        experience: payload,
       });
       set((state) => ({
         candidatureData: state.candidatureData
@@ -174,6 +182,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         loading: false,
       }));
       toast.success("Experience submitted successfully!");
+      return true;
     } catch (error) {
       console.error("Error submitting experience:", error);
       set({
@@ -181,6 +190,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit experience. Please try again.",
       });
       toast.error("Failed to submit experience. Please try again.");
+      return false;
     }
   },
 
@@ -204,14 +214,16 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
           : null,
         loading: false,
       }));
-      toast.success("Language levels submitted successfully!");
+      toast.success("Publications submitted successfully!");
+      return true;
     } catch (error) {
-      console.error("Error submitting language levels:", error);
+      console.error("Error submitting communication:", error);
       set({
         loading: false,
-        error: "Failed to submit language levels. Please try again.",
+        error: "Failed to submit communication. Please try again.",
       });
-      toast.error("Failed to submit language levels. Please try again.");
+      toast.error("Failed to submit communication. Please try again.");
+      return false;
     }
   },
 
@@ -235,7 +247,8 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
           : null,
         loading: false,
       }));
-      toast.success("Language levels submitted successfully!");
+      toast.success("Communication submitted successfully!");
+      return true;
     } catch (error) {
       console.error("Error submitting language levels:", error);
       set({
@@ -243,6 +256,7 @@ export const useCandidatureStore = create<CandidatureStoreState>((set) => ({
         error: "Failed to submit language levels. Please try again.",
       });
       toast.error("Failed to submit language levels. Please try again.");
+      return false;
     }
   },
 

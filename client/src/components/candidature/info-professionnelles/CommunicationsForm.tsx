@@ -28,7 +28,7 @@ const CommunicationsForm = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    submitCommunication(formData);
+    return await submitCommunication(formData);
   };
 
   const handleNext = (value?: string) => {

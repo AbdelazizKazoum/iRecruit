@@ -29,7 +29,7 @@ const DiplomesForm = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    submitDiplome(formData);
+    return await submitDiplome(formData);
   };
 
   const handleNext = (value?: string) => {

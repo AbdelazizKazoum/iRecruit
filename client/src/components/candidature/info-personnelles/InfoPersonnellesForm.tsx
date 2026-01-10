@@ -39,8 +39,10 @@ const InfoPersonnelles = ({
       });
     }
 
-    await submitPersonalInformation(formData);
-    router.push(`/${locale}/candidature?section=info-professionnelles`);
+    const ok = await submitPersonalInformation(formData);
+    if (ok) {
+      router.push(`/${locale}/candidature?section=info-professionnelles`);
+    }
   }
 
   return (

@@ -28,7 +28,7 @@ const PublicationsForm = ({ locale }: { locale: Locale }) => {
       });
     }
 
-    submitPublications(formData);
+    return await submitPublications(formData);
   };
 
   const handleNext = (value?: string) => {

@@ -9,8 +9,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Enable CORS with custom configuration
+  const allowedOrigins = process.env.FRONTEND
+    ? process.env.FRONTEND.split(",").map((origin) => origin.trim())
+    : [];
   app.enableCors({
-    origin: [process.env.FRONTEND, 'http://example.com'], // Allow specific origins
+    origin: allowedOrigins.length ? allowedOrigins : true, // Allow specific origins
     methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
     allowedHeaders: 'Content-Type, Authorization', // Allowed headers
     credentials: true, // Allow cookies or authorization headers

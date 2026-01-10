@@ -34,7 +34,7 @@ const DynamicGridForm = ({
   category: string;
   schema: any;
   locale: Locale;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => Promise<boolean>;
   handleNext?: (value?: string) => void;
   data: any;
   checkKey: string; // Key to check for duplicates
@@ -84,7 +84,7 @@ const DynamicGridForm = ({
     });
   }, [config.fields, category, form.control, locale]);
 
-  const addToList = (data: any) => {
+  const addToList = async (data: any) => {
     // Check if the key specified in `checkKey` already exists in `submittedData`
     const exists = submittedData.some(
       (item) => item[checkKey] === data[checkKey]
@@ -95,8 +95,17 @@ const DynamicGridForm = ({
       return; // Do not add duplicate data
     }
 
-    // Submit data to the api using the method provided to this component
-    onSubmit(data);
+    let ok = false;
+    try {
+      // Submit data to the api using the method provided to this component
+      ok = await onSubmit(data);
+    } catch (error) {
+      ok = false;
+    }
+
+    if (!ok) {
+      return;
+    }
 
     // Set submitted data to the global state
     setSubmittedData((prev) => [...prev, data]);

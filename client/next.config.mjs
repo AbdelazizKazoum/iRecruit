@@ -6,6 +6,7 @@ const nextConfig = {
       "images.unsplash.com",
       "picsum.photos",
       "images.pexels.com",
+      "example.com",
     ], // Add the domain you want to allow
   },
 };

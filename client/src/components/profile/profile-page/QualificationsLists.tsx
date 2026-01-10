@@ -3,6 +3,7 @@ import PageHeader from "@/components/PageHeader";
 import {
   communicationsFormConfig,
   diplomesFormConfig,
+  experiencesFormConfig,
   languesFormConfig,
   publicationsFormConfig,
 } from "@/configs/formConfigs";
@@ -31,6 +32,12 @@ const QualificationsLists = ({
         }
       />
       <Separator />
+      <List
+        submittedData={candidatureData?.professionalInformation?.experiences}
+        locale={locale}
+        fields={experiencesFormConfig.fields}
+        title={experiencesFormConfig.title[locale]}
+      />
       <List
         submittedData={
           candidatureData?.professionalInformation?.parcoursEtDiplomes

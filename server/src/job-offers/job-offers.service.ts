@@ -1,20 +1,12 @@
-/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
 import { UpdateJobOfferDto } from './dto/update-job-offer.dto';
+import { FindJobOffersQueryDto } from './dto/find-job-offers-query.dto';
 import { JobOffer, JobOfferDocument } from 'src/schemas/JobOffer.schema';
 import { UserDocument } from 'src/schemas/user.schema';
 import { ApplicationsService } from 'src/applications/applications.service';
-
-type JobOfferFilters = {
-  search?: string;
-  region?: string;
-  published?: string;
-  page?: string;
-  limit?: string;
-};
 
 @Injectable()
 export class JobOffersService {
@@ -28,81 +20,16 @@ export class JobOffersService {
     return createdJobOffer.save();
   }
 
-  async findAll(
-    user: UserDocument,
-    filters: JobOfferFilters = {},
-  ): Promise<{
-    data: JobOffer[];
-    total: number;
-    page: number;
-    limit: number;
-  }> {
+  async findAll(user: UserDocument): Promise<JobOffer[]> {
     // Retrieve all job offers
     const offers = await this.jobOfferModel.find().exec();
 
-    const search = filters.search ? filters.search.toLowerCase().trim() : '';
-    const region = filters.region ? filters.region.trim() : '';
-    const published = filters.published ? filters.published.trim() : '';
-    const page = Math.max(parseInt(filters.page || '1', 10) || 1, 1);
-    const limit = Math.max(parseInt(filters.limit || '12', 10) || 12, 1);
-
-    // Apply filters in memory (keeps logic simple while schema stores strings)
-    let filtered = offers.filter((offer: JobOfferDocument) => {
-      const matchesSearch =
-        !search ||
-        [
-          offer.title?.fr,
-          offer.title?.en,
-          offer.title?.ar,
-          offer.description?.fr,
-          offer.description?.en,
-          offer.description?.ar,
-          offer.tag?.fr,
-          offer.tag?.en,
-          offer.tag?.ar,
-          (offer as any).specialite?.fr,
-          (offer as any).specialite?.en,
-          (offer as any).specialite?.ar,
-          offer.department?.fr,
-          offer.department?.en,
-          offer.department?.ar,
-        ]
-          .filter(Boolean)
-          .some((field: string) => field.toLowerCase().includes(search));
-
-      const matchesRegion =
-        !region ||
-        [
-          offer.city?.fr,
-          offer.city?.en,
-          offer.city?.ar,
-          offer.department?.fr,
-          offer.department?.en,
-          offer.department?.ar,
-        ]
-          .filter(Boolean)
-          .some((field: string) => field === region);
-
-      const matchesDate = (() => {
-        if (!published) return true;
-        const days = parseInt(published, 10);
-        if (isNaN(days)) return true;
-        const cutoff = new Date();
-        cutoff.setDate(cutoff.getDate() - days);
-        const publishedDate = offer.datePublication
-          ? new Date(offer.datePublication)
-          : null;
-        return publishedDate ? publishedDate >= cutoff : false;
-      })();
-
-      return matchesSearch && matchesRegion && matchesDate;
-    });
-
-    // Remove offers already applied for by the user (if authenticated)
     if (user) {
+      // Retrieve user applications
       const userApplications =
         await this.applicationsService.findUserApplication(user);
 
+      // Extract all offer IDs from user applications as ObjectIds
       const userOfferIds = userApplications.map(
         (application: any) =>
           application.offer instanceof Types.ObjectId
@@ -110,28 +37,96 @@ export class JobOffersService {
             : new Types.ObjectId(application.offer as string).toString(), // Handle edge case if offer is not an ObjectId
       );
 
-      filtered = filtered.filter((offer: JobOfferDocument) => {
-        const offerId = offer._id.toString();
+      // Filter out offers already applied for
+      return offers.filter((offer: JobOfferDocument) => {
+        const offerId = offer._id.toString(); // Ensure this is also a string
+
+        // Return only offers that are not in userOfferIds
         return !userOfferIds.includes(offerId);
       });
+    } else {
+      // Return all offers if no user is provided
+      return offers;
     }
-
-    // Sort by publication date (newest first)
-    filtered.sort((a, b) => {
-      const dateA = a.datePublication ? new Date(a.datePublication).getTime() : 0;
-      const dateB = b.datePublication ? new Date(b.datePublication).getTime() : 0;
-      return dateB - dateA;
-    });
-
-    const total = filtered.length;
-    const start = (page - 1) * limit;
-    const data = filtered.slice(start, start + limit);
-
-    return { data, total, page, limit };
   }
 
-  async findOne(id: string): Promise<JobOffer> {
-    return this.jobOfferModel.findById(id).exec();
+  async findAllWithFilters(query: FindJobOffersQueryDto) {
+    const { page = 1, limit = 10, title, date, city, department } = query;
+    const skip = (page - 1) * limit;
+
+    const filter: any = {};
+
+    if (title) {
+      filter.$or = [
+        { 'title.fr': { $regex: title, $options: 'i' } },
+        { 'title.en': { $regex: title, $options: 'i' } },
+        { 'title.ar': { $regex: title, $options: 'i' } },
+      ];
+    }
+
+    if (date) {
+      filter.datePublication = date;
+    }
+
+    if (city) {
+      if (filter.$or) {
+        filter.$and = [
+          { $or: filter.$or },
+          {
+            $or: [
+              { 'city.fr': { $regex: city, $options: 'i' } },
+              { 'city.en': { $regex: city, $options: 'i' } },
+              { 'city.ar': { $regex: city, $options: 'i' } },
+            ],
+          },
+        ];
+        delete filter.$or;
+      } else {
+        filter.$or = [
+          { 'city.fr': { $regex: city, $options: 'i' } },
+          { 'city.en': { $regex: city, $options: 'i' } },
+          { 'city.ar': { $regex: city, $options: 'i' } },
+        ];
+      }
+    }
+
+    if (department) {
+      if (filter.$or) {
+        filter.$and = [
+          { $or: filter.$or },
+          {
+            $or: [
+              { 'department.fr': { $regex: department, $options: 'i' } },
+              { 'department.en': { $regex: department, $options: 'i' } },
+              { 'department.ar': { $regex: department, $options: 'i' } },
+            ],
+          },
+        ];
+        delete filter.$or;
+      } else {
+        filter.$or = [
+          { 'department.fr': { $regex: department, $options: 'i' } },
+          { 'department.en': { $regex: department, $options: 'i' } },
+          { 'department.ar': { $regex: department, $options: 'i' } },
+        ];
+      }
+    }
+
+    const total = await this.jobOfferModel.countDocuments(filter).exec();
+    const data = await this.jobOfferModel
+      .find(filter)
+      .skip(skip)
+      .limit(limit)
+      .exec();
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages,
+    };
   }
 
   async update(

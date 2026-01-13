@@ -21,6 +21,7 @@
   "homepage": "https://github.com/AbdelazizKazoum/iRecruit#readme",
   "dependencies": {
     "@getbrevo/brevo": "^3.0.1",
+    "class-transformer": "^0.5.1",
     "react-toastify": "^10.0.6"
   }
 }

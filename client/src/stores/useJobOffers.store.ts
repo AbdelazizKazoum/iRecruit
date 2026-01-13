@@ -1,33 +1,55 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clientApi from "@/libs/clientApi";
+import { jobOffersService } from "@/services/jobOffersService";
 import { OfferType } from "@/types/application.types";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
 export interface JobOfferStoreState {
-  jobOffers: OfferType[] | null;
+  jobOffers: OfferType[];
   selectedOffer: OfferType | null;
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  } | null;
   loading: boolean;
   error: string;
 
-  createOffer: (data: OfferType) => void; // Fixed typo here
-  fetchOffers: () => Promise<void>; // Update to not return data but set state directly
+  createOffer: (data: OfferType) => void;
+  fetchOffers: () => Promise<void>;
+  fetchJobOffers: (params?: {
+    page?: number;
+    limit?: number;
+    title?: string;
+    date?: string;
+    city?: string;
+    department?: string;
+  }) => Promise<{
+    data: OfferType[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  } | null>;
 }
 
 export const useJobOffersStore = create<JobOfferStoreState>((set) => ({
-  jobOffers: null,
+  jobOffers: [],
   selectedOffer: null,
+  pagination: null,
   loading: false,
   error: "",
 
   // Set application data to the store
   createOffer: (data) => {
     set((state) => ({
-      jobOffers: state.jobOffers ? [...state.jobOffers, data] : [data],
+      jobOffers: [...state.jobOffers, data],
     }));
   },
 
-  // Fetch job offers from the API
+  // Fetch job offers from the API (original method for public offers)
   fetchOffers: async () => {
     set({ loading: true, error: "" });
     try {
@@ -41,6 +63,29 @@ export const useJobOffersStore = create<JobOfferStoreState>((set) => ({
         error: "Failed to fetch job offers. Please try again.",
       });
       toast.error("Failed to fetch job offers. Please try again.");
+    }
+  },
+
+  // Fetch job offers with pagination and filters
+  fetchJobOffers: async (params) => {
+    try {
+      set({ loading: true });
+      const result = await jobOffersService.getAllJobOffers(params);
+      set({
+        jobOffers: result.data,
+        pagination: {
+          total: result.total,
+          page: result.page,
+          limit: result.limit,
+          totalPages: result.totalPages,
+        },
+      });
+      return result;
+    } catch (error) {
+      toast(error instanceof Error ? error.message : "An error occurred");
+      return null;
+    } finally {
+      set({ loading: false });
     }
   },
 }));

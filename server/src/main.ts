@@ -9,8 +9,9 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Enable CORS with custom configuration
-  const allowedOrigins = process.env.FRONTEND
-    ? process.env.FRONTEND.split(",").map((origin) => origin.trim())
+  const origins = 'http://localhost:3001';
+  const allowedOrigins = origins
+    ? origins.split(',').map((origin) => origin.trim())
     : [];
   app.enableCors({
     origin: allowedOrigins.length ? allowedOrigins : true, // Allow specific origins

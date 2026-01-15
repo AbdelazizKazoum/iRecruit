@@ -13,6 +13,7 @@ import {
   LogOut,
   Shield,
   HelpCircle,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -57,6 +58,11 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
           title: adminSidebar.applications,
           href: `/${lang}/admin/applications`,
           icon: FileText,
+        },
+        {
+          title: adminSidebar.sessions,
+          href: `/${lang}/admin/sessions`,
+          icon: Calendar,
         },
       ],
     },

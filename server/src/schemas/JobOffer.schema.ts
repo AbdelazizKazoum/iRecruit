@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { User } from './user.schema';
 
 export type JobOfferDocument = HydratedDocument<JobOffer>;
 
@@ -49,6 +50,9 @@ export class JobOffer {
 
   @Prop()
   candidatesNumber: number;
+
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  owner: User; // recruiter
 }
 
 export const JobOfferSchema = SchemaFactory.createForClass(JobOffer);

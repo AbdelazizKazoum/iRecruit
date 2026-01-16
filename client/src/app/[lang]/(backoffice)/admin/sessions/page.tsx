@@ -2,7 +2,7 @@ import React from "react";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Calendar } from "lucide-react";
-import { SessionsTable } from "@/components/Layout/admin/sessions/SessionsTable";
+import { SessionsTable } from "@/app/[lang]/(backoffice)/admin/sessions/components/SessionsTable";
 
 interface SessionsPageProps {
   params: {

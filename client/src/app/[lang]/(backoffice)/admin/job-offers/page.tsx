@@ -2,7 +2,7 @@ import React from "react";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Briefcase } from "lucide-react";
-import { JobOffersTable } from "@/components/Layout/admin/offers/JobOffersTable";
+import { JobOffersTable } from "@/app/[lang]/(backoffice)/admin/job-offers/components/JobOffersTable";
 
 interface OffersPageProps {
   params: {

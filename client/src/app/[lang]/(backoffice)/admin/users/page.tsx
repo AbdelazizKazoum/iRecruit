@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Users } from "lucide-react";
-import { UsersTable } from "@/components/Layout/admin/users/UsersTable";
+import { UsersTable } from "@/app/[lang]/(backoffice)/admin/users/components/UsersTable";
 import { auth } from "@/libs/auth";
 import { UserType } from "@/types/user.types";
 

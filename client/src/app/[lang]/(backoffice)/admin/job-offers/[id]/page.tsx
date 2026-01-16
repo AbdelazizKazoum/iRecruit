@@ -38,28 +38,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@radix-ui/react-switch";
-
-// --- MOCK TYPES BASED ON YOUR SCHEMAS ---
-
-interface Session {
-  _id: string;
-  yearLabel: string; // "2025/2026"
-  isActive: boolean;
-  startDate: string;
-  endDate: string;
-}
-
-interface Tranche {
-  _id: string;
-  name: string; // "Tranche 1"
-  session: Session; // The parent session
-  jobOfferId: string;
-  startDate: string;
-  endDate: string;
-  isOpen: boolean;
-  maxCandidates?: number;
-  currentCandidates: number; // Added for UI visualization
-}
+import { CandidateListModal } from "../components/CandidateListModal";
+import { Tranche, Session } from "../components/types";
 
 // --- MOCK DATA ---
 const MOCK_SESSIONS: Session[] = [
@@ -124,6 +104,7 @@ export default function JobOfferRecruitmentManager({
   jobOfferTitle = "Senior Fullstack Developer",
 }: JobOfferRecruitmentManagerProps) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [selectedTrancheForCandidates, setSelectedTrancheForCandidates] = useState<Tranche | null>(null);
 
   // Group Tranches by Session ID for the UI
   const groupedTranches = MOCK_SESSIONS.reduce((acc, session) => {
@@ -188,6 +169,7 @@ export default function JobOfferRecruitmentManager({
               key={session._id}
               session={session}
               tranches={groupedTranches[session._id] || []}
+              onManageCandidates={setSelectedTrancheForCandidates}
             />
           ))}
         </div>
@@ -223,6 +205,14 @@ export default function JobOfferRecruitmentManager({
           </Card>
         </div>
       </div>
+
+      {selectedTrancheForCandidates && (
+        <CandidateListModal
+          tranche={selectedTrancheForCandidates}
+          isOpen={!!selectedTrancheForCandidates}
+          onClose={() => setSelectedTrancheForCandidates(null)}
+        />
+      )}
     </div>
   );
 }
@@ -231,9 +221,11 @@ export default function JobOfferRecruitmentManager({
 function SessionCard({
   session,
   tranches,
+  onManageCandidates,
 }: {
   session: Session;
   tranches: Tranche[];
+  onManageCandidates: (tranche: Tranche) => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -289,7 +281,11 @@ function SessionCard({
               </div>
             ) : (
               tranches.map((tranche) => (
-                <TrancheItem key={tranche._id} tranche={tranche} />
+                <TrancheItem
+                  key={tranche._id}
+                  tranche={tranche}
+                  onManageCandidates={onManageCandidates}
+                />
               ))
             )}
           </div>
@@ -300,7 +296,13 @@ function SessionCard({
 }
 
 // --- SUB-COMPONENT: TRANCHE ITEM ---
-function TrancheItem({ tranche }: { tranche: Tranche }) {
+function TrancheItem({
+  tranche,
+  onManageCandidates,
+}: {
+  tranche: Tranche;
+  onManageCandidates: (tranche: Tranche) => void;
+}) {
   const percentFull = tranche.maxCandidates
     ? Math.round((tranche.currentCandidates / tranche.maxCandidates) * 100)
     : 0;
@@ -342,40 +344,55 @@ function TrancheItem({ tranche }: { tranche: Tranche }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6 w-full sm:w-auto border-t sm:border-0 pt-4 sm:pt-0 mt-2 sm:mt-0">
         {/* Candidates Stats */}
-        <div className="flex flex-col items-end min-w-[100px]">
-          <div className="flex items-center gap-1 text-sm font-medium">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            <span>
-              {tranche.currentCandidates}{" "}
-              <span className="text-muted-foreground font-normal">
-                / {tranche.maxCandidates || "∞"}
+        <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center min-w-[100px]">
+          <span className="text-sm font-medium text-muted-foreground sm:hidden">
+            Occupancy
+          </span>
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-1 text-sm font-medium">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              <span>
+                {tranche.currentCandidates}{" "}
+                <span className="text-muted-foreground font-normal">
+                  / {tranche.maxCandidates || "∞"}
+                </span>
               </span>
-            </span>
-          </div>
-          {tranche.maxCandidates && (
-            <div className="w-full h-1.5 bg-secondary rounded-full mt-1 overflow-hidden">
-              <div
-                className="h-full bg-primary rounded-full"
-                style={{ width: `${percentFull}%` }}
-              />
             </div>
-          )}
+            {tranche.maxCandidates && (
+              <div className="w-24 sm:w-full h-1.5 bg-secondary rounded-full mt-1 overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full"
+                  style={{ width: `${percentFull}%` }}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-1 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button variant="ghost" size="sm">
-            Edit
-          </Button>
+        <div className="flex flex-wrap sm:flex-nowrap items-center justify-end gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="h-8 flex-1 sm:flex-none whitespace-nowrap"
+            onClick={() => onManageCandidates(tranche)}
           >
-            Close
+            Manage Candidates
           </Button>
+          <div className="flex items-center gap-1 flex-1 sm:flex-none justify-end">
+            <Button variant="ghost" size="sm">
+              Edit
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+            >
+              Close
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -27,6 +28,7 @@ import { useRecruitmentSession } from "@/stores/useRecruitmentSessionStore";
 import { format } from "date-fns";
 import { CreateSessionModal } from "./CreateSessionModal";
 import { EditSessionModal } from "./EditSessionModal";
+import { ShowSessionModal } from "./ShowSessionModal";
 import { RecruitmentSession } from "@/types/recruitment-session.types";
 
 interface SessionsTableProps {
@@ -42,6 +44,7 @@ export function SessionsTable({ dictionary, lang }: SessionsTableProps) {
   const [selectedSession, setSelectedSession] =
     useState<RecruitmentSession | null>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isShowOpen, setIsShowOpen] = useState(false);
 
   useEffect(() => {
     fetchSessions();
@@ -56,6 +59,11 @@ export function SessionsTable({ dictionary, lang }: SessionsTableProps) {
   const handleEdit = (session: RecruitmentSession) => {
     setSelectedSession(session);
     setIsEditOpen(true);
+  };
+
+  const handleShow = (session: RecruitmentSession) => {
+    setSelectedSession(session);
+    setIsShowOpen(true);
   };
 
   const filteredSessions = sessions.filter((session) =>
@@ -137,7 +145,11 @@ export function SessionsTable({ dictionary, lang }: SessionsTableProps) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setTimeout(() => handleShow(session), 100);
+                          }}
+                        >
                           <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </DropdownMenuItem>
@@ -173,6 +185,12 @@ export function SessionsTable({ dictionary, lang }: SessionsTableProps) {
         session={selectedSession}
         open={isEditOpen}
         onOpenChange={setIsEditOpen}
+      />
+
+      <ShowSessionModal
+        session={selectedSession}
+        open={isShowOpen}
+        onOpenChange={setIsShowOpen}
       />
     </div>
   );

@@ -32,12 +32,49 @@ export class TrancheService {
     return createdTranche.save();
   }
 
-  async findAll(): Promise<Tranche[]> {
-    return this.trancheModel
-      .find()
-      .populate('session')
-      .populate('jobOffer')
-      .exec();
+  async findAll(query: any = {}): Promise<any> {
+    const { page = 1, limit = 10, session, jobOffer, name, isOpen } = query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const filter: any = {};
+
+    if (session) {
+      if (session.match(/^[0-9a-fA-F]{24}$/)) {
+        filter.session = session;
+      }
+    }
+
+    if (jobOffer) {
+      filter.jobOffer = jobOffer;
+    }
+
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+
+    if (isOpen !== undefined) {
+      filter.isOpen = isOpen === 'true';
+    }
+
+    const [data, total] = await Promise.all([
+      this.trancheModel
+        .find(filter)
+        .populate('session')
+        .populate('jobOffer')
+        .skip(skip)
+        .limit(Number(limit))
+        .sort({ createdAt: -1 })
+        .exec(),
+      this.trancheModel.countDocuments(filter).exec(),
+    ]);
+
+    return {
+      data,
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(total / Number(limit)),
+    };
   }
 
   async findOne(id: string): Promise<Tranche> {
@@ -121,6 +158,7 @@ export class TrancheService {
     }
     return this.trancheModel
       .find({ session: sessionId })
+      .populate('session')
       .populate('jobOffer')
       .exec();
   }

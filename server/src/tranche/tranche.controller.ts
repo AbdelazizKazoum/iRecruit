@@ -23,11 +23,8 @@ export class TrancheController {
   }
 
   @Get()
-  findAll(@Query('session') sessionId?: string) {
-    if (sessionId) {
-      return this.trancheService.findBySession(sessionId);
-    }
-    return this.trancheService.findAll();
+  findAll(@Query() query: any) {
+    return this.trancheService.findAll(query);
   }
 
   @Get(':id')

@@ -11,6 +11,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { JobOffersModule } from './job-offers/job-offers.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { RecruitmentSessionModule } from './recruitment-session/recruitment-session.module';
+import { TrancheModule } from './tranche/tranche.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { RecruitmentSessionModule } from './recruitment-session/recruitment-sess
     JobOffersModule,
     ApplicationsModule,
     RecruitmentSessionModule,
+    TrancheModule,
   ],
   controllers: [AppController],
   providers: [AppService],

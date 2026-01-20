@@ -3,7 +3,10 @@ import { Module } from '@nestjs/common';
 import { RecruitmentSessionService } from './recruitment-session.service';
 import { RecruitmentSessionController } from './recruitment-session.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RecruitmentSession, RecruitmentSessionSchema } from 'src/schemas/recruitment-session.schema';
+import {
+  RecruitmentSession,
+  RecruitmentSessionSchema,
+} from 'src/schemas/recruitment-session.schema';
 
 @Module({
   imports: [

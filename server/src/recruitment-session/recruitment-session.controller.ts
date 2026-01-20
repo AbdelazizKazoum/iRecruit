@@ -14,7 +14,9 @@ import { UpdateRecruitmentSessionDto } from './dto/update-recruitment-session.dt
 
 @Controller('recruitment-session')
 export class RecruitmentSessionController {
-  constructor(private readonly recruitmentSessionService: RecruitmentSessionService) {}
+  constructor(
+    private readonly recruitmentSessionService: RecruitmentSessionService,
+  ) {}
 
   @Post()
   create(@Body() createDto: CreateRecruitmentSessionDto) {
@@ -32,7 +34,10 @@ export class RecruitmentSessionController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateDto: UpdateRecruitmentSessionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDto: UpdateRecruitmentSessionDto,
+  ) {
     return this.recruitmentSessionService.update(id, updateDto);
   }
 

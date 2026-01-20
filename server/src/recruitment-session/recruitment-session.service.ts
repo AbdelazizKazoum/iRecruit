@@ -2,7 +2,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RecruitmentSession, RecruitmentSessionDocument } from 'src/schemas/recruitment-session.schema';
+import {
+  RecruitmentSession,
+  RecruitmentSessionDocument,
+} from 'src/schemas/recruitment-session.schema';
 import { CreateRecruitmentSessionDto } from './dto/create-recruitment-session.dto';
 import { UpdateRecruitmentSessionDto } from './dto/update-recruitment-session.dto';
 
@@ -13,7 +16,9 @@ export class RecruitmentSessionService {
     private recruitmentSessionModel: Model<RecruitmentSessionDocument>,
   ) {}
 
-  async create(createDto: CreateRecruitmentSessionDto): Promise<RecruitmentSession> {
+  async create(
+    createDto: CreateRecruitmentSessionDto,
+  ): Promise<RecruitmentSession> {
     const createdSession = new this.recruitmentSessionModel(createDto);
     return createdSession.save();
   }
@@ -30,7 +35,10 @@ export class RecruitmentSessionService {
     return session;
   }
 
-  async update(id: string, updateDto: UpdateRecruitmentSessionDto): Promise<RecruitmentSession> {
+  async update(
+    id: string,
+    updateDto: UpdateRecruitmentSessionDto,
+  ): Promise<RecruitmentSession> {
     const updatedSession = await this.recruitmentSessionModel
       .findByIdAndUpdate(id, updateDto, { new: true })
       .exec();
@@ -41,7 +49,9 @@ export class RecruitmentSessionService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.recruitmentSessionModel.findByIdAndDelete(id).exec();
+    const result = await this.recruitmentSessionModel
+      .findByIdAndDelete(id)
+      .exec();
     if (!result) {
       throw new NotFoundException(`RecruitmentSession with ID ${id} not found`);
     }

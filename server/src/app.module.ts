@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 import { MailerModule } from './mailer/mailer.module';
 import { JobOffersModule } from './job-offers/job-offers.module';
 import { ApplicationsModule } from './applications/applications.module';
+import { RecruitmentSessionModule } from './recruitment-session/recruitment-session.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ApplicationsModule } from './applications/applications.module';
     MailerModule,
     JobOffersModule,
     ApplicationsModule,
+    RecruitmentSessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

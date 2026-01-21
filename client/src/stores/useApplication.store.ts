@@ -2,18 +2,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clientApi from "@/libs/clientApi";
 import { ApplicationType, OfferType } from "@/types/application.types";
+import { ActiveTranche } from "@/types/tranche.types"; // Active tranche context for applications.
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
 export interface ApplicationStoreState {
   applicationData: ApplicationType | null;
   selectedOffer: OfferType | null;
+  selectedTranche: ActiveTranche | null; // Active tranche selected by the candidate.
   applications: ApplicationType[] | null;
   loading: boolean;
   error: string;
 
   setApplication: (data: ApplicationType) => void;
   setOffer: (data: OfferType) => void;
+  setTranche: (data: ActiveTranche) => void; // Store tranche context for the apply flow.
   submitApplication: (data: ApplicationType) => Promise<string>;
   fetchApplications: () => Promise<string>;
 }
@@ -21,6 +24,7 @@ export interface ApplicationStoreState {
 export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   applicationData: null,
   selectedOffer: null,
+  selectedTranche: null, // Initialize tranche state as empty.
   applications: null,
   loading: false,
   error: "",
@@ -36,6 +40,13 @@ export const useApplicationStore = create<ApplicationStoreState>((set) => ({
   setOffer: (data) => {
     set({
       selectedOffer: data,
+    });
+  },
+
+  // set tranche context to the store
+  setTranche: (data) => {
+    set({
+      selectedTranche: data,
     });
   },
 

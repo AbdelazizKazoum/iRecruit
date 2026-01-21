@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { getDictionary } from "@/utils/getDictionary";
-import { OfferType } from "@/types/application.types";
+import { ActiveTranche } from "@/types/tranche.types"; // Active tranche payload for public cards.
 import { Locale } from "@/configs/i18n";
 import Link from "next/link";
 import ApplyButton from "./ApplyButton";
@@ -19,15 +19,24 @@ import ApplyButton from "./ApplyButton";
 export function ConcourItem({
   className,
   dictionary,
-  offer,
+  tranche,
   locale,
 }: {
   className: string;
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
-  offer: OfferType;
+  tranche: ActiveTranche; // Tranche includes job offer + session metadata.
   locale: Locale;
 }) {
-  const detailsHref = offer._id ? `/${locale}/concours/${offer._id}` : "";
+  const offer = tranche.jobOffer; // Extract job offer details for display.
+  const sessionLabel = tranche.session?.yearLabel; // Recruitment session year label.
+  const trancheLabel = tranche.name; // Tranche name to show on the card.
+  const sessionPrefix = dictionary.concours?.sessionLabel || "Session"; // Localized session label.
+  const tranchePrefix = dictionary.concours?.trancheLabel || "Tranche"; // Localized tranche label.
+  const deadlineDate = new Date(tranche.endDate); // Use tranche end date as the deadline.
+  const deadlineLabel = Number.isNaN(deadlineDate.getTime())
+    ? tranche.endDate
+    : deadlineDate.toLocaleDateString(locale); // Fallback to raw value if parsing fails.
+  const detailsHref = tranche._id ? `/${locale}/concours/${tranche._id}` : ""; // Route by tranche id.
 
   return (
     <Card
@@ -58,12 +67,27 @@ export function ConcourItem({
           {offer.description[locale]}
         </CardDescription>
 
-        <div className="mt-auto pt-2 space-y-3">
-          <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
-            {offer.tag[locale]}
-          </div>
+          <div className="mt-auto pt-2 space-y-3">
+            {/* Session and tranche badges for active context */}
+            {(sessionLabel || trancheLabel) && (
+              <div className="flex flex-wrap gap-2 text-xs">
+                {sessionLabel && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                    {sessionPrefix} {sessionLabel}
+                  </span>
+                )}
+                {trancheLabel && (
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700">
+                    {tranchePrefix}: {trancheLabel}
+                  </span>
+                )}
+              </div>
+            )}
+            <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400">
+              {offer.tag[locale]}
+            </div>
 
-          <div className="flex justify-between items-center text-xs sm:text-sm text-muted-foreground border-t pt-3">
+            <div className="flex justify-between items-center text-xs sm:text-sm text-muted-foreground border-t pt-3">
             <div className="flex flex-col gap-0.5">
               <span className="font-medium text-foreground">
                 {dictionary["concours"].publishedOn}
@@ -75,7 +99,7 @@ export function ConcourItem({
                 {dictionary["concours"].deadline}
               </span>
               <span className="text-orange-600 dark:text-orange-400 font-medium">
-                {offer.depotAvant}
+                {deadlineLabel}
               </span>
             </div>
           </div>
@@ -105,7 +129,7 @@ export function ConcourItem({
           </Button>
         )}
         <ApplyButton
-          offer={offer}
+          tranche={tranche}
           locale={locale}
           label={dictionary["concours"].apply}
           className="w-full sm:flex-1 h-9 text-xs sm:text-sm"

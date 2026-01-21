@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, CalendarDays, MapPin, Users, Tag } from "lucide-react";
 import React from "react";
 
-import { getJobOfferById } from "@/libs/actions/offers";
+import { getTrancheById } from "@/libs/actions/tranches"; // Fetch tranche context for details.
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Badge } from "@/components/ui/badge";
@@ -19,11 +19,18 @@ type OfferDetailsPageProps = {
 const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
   const { lang, id } = params;
   const dictionary = await getDictionary(lang);
-  const offer = await getJobOfferById(id);
+  const tranche = await getTrancheById(id); // Load the tranche by id for active context.
 
-  if (!offer) {
+  if (!tranche) {
     return notFound();
   }
+  const offer = tranche.jobOffer; // Use the embedded job offer for details.
+  const sessionPrefix = dictionary.concours?.sessionLabel || "Session"; // Localized session label.
+  const tranchePrefix = dictionary.concours?.trancheLabel || "Tranche"; // Localized tranche label.
+  const deadlineDate = new Date(tranche.endDate); // Override deadline using tranche endDate.
+  const deadlineLabel = Number.isNaN(deadlineDate.getTime())
+    ? tranche.endDate
+    : deadlineDate.toLocaleDateString(lang); // Fallback if parsing fails.
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
@@ -55,13 +62,22 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
                   <Tag className="mr-2 h-3.5 w-3.5" />
                   {offer.tag[lang]}
                 </Badge>
+                {/* Session + tranche context badges */}
+                <Badge variant="outline">
+                  <CalendarDays className="mr-2 h-3.5 w-3.5" />
+                  {sessionPrefix}: {tranche.session.yearLabel}
+                </Badge>
+                <Badge variant="outline">
+                  <Tag className="mr-2 h-3.5 w-3.5" />
+                  {tranchePrefix}: {tranche.name}
+                </Badge>
                 <Badge variant="outline">
                   <CalendarDays className="mr-2 h-3.5 w-3.5" />
                   {dictionary.concours.publishedOn}: {offer.datePublication}
                 </Badge>
                 <Badge variant="outline" className="text-orange-600">
                   <CalendarDays className="mr-2 h-3.5 w-3.5" />
-                  {dictionary.concours.deadline}: {offer.depotAvant}
+                  {dictionary.concours.deadline}: {deadlineLabel}
                 </Badge>
               </div>
               <CardTitle className="text-2xl lg:text-3xl">
@@ -123,7 +139,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
               <Separator />
               <div className="flex justify-end">
                 <ApplyButton
-                  offer={offer}
+                  tranche={tranche}
                   locale={lang}
                   label={
                     dictionary.concoursDetails?.applyNow ||
@@ -160,7 +176,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
               <InfoLine
                 icon={<CalendarDays className="h-4 w-4 text-orange-600" />}
                 label={dictionary.concours.deadline}
-                value={offer.depotAvant}
+                value={deadlineLabel}
               />
               {offer.organisme && (
                 <InfoLine
@@ -172,7 +188,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
 
               <Separator />
               <ApplyButton
-                offer={offer}
+                tranche={tranche}
                 locale={lang}
                 label={
                   dictionary.concoursDetails?.applyNow ||

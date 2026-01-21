@@ -99,7 +99,7 @@ const DynamicGridForm = ({
     try {
       // Submit data to the api using the method provided to this component
       ok = await onSubmit(data);
-    } catch (error) {
+    } catch {
       ok = false;
     }
 

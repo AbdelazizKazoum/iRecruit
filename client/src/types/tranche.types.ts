@@ -26,7 +26,7 @@ export interface CreateTrancheData {
   maxCandidates?: number;
 }
 
-export interface UpdateTrancheData extends Partial<CreateTrancheData> {}
+export type UpdateTrancheData = Partial<CreateTrancheData>;
 
 export interface JobOfferSession extends RecruitmentSession {
   tranches: Tranche[];

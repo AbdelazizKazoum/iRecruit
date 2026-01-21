@@ -86,7 +86,7 @@ export default function JobOfferRecruitmentManager({
       }
     };
     initData();
-  }, [jobOfferId, fetchJobOfferSessions]);
+  }, [jobOfferId, fetchJobOfferSessions, toast]);
 
   // Calculate total active candidates across all sessions
   const totalActiveCandidates = sessions.reduce((acc, session) => {
@@ -439,7 +439,7 @@ function CreateTrancheModal({
       }
     };
     fetchSessions();
-  }, []);
+  }, [toast]);
 
   const handleSubmit = async () => {
     if (

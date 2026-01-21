@@ -15,7 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CandidateDetailView } from "./CandidateDetailView";
-import { Tranche, CandidateProfile, MOCK_CANDIDATES } from "./types";
+import { CandidateProfile, MOCK_CANDIDATES } from "./types";
+import { Tranche } from "@/types/tranche.types";
 
 interface CandidateListModalProps {
   tranche: Tranche;

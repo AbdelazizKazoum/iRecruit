@@ -13,4 +13,9 @@ export const jobOffersService = {
 
     return data;
   },
+
+  getJobOfferById: async function (id: string) {
+    const { data } = await clientApi.get(`/job-offers/${id}`);
+    return data;
+  },
 };

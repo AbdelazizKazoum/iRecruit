@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { Tranche, TrancheDocument } from 'src/schemas/tranche.schema';
 import {
   RecruitmentSession,
@@ -58,9 +58,14 @@ export class TrancheService {
               $match: {
                 $expr: {
                   $and: [
-                    { $eq: ['$session', '$$sessionId'] },
                     {
-                      $eq: ['$jobOffer', new Types.ObjectId(jobOfferId)],
+                      $eq: [
+                        { $toString: '$session' },
+                        { $toString: '$$sessionId' },
+                      ],
+                    },
+                    {
+                      $eq: [{ $toString: '$jobOffer' }, jobOfferId],
                     },
                   ],
                 },
@@ -85,6 +90,59 @@ export class TrancheService {
       limit: Number(limit),
       totalPages: Math.ceil(total / Number(limit)),
     };
+  }
+
+  async findActive() {
+    const now = new Date();
+    const pipeline: any[] = [
+      {
+        $match: {
+          isOpen: true,
+          startDate: { $lte: now },
+          endDate: { $gte: now },
+        },
+      },
+      {
+        $lookup: {
+          from: 'recruitmentsessions',
+          let: { sessionId: '$session' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: [{ $toString: '$_id' }, { $toString: '$$sessionId' }],
+                },
+              },
+            },
+          ],
+          as: 'session',
+        },
+      },
+      { $unwind: '$session' },
+      {
+        $match: { 'session.isActive': true },
+      },
+      {
+        $lookup: {
+          from: 'joboffers',
+          let: { jobOfferId: '$jobOffer' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: [{ $toString: '$_id' }, { $toString: '$$jobOfferId' }],
+                },
+              },
+            },
+          ],
+          as: 'jobOffer',
+        },
+      },
+      { $unwind: '$jobOffer' },
+      { $sort: { startDate: 1 } },
+    ];
+
+    return this.trancheModel.aggregate(pipeline).exec();
   }
 
   async create(createTrancheDto: CreateTrancheDto): Promise<Tranche> {

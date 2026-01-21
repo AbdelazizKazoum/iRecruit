@@ -22,6 +22,11 @@ export class TrancheController {
     return this.trancheService.create(createTrancheDto);
   }
 
+  @Get('active')
+  findActive() {
+    return this.trancheService.findActive();
+  }
+
   @Get('job-offer/:jobOfferId/sessions')
   getJobOfferSessions(
     @Param('jobOfferId') jobOfferId: string,

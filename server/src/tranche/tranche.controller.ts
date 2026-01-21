@@ -22,6 +22,14 @@ export class TrancheController {
     return this.trancheService.create(createTrancheDto);
   }
 
+  @Get('job-offer/:jobOfferId/sessions')
+  getJobOfferSessions(
+    @Param('jobOfferId') jobOfferId: string,
+    @Query() query: any,
+  ) {
+    return this.trancheService.getJobOfferSessions(jobOfferId, query);
+  }
+
   @Get()
   findAll(@Query() query: any) {
     return this.trancheService.findAll(query);

@@ -5,8 +5,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Tranche, TrancheDocument } from 'src/schemas/tranche.schema';
+import {
+  RecruitmentSession,
+  RecruitmentSessionDocument,
+} from 'src/schemas/recruitment-session.schema';
 import { CreateTrancheDto } from './dto/create-tranche.dto';
 import { UpdateTrancheDto } from './dto/update-tranche.dto';
 
@@ -14,7 +18,74 @@ import { UpdateTrancheDto } from './dto/update-tranche.dto';
 export class TrancheService {
   constructor(
     @InjectModel(Tranche.name) private trancheModel: Model<TrancheDocument>,
+    @InjectModel(RecruitmentSession.name)
+    private recruitmentSessionModel: Model<RecruitmentSessionDocument>,
   ) {}
+
+  async getJobOfferSessions(jobOfferId: string, query: any) {
+    if (!jobOfferId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestException('Invalid Job Offer ID format');
+    }
+
+    const { page = 1, limit = 10, session, date } = query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const matchStage: any = {};
+
+    if (session) {
+      matchStage.yearLabel = { $regex: session, $options: 'i' };
+    }
+
+    if (date) {
+      const queryDate = new Date(date);
+      if (!isNaN(queryDate.getTime())) {
+        matchStage.startDate = { $lte: queryDate };
+        matchStage.endDate = { $gte: queryDate };
+      }
+    }
+
+    const pipeline: any[] = [
+      { $match: matchStage },
+      { $sort: { startDate: -1 } },
+      { $skip: skip },
+      { $limit: Number(limit) },
+      {
+        $lookup: {
+          from: 'tranches',
+          let: { sessionId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$session', '$$sessionId'] },
+                    {
+                      $eq: ['$jobOffer', new Types.ObjectId(jobOfferId)],
+                    },
+                  ],
+                },
+              },
+            },
+            { $sort: { startDate: 1 } },
+          ],
+          as: 'tranches',
+        },
+      },
+    ];
+
+    const [data, total] = await Promise.all([
+      this.recruitmentSessionModel.aggregate(pipeline).exec(),
+      this.recruitmentSessionModel.countDocuments(matchStage).exec(),
+    ]);
+
+    return {
+      data,
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(total / Number(limit)),
+    };
+  }
 
   async create(createTrancheDto: CreateTrancheDto): Promise<Tranche> {
     const startDate = new Date(createTrancheDto.startDate);

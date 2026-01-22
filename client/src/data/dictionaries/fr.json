@@ -112,6 +112,8 @@
     "description": "Consultez les dernières annonces de concours et postulez aux offres qui correspondent à votre profil.",
     "publishedOn": "Publié le",
     "deadline": "Dépôt avant",
+    "sessionLabel": "Session",
+    "trancheLabel": "Tranche",
     "details": "Détails",
     "apply": "Postuler",
     "noOffers": "Aucune offre disponible pour le moment",

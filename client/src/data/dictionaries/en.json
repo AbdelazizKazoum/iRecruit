@@ -109,6 +109,8 @@
     "description": "Check out the latest job announcements and apply for opportunities that match your profile.",
     "publishedOn": "Published on",
     "deadline": "Apply before",
+    "sessionLabel": "Session",
+    "trancheLabel": "Tranche",
     "details": "Details",
     "apply": "Apply",
     "noOffers": "No offers available at the moment",

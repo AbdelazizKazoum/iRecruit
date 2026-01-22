@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { getDictionary } from "@/utils/getDictionary";
-import { OfferType } from "@/types/application.types";
+import { ActiveTranche } from "@/types/tranche.types"; // Active tranche type for listings.
 import { Locale } from "@/configs/i18n";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
@@ -25,7 +25,7 @@ export function ConcoursSearchList({
   limit,
   searchParams,
 }: {
-  offers: OfferType[];
+  offers: ActiveTranche[]; // Active tranches displayed in the list.
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   locale: Locale;
   total: number;
@@ -47,8 +47,8 @@ export function ConcoursSearchList({
 
   const regions = useMemo(() => {
     const set = new Set<string>();
-    offers.forEach((offer) => {
-      const city = offer?.city?.[locale];
+    offers.forEach((tranche) => {
+      const city = tranche?.jobOffer?.city?.[locale]; // Use job offer city for region filters.
       if (city) set.add(city);
     });
     return Array.from(set);
@@ -133,11 +133,12 @@ export function ConcoursSearchList({
 
       {offers.length > 0 ? (
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-6 pb-4 ">
-          {offers.map((item: OfferType) => (
+          {/* Render one card per active tranche */}
+          {offers.map((item: ActiveTranche) => (
             <ConcourItem
-              offer={item}
+              tranche={item}
               dictionary={dictionary}
-              key={item.title[locale]}
+              key={item._id}
               className=""
               locale={locale}
             />

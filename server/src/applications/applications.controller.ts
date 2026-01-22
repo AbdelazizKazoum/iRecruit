@@ -48,6 +48,13 @@ export class ApplicationsController {
     return this.applicationsService.findUserApplication(user);
   }
 
+  // Fetch candidate applications for a specific tranche (admin view).
+  @UseGuards(JwtAuthGuard)
+  @Get('tranche/:id')
+  findTrancheApplications(@Param('id') id: string) {
+    return this.applicationsService.findByTranche(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.applicationsService.findOne(id);

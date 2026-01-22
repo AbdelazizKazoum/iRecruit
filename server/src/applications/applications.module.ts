@@ -7,6 +7,7 @@ import {
   Application,
   ApplicationSchema,
 } from 'src/schemas/Applications.schema';
+import { Tranche, TrancheSchema } from 'src/schemas/tranche.schema'; // Tranche model for application tagging.
 import { SharedModule } from 'src/common/shared.module';
 import { PassportModule } from '@nestjs/passport';
 import { CandidatureModule } from 'src/candidature/candidature.module';
@@ -17,6 +18,10 @@ import { CandidatureModule } from 'src/candidature/candidature.module';
       {
         name: Application.name,
         schema: ApplicationSchema,
+      },
+      {
+        name: Tranche.name,
+        schema: TrancheSchema,
       },
     ]),
     CandidatureModule,

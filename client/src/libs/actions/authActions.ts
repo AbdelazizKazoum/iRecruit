@@ -8,13 +8,13 @@ import axios from "axios";
 // Login action
 export async function authenticate(formData: any) {
   try {
-    const res = await signIn("credentials", formData);
+    const { redirectTo, ...credentials } = formData || {};
+    await signIn("credentials", {
+      ...credentials,
+      redirectTo: redirectTo || "/",
+    });
 
-    return {
-      data: res,
-      success: true,
-      message: "",
-    };
+    return { success: true };
   } catch (error) {
     if (error instanceof AuthError) {
       console.error("Authenticated failed !", error);

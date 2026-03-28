@@ -48,7 +48,7 @@ export class FileUploadService {
       const filePath = path.join(uploadPath, file.originalname);
 
       // Save the file
-      fs.writeFileSync(filePath, file.buffer);
+      fs.writeFileSync(filePath, new Uint8Array(file.buffer));
 
       // Extract file name without extension
       const fileNameWithoutExtension = path.basename(

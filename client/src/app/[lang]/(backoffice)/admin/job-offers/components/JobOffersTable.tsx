@@ -36,12 +36,14 @@ import {
   ChevronRight,
   GitBranch,
   Briefcase,
+  Plus,
 } from "lucide-react";
 import { getDictionary } from "@/utils/getDictionary";
 import { useJobOffersStore } from "@/stores/useJobOffers.store";
 import { Locale } from "@/configs/i18n";
 import { JobOffersTableRowSkeleton } from "./JobOffersTableRowSkeleton";
 import { useRouter } from "next/navigation"; // Assuming Next.js router
+import { toast } from "react-toastify";
 
 interface JobOffersTableProps {
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
@@ -56,9 +58,12 @@ export function JobOffersTable({ dictionary, lang }: JobOffersTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 5;
 
-  const { jobOffers, pagination, fetchJobOffers, loading } =
+  const { jobOffers, pagination, fetchJobOffers, deleteOffer, loading } =
     useJobOffersStore();
   const { offersPage } = dictionary;
+  const actionLabels = offersPage?.table?.actions as
+    | Record<string, string>
+    | undefined;
 
   // Fetch job offers when filters or page change
   useEffect(() => {
@@ -112,11 +117,35 @@ export function JobOffersTable({ dictionary, lang }: JobOffersTableProps) {
   };
 
   const handleEditOffer = (offerId: string) => {
-    console.log("Edit offer:", offerId);
+    router.push(`/${lang}/admin/job-offers/${offerId}/edit`);
   };
 
-  const handleDeleteOffer = (offerId: string) => {
-    console.log("Delete offer:", offerId);
+  const handleDeleteOffer = async (offerId: string) => {
+    const confirmMessage =
+      actionLabels?.confirmDelete ||
+      "Are you sure you want to delete this job offer?";
+    if (!window.confirm(confirmMessage)) return;
+
+    try {
+      await deleteOffer(offerId);
+      const params: {
+        page?: number;
+        limit?: number;
+        title?: string;
+        department?: string;
+        city?: string;
+      } = { page: currentPage, limit };
+      if (departmentFilter !== "all") params.department = departmentFilter;
+      if (cityFilter !== "all") params.city = cityFilter;
+      if (searchTerm.trim()) params.title = searchTerm.trim();
+      fetchJobOffers(params);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to delete job offer."
+      );
+    }
   };
 
   return (
@@ -164,6 +193,13 @@ export function JobOffersTable({ dictionary, lang }: JobOffersTableProps) {
               <SelectItem value="Fez">Fez</SelectItem>
             </SelectContent>
           </Select>
+          <Button
+            className="hidden lg:flex"
+            onClick={() => router.push(`/${lang}/admin/job-offers/new`)}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            {"New Job Offer"}
+          </Button>
         </div>
       </div>
 

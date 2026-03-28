@@ -4,6 +4,7 @@ import { authenticate } from "@/libs/actions/authActions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -39,13 +40,15 @@ export const LoginForm = ({
   const {
     formState: { isSubmitting },
   } = form;
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || `/${locale}/home`;
 
   // State
   const [error, setError] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = useCallback(async (data: LoginFormData) => {
-    const response = await authenticate(data);
+    const response = await authenticate({ ...data, redirectTo });
 
     if (!response) {
       return null;
@@ -66,7 +69,7 @@ export const LoginForm = ({
     }
 
     console.log(response);
-  }, []);
+  }, [redirectTo]);
 
   return (
     <div>

@@ -143,7 +143,7 @@ export class UsersService {
       throw new InternalServerErrorException(error.message);
     }
   }
-  remove(id: string) {
+  remove(id: string): Promise<any> {
     return this.userModal.deleteOne({ _id: id });
   }
 

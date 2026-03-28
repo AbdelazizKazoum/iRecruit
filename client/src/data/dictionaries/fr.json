@@ -112,6 +112,8 @@
     "description": "Consultez les dernières annonces de concours et postulez aux offres qui correspondent à votre profil.",
     "publishedOn": "Publié le",
     "deadline": "Dépôt avant",
+    "sessionLabel": "Session",
+    "trancheLabel": "Tranche",
     "details": "Détails",
     "apply": "Postuler",
     "noOffers": "Aucune offre disponible pour le moment",
@@ -442,5 +444,27 @@
         "all": "Tous"
       }
     }
+  },
+  "sessionsPage": {
+    "title": "Gestion des Sessions",
+    "subtitle": "Gérer les sessions d'offres d'emploi, les entretiens et les processus de candidature."
+  },
+  "createJobOfferModal": {
+    "title": "Créer une nouvelle offre d'emploi",
+    "description": "Remplissez les détails ci-dessous pour publier une nouvelle offre d'emploi.",
+    "jobTitle": "Titre du poste",
+    "jobDescription": "Description du poste",
+    "tags": "Tags",
+    "city": "Ville",
+    "department": "Département",
+    "publicationDate": "Date de publication",
+    "deadline": "Date limite de candidature",
+    "candidates": "Nombre de candidats",
+    "imageUrl": "URL de l'image",
+    "cancel": "Annuler",
+    "create": "Créer l'offre",
+    "creating": "Création en cours...",
+    "successMessage": "Offre d'emploi créée avec succès!",
+    "errorMessage": "Échec de la création de l'offre d'emploi."
   }
 }

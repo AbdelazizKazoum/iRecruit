@@ -1,4 +1,10 @@
-import { IsNumber, IsObject, IsUrl, IsDateString } from 'class-validator';
+import {
+  IsNumber,
+  IsObject,
+  IsDateString,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { MultilingualField } from 'src/common/types/dtos';
 
 export class CreateJobOfferDto {
@@ -17,8 +23,9 @@ export class CreateJobOfferDto {
   @IsDateString()
   depotAvant: string;
 
-  @IsUrl()
-  imageUrl: string;
+  @IsOptional()
+  @IsString()
+  imageUrl?: string;
 
   @IsObject() /* eslint-disable prettier/prettier */ city: MultilingualField;
 
@@ -27,4 +34,20 @@ export class CreateJobOfferDto {
 
   @IsNumber()
   candidatesNumber: number;
+
+  @IsOptional()
+  @IsObject()
+  grade?: MultilingualField;
+
+  @IsOptional()
+  @IsObject()
+  organisme?: MultilingualField;
+
+  @IsOptional()
+  @IsObject()
+  specialite?: MultilingualField;
+
+  @IsOptional()
+  @IsObject()
+  etablissement?: MultilingualField;
 }

@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateJobOfferDto } from './dto/create-job-offer.dto';
@@ -7,20 +11,55 @@ import { FindJobOffersQueryDto } from './dto/find-job-offers-query.dto';
 import { JobOffer, JobOfferDocument } from 'src/schemas/JobOffer.schema';
 import { UserDocument } from 'src/schemas/user.schema';
 import { ApplicationsService } from 'src/applications/applications.service';
+import { FileUploadService } from 'src/common/services/file-upload.service';
 
 @Injectable()
 export class JobOffersService {
   constructor(
     @InjectModel(JobOffer.name) private jobOfferModel: Model<JobOfferDocument>,
     private applicationsService: ApplicationsService,
+    private fileUploadService: FileUploadService,
   ) {}
 
-  async create(createJobOfferDto: CreateJobOfferDto): Promise<JobOffer> {
-    const createdJobOffer = new this.jobOfferModel(createJobOfferDto);
+  private async resolveImageUrl(files?: any[]) {
+    if (!files || files.length === 0) {
+      return null;
+    }
+    const uploadPath = 'uploads/job-offers';
+    const uploadedFiles = await this.fileUploadService.uploadFiles(
+      files,
+      uploadPath,
+      ['png', 'jpg', 'jpeg', 'webp'],
+    );
+    const filePath = Object.values(uploadedFiles)[0];
+    if (!filePath) {
+      return null;
+    }
+    const normalized = filePath.replace(/\\/g, '/');
+    return normalized.startsWith('/') ? normalized : `/${normalized}`;
+  }
+
+  async create(
+    createJobOfferDto: CreateJobOfferDto,
+    user?: UserDocument,
+    files?: any[],
+  ): Promise<JobOffer> {
+    if (!user?._id) {
+      throw new BadRequestException('Owner is required to create a job offer');
+    }
+    const imageUrl = await this.resolveImageUrl(files);
+    if (!imageUrl && !createJobOfferDto?.imageUrl) {
+      throw new BadRequestException('Image is required to create a job offer');
+    }
+    const createdJobOffer = new this.jobOfferModel({
+      ...createJobOfferDto,
+      imageUrl: imageUrl || createJobOfferDto.imageUrl,
+      owner: user._id,
+    });
     return createdJobOffer.save();
   }
 
-  async findAll(user: UserDocument): Promise<JobOffer[]> {
+  async findAll(user?: UserDocument): Promise<JobOffer[]> {
     // Retrieve all job offers
     const offers = await this.jobOfferModel.find().exec();
 
@@ -129,12 +168,26 @@ export class JobOffersService {
     };
   }
 
+  async findOne(id: string): Promise<JobOffer> {
+    const offer = await this.jobOfferModel.findById(id).exec();
+    if (!offer) {
+      throw new NotFoundException('Job offer not found');
+    }
+    return offer;
+  }
+
   async update(
     id: string,
     updateJobOfferDto: UpdateJobOfferDto,
+    files?: any[],
   ): Promise<JobOffer> {
+    const imageUrl = await this.resolveImageUrl(files);
+    const payload = {
+      ...updateJobOfferDto,
+      ...(imageUrl ? { imageUrl } : {}),
+    };
     return this.jobOfferModel
-      .findByIdAndUpdate(id, updateJobOfferDto, { new: true })
+      .findByIdAndUpdate(id, payload, { new: true })
       .exec();
   }
 

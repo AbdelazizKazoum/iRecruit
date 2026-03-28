@@ -1,6 +1,6 @@
 import React from "react";
-import { getJobOffers } from "@/libs/actions/offers";
-import { OfferType } from "@/types/application.types";
+import { getActiveTranches } from "@/libs/actions/tranches"; // Fetch active tranches for open positions.
+import { ActiveTranche } from "@/types/tranche.types"; // Active tranche shape for cards.
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { ConcourItem } from "@/components/concours/ConcourItem";
@@ -14,8 +14,10 @@ const Offers = async ({
   dictionary: Awaited<ReturnType<typeof getDictionary>>;
   locale: Locale;
 }) => {
-  const { data: jobOffers } = await getJobOffers({ limit: 4, page: 1 });
-  const limitedOffers = jobOffers.slice(0, 4);
+  // Load active tranches instead of generic job offers.
+  const activeTranches = await getActiveTranches();
+  // Limit the home section to the first 4 active tranches.
+  const limitedTranches = activeTranches.slice(0, 4);
 
   return (
     <div className="bg-white-300 py-24">
@@ -28,13 +30,14 @@ const Offers = async ({
             {dictionary["concours"].description}
           </p>
         </div>
-        {limitedOffers.length > 0 ? (
+        {limitedTranches.length > 0 ? (
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8 pb-4">
-            {limitedOffers.map((item: OfferType) => (
+            {/* Render active tranche cards for the home section */}
+            {limitedTranches.map((item: ActiveTranche) => (
               <ConcourItem
-                offer={item}
+                tranche={item}
                 dictionary={dictionary}
-                key={item._id ?? item.title[locale]}
+                key={item._id}
                 className="transform hover:scale-105 transition-transform duration-300"
                 locale={locale}
               />
@@ -45,7 +48,7 @@ const Offers = async ({
             {dictionary["concours"].noOffers}
           </p>
         )}
-        {jobOffers.length > 4 && (
+        {activeTranches.length > 4 && (
           <div className="flex justify-center mt-12">
             <Link href={`/${locale}/concours`}>
               <ButtonPrimary addClass="" onClick={null} disabled={false}>

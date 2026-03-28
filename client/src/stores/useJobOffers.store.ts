@@ -17,7 +17,16 @@ export interface JobOfferStoreState {
   loading: boolean;
   error: string;
 
-  createOffer: (data: OfferType) => void;
+  createOffer: (
+    data: Partial<OfferType>,
+    imageFile?: File | null
+  ) => Promise<OfferType>;
+  updateOffer: (
+    id: string,
+    data: Partial<OfferType>,
+    imageFile?: File | null
+  ) => Promise<OfferType>;
+  deleteOffer: (id: string) => Promise<void>;
   fetchOffers: () => Promise<void>;
   fetchJobOffers: (params?: {
     page?: number;
@@ -43,10 +52,75 @@ export const useJobOffersStore = create<JobOfferStoreState>((set) => ({
   error: "",
 
   // Set application data to the store
-  createOffer: (data) => {
-    set((state) => ({
-      jobOffers: [...state.jobOffers, data],
-    }));
+  createOffer: async (data, imageFile) => {
+    set({ loading: true, error: "" });
+    try {
+      const createdOffer = await jobOffersService.createJobOffer(
+        data,
+        imageFile
+      );
+      set((state) => ({
+        jobOffers: [createdOffer, ...state.jobOffers],
+        loading: false,
+      }));
+      toast.success("Job offer created successfully!");
+      return createdOffer;
+    } catch (error) {
+      console.error("Error creating job offer:", error);
+      set({
+        loading: false,
+        error: "Failed to create job offer. Please try again.",
+      });
+      toast.error("Failed to create job offer. Please try again.");
+      throw error;
+    }
+  },
+
+  updateOffer: async (id, data, imageFile) => {
+    set({ loading: true, error: "" });
+    try {
+      const updatedOffer = await jobOffersService.updateJobOffer(
+        id,
+        data,
+        imageFile
+      );
+      set((state) => ({
+        jobOffers: state.jobOffers.map((offer) =>
+          offer._id === id ? updatedOffer : offer
+        ),
+        loading: false,
+      }));
+      toast.success("Job offer updated successfully!");
+      return updatedOffer;
+    } catch (error) {
+      console.error("Error updating job offer:", error);
+      set({
+        loading: false,
+        error: "Failed to update job offer. Please try again.",
+      });
+      toast.error("Failed to update job offer. Please try again.");
+      throw error;
+    }
+  },
+
+  deleteOffer: async (id) => {
+    set({ loading: true, error: "" });
+    try {
+      await jobOffersService.deleteJobOffer(id);
+      set((state) => ({
+        jobOffers: state.jobOffers.filter((offer) => offer._id !== id),
+        loading: false,
+      }));
+      toast.success("Job offer deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting job offer:", error);
+      set({
+        loading: false,
+        error: "Failed to delete job offer. Please try again.",
+      });
+      toast.error("Failed to delete job offer. Please try again.");
+      throw error;
+    }
   },
 
   // Fetch job offers from the API (original method for public offers)

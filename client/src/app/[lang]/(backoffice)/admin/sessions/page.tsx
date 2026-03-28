@@ -24,11 +24,11 @@ export default async function SessionsPage({
             <Calendar className="h-6 w-6 text-primary" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Sessions Management
+            {dictionary.sessionsPage.title}
           </h1>
         </div>
         <p className="text-muted-foreground ml-14">
-          Manage job offer sessions, interviews, and application processes.
+          {dictionary.sessionsPage.subtitle}
         </p>
       </div>
 

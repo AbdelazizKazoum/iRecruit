@@ -8,16 +8,20 @@ import {
 
 export class CreateApplicationDto {
   @IsMongoId()
-  @IsNotEmpty()
-  user: string; // MongoDB ObjectId as a string
+  @IsOptional()
+  user?: string; // User is inferred from JWT, not from the payload.
 
   @IsString()
   @IsNotEmpty()
   applicationDiploma: string;
 
   @IsMongoId()
+  @IsOptional()
+  offer?: string; // Offer is derived from the tranche on the backend.
+
+  @IsMongoId()
   @IsNotEmpty()
-  offer: string; // MongoDB ObjectId as a string
+  trancheId: string; // Tranche id required to derive session/job offer.
 
   @IsOptional()
   @IsObject()

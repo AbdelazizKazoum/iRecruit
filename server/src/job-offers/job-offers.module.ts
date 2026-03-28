@@ -5,6 +5,7 @@ import { JobOffersController } from './job-offers.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JobOffer, JobOfferSchema } from 'src/schemas/JobOffer.schema';
 import { ApplicationsModule } from 'src/applications/applications.module';
+import { SharedModule } from 'src/common/shared.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ApplicationsModule } from 'src/applications/applications.module';
       },
     ]),
     ApplicationsModule,
+    SharedModule,
   ],
   controllers: [JobOffersController],
   providers: [JobOffersService],

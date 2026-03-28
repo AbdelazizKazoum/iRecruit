@@ -8,7 +8,6 @@ import {
   LayoutDashboard,
   Users,
   Briefcase,
-  FileText,
   Settings,
   LogOut,
   Shield,
@@ -55,11 +54,6 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
           icon: Briefcase,
         },
         {
-          title: adminSidebar.applications,
-          href: `/${lang}/admin/applications`,
-          icon: FileText,
-        },
-        {
           title: adminSidebar.sessions,
           href: `/${lang}/admin/sessions`,
           icon: Calendar,
@@ -89,7 +83,7 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
       className={cn(
         "flex flex-col h-full border-white/10 bg-black-600 text-white",
         isRtl ? "border-l" : "border-r",
-        className
+        className,
       )}
     >
       {/* Logo Section */}
@@ -121,7 +115,7 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
                         "w-full justify-start gap-3 font-medium transition-all duration-200",
                         isActive
                           ? "bg-primary text-white shadow-md hover:bg-primary/90"
-                          : "text-gray-400 hover:text-white hover:bg-white/5"
+                          : "text-gray-400 hover:text-white hover:bg-white/5",
                       )}
                       asChild
                     >
@@ -129,7 +123,7 @@ export function AdminSidebar({ className, lang, dictionary }: SidebarProps) {
                         <item.icon
                           className={cn(
                             "h-4 w-4",
-                            isActive ? "text-white" : "text-gray-400"
+                            isActive ? "text-white" : "text-gray-400",
                           )}
                         />
                         {item.title}

@@ -11,10 +11,15 @@ const AttachmentForm = forwardRef<
   { locale: Locale; next: () => void }
 >(({ locale, next }, ref) => {
   // Hooks
-  const { setApplication, selectedOffer } = useApplicationStore();
+  const { setApplication, selectedOffer, selectedTranche } =
+    useApplicationStore(); // Capture selected offer + tranche for payload tagging.
 
   const onSubmit = async (data: ApplicationType) => {
-    const dataToSubmit = { ...data, offer: selectedOffer };
+    const dataToSubmit = {
+      ...data,
+      offer: selectedOffer,
+      trancheId: selectedTranche?._id, // Attach tranche id so backend can derive session/jobOffer.
+    };
 
     setApplication(dataToSubmit);
     next();

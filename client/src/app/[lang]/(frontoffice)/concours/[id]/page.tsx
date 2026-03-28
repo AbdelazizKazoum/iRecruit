@@ -1,16 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, CalendarDays, MapPin, Users, Tag } from "lucide-react";
 import React from "react";
 
-import { getJobOfferById } from "@/libs/actions/offers";
+import { getTrancheById } from "@/libs/actions/tranches"; // Fetch tranche context for details.
 import { getDictionary } from "@/utils/getDictionary";
 import { Locale } from "@/configs/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import ApplyButton from "@/components/concours/ApplyButton";
+import { resolveImageUrl } from "@/utils/resolveImageUrl";
 
 type OfferDetailsPageProps = {
   params: { lang: Locale; id: string };
@@ -19,11 +20,19 @@ type OfferDetailsPageProps = {
 const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
   const { lang, id } = params;
   const dictionary = await getDictionary(lang);
-  const offer = await getJobOfferById(id);
+  const tranche = await getTrancheById(id); // Load the tranche by id for active context.
 
-  if (!offer) {
+  if (!tranche) {
     return notFound();
   }
+  const offer = tranche.jobOffer; // Use the embedded job offer for details.
+  const sessionPrefix = dictionary.concours?.sessionLabel || "Session"; // Localized session label.
+  const tranchePrefix = dictionary.concours?.trancheLabel || "Tranche"; // Localized tranche label.
+  const deadlineDate = new Date(tranche.endDate); // Override deadline using tranche endDate.
+  const deadlineLabel = Number.isNaN(deadlineDate.getTime())
+    ? tranche.endDate
+    : deadlineDate.toLocaleDateString(lang); // Fallback if parsing fails.
+  const imageSrc = resolveImageUrl(offer.imageUrl);
 
   return (
     <div className="max-w-screen-2xl mt-24 pb-24 px-4 sm:px-8 xl:px-16 mx-auto">
@@ -40,13 +49,10 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
         <div className="grid gap-8 lg:grid-cols-[1.6fr,1fr]">
           <Card className="overflow-hidden">
             <div className="relative w-full h-64 sm:h-80 bg-gray-100">
-              <Image
-                src={offer.imageUrl}
+              <img
+                src={imageSrc || offer.imageUrl}
                 alt={offer.title[lang]}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
-                priority
+                className="h-full w-full object-cover"
               />
             </div>
             <CardHeader className="space-y-3">
@@ -55,13 +61,22 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
                   <Tag className="mr-2 h-3.5 w-3.5" />
                   {offer.tag[lang]}
                 </Badge>
+                {/* Session + tranche context badges */}
+                <Badge variant="outline">
+                  <CalendarDays className="mr-2 h-3.5 w-3.5" />
+                  {sessionPrefix}: {tranche.session.yearLabel}
+                </Badge>
+                <Badge variant="outline">
+                  <Tag className="mr-2 h-3.5 w-3.5" />
+                  {tranchePrefix}: {tranche.name}
+                </Badge>
                 <Badge variant="outline">
                   <CalendarDays className="mr-2 h-3.5 w-3.5" />
                   {dictionary.concours.publishedOn}: {offer.datePublication}
                 </Badge>
                 <Badge variant="outline" className="text-orange-600">
                   <CalendarDays className="mr-2 h-3.5 w-3.5" />
-                  {dictionary.concours.deadline}: {offer.depotAvant}
+                  {dictionary.concours.deadline}: {deadlineLabel}
                 </Badge>
               </div>
               <CardTitle className="text-2xl lg:text-3xl">
@@ -123,7 +138,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
               <Separator />
               <div className="flex justify-end">
                 <ApplyButton
-                  offer={offer}
+                  tranche={tranche}
                   locale={lang}
                   label={
                     dictionary.concoursDetails?.applyNow ||
@@ -160,7 +175,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
               <InfoLine
                 icon={<CalendarDays className="h-4 w-4 text-orange-600" />}
                 label={dictionary.concours.deadline}
-                value={offer.depotAvant}
+                value={deadlineLabel}
               />
               {offer.organisme && (
                 <InfoLine
@@ -172,7 +187,7 @@ const OfferDetailsPage = async ({ params }: OfferDetailsPageProps) => {
 
               <Separator />
               <ApplyButton
-                offer={offer}
+                tranche={tranche}
                 locale={lang}
                 label={
                   dictionary.concoursDetails?.applyNow ||

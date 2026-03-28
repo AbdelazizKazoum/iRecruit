@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import {
   Calendar as CalendarIcon,
+  Briefcase,
   Check,
   ChevronDown,
   Download,
@@ -59,6 +60,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/libs/utils";
+import { downloadFile } from "@/utils/downloadFile"; // File download helper for admin documents.
+import { useApplicationStore } from "@/stores/useApplication.store";
 
 interface CandidateDetailViewProps {
   candidate: CandidateProfile;
@@ -72,40 +75,102 @@ export function CandidateDetailView({
   onClose,
 }: CandidateDetailViewProps) {
   const { personalInformation: pi, professionalInformation: prof } = candidate;
-  const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
 
-  const handleAcceptConfirm = (data: any) => {
+  console.log("Rendering CandidateDetailView for:", candidate);
+
+  const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const { acceptApplication, rejectApplication } = useApplicationStore();
+
+  // Normalize optional arrays for consistent rendering in tabs.
+  const diplomas = prof.parcoursEtDiplomes || [];
+  const languages = prof.niveauxLangues || [];
+  const experiences = prof.experiences || [];
+  const publications = prof.publications || [];
+  const communications = prof.communications || [];
+  const pedagogicalExperiences = Array.isArray(prof.experiencePedagogique)
+    ? prof.experiencePedagogique
+    : prof.experiencePedagogique
+      ? [prof.experiencePedagogique]
+      : [];
+  const residanatEntries = Array.isArray(prof.residanat)
+    ? prof.residanat
+    : prof.residanat
+      ? [prof.residanat]
+      : [];
+  const otherDocuments = prof.autresDocuments || [];
+
+  // Download a file from the backend and trigger a browser save dialog.
+  const handleFileDownload = async (
+    filePath?: string,
+    fallbackName?: string,
+  ) => {
+    if (!filePath) {
+      return;
+    }
+
+    const blob = await downloadFile(filePath);
+    if (!blob) {
+      return;
+    }
+
+    const fileName =
+      filePath.split("/").pop() || fallbackName || "document.pdf";
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleAcceptConfirm = async (data: any) => {
     console.log(
       `Accepted candidate ${candidate._id}. Interview Details:`,
-      data
+      data,
     );
-    alert(
-      `Candidate Accepted! Interview scheduled on ${
-        data.date ? format(data.date, "PPP") : "N/A"
-      } at ${data.time}.\n\nEmail sent to ${pi.email}`
-    );
+    const result = await acceptApplication(candidate._id, data.message);
+    if (result === "success") {
+      alert(
+        `Candidate Accepted! Interview scheduled on ${
+          data.date ? format(data.date, "PPP") : "N/A"
+        } at ${data.time}.\n\nEmail sent to ${pi.email}`,
+      );
+      // Optionally refresh or update status
+    }
     // TODO: Call backend to update status and send email
   };
 
-  const handleStatusChange = (status: "accepted" | "rejected") => {
+  const handleRejectConfirm = async () => {
+    const result = await rejectApplication(candidate._id);
+    if (result === "success") {
+      alert(`Application rejected for ${pi.email}`);
+      // Optionally refresh or update status
+    }
+    setIsRejectModalOpen(false);
+  };
+
+  const handleStatusChange = async (status: "accepted" | "rejected") => {
     if (status === "accepted") {
       setIsAcceptModalOpen(true);
       return;
     }
-    // TODO: Connect to backend API
-    console.log(`Setting candidate ${candidate._id} status to ${status}`);
-    // Simulate email notification
-    alert(`Rejection email queued for ${pi.email}`);
+    if (status === "rejected") {
+      setIsRejectModalOpen(true);
+      return;
+    }
   };
 
   const getStatusBadgeClasses = (status: string) => {
     switch (status) {
       case "accepted":
-        return "bg-green-500 text-white hover:bg-green-600 border-transparent shadow-sm";
+        return "bg-green-500 text-white-500 hover:bg-green-600 border-transparent shadow-sm";
       case "rejected":
-        return "bg-orange-500 text-white hover:bg-orange-600 border-transparent shadow-sm";
+        return "bg-orange-500 text-white-500 hover:bg-orange-600 border-transparent shadow-sm";
       default: // pending
-        return "bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200";
+        return "bg-yellow-600 text-white-500 border-transparent shadow-sm hover:bg-yellow-700";
     }
   };
 
@@ -147,22 +212,21 @@ export function CandidateDetailView({
               {/* Decision Actions */}
               <div className="flex items-center bg-muted/50 p-1 rounded-md gap-1">
                 <Button
-                  variant="ghost"
                   size="sm"
-                  className="h-8 px-3 text-muted-foreground hover:text-orange-600 hover:bg-orange-50 transition-all font-medium"
+                  className="h-8 px-3 bg-orange-500 text-white-500 hover:bg-orange-600 shadow-sm transition-all font-medium"
                   onClick={() => handleStatusChange("rejected")}
                 >
-                  <X className="h-4 w-4 mr-2" />
-                  Reject
+                  <X className="h-4 w-4 md:mr-2" />
+                  <span className="hidden md:inline">Reject</span>
                 </Button>
                 <Separator orientation="vertical" className="h-4" />
                 <Button
                   size="sm"
-                  className="h-8 px-3 bg-green-600 text-white hover:bg-green-700 shadow-sm transition-all font-medium"
+                  className="h-8 px-3 bg-green-500 text-white-500 hover:bg-green-600 shadow-sm transition-all font-medium"
                   onClick={() => handleStatusChange("accepted")}
                 >
-                  <Check className="h-4 w-4 mr-2" />
-                  Accept
+                  <Check className="h-4 w-4 md:mr-2" />
+                  <span className="hidden md:inline">Accept</span>
                 </Button>
               </div>
 
@@ -214,7 +278,7 @@ export function CandidateDetailView({
                 <Badge
                   variant="outline"
                   className={`mt-2 capitalize ${getStatusBadgeClasses(
-                    candidate.status
+                    candidate.status,
                   )}`}
                 >
                   {candidate.status}
@@ -252,6 +316,43 @@ export function CandidateDetailView({
                   label="Email"
                   value={pi.email}
                 />
+                {/* Application metadata */}
+                {candidate.applicationDiploma ? (
+                  <InfoItem
+                    icon={<GraduationCap className="h-4 w-4" />}
+                    label="Applied Diploma"
+                    value={candidate.applicationDiploma}
+                  />
+                ) : null}
+                {candidate.appliedDate ? (
+                  <InfoItem
+                    icon={<CalendarIcon className="h-4 w-4" />}
+                    label="Applied On"
+                    value={new Date(candidate.appliedDate).toLocaleDateString()}
+                  />
+                ) : null}
+                {/* Extended personal details */}
+                {pi.lieuNaissance ? (
+                  <InfoItem
+                    icon={<MapPin className="h-4 w-4" />}
+                    label="Birthplace"
+                    value={pi.lieuNaissance}
+                  />
+                ) : null}
+                {pi.sexe ? (
+                  <InfoItem
+                    icon={<UserIcon className="h-4 w-4" />}
+                    label="Gender"
+                    value={pi.sexe}
+                  />
+                ) : null}
+                {pi.adresseAr ? (
+                  <InfoItem
+                    icon={<MapPin className="h-4 w-4" />}
+                    label="Address (AR)"
+                    value={pi.adresseAr}
+                  />
+                ) : null}
               </div>
 
               <Separator className="my-6" />
@@ -260,10 +361,100 @@ export function CandidateDetailView({
                 <FileText className="h-4 w-4" /> Documents
               </h3>
               <div className="space-y-2">
-                <FileLink label="CV" filename={pi.files.cvPdf} />
-                <FileLink label="CIN Scanned" filename={pi.files.cinPdf} />
-                <FileLink label="Baccalaureate" filename={pi.files.bacPdf} />
+                <FileLink
+                  label="CV"
+                  filePath={pi.files.cvPdf}
+                  onDownload={handleFileDownload}
+                />
+                <FileLink
+                  label="CIN Scanned"
+                  filePath={pi.files.cinPdf}
+                  onDownload={handleFileDownload}
+                />
+                <FileLink
+                  label="Baccalaureate"
+                  filePath={pi.files.bacPdf}
+                  onDownload={handleFileDownload}
+                />
+                <FileLink
+                  label="Work Attestation"
+                  filePath={pi.files.attestation}
+                  onDownload={handleFileDownload}
+                />
               </div>
+
+              {(candidate.applicationAttachments?.declarationPdf ||
+                candidate.applicationAttachments?.motivationLetterPdf) && (
+                <>
+                  <Separator className="my-6" />
+                  <h3 className="font-semibold mb-3 flex items-center gap-2">
+                    <FileText className="h-4 w-4" /> Application Files
+                  </h3>
+                  <div className="space-y-2">
+                    <FileLink
+                      label="Declaration"
+                      filePath={
+                        candidate.applicationAttachments?.declarationPdf
+                      }
+                      onDownload={handleFileDownload}
+                    />
+                    <FileLink
+                      label="Motivation Letter"
+                      filePath={
+                        candidate.applicationAttachments?.motivationLetterPdf
+                      }
+                      onDownload={handleFileDownload}
+                    />
+                  </div>
+                </>
+              )}
+
+              {(pi.experiences?.fonctionnaire !== undefined ||
+                pi.situationDeHandicap?.handicap !== undefined ||
+                pi.experiences?.fonction ||
+                pi.experiences?.ppr) && (
+                <>
+                  <Separator className="my-6" />
+                  <h3 className="font-semibold mb-3 flex items-center gap-2">
+                    <Users className="h-4 w-4" /> Employment & Accessibility
+                  </h3>
+                  {pi.experiences?.fonctionnaire !== undefined ? (
+                    <InfoItem
+                      icon={<Users className="h-4 w-4" />}
+                      label="Government Employee"
+                      value={pi.experiences.fonctionnaire ? "Yes" : "No"}
+                    />
+                  ) : null}
+                  {pi.experiences?.fonction ? (
+                    <InfoItem
+                      icon={<Briefcase className="h-4 w-4" />}
+                      label="Organization"
+                      value={pi.experiences.fonction}
+                    />
+                  ) : null}
+                  {pi.experiences?.ppr ? (
+                    <InfoItem
+                      icon={<UserIcon className="h-4 w-4" />}
+                      label="PPR"
+                      value={pi.experiences.ppr}
+                    />
+                  ) : null}
+                  {pi.situationDeHandicap?.handicap !== undefined ? (
+                    <InfoItem
+                      icon={<UserIcon className="h-4 w-4" />}
+                      label="Disability"
+                      value={pi.situationDeHandicap.handicap ? "Yes" : "No"}
+                    />
+                  ) : null}
+                  {pi.situationDeHandicap?.typeHandicap ? (
+                    <InfoItem
+                      icon={<UserIcon className="h-4 w-4" />}
+                      label="Disability Type"
+                      value={pi.situationDeHandicap.typeHandicap}
+                    />
+                  ) : null}
+                </>
+              )}
             </div>
 
             {/* Right Content: Professional Info */}
@@ -288,38 +479,52 @@ export function CandidateDetailView({
                         Academic Background
                       </h3>
 
-                      <div className="space-y-4">
-                        {prof.parcoursEtDiplomes?.map((diploma, idx) => (
-                          <Card key={idx}>
-                            <CardContent className="p-4 flex flex-col md:flex-row justify-between gap-4">
-                              <div>
-                                <h4 className="font-bold text-base">
-                                  {diploma.intituleDiplome}
-                                </h4>
-                                <p className="text-muted-foreground">
-                                  {diploma.diplomeType} • {diploma.specialite}
-                                </p>
-                                <div className="flex items-center gap-2 mt-2 text-sm">
-                                  <Badge variant="secondary">
-                                    {diploma.anneeObtention}
-                                  </Badge>
-                                  <span className="text-muted-foreground">
-                                    {diploma.etablissement}
-                                  </span>
+                      {/* Diploma cards with optional file downloads */}
+                      {diplomas.length === 0 ? (
+                        <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                          <p>No diplomas uploaded yet.</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {diplomas.map((diploma, idx) => (
+                            <Card key={idx}>
+                              <CardContent className="p-4 flex flex-col md:flex-row justify-between gap-4">
+                                <div>
+                                  <h4 className="font-bold text-base">
+                                    {diploma.intituleDiplome}
+                                  </h4>
+                                  <p className="text-muted-foreground">
+                                    {diploma.diplomeType} - {diploma.specialite}
+                                  </p>
+                                  <div className="flex items-center gap-2 mt-2 text-sm">
+                                    <Badge variant="secondary">
+                                      {diploma.anneeObtention}
+                                    </Badge>
+                                    <span className="text-muted-foreground">
+                                      {diploma.etablissement}
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="shrink-0 h-9"
-                              >
-                                <Download className="h-3 w-3 mr-2" />
-                                Diploma PDF
-                              </Button>
-                            </CardContent>
-                          </Card>
-                        ))}
-                      </div>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="shrink-0 h-9"
+                                  disabled={!diploma.files?.diplomePdf}
+                                  onClick={() =>
+                                    handleFileDownload(
+                                      diploma.files?.diplomePdf,
+                                      "diploma.pdf",
+                                    )
+                                  }
+                                >
+                                  <Download className="h-3 w-3 mr-2" />
+                                  Diploma PDF
+                                </Button>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </TabsContent>
 
@@ -329,23 +534,366 @@ export function CandidateDetailView({
                       <Languages className="h-5 w-5 text-primary" />
                       Languages
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {prof.niveauxLangues?.map((lang, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between p-4 border rounded-lg"
-                        >
-                          <span className="font-medium">{lang.langue}</span>
-                          <Badge>{lang.niveau}</Badge>
-                        </div>
-                      ))}
-                    </div>
+                    {/* Language cards with optional certificate downloads */}
+                    {languages.length === 0 ? (
+                      <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                        <p>No language certificates uploaded.</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {languages.map((lang, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center justify-between p-4 border rounded-lg"
+                          >
+                            <div>
+                              <span className="font-medium">{lang.langue}</span>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                Level: {lang.niveau}
+                              </div>
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8"
+                              disabled={!lang.files?.certificatLanguePdf}
+                              onClick={() =>
+                                handleFileDownload(
+                                  lang.files?.certificatLanguePdf,
+                                  "language-certificate.pdf",
+                                )
+                              }
+                            >
+                              <Download className="h-3 w-3 mr-2" />
+                              Certificate
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </TabsContent>
 
                   {/* Experience Tab (Placeholder based on schema structure) */}
                   <TabsContent value="experience">
-                    <div className="text-center py-12 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
-                      <p>No publications or research documents uploaded.</p>
+                    <div className="space-y-8">
+                      {/* Professional experience section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <Users className="h-5 w-5 text-primary" />
+                          Professional Experience
+                        </h3>
+                        {experiences.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No professional experience added.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {experiences.map((exp, idx) => {
+                              // Normalize highlights for consistent rendering.
+                              const highlights = Array.isArray(exp.highlights)
+                                ? exp.highlights
+                                : typeof exp.highlights === "string"
+                                  ? exp.highlights
+                                      .split("\n")
+                                      .map((item) => item.trim())
+                                      .filter(Boolean)
+                                  : [];
+
+                              return (
+                                <Card key={idx}>
+                                  <CardContent className="p-4 space-y-2">
+                                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                                      <div>
+                                        <h4 className="font-semibold">
+                                          {exp.position}
+                                        </h4>
+                                        <p className="text-sm text-muted-foreground">
+                                          {exp.company}
+                                        </p>
+                                      </div>
+                                      <Badge variant="secondary">
+                                        {exp.startDate || "N/A"} -{" "}
+                                        {exp.currentlyWorking
+                                          ? "Present"
+                                          : exp.endDate || "N/A"}
+                                      </Badge>
+                                    </div>
+                                    {exp.description ? (
+                                      <p className="text-sm text-muted-foreground">
+                                        {exp.description}
+                                      </p>
+                                    ) : null}
+                                    {highlights.length > 0 ? (
+                                      <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                                        {highlights.map((item, hIdx) => (
+                                          <li key={hIdx}>{item}</li>
+                                        ))}
+                                      </ul>
+                                    ) : null}
+                                  </CardContent>
+                                </Card>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Pedagogical experience section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <GraduationCap className="h-5 w-5 text-primary" />
+                          Pedagogical Experience
+                        </h3>
+                        {pedagogicalExperiences.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No pedagogical experience uploaded.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {pedagogicalExperiences.map((exp, idx) => (
+                              <Card key={idx}>
+                                <CardContent className="p-4 space-y-2">
+                                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                                    <div>
+                                      <h4 className="font-semibold">
+                                        {exp.poste || "Teaching Experience"}
+                                      </h4>
+                                      <p className="text-sm text-muted-foreground">
+                                        {exp.etablissement || "N/A"}
+                                      </p>
+                                    </div>
+                                    <Badge variant="secondary">
+                                      {exp.experiencePedagogiqueEnHeures
+                                        ? `${exp.experiencePedagogiqueEnHeures} hours`
+                                        : "Hours not provided"}
+                                    </Badge>
+                                  </div>
+                                  {exp.description ? (
+                                    <p className="text-sm text-muted-foreground">
+                                      {exp.description}
+                                    </p>
+                                  ) : null}
+                                  {(exp.dateDebut ||
+                                    exp.dateFin ||
+                                    exp.ville) && (
+                                    <p className="text-xs text-muted-foreground">
+                                      {exp.ville
+                                        ? `Location: ${exp.ville}`
+                                        : ""}
+                                      {exp.ville &&
+                                      (exp.dateDebut || exp.dateFin)
+                                        ? " | "
+                                        : ""}
+                                      {exp.dateDebut || "N/A"} -{" "}
+                                      {exp.dateFin || "N/A"}
+                                    </p>
+                                  )}
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Publications section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-primary" />
+                          Publications
+                        </h3>
+                        {publications.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No publications uploaded.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {publications.map((pub, idx) => (
+                              <Card key={idx}>
+                                <CardContent className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                  <div>
+                                    <h4 className="font-semibold">
+                                      {pub.titre}
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      {pub.type} - {pub.anneePublication}
+                                    </p>
+                                    {pub.url ? (
+                                      <a
+                                        href={pub.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-xs text-primary underline"
+                                      >
+                                        {pub.url}
+                                      </a>
+                                    ) : null}
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="h-8"
+                                    disabled={!pub.files?.publicationPdf}
+                                    onClick={() =>
+                                      handleFileDownload(
+                                        pub.files?.publicationPdf,
+                                        "publication.pdf",
+                                      )
+                                    }
+                                  >
+                                    <Download className="h-3 w-3 mr-2" />
+                                    Publication PDF
+                                  </Button>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Communications section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-primary" />
+                          Communications
+                        </h3>
+                        {communications.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No communications uploaded.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {communications.map((com, idx) => (
+                              <Card key={idx}>
+                                <CardContent className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                  <div>
+                                    <h4 className="font-semibold">
+                                      {com.titre}
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      {com.anneeCommunication}
+                                    </p>
+                                    {com.url ? (
+                                      <a
+                                        href={com.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-xs text-primary underline"
+                                      >
+                                        {com.url}
+                                      </a>
+                                    ) : null}
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="h-8"
+                                    disabled={!com.files?.communicationPdf}
+                                    onClick={() =>
+                                      handleFileDownload(
+                                        com.files?.communicationPdf,
+                                        "communication.pdf",
+                                      )
+                                    }
+                                  >
+                                    <Download className="h-3 w-3 mr-2" />
+                                    Communication PDF
+                                  </Button>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Residency documents section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-primary" />
+                          Residency Documents
+                        </h3>
+                        {residanatEntries.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No residency documents uploaded.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {residanatEntries.map((res, idx) => (
+                              <Card key={idx}>
+                                <CardContent className="p-4 flex items-center justify-between gap-4">
+                                  <div>
+                                    <h4 className="font-semibold">
+                                      Residency Document {idx + 1}
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      File attached
+                                    </p>
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="h-8"
+                                    disabled={!res.residanatPdf}
+                                    onClick={() =>
+                                      handleFileDownload(
+                                        res.residanatPdf,
+                                        "residency.pdf",
+                                      )
+                                    }
+                                  >
+                                    <Download className="h-3 w-3 mr-2" />
+                                    Residency PDF
+                                  </Button>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Other documents section */}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-primary" />
+                          Other Documents
+                        </h3>
+                        {otherDocuments.length === 0 ? (
+                          <div className="text-center py-10 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
+                            <p>No additional documents uploaded.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {otherDocuments.map((doc, idx) => (
+                              <Card key={idx}>
+                                <CardContent className="p-4 flex items-center justify-between gap-4">
+                                  <div>
+                                    <h4 className="font-semibold">
+                                      {doc.intitule}
+                                    </h4>
+                                    <p className="text-sm text-muted-foreground">
+                                      File attached
+                                    </p>
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="h-8"
+                                    disabled={!doc.documentPdf}
+                                    onClick={() =>
+                                      handleFileDownload(
+                                        doc.documentPdf,
+                                        "document.pdf",
+                                      )
+                                    }
+                                  >
+                                    <Download className="h-3 w-3 mr-2" />
+                                    Document PDF
+                                  </Button>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -358,6 +906,12 @@ export function CandidateDetailView({
         isOpen={isAcceptModalOpen}
         onClose={() => setIsAcceptModalOpen(false)}
         onConfirm={handleAcceptConfirm}
+        candidateName={`${pi.prenom} ${pi.nom}`}
+      />
+      <RejectCandidateModal
+        isOpen={isRejectModalOpen}
+        onClose={() => setIsRejectModalOpen(false)}
+        onConfirm={handleRejectConfirm}
         candidateName={`${pi.prenom} ${pi.nom}`}
       />
     </>
@@ -380,7 +934,7 @@ function AcceptCandidateModal({
   candidateName,
 }: AcceptCandidateModalProps) {
   const [invitationType, setInvitationType] = useState<"interview" | "test">(
-    "interview"
+    "interview",
   );
   const [date, setDate] = useState<Date>();
   const [time, setTime] = useState("");
@@ -441,7 +995,7 @@ function AcceptCandidateModal({
                     variant={"outline"}
                     className={cn(
                       "w-full justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
+                      !date && "text-muted-foreground",
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -497,10 +1051,51 @@ function AcceptCandidateModal({
           </Button>
           <Button
             onClick={handleConfirm}
-            className="bg-green-600 hover:bg-green-700 text-white"
+            className="bg-green-500 hover:bg-green-600 text-white-500"
             disabled={!date || !time}
           >
             Confirm & Send Invite
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// --- REJECT MODAL COMPONENT ---
+
+interface RejectCandidateModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  candidateName: string;
+}
+
+function RejectCandidateModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  candidateName,
+}: RejectCandidateModalProps) {
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Confirm Rejection</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to reject the application for {candidateName}?
+            This action cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            onClick={onConfirm}
+            className="bg-orange-500 hover:bg-orange-600 text-white-500"
+          >
+            Reject Application
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -534,13 +1129,37 @@ const InfoItem = ({
   </div>
 );
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FileLink = ({ label, filename }: { label: string; filename: string }) => (
-  <div className="flex items-center justify-between p-2 rounded border bg-background text-sm hover:bg-muted/50 transition-colors cursor-pointer">
-    <div className="flex items-center gap-2 truncate">
-      <FileText className="h-3.5 w-3.5 text-blue-500" />
-      <span className="truncate">{label}</span>
-    </div>
-    <Download className="h-3 w-3 text-muted-foreground" />
-  </div>
-);
+// Props for document download links in the candidate detail sidebar.
+type FileLinkProps = {
+  label: string;
+  filePath?: string;
+  onDownload: (filePath?: string, fallbackName?: string) => void;
+};
+
+const FileLink = ({ label, filePath, onDownload }: FileLinkProps) => {
+  // Disable the button when there is no file attached.
+  const isDisabled = !filePath;
+
+  return (
+    <button
+      type="button"
+      className={`flex items-center justify-between p-2 rounded border text-sm transition-colors ${
+        isDisabled
+          ? "bg-muted/40 text-muted-foreground cursor-not-allowed"
+          : "bg-background hover:bg-muted/50"
+      }`}
+      onClick={() => onDownload(filePath, `${label}.pdf`)}
+      disabled={isDisabled}
+    >
+      <div className="flex items-center gap-2 truncate">
+        <FileText className="h-3.5 w-3.5 text-blue-500" />
+        <span className="truncate">{label}</span>
+      </div>
+      {isDisabled ? (
+        <span className="text-xs uppercase">Missing</span>
+      ) : (
+        <Download className="h-3 w-3 text-muted-foreground" />
+      )}
+    </button>
+  );
+};

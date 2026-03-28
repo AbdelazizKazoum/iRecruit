@@ -4,6 +4,7 @@ export interface ApplicationType {
   user?: UserType;
   applicationDiploma: string;
   offer: OfferType | null;
+  trancheId?: string; // Tranche id to tag the application with the active tranche.
 
   recuCandidature?: Date;
 
